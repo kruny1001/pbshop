@@ -9,7 +9,7 @@ angular.module('galleries').run(['Menus',
 
         //Menus.addSubMenuItem(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
 		Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
-        Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/test');
+        Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/test1');
 		Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
 
 

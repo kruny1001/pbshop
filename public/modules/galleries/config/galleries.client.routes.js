@@ -10,7 +10,7 @@ angular.module('galleries').config(['$stateProvider',
                 templateUrl: 'modules/galleries/views/list-galleries.client.view.html'
             }).
             state('testGallery', {
-                url: '/galleries/test',
+                url: '/galleries/test1',
                 templateUrl: 'modules/galleries/views/test-gallery.client.view.html'
             }).
             state('createGallery', {
