@@ -44,6 +44,8 @@ angular.element(document).ready(function () {
 ApplicationConfiguration.registerModule('articles');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('galleries');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
 // Configuring the Articles module
@@ -304,6 +306,99 @@ angular.module('core').service('Menus', [function () {
     //Adding the topbar menu
     this.addMenu('topbar');
   }]);'use strict';
+// Configuring the Articles module
+angular.module('galleries').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Galleries', 'galleries', 'dropdown', '/galleries(/create)?');
+    Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
+    Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('galleries').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Galleries state routing
+    $stateProvider.state('listGalleries', {
+      url: '/galleries',
+      templateUrl: 'modules/galleries/views/list-galleries.client.view.html'
+    }).state('createGallery', {
+      url: '/galleries/create',
+      templateUrl: 'modules/galleries/views/create-gallery.client.view.html'
+    }).state('viewGallery', {
+      url: '/galleries/:galleryId',
+      templateUrl: 'modules/galleries/views/view-gallery.client.view.html'
+    }).state('editGallery', {
+      url: '/galleries/:galleryId/edit',
+      templateUrl: 'modules/galleries/views/edit-gallery.client.view.html'
+    });
+  }
+]);'use strict';
+// Galleries controller
+angular.module('galleries').controller('GalleriesController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Galleries',
+  function ($scope, $stateParams, $location, Authentication, Galleries) {
+    $scope.authentication = Authentication;
+    // Create new Gallery
+    $scope.create = function () {
+      // Create new Gallery object
+      var gallery = new Galleries({ name: this.name });
+      // Redirect after save
+      gallery.$save(function (response) {
+        $location.path('galleries/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Gallery
+    $scope.remove = function (gallery) {
+      if (gallery) {
+        gallery.$remove();
+        for (var i in $scope.galleries) {
+          if ($scope.galleries[i] === gallery) {
+            $scope.galleries.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.gallery.$remove(function () {
+          $location.path('galleries');
+        });
+      }
+    };
+    // Update existing Gallery
+    $scope.update = function () {
+      var gallery = $scope.gallery;
+      gallery.$update(function () {
+        $location.path('galleries/' + gallery._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Galleries
+    $scope.find = function () {
+      $scope.galleries = Galleries.query();
+    };
+    // Find existing Gallery
+    $scope.findOne = function () {
+      $scope.gallery = Galleries.get({ galleryId: $stateParams.galleryId });
+    };
+  }
+]);'use strict';
+//Galleries service used to communicate Galleries REST endpoints
+angular.module('galleries').factory('Galleries', [
+  '$resource',
+  function ($resource) {
+    return $resource('galleries/:galleryId', { galleryId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 // Config HTTP Error Handling
 angular.module('users').config([
   '$httpProvider',

@@ -109,6 +109,7 @@ UserSchema.methods.hashPassword = function(password) {
 
 /**
  * Create instance method for authenticating user
+ * Compare password with hash
  */
 UserSchema.methods.authenticate = function(password) {
 	return this.password === this.hashPassword(password);
