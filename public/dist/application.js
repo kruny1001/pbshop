@@ -42,6 +42,10 @@ angular.element(document).ready(function () {
 });'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('articles');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('brazil2s');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('brazils');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
@@ -134,6 +138,182 @@ angular.module('articles').factory('Articles', [
   '$resource',
   function ($resource) {
     return $resource('articles/:articleId', { articleId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
+// Configuring the Articles module
+angular.module('brazil2s').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Brazil2s', 'brazil2s', 'dropdown', '/brazil2s(/create)?');
+    Menus.addSubMenuItem('topbar', 'brazil2s', 'List Brazil2s', 'brazil2s');
+    Menus.addSubMenuItem('topbar', 'brazil2s', 'New Brazil2', 'brazil2s/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('brazil2s').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Brazil2s state routing
+    $stateProvider.state('listBrazil2s', {
+      url: '/brazil2s',
+      templateUrl: 'modules/brazil2s/views/list-brazil2s.client.view.html'
+    }).state('createBrazil2', {
+      url: '/brazil2s/create',
+      templateUrl: 'modules/brazil2s/views/create-brazil2.client.view.html'
+    }).state('viewBrazil2', {
+      url: '/brazil2s/:brazil2Id',
+      templateUrl: 'modules/brazil2s/views/view-brazil2.client.view.html'
+    }).state('editBrazil2', {
+      url: '/brazil2s/:brazil2Id/edit',
+      templateUrl: 'modules/brazil2s/views/edit-brazil2.client.view.html'
+    });
+  }
+]);'use strict';
+// Brazil2s controller
+angular.module('brazil2s').controller('Brazil2sController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Brazil2s',
+  function ($scope, $stateParams, $location, Authentication, Brazil2s) {
+    $scope.authentication = Authentication;
+    // Create new Brazil2
+    $scope.create = function () {
+      // Create new Brazil2 object
+      var brazil2 = new Brazil2s({ name: this.name });
+      // Redirect after save
+      brazil2.$save(function (response) {
+        $location.path('brazil2s/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Brazil2
+    $scope.remove = function (brazil2) {
+      if (brazil2) {
+        brazil2.$remove();
+        for (var i in $scope.brazil2s) {
+          if ($scope.brazil2s[i] === brazil2) {
+            $scope.brazil2s.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.brazil2.$remove(function () {
+          $location.path('brazil2s');
+        });
+      }
+    };
+    // Update existing Brazil2
+    $scope.update = function () {
+      var brazil2 = $scope.brazil2;
+      brazil2.$update(function () {
+        $location.path('brazil2s/' + brazil2._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Brazil2s
+    $scope.find = function () {
+      $scope.brazil2s = Brazil2s.query();
+    };
+    // Find existing Brazil2
+    $scope.findOne = function () {
+      $scope.brazil2 = Brazil2s.get({ brazil2Id: $stateParams.brazil2Id });
+    };
+  }
+]);'use strict';
+//Brazil2s service used to communicate Brazil2s REST endpoints
+angular.module('brazil2s').factory('Brazil2s', [
+  '$resource',
+  function ($resource) {
+    return $resource('brazil2s/:brazil2Id', { brazil2Id: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
+//Setting up route
+angular.module('brazils').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Brazils state routing
+    $stateProvider.state('listBrazils', {
+      url: '/brazils',
+      templateUrl: 'modules/brazils/views/list-brazils.client.view.html'
+    }).state('createBrazil', {
+      url: '/brazils/create',
+      templateUrl: 'modules/brazils/views/create-brazil.client.view.html'
+    }).state('viewBrazil', {
+      url: '/brazils/:brazilId',
+      templateUrl: 'modules/brazils/views/view-brazil.client.view.html'
+    }).state('editBrazil', {
+      url: '/brazils/:brazilId/edit',
+      templateUrl: 'modules/brazils/views/edit-brazil.client.view.html'
+    });
+  }
+]);'use strict';
+// Brazils controller
+angular.module('brazils').controller('BrazilsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Brazils',
+  function ($scope, $stateParams, $location, Authentication, Brazils) {
+    $scope.authentication = Authentication;
+    // Create new Brazil
+    $scope.create = function () {
+      // Create new Brazil object
+      var brazil = new Brazils({ name: this.name });
+      // Redirect after save
+      brazil.$save(function (response) {
+        $location.path('brazils/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Brazil
+    $scope.remove = function (brazil) {
+      if (brazil) {
+        brazil.$remove();
+        for (var i in $scope.brazils) {
+          if ($scope.brazils[i] === brazil) {
+            $scope.brazils.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.brazil.$remove(function () {
+          $location.path('brazils');
+        });
+      }
+    };
+    // Update existing Brazil
+    $scope.update = function () {
+      var brazil = $scope.brazil;
+      brazil.$update(function () {
+        $location.path('brazils/' + brazil._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Brazils
+    $scope.find = function () {
+      $scope.brazils = Brazils.query();
+    };
+    // Find existing Brazil
+    $scope.findOne = function () {
+      $scope.brazil = Brazils.get({ brazilId: $stateParams.brazilId });
+    };
+  }
+]);'use strict';
+//Brazils service used to communicate Brazils REST endpoints
+angular.module('brazils').factory('Brazils', [
+  '$resource',
+  function ($resource) {
+    return $resource('brazils/:brazilId', { brazilId: '@_id' }, { update: { method: 'PUT' } });
   }
 ]);'use strict';
 // Setting up route
@@ -311,8 +491,11 @@ angular.module('galleries').run([
   'Menus',
   function (Menus) {
     // Set top bar menu items
+    //Menus.addMenuItem(menuId, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
     Menus.addMenuItem('topbar', 'Galleries', 'galleries', 'dropdown', '/galleries(/create)?');
+    //Menus.addSubMenuItem(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
     Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
+    Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/gview');
     Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
   }
 ]);'use strict';
@@ -321,7 +504,10 @@ angular.module('galleries').config([
   '$stateProvider',
   function ($stateProvider) {
     // Galleries state routing
-    $stateProvider.state('listGalleries', {
+    $stateProvider.state('gview', {
+      url: '/galleries/gview',
+      templateUrl: 'modules/galleries/views/gview.client.view.html'
+    }).state('listGalleries', {
       url: '/galleries',
       templateUrl: 'modules/galleries/views/list-galleries.client.view.html'
     }).state('createGallery', {
@@ -390,6 +576,11 @@ angular.module('galleries').controller('GalleriesController', [
     $scope.findOne = function () {
       $scope.gallery = Galleries.get({ galleryId: $stateParams.galleryId });
     };
+  }
+]);'use strict';
+angular.module('galleries').controller('GviewController', [
+  '$scope',
+  function ($scope) {
   }
 ]);'use strict';
 //Galleries service used to communicate Galleries REST endpoints
