@@ -6,3 +6,11 @@ PBShop_test
 [![Dependencies Status](https://david-dm.org/meanjs/mean.svg)](https://david-dm.org/meanjs/mean)
 
 History
+module userMgnt
+create user list directive
+
+module cart
+
+module gallery
+    gallery-grid directive
+        https://github.com/passy/angular-masonry
