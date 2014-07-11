@@ -380,3 +380,12 @@ exports.removeOAuthProvider = function(req, res, next) {
 		});
 	}
 };
+
+// [Test] Extract Data from MongoDB
+exports.findUsers = function(req, res) {
+    User.findOne({
+        _id: 'kruny1001'
+    }).exec(function(err, user) {
+        res.jsonp(req.user.lastName || null);
+    });
+};

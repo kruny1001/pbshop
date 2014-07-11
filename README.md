@@ -14,3 +14,12 @@ module cart
 module gallery
     gallery-grid directive
         https://github.com/passy/angular-masonry
+
+7_10
+Fixed gview.client.controller.js 
+    Create a test driven API call
+        users.server.controller.js
+        user.server.model.js
+        user.server.routes.js
+        
+
