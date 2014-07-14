@@ -5,6 +5,10 @@ angular.module('galleries').config(['$stateProvider',
     function($stateProvider) {
         // Galleries state routing
         $stateProvider.
+		state('userlist', {
+			url: '/galleries/userlist',
+			templateUrl: 'modules/galleries/views/userlist.client.view.html'
+		}).
 		state('gview', {
 			url: '/galleries/gview',
 			templateUrl: 'modules/galleries/views/gview.client.view.html'

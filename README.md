@@ -16,11 +16,40 @@ module gallery
         https://github.com/passy/angular-masonry
 
 7_10
-Fixed gview.client.controller.js 
+=========
+Fixed gview.client.controller.js
+--------
     Create a test driven API call
         users.server.controller.js
         user.server.model.js
         user.server.routes.js
-        
-7_13 
+
+
+7_13
+=====
 Clone to Home PC
+------
+
+7_14
+=====
+userlist view added
+-----
+
+
+
+user information dashboard(not connected with db)
+[example](http://kevangular.herokuapp.com/#!/galleries/userlist)
+
+    Files 
+    1. userlist.client.controller.js
+    2. userlist.client.view.html
+
+directive
+----
+* userlist dashboard
+services
+----
+* extracting user information
+* filtering user information
+
+

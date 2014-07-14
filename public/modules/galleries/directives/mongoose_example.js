@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 // This is the test of MongoDB with Mongoose
@@ -149,3 +150,5 @@ var html4 = '<h2> Queried (name.last = "Doe", age >64) Documents in MonogoDB dat
 var html5 = '</code></pre> <br\> <i>';
 var html6 = ' documents. </i> <br\> <br\> \
 <br\> <br\> <center><i> Demo code available at <a href="http://github.com/mongolab/hello-mongoose">github.com</a> </i></center>';
+
+*/
