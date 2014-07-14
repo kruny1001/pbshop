@@ -1,10 +1,11 @@
+'use strict';
 
 // This is the test of MongoDB with Mongoose
 
 //
 // Preamble
 var http = require ('http');	     // For serving a basic web page.
-var mongoose = require ("mongoose"); // The reason for this demo.
+var mongoose = require ('mongoose'); // The reason for this demo.
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.  
@@ -55,21 +56,21 @@ var johndoe = new PUser ({
 });
 
 // Saving it to the database.  
-johndoe.save(function (err) {if (err) console.log ('Error on save!')});
+johndoe.save(function (err) {if (err) console.log ('Error on save!');});
 
 // Creating more users manually
 var janedoe = new PUser ({
     name: { first: 'Jane', last: 'Doe' },
     age: 65
 });
-janedoe.save(function (err) {if (err) console.log ('Error on save!')});
+janedoe.save(function (err) {if (err) console.log ('Error on save!');});
 
 // Creating more users manually
 var alicesmith = new PUser ({
     name: { first: 'Alice', last: 'Smith' },
     age: 45
 });
-alicesmith.save(function (err) {if (err) console.log ('Error on save!')});
+alicesmith.save(function (err) {if (err) console.log ('Error on save!');});
 
 
 // In case the browser connects before the database is connected, the
@@ -121,25 +122,7 @@ function findPerson(req, res){
         console.log('%s %s is a %s.', person.name.first, person.name.last, person.age)
     });
 
-    /*
-    Example of Query
-     Person
-     .find({ occupation: /host/ })
-     .where('name.last').equals('Ghost')
-     .where('age').gt(17).lt(66)
-     .where('likes').in(['vaporizing', 'talking'])
-     .limit(10)
-     .sort('-occupation')
-     .select('name occupation')
-     .exec(callback);
-    */
 
-    /*
-    PUser.findOne({'name.last': 'Doe'}, 'name occupation', function(err, person){
-        if(err) return handleError(err);
-        console.log('result of findPerson function');
-        console.log('%s %s is a %s.', person.name.first, person.name.last, person.age) // Space Ghost is a talk show host.
-    })*/
 }
 
 // Tell the console we're getting ready.
