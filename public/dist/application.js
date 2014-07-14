@@ -50,6 +50,8 @@ ApplicationConfiguration.registerModule('brazils');'use strict';
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('galleries');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('user-mgnt');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
 // Configuring the Articles module
@@ -504,7 +506,10 @@ angular.module('galleries').config([
   '$stateProvider',
   function ($stateProvider) {
     // Galleries state routing
-    $stateProvider.state('gview', {
+    $stateProvider.state('userlist', {
+      url: '/galleries/userlist',
+      templateUrl: 'modules/galleries/views/userlist.client.view.html'
+    }).state('gview', {
       url: '/galleries/gview',
       templateUrl: 'modules/galleries/views/gview.client.view.html'
     }).state('listGalleries', {
@@ -580,14 +585,428 @@ angular.module('galleries').controller('GalleriesController', [
 ]);'use strict';
 angular.module('galleries').controller('GviewController', [
   '$scope',
-  function ($scope) {
+  '$http',
+  function ($scope, $http) {
+    $scope.items = [
+      {
+        'id': 0,
+        'picture': 'http://placehold.it/32x32',
+        'age': 31,
+        'name': 'Mathews Goff'
+      },
+      {
+        'id': 1,
+        'picture': 'http://placehold.it/32x32',
+        'age': 36,
+        'name': 'Collins Alston'
+      },
+      {
+        'id': 2,
+        'picture': 'http://placehold.it/32x32',
+        'age': 27,
+        'name': 'Jasmine Rollins'
+      },
+      {
+        'id': 3,
+        'picture': 'http://placehold.it/32x32',
+        'age': 32,
+        'name': 'Julie Jefferson'
+      },
+      {
+        'id': 4,
+        'picture': 'http://placehold.it/32x32',
+        'age': 23,
+        'name': 'Wilder King'
+      },
+      {
+        'id': 5,
+        'picture': 'http://placehold.it/32x32',
+        'age': 23,
+        'name': 'Stanley Moore'
+      },
+      {
+        'id': 6,
+        'picture': 'http://placehold.it/32x32',
+        'age': 36,
+        'name': 'Reynolds Bishop'
+      },
+      {
+        'id': 7,
+        'picture': 'http://placehold.it/32x32',
+        'age': 26,
+        'name': 'Bryant Flowers'
+      },
+      {
+        'id': 8,
+        'picture': 'http://placehold.it/32x32',
+        'age': 38,
+        'name': 'Jenifer Martinez'
+      },
+      {
+        'id': 9,
+        'picture': 'http://placehold.it/32x32',
+        'age': 40,
+        'name': 'Mcguire Pittman'
+      },
+      {
+        'id': 10,
+        'picture': 'http://placehold.it/32x32',
+        'age': 34,
+        'name': 'Valdez Hyde'
+      },
+      {
+        'id': 11,
+        'picture': 'http://placehold.it/32x32',
+        'age': 34,
+        'name': 'Marla Mayo'
+      },
+      {
+        'id': 12,
+        'picture': 'http://placehold.it/32x32',
+        'age': 30,
+        'name': 'Brown Ortega'
+      },
+      {
+        'id': 13,
+        'picture': 'http://placehold.it/32x32',
+        'age': 32,
+        'name': 'Jeannette William'
+      },
+      {
+        'id': 14,
+        'picture': 'http://placehold.it/32x32',
+        'age': 30,
+        'name': 'Bridges Ashley'
+      },
+      {
+        'id': 15,
+        'picture': 'http://placehold.it/32x32',
+        'age': 33,
+        'name': 'Latasha Hewitt'
+      },
+      {
+        'id': 16,
+        'picture': 'http://placehold.it/32x32',
+        'age': 35,
+        'name': 'Alma Sawyer'
+      },
+      {
+        'id': 17,
+        'picture': 'http://placehold.it/32x32',
+        'age': 21,
+        'name': 'Liz Mcbride'
+      },
+      {
+        'id': 18,
+        'picture': 'http://placehold.it/32x32',
+        'age': 26,
+        'name': 'Mcintosh Chandler'
+      },
+      {
+        'id': 19,
+        'picture': 'http://placehold.it/32x32',
+        'age': 20,
+        'name': 'Alford Hartman'
+      },
+      {
+        'id': 20,
+        'picture': 'http://placehold.it/32x32',
+        'age': 29,
+        'name': 'Tiffany Green'
+      },
+      {
+        'id': 21,
+        'picture': 'http://placehold.it/32x32',
+        'age': 38,
+        'name': 'Stafford Riggs'
+      },
+      {
+        'id': 22,
+        'picture': 'http://placehold.it/32x32',
+        'age': 40,
+        'name': 'Elinor Chambers'
+      },
+      {
+        'id': 23,
+        'picture': 'http://placehold.it/32x32',
+        'age': 27,
+        'name': 'Carly Howard'
+      },
+      {
+        'id': 24,
+        'picture': 'http://placehold.it/32x32',
+        'age': 27,
+        'name': 'Rosalind Sanchez'
+      },
+      {
+        'id': 25,
+        'picture': 'http://placehold.it/32x32',
+        'age': 28,
+        'name': 'Jaclyn Shelton'
+      },
+      {
+        'id': 26,
+        'picture': 'http://placehold.it/32x32',
+        'age': 25,
+        'name': 'Hughes Phelps'
+      },
+      {
+        'id': 27,
+        'picture': 'http://placehold.it/32x32',
+        'age': 36,
+        'name': 'Rosetta Barrett'
+      },
+      {
+        'id': 28,
+        'picture': 'http://placehold.it/32x32',
+        'age': 29,
+        'name': 'Jarvis Wong'
+      },
+      {
+        'id': 29,
+        'picture': 'http://placehold.it/32x32',
+        'age': 23,
+        'name': 'Kerri Pennington'
+      }
+    ];
   }
 ]);'use strict';
+angular.module('galleries').controller('UserlistController', [
+  '$scope',
+  'testuserlist',
+  'ContactService',
+  function ($scope, testuserlist, ContactService) {
+    $scope.users = testuserlist.users;
+    $scope.contacts = ContactService.list();
+    $scope.saveContact = function () {
+      ContactService.save($scope.newcontact);
+      $scope.newcontact = {};
+    };
+    $scope.delete = function (id) {
+      ContactService.delete(id);
+      if ($scope.newcontact.id == id)
+        $scope.newcontact = {};
+    };
+    $scope.edit = function (id) {
+      $scope.newcontact = angular.copy(ContactService.get(id));
+    };
+  }
+]);/*
+'use strict';
+
+// This is the test of MongoDB with Mongoose
+
+//
+// Preamble
+var http = require ('http');	     // For serving a basic web page.
+var mongoose = require ('mongoose'); // The reason for this demo.
+
+// Here we find an appropriate database to connect to, defaulting to
+// localhost if we don't find one.  
+var uristring =
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/HelloMongoose';
+
+// The http server will listen to an appropriate port, or default to
+// port 5000.
+var theport = process.env.PORT || 5000;
+
+// Makes connection asynchronously.  Mongoose will queue up database
+// operations and release them when the connection is complete.
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
+
+// This is the schema.  Note the types, validation and trim
+// statements.  They enforce useful constraints on the data.
+var userSchema = new mongoose.Schema({
+    name: {
+        first: String,
+        last: { type: String, trim: true }
+    },
+    age: { type: Number, min: 0}
+});
+
+// Compiles the schema into a model, opening (or creating, if
+// nonexistent) the 'PowerUsers' collection in the MongoDB database
+var PUser = mongoose.model('PowerUsers', userSchema);
+
+// Clear out old data
+PUser.remove({}, function(err) {
+    if (err) {
+        console.log ('error deleting old data.');
+    }
+});
+
+// Creating one user.
+var johndoe = new PUser ({
+    name: { first: 'John', last: '  Doe   ' },
+    age: 25
+});
+
+// Saving it to the database.  
+johndoe.save(function (err) {if (err) console.log ('Error on save!');});
+
+// Creating more users manually
+var janedoe = new PUser ({
+    name: { first: 'Jane', last: 'Doe' },
+    age: 65
+});
+janedoe.save(function (err) {if (err) console.log ('Error on save!');});
+
+// Creating more users manually
+var alicesmith = new PUser ({
+    name: { first: 'Alice', last: 'Smith' },
+    age: 45
+});
+alicesmith.save(function (err) {if (err) console.log ('Error on save!');});
+
+
+// In case the browser connects before the database is connected, the
+// user will see this message.
+var found = ['DB Connection not yet established.  Try again later.  Check the console output for error messages if this persists.'];
+
+// Create a rudimentary http server.  (Note, a real web application
+// would use a complete web framework and router like express.js). 
+// This is effectively the main interaction loop for the application. 
+// As new http requests arrive, the callback function gets invoked.
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    createWebpage(req, res);
+    findPerson(req, res);
+}).listen(theport);
+
+function createWebpage (req, res) {
+    // Let's find all the documents
+    PUser.find({}).exec(function(err, result) {
+        if (!err) {
+            res.write(html1 + JSON.stringify(result, undefined, 2) +  html2 + result.length + html3);
+            // Let's see if there are any senior citizens (older than 64) with the last name Doe using the query constructor
+            var query = PUser.find({'name.last': 'Doe'}); // (ok in this example, it's all entries)
+            query.where('age').gt(64);
+            query.exec(function(err, result) {
+                if (!err) {
+                    res.end(html4 + JSON.stringify(result, undefined, 2) + html5 + result.length + html6);
+                    //console.log(result);
+                } else {
+                    res.end('Error in second query. ' + err)
+                }
+            });
+
+            //console.log(result);
+
+        } else {
+            res.end('Error in first query. ' + err)
+        };
+    });
+}
+
+function findPerson(req, res){
+    var query = PUser.findOne({'name.last': 'Doe'});
+
+    //selecting the 'name' and 'age' fields
+    query.select('name age');
+    query.exec(function(err, person){
+        if(err) return handleError(err);
+        console.log('%s %s is a %s.', person.name.first, person.name.last, person.age)
+    });
+
+
+}
+
+// Tell the console we're getting ready.
+// The listener in http.createServer should still be active after these messages are emitted.
+console.log('http server will be listening on port %d', theport);
+console.log('CTRL+C to exit');
+//
+// House keeping.
+
+//
+// The rudimentary HTML content in three pieces.
+var html1 = '<title> hello-mongoose: MongoLab MongoDB Mongoose Node.js Demo on Heroku </title> \
+<head> \
+<style> body {color: #394a5f; font-family: sans-serif} </style> \
+</head> \
+<body> \
+<br\> \
+<br\> \
+<br\> <h2> All Documents in MonogoDB database </h2> <pre><code> ';
+var html2 = '</code></pre> <br\> <i>';
+var html3 = ' documents. </i> <br\> <br\>';
+
+var html4 = '<h2> Queried (name.last = "Doe", age >64) Documents in MonogoDB database </h2> <pre><code> ';
+var html5 = '</code></pre> <br\> <i>';
+var html6 = ' documents. </i> <br\> <br\> \
+<br\> <br\> <center><i> Demo code available at <a href="http://github.com/mongolab/hello-mongoose">github.com</a> </i></center>';
+
+*/
+'use strict';
+angular.module('galleries').service('ContactService', [function () {
+    //to create unique contact id
+    var uid = 1;
+    var contacts = [{
+          id: 0,
+          'name': 'Kevin',
+          'email': 'test@test.com',
+          'phone': '123-123-1234'
+        }];
+    //save method create a new contact if not already exists
+    //else update the existing object
+    this.save = function (contact) {
+      if (contact.id == null) {
+        contact.id = uid++;
+        contacts.push(contact);
+      } else {
+        for (var i in contacts) {
+          if (contacts[i].id == contact.id) {
+            contacts[i] = contact;
+          }
+        }
+      }
+    };
+    this.get = function (id) {
+      for (var i in contacts) {
+        if (contacts[i].id == id) {
+          return contacts[i];
+        }
+      }
+    };
+    this.delete = function (id) {
+      for (var i in contacts) {
+        if (contacts[i].id == id) {
+          contacts.splice(i, 1);
+        }
+      }
+    };
+    this.list = function () {
+      return contacts;
+    };
+  }]);'use strict';
 //Galleries service used to communicate Galleries REST endpoints
 angular.module('galleries').factory('Galleries', [
   '$resource',
   function ($resource) {
     return $resource('galleries/:galleryId', { galleryId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);/**
+ * Created by KevinSo on 7/14/2014.
+ */
+'use strict';
+angular.module('galleries').factory('testuserlist', [
+  '$resource',
+  function ($resource) {
+    var fac = {};
+    fac.users = [
+      'Kevin',
+      'CK',
+      'Jacob'
+    ];
+    return fac;
   }
 ]);'use strict';
 // Config HTTP Error Handling
