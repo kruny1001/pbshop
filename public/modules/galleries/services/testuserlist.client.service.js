@@ -10,3 +10,17 @@ angular.module('galleries').factory('testuserlist', ['$resource',
         return fac;
     }
 ]);
+
+
+//Articles service used for communicating with the articles REST endpoints
+angular.module('galleries').factory('listusers', ['$resource',
+    function($resource) {
+        return $resource('/galleries', {
+            articleId: '@_id'
+        }, {
+            update: {
+                method: 'GET'
+            }
+        });
+    }
+]);

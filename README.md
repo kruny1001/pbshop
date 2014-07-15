@@ -56,4 +56,23 @@ services
 * extracting user information
 * filtering user information
 
+7_15
 
+Build API
+
+/galleries/userlist
+list all of user informations
+
+/galleries/productlist
+list all of product list
+
+(Plan)7_16
+Finish implementing product-description directive
+Design Quiz directive 
+
+
+(Plan)7_17
+Implementation of Quiz directive
+Connect Social Network(Facebook, Twitter, and Google+)
+
+(Plan)7_18
