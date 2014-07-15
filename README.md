@@ -66,6 +66,8 @@ list all of user informations
 /galleries/productlist
 list all of product list
 
+build Authentication version of API
+
 (Plan)7_16
 Finish implementing product-description directive
 Design Quiz directive 

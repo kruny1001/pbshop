@@ -39,5 +39,15 @@
     </table>
 
 		<hr />
+        <button ng-click="find()">update</button>
+        <div ng-repeat="gal in galleries">
+            <h5>{{gal}}</h5>
+            <h5>display name:   {{gal.user.displayName}}</h5>
+            <h5>user id     :   {{gal.user._id}}</h5>
+            <h5>document id :   {{gal._id}}</h5>
+            <h5>version     :   {{gal.__v}}</h5>
+            <h5>name        :   {{gal.name}}</h5>
+        </div>
+        <hr />
 		<product-description></product-description>
 </section>

@@ -6,5 +6,4 @@ describe('hello-progractor', function(){
             expect(browser.getTitle()).toBe('MEAN.JS - Development Environment 1');
         });
     });
-
 });

@@ -1,8 +1,11 @@
 'use strict';
 
-angular.module('galleries').controller('UserlistController', ['$scope','testuserlist','ContactService',
-	function($scope, testuserlist, ContactService) {
+angular.module('galleries').controller('UserlistController', ['$scope','testuserlist','ContactService','Authentication','Listusers',
+	function($scope, testuserlist, ContactService, Authentication, Listusers) {
+        $scope.authentication = Authentication;
+
         $scope.users = testuserlist.users;
+        //$scope.galleries = Listusers.query();
 
         $scope.contacts = ContactService.list();
 
@@ -20,5 +23,10 @@ angular.module('galleries').controller('UserlistController', ['$scope','testuser
         $scope.edit = function (id) {
             $scope.newcontact = angular.copy(ContactService.get(id));
         }
+
+        // Find a list of Galleries
+        $scope.find = function() {
+            $scope.galleries = Listusers.query();
+        };
 	}
 ]);

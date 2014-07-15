@@ -12,12 +12,11 @@ angular.module('galleries').factory('testuserlist', ['$resource',
 ]);
 
 
-//Articles service used for communicating with the articles REST endpoints
-angular.module('galleries').factory('listusers', ['$resource',
+//galleries service used for communicating with the articles REST endpoints
+angular.module('galleries').factory('Listusers', ['$resource',
     function($resource) {
-        return $resource('/galleries', {
-            articleId: '@_id'
-        }, {
+        return $resource('/galleries', {},
+        {
             update: {
                 method: 'GET'
             }
