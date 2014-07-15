@@ -946,6 +946,12 @@ var html6 = ' documents. </i> <br\> <br\> \
 
 */
 'use strict';
+angular.module('galleries').directive('productDescription', [function () {
+    return {
+      templateUrl: '/modules/galleries/directives/product-description/product-description.html',
+      restrict: 'E'
+    };
+  }]);'use strict';
 angular.module('galleries').service('ContactService', [function () {
     //to create unique contact id
     var uid = 1;
