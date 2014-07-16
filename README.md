@@ -79,12 +79,16 @@ build Authentication version of API
 
 
 Finish implementing product-description directive
+
 Design Quiz directive 
 
 
 ##Plan## 
+![Alt text](https://doc-0g-4g-docs.googleusercontent.com/docs/securesc/9vr1tvqfvqo09mp26t424ufbuprvemet/gf7c236g2ibp38bnqfjrqr11gal4ubrg/1405533600000/01698277479583512150/01698277479583512150/0B8FisuvAYPTfY0NTaS1Uc2RoUlk?e=view&h=16653014193614665626&nonce=b1f4k1elka2ks&user=01698277479583512150&hash=m5ttg98dfni35qj1u8gsqh5tp1pn1c1d)
+
 * Considering a **Polymer** integration
 * Design framework **material design**
+http://blog.sethladd.com/2014/02/angular-and-polymer-data-binding.html
 
 ***
 
