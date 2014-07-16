@@ -1,3 +1,9 @@
+/*
+    History:
+        20140716 Create a directive
+
+**/
+
 'use strict';
 
 angular.module('galleries').directive('productDescription', [

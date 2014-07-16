@@ -40,6 +40,7 @@
 
 		<hr />
         <button ng-click="find()">update</button>
+        <button ng-click="galleries = null;">clear</button>
         <div ng-repeat="gal in galleries">
             <h5>{{gal}}</h5>
             <h5>display name:   {{gal.user.displayName}}</h5>

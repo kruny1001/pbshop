@@ -102,14 +102,15 @@ exports.delete = function(req, res) {
 /**
  * List of Galleries
  */
-exports.list = function(req, res) { Gallery.find().sort('-created').populate('user', 'displayName').exec(function(err, galleries) {
-		if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(galleries);
-		}
+exports.list = function(req, res) {
+    Gallery.find().sort('-created').populate('user', 'displayName').exec(function(err, galleries) {
+            if (err) {
+                return res.send(400, {
+                    message: getErrorMessage(err)
+                });
+            } else {
+                res.jsonp(galleries);
+            }
 	});
 };
 

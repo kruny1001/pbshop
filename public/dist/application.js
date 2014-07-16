@@ -775,8 +775,12 @@ angular.module('galleries').controller('UserlistController', [
   '$scope',
   'testuserlist',
   'ContactService',
-  function ($scope, testuserlist, ContactService) {
+  'Authentication',
+  'Listusers',
+  function ($scope, testuserlist, ContactService, Authentication, Listusers) {
+    $scope.authentication = Authentication;
     $scope.users = testuserlist.users;
+    //$scope.galleries = Listusers.query();
     $scope.contacts = ContactService.list();
     $scope.saveContact = function () {
       ContactService.save($scope.newcontact);
@@ -789,6 +793,10 @@ angular.module('galleries').controller('UserlistController', [
     };
     $scope.edit = function (id) {
       $scope.newcontact = angular.copy(ContactService.get(id));
+    };
+    // Find a list of Galleries
+    $scope.find = function () {
+      $scope.galleries = Listusers.query();
     };
   }
 ]);/*
@@ -945,6 +953,11 @@ var html6 = ' documents. </i> <br\> <br\> \
 <br\> <br\> <center><i> Demo code available at <a href="http://github.com/mongolab/hello-mongoose">github.com</a> </i></center>';
 
 */
+/*
+    History:
+        20140716 Create a directive
+
+**/
 'use strict';
 angular.module('galleries').directive('productDescription', [function () {
     return {
@@ -1013,6 +1026,13 @@ angular.module('galleries').factory('testuserlist', [
       'Jacob'
     ];
     return fac;
+  }
+]);
+//galleries service used for communicating with the articles REST endpoints
+angular.module('galleries').factory('Listusers', [
+  '$resource',
+  function ($resource) {
+    return $resource('/galleries', {}, { update: { method: 'GET' } });
   }
 ]);'use strict';
 // Config HTTP Error Handling

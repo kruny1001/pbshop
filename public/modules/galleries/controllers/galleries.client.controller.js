@@ -1,7 +1,8 @@
 'use strict';
 
 // Galleries controller
-angular.module('galleries').controller('GalleriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Galleries',
+angular.module('galleries').controller('GalleriesController',
+    ['$scope', '$stateParams', '$location', 'Authentication', 'Galleries',
 	function($scope, $stateParams, $location, Authentication, Galleries ) {
 		$scope.authentication = Authentication;
 

@@ -24,17 +24,15 @@ Fixed gview.client.controller.js
         user.server.model.js
         user.server.routes.js
 
+***
 
-7_13
-=====
+#7_13#
 Clone to Home PC
-------
 
-7_14
-=====
+***
+
+#7_14#
 userlist view added
------
-
 
 
 user information dashboard(not connected with db)
@@ -44,37 +42,56 @@ user information dashboard(not connected with db)
     1. userlist.client.controller.js
     2. userlist.client.view.html
 
-directive
-----
+##directive##
+
 * userlist dashboard
 * product-description directive
   This directive will shows product image and description 
   
   
-services
-----
+##services##
 * extracting user information
 * filtering user information
 
-7_15
+***
 
-Build API
+#7_15#
 
-/galleries/userlist
+##Build API##
+GET: /galleries (DONE)
+list all galleries items(json)
+
+GET: /galleries/userlist
 list all of user informations
+
+GET: /users/all
+list all of user's information
 
 /galleries/productlist
 list all of product list
 
 build Authentication version of API
 
-(Plan)7_16
+*** 
+
+#(Plan)7_16#
+
+
+
 Finish implementing product-description directive
 Design Quiz directive 
 
 
-(Plan)7_17
+##Plan## 
+* Considering a **Polymer** integration
+* Design framework **material design**
+
+***
+
+#(Plan)7_17#
 Implementation of Quiz directive
 Connect Social Network(Facebook, Twitter, and Google+)
 
-(Plan)7_18
+***
+
+#(Plan)7_18#
