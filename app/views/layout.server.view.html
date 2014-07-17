@@ -4,6 +4,12 @@
 <head>
 	<title>{{title}}</title>
 
+    <!-- Polymer Integration -->
+    <script src="/lib/platform/platform.js"></script>
+    <link rel="import" href="/lib/paper-elements/paper-elements.html">
+    <link rel="import"
+          href="/lib/paper-tabs/paper-tabs.html">
+
 	<!-- General META -->
 	<meta charset="utf-8">
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -57,12 +63,11 @@
 
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
-	{% endfor %} 
+	{% endfor %}
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
 	<script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
-
 	{% endif %}
 </body>
 
