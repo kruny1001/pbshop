@@ -95,7 +95,7 @@ http://blog.sethladd.com/2014/02/angular-and-polymer-data-binding.html
 implementing product-description directive(30%)
 Design Quiz directive (10%)
 Implementation of Quiz directive
-Toolbar Test (Polymer) URL: 
+Toolbar Test (Polymer) URL: http://kevangular.herokuapp.com/#!/test-polymer
 
 ##**Back-End**##
 Connect Social Network(Facebook, Twitter, and Google+)
