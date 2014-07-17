@@ -492,13 +492,6 @@ angular.module('core').service('Menus', [function () {
 angular.module('galleries').run([
   'Menus',
   function (Menus) {
-    // Set top bar menu items
-    //Menus.addMenuItem(menuId, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
-    Menus.addMenuItem('topbar', 'Galleries', 'galleries', 'dropdown', '/galleries(/create)?');
-    //Menus.addSubMenuItem(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
-    Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
-    Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/gview');
-    Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
   }
 ]);'use strict';
 //Setting up route
@@ -506,7 +499,10 @@ angular.module('galleries').config([
   '$stateProvider',
   function ($stateProvider) {
     // Galleries state routing
-    $stateProvider.state('userlist', {
+    $stateProvider.state('test-polymer', {
+      url: '/test-polymer',
+      templateUrl: 'modules/galleries/views/test-polymer.client.view.html'
+    }).state('userlist', {
       url: '/galleries/userlist',
       templateUrl: 'modules/galleries/views/userlist.client.view.html'
     }).state('gview', {
@@ -769,6 +765,11 @@ angular.module('galleries').controller('GviewController', [
         'name': 'Kerri Pennington'
       }
     ];
+  }
+]);'use strict';
+angular.module('galleries').controller('TestpolymerController', [
+  '$scope',
+  function ($scope) {
   }
 ]);'use strict';
 angular.module('galleries').controller('UserlistController', [

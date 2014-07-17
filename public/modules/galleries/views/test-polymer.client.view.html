@@ -1,0 +1,70 @@
+<section data-ng-controller="TestpolymerController">
+
+    <h3> Polymer toolbar test </h3>
+
+    <core-toolbar>
+        <core-icon-button icon="menu"></core-icon-button>
+        <span flex>Toolbar1</span>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="dark-theme">
+        <core-icon-button icon="menu"></core-icon-button>
+        <span flex>Toolbar: dark-theme</span>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="tall">
+        <core-icon-button icon="menu"></core-icon-button>
+        <span flex>Toolbar: tall</span>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="tall">
+        <core-icon-button icon="menu" class="bottom"></core-icon-button>
+        <span flex class="bottom">Toolbar: tall with elements pin to the bottom</span>
+        <core-icon-button icon="refresh" class="bottom"></core-icon-button>
+        <core-icon-button icon="add" class="bottom"></core-icon-button>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="medium-tall">
+        <core-icon-button icon="menu"></core-icon-button>
+        <span flex></span>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+        <span class="bottom indent">Toolbar: medium-tall with label aligns to the bottom</span>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="tall">
+        <core-icon-button icon="menu"></core-icon-button>
+        <div flex></div>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+        <div class="middle indent">label aligns to the middle</div>
+        <div class="bottom indent" style="color: #666; font-size: 18px;">some stuffs align to the bottom</div>
+    </core-toolbar>
+
+    <hr/>
+
+    <core-toolbar class="tall">
+        <core-icon-button icon="menu"></core-icon-button>
+        <div flex></div>
+        <core-icon-button icon="refresh"></core-icon-button>
+        <core-icon-button icon="add"></core-icon-button>
+        <div class="middle indent">element (e.g. progress) fits at the bottom of the toolbar</div>
+        <div class="bottom fit" style="height: 20px; background-color: #0f9d58;"></div>
+    </core-toolbar>
+</section>
