@@ -1,7 +1,68 @@
 <section data-ng-controller="TestpolymerController">
+    <style>
+        core-header-panel {
+            height: 500px;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        core-toolbar {
+            background: #03a9f4;
+            color: white;
+        }
+        #tabs {
+            width: 100%;
+            margin: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-    <h3> Polymer toolbar test </h3>
+        .container1 {
+            width: 80%;
+            margin: 50px auto;
+        }
+        @media (min-width: 481px) {
+            #tabs {
+                width: 200px;
+            }
+            .container1 {
+                width: 400px;
+            }
+        }
 
+    </style>
+    <h3> Polymer User List Example </h3>
+
+    <core-header-panel>
+        <core-toolbar>
+            <paper-tabs id="tabs" selected="all" valueattr="name" self-end>
+                <paper-tab name="all">ALL</paper-tab>
+                <paper-tab name="favorites">FAVORITES</paper-tab>
+            </paper-tabs>
+        </core-toolbar>
+
+        <div class="container1" layout vertical center>
+            <!--
+            <post-card>
+                <img ng-src="/modules/galleries/img/avatar-01.svg">
+                <h2>A Developer</h2>
+                <p>Something really profound about code.</p>
+            </post-card>
+            -->
+            <post-list show="all"></post-list>
+        </div>
+    </core-header-panel>
+    <script>
+        var list = document.querySelector('post-list');
+        var tabs = document.querySelector('paper-tabs');
+
+        tabs.addEventListener('core-select', function() {
+            list.show = tabs.selected;
+        });
+    </script>
+
+    <!--
     <core-toolbar>
         <core-icon-button icon="menu"></core-icon-button>
         <span flex>Toolbar1</span>
@@ -67,4 +128,5 @@
         <div class="middle indent">element (e.g. progress) fits at the bottom of the toolbar</div>
         <div class="bottom fit" style="height: 20px; background-color: #0f9d58;"></div>
     </core-toolbar>
+    -->
 </section>
