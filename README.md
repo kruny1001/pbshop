@@ -115,3 +115,7 @@ Implementation of Quiz directive
 #7_21# 
 ## User Friendly User List(Polymer)##
 http://kevangular.herokuapp.com/#!/test-polymer
+
+#7_23#
+## User list data binding with angular##
+## Dialog Custom element##

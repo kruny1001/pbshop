@@ -17,10 +17,11 @@ work properly with post-list and data service by polymer data binding service.
         <h2>{{post.username}}</h2>
         <p>{{post.text}}</p>
     </post-card>
-<!--
-polymer data binding
-<post-list show="all"></post-list>
--->
+
+    <!--
+    polymer data binding
+    <post-list show="all"></post-list>
+    -->
 
 </div>
 
