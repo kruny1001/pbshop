@@ -1,4 +1,4 @@
-<section data-ng-controller="TestpolymerController">
+<section data-ng-controller="TestpolymerController" >
     <style>
         core-header-panel {
             height: 100%;
@@ -43,14 +43,16 @@
             </core-toolbar>
 
             <div class="container1" layout vertical center>
-                <!--
-                <post-card>
-                    <img ng-src="/modules/galleries/img/avatar-01.svg">
-                    <h2>A Developer</h2>
-                    <p>Something really profound about code.</p>
+
+                <post-card ng-repeat="post in posts">
+                    <img ng-src="{{post.avatar}}">
+                    <h2>{{post.username}}</h2>
+                    <p>{{post.text}}</p>
                 </post-card>
-                -->
+                <!--
+                    polymer databinding
                 <post-list show="all"></post-list>
+                -->
             </div>
         </core-header-panel>
     </div>
