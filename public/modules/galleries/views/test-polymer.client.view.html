@@ -1,7 +1,7 @@
 <section data-ng-controller="TestpolymerController">
     <style>
         core-header-panel {
-            height: 500px;
+            height: 100%;
             overflow: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -30,29 +30,31 @@
                 width: 400px;
             }
         }
-
     </style>
     <h3> Polymer User List Example </h3>
 
-    <core-header-panel>
-        <core-toolbar>
-            <paper-tabs id="tabs" selected="all" valueattr="name" self-end>
-                <paper-tab name="all">ALL</paper-tab>
-                <paper-tab name="favorites">FAVORITES</paper-tab>
-            </paper-tabs>
-        </core-toolbar>
+    <div style="height:500px"">
+        <core-header-panel>
+            <core-toolbar>
+                <paper-tabs id="tabs" selected="all" valueattr="name" self-end>
+                    <paper-tab name="all">ALL</paper-tab>
+                    <paper-tab name="favorites">FAVORITES</paper-tab>
+                </paper-tabs>
+            </core-toolbar>
 
-        <div class="container1" layout vertical center>
-            <!--
-            <post-card>
-                <img ng-src="/modules/galleries/img/avatar-01.svg">
-                <h2>A Developer</h2>
-                <p>Something really profound about code.</p>
-            </post-card>
-            -->
-            <post-list show="all"></post-list>
-        </div>
-    </core-header-panel>
+            <div class="container1" layout vertical center>
+                <!--
+                <post-card>
+                    <img ng-src="/modules/galleries/img/avatar-01.svg">
+                    <h2>A Developer</h2>
+                    <p>Something really profound about code.</p>
+                </post-card>
+                -->
+                <post-list show="all"></post-list>
+            </div>
+        </core-header-panel>
+    </div>
+
     <script>
         var list = document.querySelector('post-list');
         var tabs = document.querySelector('paper-tabs');
@@ -61,6 +63,31 @@
             list.show = tabs.selected;
         });
     </script>
+
+
+    <h3>Polymer Dialog Message Example</h3>
+    <paper-dialog heading="Dialog" transition="paper-dialog-transition-center">
+        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
+        <p>Id qui scripta laboramus dissentiet, verterem partiendo vim at. Stet dissentiet ut mei. Iriure facilis eloquentiam pro eu, nec an esse inciderint. In meliore abhorreant sea. Eros nostro ocurreret at nec. Cu per regione persecuti.</p>
+        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
+
+        <paper-button label="More Info..." dismissive></paper-button>
+        <paper-button label="Decline" affirmative></paper-button>
+        <paper-button label="Accept" affirmative autofocus></paper-button>
+    </paper-dialog>
+
+    <paper-dialog heading="Dialog" transition="paper-dialog-transition-bottom">
+        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
+        <p>Id qui scripta laboramus dissentiet, verterem partiendo vim at. Stet dissentiet ut mei. Iriure facilis eloquentiam pro eu, nec an esse inciderint. In meliore abhorreant sea. Eros nostro ocurreret at nec. Cu per regione persecuti.</p>
+        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
+
+        <paper-button label="More Info..." dismissive></paper-button>
+        <paper-button label="Decline" affirmative></paper-button>
+        <paper-button label="Accept" affirmative autofocus></paper-button>
+    </paper-dialog>
+
+    <paper-button label="Transition A" ng-click="toggleDialog('paper-dialog-transition-bottom')"></paper-button>
+    <paper-button label="Transition B" ng-click="toggleDialog('paper-dialog-transition-center')"></paper-button>
 
     <!--
     <core-toolbar>
