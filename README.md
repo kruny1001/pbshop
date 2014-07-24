@@ -119,3 +119,7 @@ http://kevangular.herokuapp.com/#!/test-polymer
 #7_23#
 ## User list data binding with angular##
 ## Dialog Custom element##
+
+#7_24#
+Communication between Angular and Polymer
+https://github.com/eee-c/angular-bind-polymer

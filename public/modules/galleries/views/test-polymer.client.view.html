@@ -37,17 +37,22 @@
         <core-header-panel>
             <core-toolbar>
                 <paper-tabs id="tabs" selected="all" valueattr="name" self-end>
-                    <paper-tab name="all">ALL</paper-tab>
-                    <paper-tab name="favorites">FAVORITES</paper-tab>
+                    <paper-tab name="all" ng-click="getAllUsers()">ALL</paper-tab>
+                    <paper-tab name="favorites" ng-click="getFavorites()">FAVORITES</paper-tab>
                 </paper-tabs>
             </core-toolbar>
 
             <div class="container1" layout vertical center>
 
                 <post-card ng-repeat="post in posts">
-                    <img ng-src="{{post.avatar}}">
-                    <h2>{{post.username}}</h2>
-                    <p>{{post.text}}</p>
+                        <img ng-src="{{post.avatar}}">
+                        <h2>{{post.username}}</h2>
+                    <core-icon-button
+                            id="favicon"
+                            icon="favorite"
+                            ng-click="console.log(!!)"></core-icon-button>
+                        <p>{{post.text}}</p>
+
                 </post-card>
                 <!--
                     polymer databinding
@@ -65,8 +70,7 @@
             list.show = tabs.selected;
         });
     </script>
-
-
+    <!-- Dialog -->
     <h3>Polymer Dialog Message Example</h3>
     <paper-dialog heading="Dialog" transition="paper-dialog-transition-center">
         <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
