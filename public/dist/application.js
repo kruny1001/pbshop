@@ -972,24 +972,6 @@ var html6 = ' documents. </i> <br\> <br\> \
 <br\> <br\> <center><i> Demo code available at <a href="http://github.com/mongolab/hello-mongoose">github.com</a> </i></center>';
 
 */
-/**
- * Created by KevinSo on 7/24/2014.
- */
-/*
-'use strict';
-
-angular.module('galleries').directive('postCard', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        controller: 'TestpolymerController',
-        templateUrl: '/modules/galleries/views/post-card.html',
-        link: function(scope, controller) {
-
-        }
-    };
-});
-*/
 /*
     History:
         20140716 Create a directive
@@ -1001,7 +983,34 @@ angular.module('galleries').directive('productDescription', [function () {
       templateUrl: '/modules/galleries/directives/product-description/product-description.html',
       restrict: 'E'
     };
-  }]);'use strict';
+  }]);/**
+ * Created by KevinSo on 7/24/2014.
+ */
+'use strict';
+angular.module('galleries').directive('quiz', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    controller: 'TestpolymerController',
+    templateUrl: '/modules/galleries/directives/quiz/quiz.html',
+    link: function (scope, elem, attrs) {
+      /*
+            elem.bind('click', function() {
+                scope.color = !scope.color;
+                if(scope.color)
+                    elem.css('background-color', 'rgba(255, 153, 54, 0.52)');
+                else
+                    elem.css('background-color', '#ff3c38');
+
+                scope.$apply();
+            });
+            */
+      elem.bind('mouseover', function () {
+        elem.css('cursor', 'pointer');
+      });
+    }
+  };
+});'use strict';
 angular.module('galleries').service('ContactService', [function () {
     //to create unique contact id
     var uid = 1;
