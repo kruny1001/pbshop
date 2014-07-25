@@ -30,6 +30,16 @@
                 width: 400px;
             }
         }
+        .quiz {
+            display: block;
+            position: relative;
+            /*background-color: #ff3c38;*/
+            *background-color:#ffffff;*
+            padding: 20px;
+            width: 400px;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
     </style>
     <h3> Polymer User List Example </h3>
 
@@ -43,14 +53,23 @@
             </core-toolbar>
 
             <div class="container1" layout vertical center>
-
-                <post-card ng-repeat="post in posts">
+                <quiz class="quiz" ng-init="color=false" ng-repeat="post in posts"></quiz>
+                <!--
+                <post-card2 ng-repeat="post in posts">
+                    <img ng-src="{{post.avatar}}">
+                    <h2>{{post.username}}</h2>
+                    <p>{{post.text}}</p>
+                </post-card2>
+                -->
+                <!--
+                <user-card ng-repeat="post in posts">
                         <img ng-src="{{post.avatar}}">
                         <h2>{{post.username}}</h2>
 
                         <p>{{post.text}}</p>
 
-                </post-card>
+                </user-card>
+                -->
                 <!--
                     polymer databinding
                 <post-list show="all"></post-list>

@@ -123,3 +123,6 @@ http://kevangular.herokuapp.com/#!/test-polymer
 #7_24#
 Communication between Angular and Polymer
 https://github.com/eee-c/angular-bind-polymer
+
+#7_25#
+Build Directive by using Polymer elements
