@@ -47,10 +47,7 @@
                 <post-card ng-repeat="post in posts">
                         <img ng-src="{{post.avatar}}">
                         <h2>{{post.username}}</h2>
-                    <core-icon-button
-                            id="favicon"
-                            icon="favorite"
-                            ng-click="console.log(!!)"></core-icon-button>
+
                         <p>{{post.text}}</p>
 
                 </post-card>

@@ -1,6 +1,7 @@
 /**
  * Created by KevinSo on 7/24/2014.
  */
+/*
 'use strict';
 
 angular.module('galleries').directive('postCard', function() {
@@ -14,3 +15,4 @@ angular.module('galleries').directive('postCard', function() {
         }
     };
 });
+*/
