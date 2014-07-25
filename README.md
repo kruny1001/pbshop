@@ -126,3 +126,29 @@ https://github.com/eee-c/angular-bind-polymer
 
 #7_25#
 Build Directive by using Polymer elements
+
+Create a editor
+option 1
+1 column description
+
+option 2
+2 column description
+
+option 3
+3 column description
+
+option 1.1
+Image + Description
+
+option 2.1
+Image(Left) + Description
+
+option 2.2
+Image(right) + Description
+
+option 3.1 
+Image + Description + Image
+
+option 3.2 
+Description + Image + Description
+ 

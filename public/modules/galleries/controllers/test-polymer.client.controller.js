@@ -24,5 +24,9 @@ angular.module('galleries').controller('TestpolymerController', ['$scope', 'poly
         $scope.clickFavorit = function(){
           console.log('!!');
         };
+
+        $scope.testClick = function() {
+            console.log('Clicked Button');
+        }
 	}
 ]);
