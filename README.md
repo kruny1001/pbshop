@@ -152,3 +152,10 @@ Image + Description + Image
 option 3.2 
 Description + Image + Description
  
+#7_29#
+YouTube Directive implementation
+files: 
+\public\modules\galleries\directives\youtube\youtube.html
+\public\modules\galleries\directives\youtube.client.directive.js
+
+applied to (http://kevangular.herokuapp.com/#!/galleries/gview)

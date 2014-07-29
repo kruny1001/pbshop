@@ -14,12 +14,12 @@ angular.module('galleries').service('ContactService', [
         //save method create a new contact if not already exists
         //else update the existing object
         this.save = function(contact){
-            if(contact.id ==null) {
+            if(contact.id === null) {
                 contact.id = uid++;
                 contacts.push(contact);
             } else {
                 for(var i in contacts) {
-                    if(contacts[i].id == contact.id) {
+                    if(contacts[i].id === contact.id) {
                         contacts[i] = contact;
                     }
                 }
@@ -28,7 +28,7 @@ angular.module('galleries').service('ContactService', [
 
         this.get = function(id) {
             for (var i in contacts) {
-                if(contacts[i].id == id){
+                if(contacts[i].id === id){
                     return contacts[i];
                 }
             }
@@ -36,7 +36,7 @@ angular.module('galleries').service('ContactService', [
 
         this.delete = function(id) {
             for(var i in contacts) {
-                if(contacts[i].id == id){
+                if(contacts[i].id === id){
                     contacts.splice(i,1);
                 }
             }

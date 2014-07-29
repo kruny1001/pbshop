@@ -27,6 +27,6 @@ angular.module('galleries').controller('TestpolymerController', ['$scope', 'poly
 
         $scope.testClick = function() {
             console.log('Clicked Button');
-        }
+        };
 	}
 ]);

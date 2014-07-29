@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('galleries').controller('GviewController', ['$scope','$http',
-	function($scope, $http) {
+angular.module('galleries').controller('GviewController', ['$scope','$http','YT_event',
+	function($scope, $http, YT_event) {
         $scope.items = [
             {
                 'id': 0,
@@ -184,5 +184,24 @@ angular.module('galleries').controller('GviewController', ['$scope','$http',
                 'name': 'Kerri Pennington'
             }
         ];
-	}
+
+        $scope.yt = {
+            width: 600,
+            height: 480,
+            videoid: "M7lc1UVf-VE",
+            playerStatus: "NOT PLAYING"
+        };
+
+        $scope.YT_event = YT_event;
+
+        $scope.sendControlEvent = function (ctrlEvent) {
+            this.$broadcast(ctrlEvent);
+        }
+
+        $scope.$on(YT_event.STATUS_CHANGE, function(event, data) {
+            $scope.yt.playerStatus = data;
+        });
+    }
+
+
 ]);
