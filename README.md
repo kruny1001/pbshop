@@ -159,3 +159,6 @@ files:
 \public\modules\galleries\directives\youtube.client.directive.js
 
 applied to (http://kevangular.herokuapp.com/#!/galleries/gview)
+
+##plan##
+directive styling
