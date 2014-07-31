@@ -185,7 +185,7 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
             }
         ];
 
-        $scope.description = "This is the descritpion";
+        $scope.description = 'This is the descritpion';
 
         $scope.yt = {
             width: 600,
@@ -209,7 +209,7 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
          */
         $scope.onDrag = function(value) {
             $scope.currentRotation = value;
-        }
+        };
 
         /**
          * DRAG END event handler
@@ -217,8 +217,8 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
         $scope.onDragEnd = function(value) {
 
             $scope.currentRotation = value;
-            console.log ("DRAG_END", value)
-        }
+            console.log ('DRAG_END', value)
+        };
 
     }
 

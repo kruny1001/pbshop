@@ -3,18 +3,18 @@
  */
 'use strict';
 
-angular.module('galleries').directive("mdraggable", function () {
+angular.module('galleries').directive('mdraggable', function () {
 
     return {
-        restrict: "A",
+        restrict: 'A',
         scope: {
-            onDragEnd: "&",
-            onDrag: "&"
+            onDragEnd: '&',
+            onDrag: '&'
         },
 
         link: function (scope, element) {
             Draggable.create(element, {
-                type: "rotation",
+                type: 'rotation',
                 // throwProps (ONLY TWEENMAX PREMIUM):
                 // enables kinetic-based flicking (continuation of movement, decelerating after releasing the mouse/finger)
                 throwProps: false,
