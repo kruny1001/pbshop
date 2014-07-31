@@ -34,5 +34,13 @@
         </ul>
     </div>
 
+    <h1>Rotation: {{ currentRotation | number:0}} - Loops: {{ currentRotation/360 | number:0}}</h1>
+
+    <img mdraggable
+         ng-src="/modules/galleries/img/knob.png"
+         width="410" height="410"
+         on-drag-end="onDragEnd(rotation)"
+         on-drag="onDrag(rotation)"
+         style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none;">
 
 </section>

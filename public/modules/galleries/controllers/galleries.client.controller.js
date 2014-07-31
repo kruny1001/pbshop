@@ -6,6 +6,8 @@ angular.module('galleries').controller('GalleriesController',
 	function($scope, $stateParams, $location, Authentication, Galleries ) {
 		$scope.authentication = Authentication;
 
+
+
 		// Create new Gallery
 		$scope.create = function() {
 			// Create new Gallery object

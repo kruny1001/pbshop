@@ -27,7 +27,10 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
                 'public/lib/underscore/underscore.js',
                 'public/lib/angular-bind-polymer/angular_bind_polymer.js',
-                'public/lib/angular-wizard/dist/angular-wizard.min.js'
+                'public/lib/angular-wizard/dist/angular-wizard.min.js',
+                'public/lib/gsap/src/minified/utils/Draggable.min.js',
+                'public/lib/gsap/src/minified/TweenMax.min.js',
+                'public/lib/jquery/dist/jquery.min.js'
 
 			]
 		},

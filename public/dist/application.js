@@ -780,6 +780,19 @@ angular.module('galleries').controller('GviewController', [
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
       $scope.yt.playerStatus = data;
     });
+    /**
+         * DRAG event handler
+         */
+    $scope.onDrag = function (value) {
+      $scope.currentRotation = value;
+    };
+    /**
+         * DRAG END event handler
+         */
+    $scope.onDragEnd = function (value) {
+      $scope.currentRotation = value;
+      console.log('DRAG_END', value);
+    };
   }
 ]);'use strict';
 angular.module('galleries').controller('TestpolymerController', [
@@ -836,7 +849,37 @@ angular.module('galleries').controller('UserlistController', [
       $scope.galleries = Listusers.query();
     };
   }
-]);/*
+]);/**
+ * Created by KevinSo on 7/31/2014.
+ */
+'use strict';
+angular.module('galleries').directive('mdraggable', function () {
+  return {
+    restrict: 'A',
+    scope: {
+      onDragEnd: '&',
+      onDrag: '&'
+    },
+    link: function (scope, element) {
+      Draggable.create(element, {
+        type: 'rotation',
+        throwProps: false,
+        onDrag: function () {
+          scope.rotation = this.rotation;
+          scope.$apply(function () {
+            scope.onDrag({ rotation: scope.rotation });
+          });
+        },
+        onDragEnd: function () {
+          scope.rotation = this.rotation;
+          scope.$apply(function () {
+            scope.onDragEnd({ rotation: scope.rotation });
+          });
+        }
+      });
+    }
+  };
+});/*
 'use strict';
 
 // This is the test of MongoDB with Mongoose

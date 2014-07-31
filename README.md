@@ -164,3 +164,6 @@ applied to (http://kevangular.herokuapp.com/#!/galleries/gview)
 directive styling
 
 #7_30#
+
+#7_31#
+GSAP Draggable rotation (Image http://kevangular.herokuapp.com/#!/galleries/gview) 

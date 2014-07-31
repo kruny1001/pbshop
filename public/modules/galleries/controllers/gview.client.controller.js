@@ -203,6 +203,23 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
         $scope.$on(YT_event.STATUS_CHANGE, function(event, data) {
             $scope.yt.playerStatus = data;
         });
+
+        /**
+         * DRAG event handler
+         */
+        $scope.onDrag = function(value) {
+            $scope.currentRotation = value;
+        }
+
+        /**
+         * DRAG END event handler
+         */
+        $scope.onDragEnd = function(value) {
+
+            $scope.currentRotation = value;
+            console.log ("DRAG_END", value)
+        }
+
     }
 
 
