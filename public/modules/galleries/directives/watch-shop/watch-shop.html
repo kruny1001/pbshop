@@ -1,43 +1,35 @@
 <div class="watch">
-    <link href="/lib/core-icons/core-icons.html" rel="import">
-    <link href="/lib/paper-button/paper-button.html" rel="import">
+    <!--  list of meterial design components-->
+    <link rel="import" href="/lib/core-icons/core-icons.html">
+    <link rel="import" href="/lib/paper-button/paper-button.html">
     <link rel="import" href="/lib/paper-shadow/paper-shadow.html">
 
     <paper-shadow z="3">
-	      <div style="padding-top: 30px; padding-bottom: 30px; padding-left: 30px " >
-	        <h2>Option1 view</h2>
 
-	        <!-- image -->
-	        <div style="height: 300px; width: 300px">
-	            <img ng-src='/modules/galleries/img/sample1.png'/>
 
-	        </div>
+        <!-- image -->
+        <div style="height: 300px; width: 300px">
+            <img ng-src='/modules/galleries/img/sample1.png'/>
+        </div>
+        <div class="watch-description">{{description}}</div>
+        <a href="http://www.w3schools.com">Visit W3Schools.com!</a>
 
-		      <div style ="display: inline-block;">
-			      <img ng-repeat="img in items" ng-src='{{img.picture}}' />
-		      </div>
-					<hr/>
-	        <!-- Description -->
-	        <div>
-	            <h4>MD</h4>
-	            <p>bla bla bla</p>
-	            <h4>ME</h4>
-	            <p>bla bla bla</p>
-	            <h4>PR</h4>
-	            <p>bla bla bla</p>
-	            <h4>ST</h4>
-	            <p>bla bla bla</p>
-	            <h4>DES</h4>
-	            <p>bla bla bla</p>
-	        </div>
-	        <!-- buttons -->
-	        <div>
-	            <paper-button label="t1" raisedButton ng-click="testClick()"></paper-button>
-	            <paper-button label="t2" raisedButton ng-click="testClick()"></paper-button>
-	        </div>
-		    </div>
+        <div>
+            <h4>MD</h4>
+            <p>bla bla bla</p>
+            <h4>ME</h4>
+            <p>bla bla bla</p>
+            <h4>PR</h4>
+            <p>bla bla bla</p>
+            <h4>ST</h4>
+            <p>bla bla bla</p>
+            <h4>DES</h4>
+            <p>bla bla bla</p>
+        </div>
+
+        <div>
+            <paper-button label="t1" raisedButton ng-click="testClick()"></paper-button>
+            <paper-button label="t2" raisedButton ng-click="testClick()"></paper-button>
+        </div>
     </paper-shadow>
-
-
-
 </div>

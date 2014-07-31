@@ -185,11 +185,13 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
             }
         ];
 
+        $scope.description = "This is the descritpion";
+
         $scope.yt = {
             width: 600,
             height: 480,
-            videoid: "M7lc1UVf-VE",
-            playerStatus: "NOT PLAYING"
+            videoid: 'M7lc1UVf-VE',
+            playerStatus: 'NOT PLAYING'
         };
 
         $scope.YT_event = YT_event;

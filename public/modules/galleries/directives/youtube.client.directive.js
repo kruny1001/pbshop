@@ -37,19 +37,19 @@ angular.module('galleries').constant('YT_event', {
 
 angular.module('galleries').directive('youtube', ['$window','YT_event', function($window, YT_event) {
     return {
-        restrict: "E",
+        restrict: 'E',
 
         scope: {
-            height: "@",
-            width: "@",
-            videoid: "@"
+            height: '@',
+            width: '@',
+            videoid: '@'
         },
 
         template: '<div></div>',
 
         link: function(scope, element, attrs, $rootScope) {
             var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
+            tag.src = 'https://www.youtube.com/iframe_api';
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -61,9 +61,9 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
                     playerVars: {
                         autoplay: 0,
                         html5: 1,
-                        theme: "light",
+                        theme: 'light',
                         modesbranding: 0,
-                        color: "white",
+                        color: 'white',
                         iv_load_policy: 3,
                         showinfo: 1,
                         controls: 1
@@ -78,21 +78,21 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
 
                             var message = {
                                 event: YT_event.STATUS_CHANGE,
-                                data: ""
+                                data: ''
                             };
 
                             switch(event.data) {
                                 case YT.PlayerState.PLAYING:
-                                    message.data = "PLAYING";
+                                    message.data = 'PLAYING';
                                     break;
                                 case YT.PlayerState.ENDED:
-                                    message.data = "ENDED";
+                                    message.data = 'ENDED';
                                     break;
                                 case YT.PlayerState.UNSTARTED:
-                                    message.data = "NOT PLAYING";
+                                    message.data = 'NOT PLAYING';
                                     break;
                                 case YT.PlayerState.PAUSED:
-                                    message.data = "PAUSED";
+                                    message.data = 'PAUSED';
                                     break;
                             }
 
@@ -105,14 +105,14 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
             };
 
             scope.$watch('height + width', function(newValue, oldValue) {
-                if (newValue == oldValue) {
+                if (newValue === oldValue) {
                     return;
                 }
                 player.setSize(scope.width, scope.height);
             });
 
             scope.$watch('videoid', function(newValue, oldValue) {
-                if (newValue == oldValue) {
+                if (newValue === oldValue) {
                     return;
                 }
                 player.cueVideoById(scope.videoid);

@@ -8,7 +8,8 @@ var ApplicationConfiguration = function () {
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
-        'ui.utils'
+        'ui.utils',
+        'mgo-angular-wizard'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -766,6 +767,7 @@ angular.module('galleries').controller('GviewController', [
         'name': 'Kerri Pennington'
       }
     ];
+    $scope.description = 'This is the descritpion';
     $scope.yt = {
       width: 600,
       height: 480,
@@ -1037,8 +1039,22 @@ angular.module('galleries').directive('watchShop', function () {
     replace: true,
     controller: 'TestpolymerController',
     templateUrl: '/modules/galleries/directives/watch-shop/watch-shop.html',
-    link: function (scope, elem, attrs) {
-      /*
+    link: {
+      pre: function preLink(a, b, c, d) {
+        console.log('pre link function');
+        console.log(a);
+        console.log(b);
+        console.log(c);
+        console.log(d);
+        console.log(a.items);
+      },
+      post: function postLink(a, b, c, d) {
+        console.log('post link function');
+        console.log(a);
+        console.log(b);
+        console.log(c);
+        console.log(d);
+      }  /*
              elem.bind('click', function() {
              scope.color = !scope.color;
              if(scope.color)
@@ -1048,10 +1064,11 @@ angular.module('galleries').directive('watchShop', function () {
 
              scope.$apply();
              });
+
+            elem.bind('mouseover', function() {
+                elem.css('cursor', 'pointer');
+            });
              */
-      elem.bind('mouseover', function () {
-        elem.css('cursor', 'pointer');
-      });
     }
   };
 });/**
@@ -1149,13 +1166,13 @@ angular.module('galleries').directive('youtube', [
           });
         };
         scope.$watch('height + width', function (newValue, oldValue) {
-          if (newValue == oldValue) {
+          if (newValue === oldValue) {
             return;
           }
           player.setSize(scope.width, scope.height);
         });
         scope.$watch('videoid', function (newValue, oldValue) {
-          if (newValue == oldValue) {
+          if (newValue === oldValue) {
             return;
           }
           player.cueVideoById(scope.videoid);
