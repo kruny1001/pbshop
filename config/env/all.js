@@ -14,7 +14,8 @@ module.exports = {
 		lib: {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+                'public/lib/angular-wizard/dist/angular-wizard.min.css'
 			],
 			js: [
 
@@ -25,7 +26,8 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
                 'public/lib/underscore/underscore.js',
-                'public/lib/angular-bind-polymer/angular_bind_polymer.js'
+                'public/lib/angular-bind-polymer/angular_bind_polymer.js',
+                'public/lib/angular-wizard/dist/angular-wizard.min.js'
 
 			]
 		},

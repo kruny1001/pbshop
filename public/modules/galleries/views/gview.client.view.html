@@ -1,54 +1,9 @@
 <!-- This view is the temporal view for testing masonry-->
 <section data-ng-controller="GviewController">
-    <style>
-        .grid {
-            border: solid 1px #ccc padding: 10px 10px 0 0;
-        }
-        .grid li {
-            display: inline-block;
-            width: 100px;
-            height: 100px;
-            border: solid 1px #ccc;
-            margin: 0 0 10px 10px;
-            background: #eee;
-        }
 
-        /**** Transitions ****/
+		<h2>YouTube Directive</h2>
+    <youtube width="200" height="300" videoid="abc"></youtube>
 
-        .masonry,
-        .masonry li { /* apply before masonry add class */
-            position: absolute; /* important to add it before enter animation start */
-
-            -webkit-transition-duration: .7s;
-            transition-duration: .7s;
-
-            -webkit-transition-property: all;
-            transition-property: all;
-        }
-
-        .masonry .masonry-enter { /* limit animated properties for entering elements */
-            -webkit-transition-property: -webkit-transform, opacity;
-            transition-property: transform, opacity;
-        }
-
-        .masonry-enter,
-        .masonry-leave.masonry-leave-active {
-            opacity: 0;
-            -webkit-transform: scale(0.1);
-            transform: scale(0.1);
-        }
-
-        .masonry-leave,
-        .masonry-enter.masonry-enter-active {
-            opacity: 1;
-            -webkit-transform: scale(1);
-            transform: scale(1);
-        }
-    </style>
-
-    <h2>T1</h2>
-
-    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
     <br />
     Width:<input type="text" ng-model="yt.width">
     Height:<input type="text" ng-model="yt.height">
@@ -62,6 +17,12 @@
 
     <p>Player status is: {{yt.playerStatus}}</p>
 
+
+
+
+		<br>
+		<br>
+		<hr />
     <watch-shop></watch-shop>
 
     <div style="margin-top:2cm">

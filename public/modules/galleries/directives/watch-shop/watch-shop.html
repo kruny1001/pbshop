@@ -4,31 +4,40 @@
     <link rel="import" href="/lib/paper-shadow/paper-shadow.html">
 
     <paper-shadow z="3">
-        <p>This</p>
+	      <div style="padding-top: 30px; padding-bottom: 30px; padding-left: 30px " >
+	        <h2>Option1 view</h2>
 
-        <!-- image -->
-        <div style="height: 300px; width: 300px">
-            <img ng-src='/modules/galleries/img/sample1.png'/>
-        </div>
+	        <!-- image -->
+	        <div style="height: 300px; width: 300px">
+	            <img ng-src='/modules/galleries/img/sample1.png'/>
 
-        <!-- Description -->
-        <div>
-            <h4>MD</h4>
-            <p>bla bla bla</p>
-            <h4>ME</h4>
-            <p>bla bla bla</p>
-            <h4>PR</h4>
-            <p>bla bla bla</p>
-            <h4>ST</h4>
-            <p>bla bla bla</p>
-            <h4>DES</h4>
-            <p>bla bla bla</p>
-        </div>
-        <!-- buttons -->
-        <div>
-            <paper-button label="t1" raisedButton ng-click="testClick()"></paper-button>
-            <paper-button label="t2" raisedButton ng-click="testClick()"></paper-button>
-        </div>
+	        </div>
+
+		      <div style ="display: inline-block;">
+			      <img ng-repeat="img in items" ng-src='{{img.picture}}' />
+		      </div>
+					<hr/>
+	        <!-- Description -->
+	        <div>
+	            <h4>MD</h4>
+	            <p>bla bla bla</p>
+	            <h4>ME</h4>
+	            <p>bla bla bla</p>
+	            <h4>PR</h4>
+	            <p>bla bla bla</p>
+	            <h4>ST</h4>
+	            <p>bla bla bla</p>
+	            <h4>DES</h4>
+	            <p>bla bla bla</p>
+	        </div>
+	        <!-- buttons -->
+	        <div>
+	            <paper-button label="t1" raisedButton ng-click="testClick()"></paper-button>
+	            <paper-button label="t2" raisedButton ng-click="testClick()"></paper-button>
+	        </div>
+		    </div>
     </paper-shadow>
+
+
 
 </div>

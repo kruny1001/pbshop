@@ -10,7 +10,23 @@ angular.module('galleries').directive('watchShop', function() {
         replace: true,
         controller: 'TestpolymerController',
         templateUrl: '/modules/galleries/directives/watch-shop/watch-shop.html',
-        link: function(scope, elem, attrs) {
+
+        link: {
+            pre: function preLink(a,b,c,d) {
+                console.log('pre link function');
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(d);
+                console.log(a.items);
+            },
+            post: function postLink(a,b,c,d) {
+                console.log('post link function');
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(d);
+            }
             /*
              elem.bind('click', function() {
              scope.color = !scope.color;
@@ -21,10 +37,11 @@ angular.module('galleries').directive('watchShop', function() {
 
              scope.$apply();
              });
-             */
+
             elem.bind('mouseover', function() {
                 elem.css('cursor', 'pointer');
             });
+             */
         }
     };
 });

@@ -56,6 +56,32 @@
             <h5>name        :   {{gal.name}}</h5>
         </div>
         <hr />
+
+	<div width="600" height="600">
+	<wizard on-finish="finishedWizard()">
+		<wz-step title="Starting">
+			<h1>This is the first step</h1>
+			<p>Select One of those picture</p>
+			<p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+			<p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+			<input type="submit" wz-next value="Continue" />
+		</wz-step>
+		<wz-step title="Continuing">
+			<h1>Continuing</h1>
+			<p>You have continued here!</p>
+			<input type="submit" wz-next value="Mercy" />
+		</wz-step>
+		<wz-step title="Mercy">
+			<h1>Continuing</h1>
+			<p>You have continued here!</p>
+			<input type="submit" wz-next value="Go on" />
+		</wz-step>
+		<wz-step title="More steps">
+			<p>Even more steps!!</p>
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+	</wizard>
+	</div>
 		<product-description></product-description>
 
 </section>

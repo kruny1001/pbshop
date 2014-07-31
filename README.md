@@ -162,3 +162,5 @@ applied to (http://kevangular.herokuapp.com/#!/galleries/gview)
 
 ##plan##
 directive styling
+
+#7_30#
