@@ -8,8 +8,7 @@ var ApplicationConfiguration = function () {
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
-        'ui.utils',
-        'mgo-angular-wizard'
+        'ui.utils'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
