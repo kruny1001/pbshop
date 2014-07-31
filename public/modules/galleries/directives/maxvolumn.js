@@ -15,7 +15,8 @@ angular.module('galleries').directive("mdraggable", function () {
         link: function (scope, element) {
             Draggable.create(element, {
                 type: "rotation",
-                // throwProps (ONLY TWEENMAX PREMIUM): enables kinetic-based flicking (continuation of movement, decelerating after releasing the mouse/finger)
+                // throwProps (ONLY TWEENMAX PREMIUM):
+                // enables kinetic-based flicking (continuation of movement, decelerating after releasing the mouse/finger)
                 throwProps: false,
                 onDrag  : function (){
                     scope.rotation = this.rotation;
