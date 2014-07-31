@@ -14,7 +14,13 @@ module.exports = {
 				'public/lib/angular-animate/angular-animate.min.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                'public/lib/underscore/underscore.js',
+                'public/lib/angular-bind-polymer/angular_bind_polymer.js',
+                'public/lib/angular-wizard/dist/angular-wizard.min.js',
+                'public/lib/gsap/src/minified/utils/Draggable.min.js',
+                'public/lib/gsap/src/minified/TweenMax.min.js',
+                'public/lib/jquery/dist/jquery.min.js'
 			]
 		},
 		css: 'public/dist/application.min.css',
