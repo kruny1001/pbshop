@@ -30,7 +30,7 @@ module.exports = {
                 'public/lib/angular-wizard/dist/angular-wizard.min.js',
                 'public/lib/gsap/src/minified/utils/Draggable.min.js',
                 'public/lib/gsap/src/minified/TweenMax.min.js',
-                'public/lib/gsap/src/minified/plugins/ThrowPropsPlugin.min.js',
+                'public/modules/galleries/temp/ThrowPropsPlugin.min.js',
                 'public/lib/jquery/dist/jquery.min.js'
 
 			]

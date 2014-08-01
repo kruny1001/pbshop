@@ -220,9 +220,7 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
         };
 
         $scope.testDraggable = function(){
-
         }
-
     }
 
 
