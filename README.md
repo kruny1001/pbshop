@@ -166,4 +166,7 @@ directive styling
 #7_30#
 
 #7_31#
-GSAP Draggable rotation (Image http://kevangular.herokuapp.com/#!/galleries/gview) 
+GSAP Draggable rotation (Image http://kevangular.herokuapp.com/#!/galleries/gview)
+ 
+#8_1#
+Apply velocity and snap degree on the Draggable Directive 

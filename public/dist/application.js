@@ -793,6 +793,8 @@ angular.module('galleries').controller('GviewController', [
       $scope.currentRotation = value;
       console.log('DRAG_END', value);
     };
+    $scope.testDraggable = function () {
+    };
   }
 ]);'use strict';
 angular.module('galleries').controller('TestpolymerController', [
@@ -863,7 +865,7 @@ angular.module('galleries').directive('mdraggable', function () {
     link: function (scope, element) {
       Draggable.create(element, {
         type: 'rotation',
-        throwProps: false,
+        throwProps: true,
         onDrag: function () {
           scope.rotation = this.rotation;
           scope.$apply(function () {
@@ -875,6 +877,16 @@ angular.module('galleries').directive('mdraggable', function () {
           scope.$apply(function () {
             scope.onDragEnd({ rotation: scope.rotation });
           });
+        },
+        snap: function (endValue) {
+          //this function gets called when the mouse/finger is released
+          // and it plots where rotation should normally end and we can
+          // alter that value and return a new one instead.
+          // This gives us an easy way to apply custom snapping
+          // behavior with any logic we want. In this case,
+          // we'll just make sure the end value snaps to 90-degree
+          // increments but only when the "snap" checkbox is selected.
+          return Math.round(endValue / 45) * 45;
         }
       });
     }

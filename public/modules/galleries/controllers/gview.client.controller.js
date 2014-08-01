@@ -215,10 +215,13 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
          * DRAG END event handler
          */
         $scope.onDragEnd = function(value) {
-
             $scope.currentRotation = value;
             console.log ('DRAG_END', value)
         };
+
+        $scope.testDraggable = function(){
+
+        }
 
     }
 

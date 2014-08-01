@@ -28,3 +28,5 @@ work properly with post-list and data service by polymer data binding service.
 
 #7_24#
 
+#7_31#
+Deploy Product.js configuration file determine whether download or not.
