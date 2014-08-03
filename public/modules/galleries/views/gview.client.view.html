@@ -1,6 +1,7 @@
 <!-- This view is the temporal view for testing masonry-->
 <section data-ng-controller="GviewController">
 
+	<!--
 	<h2>YouTube Directive</h2>
     <br />
     <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
@@ -15,8 +16,8 @@
     <button ng-click="sendControlEvent(YT_event.STOP)">Send Stop</button>
 
     <p>Player status is: {{yt.playerStatus}}</p>
-
-    <h2>WS</h2>
+	-->
+    <h2>Sample Detail Page</h2>
     <watch-shop></watch-shop>
 
     <div style="margin-top:2cm">
@@ -41,6 +42,68 @@
          width="410" height="410"
          on-drag-end="onDragEnd(rotation)"
          on-drag="onDrag(rotation)"
-         style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none;">
+         style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
+	<img mdraggable
+	     ng-src="/modules/galleries/img/knob.png"
+	     width="410" height="410"
+	     on-drag-end="onDragEnd(rotation)"
+	     on-drag="onDrag(rotation)"
+	     style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
+	<img mdraggable
+	     ng-src="/modules/galleries/img/knob.png"
+	     width="410" height="410"
+	     on-drag-end="onDragEnd(rotation)"
+	     on-drag="onDrag(rotation)"
+	     style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
+	<img mdraggable
+	     ng-src="/modules/galleries/img/knob.png"
+	     width="410" height="410"
+	     on-drag-end="onDragEnd(rotation)"
+	     on-drag="onDrag(rotation)"
+	     style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
+	<img mdraggable
+	     ng-src="/modules/galleries/img/knob.png"
+	     width="410" height="410"
+	     on-drag-end="onDragEnd(rotation)"
+	     on-drag="onDrag(rotation)"
+	     style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
+	<img mdraggable
+	     ng-src="/modules/galleries/img/knob.png"
+	     width="410" height="410"
+	     on-drag-end="onDragEnd(rotation)"
+	     on-drag="onDrag(rotation)"
+	     style="-webkit-user-select: none; transform: translate3d(0px,0px,0px); touch-action:none; width:100px; height:100px">
 
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li><a href="#">Category</a></li>
+					<li><a href="#">Category</a></li>
+					<li><a href="#">Category</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<div>
+					<h1>{{hello}}</h1>
+					<input type="text" ng-model="hello"><br/>
+
+					<button type="button" class="close">&times;</button>
+					<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
+					<a href="#" target="_blank">Bookmark</a>
+				</div>
+				<div>
+					<button type="button" class="close">&times;</button>
+					<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
+					<a href="#" target="_blank">Bookmark</a>
+				</div>
+				<div>
+					<button type="button" class="close">&times;</button>
+					<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
+					<a href="#" target="_blank">Bookmark</a>
+				</div>
+				<hr/>
+			</div>
+		</div>
+	</div>
 </section>

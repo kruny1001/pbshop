@@ -14,18 +14,9 @@ angular.module('galleries').directive('watchShop', function() {
         link: {
             pre: function preLink(a,b,c,d) {
                 console.log('pre link function');
-                console.log(a);
-                console.log(b);
-                console.log(c);
-                console.log(d);
-                console.log(a.items);
             },
             post: function postLink(a,b,c,d) {
                 console.log('post link function');
-                console.log(a);
-                console.log(b);
-                console.log(c);
-                console.log(d);
             }
             /*
              elem.bind('click', function() {

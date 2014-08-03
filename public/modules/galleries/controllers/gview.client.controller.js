@@ -185,7 +185,19 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
             }
         ];
 
+        //Test input sets
         $scope.description = 'This is the descritpion';
+        $scope.name = 'George & The Dragon';
+        $scope.location = '813 W 50th St Minneapolis, MN 55419';
+        $scope.hours = ["Mon	11:00 am - 10:00 pm" ,
+                        "Tue	11:00 am - 10:00 pm" ,
+                        "Wed	11:00 am - 10:00 pm" ,
+                        "Thu	11:00 am - 10:00 pm" ,
+                        "Fri	11:00 am - 11:00 pm" ,
+                        "Sat	11:00 am - 11:00 pm	Open now",
+                        'Sun	9:00 am - 2:00 pm']
+        $scope.menus = 'http://www.ganddpub.com/menus/main.pdf';
+        $scope.introduction = '';
 
         $scope.yt = {
             width: 600,
