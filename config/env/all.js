@@ -18,7 +18,6 @@ module.exports = {
                 'public/css/style.css'
 			],
 			js: [
-
                 'public/lib/angular/angular.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-animate/angular-animate.js',
@@ -32,7 +31,6 @@ module.exports = {
                 'public/lib/gsap/src/minified/TweenMax.min.js',
                 'public/modules/galleries/temp/ThrowPropsPlugin.min.js',
                 'public/lib/jquery/dist/jquery.min.js'
-
 			]
 		},
 		css: [

@@ -233,7 +233,11 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
 
         $scope.testDraggable = function(){
         }
+
+        $scope.expandAnimation = function(element) {
+            console.log('!!');
+            TweenMax.to(element.currentTarget, 1, {width:"50%"});
+            TweenMax.to(element.currentTarget, 1, {height:"50%"});
+        };
     }
-
-
 ]);

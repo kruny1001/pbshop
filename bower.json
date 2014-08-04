@@ -3,7 +3,6 @@
   "version": "0.3.1",
   "description": "Fullstack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
   "dependencies": {
-
     "angular": "~1.2.3",
     "angular-resource": "~1.2",
     "angular-animate": "~1.2",
@@ -16,6 +15,7 @@
     "underscore": "~1.6.0",
     "gsap": "~1.13.1",
     "jquery": "~2.1.1",
-    "bootstrap-sass-official": "~3.2.0"
+    "bootstrap-sass-official": "~3.2.0",
+    "grunt-contrib-sass": "~0.7.3"
   }
 }
