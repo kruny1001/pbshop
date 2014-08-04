@@ -1,10 +1,9 @@
 $brand-primary:         #967ADC;
 $brand-success:         #A0D468;
 
-@import "public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+@import 'public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap';
 // Import scss Files
-
-
 // Reset
 @import "reset";
 // Some Mixins
