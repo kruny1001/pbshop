@@ -5,7 +5,7 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-                'public/dist/css/style.min.css'
+                'public/css/style.css'
 			],
 			js: [
 				'public/lib/angular/angular.min.js',
@@ -23,7 +23,7 @@ module.exports = {
                 'public/lib/jquery/dist/jquery.min.js'
 			]
 		},
-		css: 'public/dist/application.min.css',
+		css: 'public/dist/css/style.min.css',
 		js: 'public/dist/application.min.js'
 	},
 	facebook: {
