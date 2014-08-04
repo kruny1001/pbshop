@@ -169,4 +169,7 @@ directive styling
 GSAP Draggable rotation (Image http://kevangular.herokuapp.com/#!/galleries/gview)
  
 #8_1#
-Apply velocity and snap degree on the Draggable Directive 
+Apply velocity and snap degree on the Draggable Directive
+ 
+#8_3#
+Add SCSS and responsive animated grid gallery
