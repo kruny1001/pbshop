@@ -252,6 +252,7 @@ th {
   font-family: 'Glyphicons Halflings';
   src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
   src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+
 .glyphicon {
   position: relative;
   top: 1px;
@@ -876,7 +877,7 @@ th {
 
 html {
   font-size: 10px;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -4042,12 +4043,14 @@ a.thumbnail.active {
 
   to {
     background-position: 0 0; } }
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
 
   to {
     background-position: 0 0; } }
+
 .progress {
   overflow: hidden;
   height: 20px;
@@ -5036,7 +5039,7 @@ button.close {
     border-radius: 10px;
     cursor: pointer;
     background-color: #000 \9;
-    background-color: transparent; }
+    background-color: rgba(0, 0, 0, 0); }
   .carousel-indicators .active {
     margin: 0;
     width: 12px;
@@ -5124,6 +5127,7 @@ button.close {
 
 @-ms-viewport {
   width: device-width; }
+
 .visible-xs, .visible-sm, .visible-md, .visible-lg {
   display: none !important; }
 
@@ -5421,6 +5425,7 @@ footer {
     -moz-opacity: 1;
     -khtml-opacity: 1;
     opacity: 1; } }
+
 @-webkit-keyframes anima {
   from {
     margin-left: -20px;
@@ -5437,6 +5442,7 @@ footer {
     -moz-opacity: 1;
     -khtml-opacity: 1;
     opacity: 1; } }
+
 @media screen and (max-width: 560px) {
   .wrapper {
     padding: 20px; } }
@@ -5548,11 +5554,11 @@ a, a:hover,
   -o-touch-callout: none;
   -ms-touch-callout: none;
   touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-  -o-tap-highlight-color: transparent;
-  -ms-tap-highlight-color: transparent;
-  tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+  -o-tap-highlight-color: rgba(0, 0, 0, 0);
+  -ms-tap-highlight-color: rgba(0, 0, 0, 0);
+  tap-highlight-color: rgba(0, 0, 0, 0); }
 
 /*Bottom to Top*/
 .bottom-to-top {

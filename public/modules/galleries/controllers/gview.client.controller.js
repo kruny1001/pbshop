@@ -236,8 +236,18 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
 
         $scope.expandAnimation = function(element) {
             console.log('!!');
-            TweenMax.to(element.currentTarget, 1, {width:"50%"});
-            TweenMax.to(element.currentTarget, 1, {height:"50%"});
+            var t1 = new TimelineMax();
+            //append a to() tween
+            t1.to(element.currentTarget, 1, {width:'50px'});
+            //add another sequenced tween (by default, tweens are added to the end of the timeline which makes sequencing simple)
+            t1.to(element.currentTarget, 1, {height:'300px', ease:Elastic.easeOut});
+            //offset the next tween by 0.75 seconds so there's a gap between the end of the previous tween and this new one
+            t1.to(element.currentTarget, 1, {opacity:0.5}, '+=0.75');
+            //overlap the next tween with the previous one by 0.5 seconds (notice the negative offset at the end)
+            t1.to(element.currentTarget, 1, {backgroundColor:'#FF0000'}, '-=0.5');
+            //animate 3 elements (e1, e2, and e3) to a rotation of 60 degrees, and stagger their start times by 0.2 seconds
+            //t1.staggerTo(element.currentTarget, 1, {rotation:60}, 0.2);
+            t1.to(element.currentTarget, 1, {left:'20px', repeat:1, yoyo:true});
         };
     }
 ]);
