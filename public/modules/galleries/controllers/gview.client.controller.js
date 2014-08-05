@@ -238,16 +238,20 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
             console.log('!!');
             var t1 = new TimelineMax();
             //append a to() tween
-            t1.to(element.currentTarget, 1, {width:'50px'});
+            //t1.to(element.currentTarget, 0.5, {width:'50px'});
             //add another sequenced tween (by default, tweens are added to the end of the timeline which makes sequencing simple)
-            t1.to(element.currentTarget, 1, {height:'300px', ease:Elastic.easeOut});
+            //t1.to(element.currentTarget, 0.5, {height:'60px', ease:Elastic.easeOut});
             //offset the next tween by 0.75 seconds so there's a gap between the end of the previous tween and this new one
-            t1.to(element.currentTarget, 1, {opacity:0.5}, '+=0.75');
+            t1.to(element.currentTarget, 0.2, {opacity:0.5}, '+=0.75');
             //overlap the next tween with the previous one by 0.5 seconds (notice the negative offset at the end)
-            t1.to(element.currentTarget, 1, {backgroundColor:'#FF0000'}, '-=0.5');
+            //t1.to(element.currentTarget, 0.2, {backgroundColor:'#FF0000'}, '-=0.5');
             //animate 3 elements (e1, e2, and e3) to a rotation of 60 degrees, and stagger their start times by 0.2 seconds
             //t1.staggerTo(element.currentTarget, 1, {rotation:60}, 0.2);
-            t1.to(element.currentTarget, 1, {left:'20px', repeat:1, yoyo:true});
+            t1.to(element.currentTarget, 0.2, {left:'20px', repeat:1, yoyo:true});
+            t1.to(element.currentTarget, 0.2, {right:'20px', repeat:1, yoyo:true});
+
+            t1.restart();
+            //t1.reverse(2.5)
         };
     }
 ]);
