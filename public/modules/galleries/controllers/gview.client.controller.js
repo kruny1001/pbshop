@@ -2,6 +2,20 @@
 
 angular.module('galleries').controller('GviewController', ['$scope','$http','YT_event',
 	function($scope, $http, YT_event) {
+        $scope.photos = [
+            {id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/"},
+            {id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports"},
+            {id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"}
+        ];
+
+        $scope.template =
+            '<div deckgrid class="deckgrid" source="photos">'+
+                '<div class="a-card">' +
+                    '<h1>{{card.title}}</h1>' +
+                    '<img src="" data-ng-src="{{card.src}}">'+
+                '</div>' +
+            '</div>'
+
         $scope.items = [
             {
                 'id': 0,
