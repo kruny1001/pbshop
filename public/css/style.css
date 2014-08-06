@@ -5449,6 +5449,7 @@ footer {
 .pic {
   max-width: 300px;
   max-height: 200px;
+  min-width: 100px;
   position: relative;
   overflow: hidden;
   margin: 10px;

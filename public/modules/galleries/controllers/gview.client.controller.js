@@ -2,20 +2,21 @@
 
 angular.module('galleries').controller('GviewController', ['$scope','$http','YT_event',
 	function($scope, $http, YT_event) {
+        /*
         $scope.photos = [
-            {id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/"},
-            {id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports"},
-            {id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"}
+            {id: 'p1', 'title': 'A nice day!', src: 'http://lorempixel.com/300/400/'},
+            {id: 'p2', 'title': 'Puh!', src: 'http://lorempixel.com/300/400/sports'},
+            {id: 'p3', 'title': 'What a club!', src: 'http://lorempixel.com/300/400/nightlife'}
         ];
 
         $scope.template =
-            '<div deckgrid class="deckgrid" source="photos">'+
+            '<div deckgrid class='deckgrid' source='photos'>'+
                 '<div class="a-card">' +
                     '<h1>{{card.title}}</h1>' +
                     '<img src="" data-ng-src="{{card.src}}">'+
                 '</div>' +
             '</div>'
-
+        */
         $scope.items = [
             {
                 'id': 0,
@@ -203,13 +204,13 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
         $scope.description = 'This is the descritpion';
         $scope.name = 'George & The Dragon';
         $scope.location = '813 W 50th St Minneapolis, MN 55419';
-        $scope.hours = ["Mon	11:00 am - 10:00 pm" ,
-                        "Tue	11:00 am - 10:00 pm" ,
-                        "Wed	11:00 am - 10:00 pm" ,
-                        "Thu	11:00 am - 10:00 pm" ,
-                        "Fri	11:00 am - 11:00 pm" ,
-                        "Sat	11:00 am - 11:00 pm	Open now",
-                        'Sun	9:00 am - 2:00 pm']
+        $scope.hours = ['Mon	11:00 am - 10:00 pm',
+                        'Tue	11:00 am - 10:00 pm',
+                        'Wed	11:00 am - 10:00 pm',
+                        'Thu	11:00 am - 10:00 pm',
+                        'Fri	11:00 am - 11:00 pm',
+                        'Sat	11:00 am - 11:00 pm	Open now',
+                        'Sun	9:00 am - 2:00 pm'];
         $scope.menus = 'http://www.ganddpub.com/menus/main.pdf';
         $scope.introduction = '';
 

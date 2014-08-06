@@ -5,6 +5,10 @@ angular.module('galleries').config(['$stateProvider',
     function($stateProvider) {
         // Galleries state routing
         $stateProvider.
+		state('menulist', {
+			url: '/menulist',
+			templateUrl: 'modules/galleries/views/menulist.client.view.html'
+		}).
 		state('test-polymer', {
 			url: '/test-polymer',
 			templateUrl: 'modules/galleries/views/test-polymer.client.view.html'

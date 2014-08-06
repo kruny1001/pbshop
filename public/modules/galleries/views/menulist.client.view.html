@@ -1,0 +1,13 @@
+<section data-ng-controller="MenulistController">
+	<!--
+	    Directive
+            menulist is calling service to get a its data from database
+	-->
+    <br/>
+    <br/>
+    <br/>
+    <h1>Menu Items</h1>
+    <section class="wrapper cl">
+        <menulist source='content' ng-repeat="content in contents"></menulist>
+    </section>
+</section>

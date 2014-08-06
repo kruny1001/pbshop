@@ -2,7 +2,7 @@ $brand-primary:         #967ADC;
 $brand-success:         #A0D468;
 
 
-@import 'public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap';
+@import '../lib/bootstrap-sass-official/assets/stylesheets/bootstrap';
 // Import scss Files
 // Reset
 @import "reset";
@@ -12,7 +12,6 @@ $brand-success:         #A0D468;
 @import "page";
 // Incontent
 @import "incontent";
-
 @import "gview";
 
 
