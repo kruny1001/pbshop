@@ -8,15 +8,15 @@
 .pic{
   max-width: 300px;
   max-height: 200px;
-  min-width: 100px;
+  min-width: 10px;
   position: relative;
   overflow: hidden;
   margin: 10px;
 
   display: inline-block;
 
-  @include prefix(animation, anima 2s);
-  @include prefix(backface-visibility, hidden);
+  //@include prefix(animation, anima 2s);
+  //@include prefix(backface-visibility, hidden);
 }
 .pic-3d{
   @include prefix(perspective, 500);
@@ -36,10 +36,10 @@
 }
 
 .pic-image{
-  @include prefix(transform, scale(1.1));
+  //@include prefix(transform, scale(1.1));
 }
 .pic:hover .pic-image{
-  @include prefix(transform, scale(1));
+  //@include prefix(transform, scale(1));
 }
 .pic-title{
   font-size: 1.8em;
@@ -51,7 +51,7 @@ a ,a:hover,
 .pic-caption,
 .pic:hover .pic-caption,
 .pic:hover img{
-  @include prefix(transition, all 0.5s ease);
+  //@include prefix(transition, all 0.5s ease);
 }
 
 /*--- EFFECTS AND TRANSITIONS ---*/
@@ -195,7 +195,7 @@ a ,a:hover,
     max-width: 400px;
     max-height:  300px;
     display: block;
-    @include prefix(animation, none);
+    //@include prefix(animation, none);
     margin: 10px auto;
   }
 }

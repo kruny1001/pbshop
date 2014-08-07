@@ -6,8 +6,16 @@
     <br/>
     <br/>
     <br/>
-    <h1>Menu Items</h1>
+    <h3>Menu Items</h3>
     <section class="wrapper cl">
-        <menulist source='content' ng-repeat="content in contents"></menulist>
+        <button class="btn-primary" ng-click="fadeIt()">Click</button>
+        <div class="badge" hide-me="isHidden">Fade me</div>
+        <div class="badge" hide-me="isHidden">or Not</div>
+        <div hide-me="isHidden" ng-repeat="content in contents">
+            <menulist source='content'
+                      picture='menuPic'
+                      desc ='menuDesc'
+                       ></menulist>
+        </div>
     </section>
 </section>

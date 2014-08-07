@@ -1,7 +1,14 @@
-<div class="pic">
-    <img ng-src={{source.pic}} class="pic-image" alt="Pic"/>
-    <span class="pic-caption bottom-to-top">
-        <h1 class="pic-title">{{source.title}}</h1>
-        <p>{{source.description}}</p>
-    </span>
+<div>
+    <div class="menu-box">
+        <img ng-src={{source.pic}} alt="Pic"/>
+        <span class="pic-caption bottom-to-top">
+            <h1 class="pic-title">{{source.title}}</h1>
+            <p>{{source.description}}</p>
+        </span>
+    </div>
+    <div ng-hide="picture">
+        <p>
+            this text will be shown
+        </p>
+    </div>
 </div>

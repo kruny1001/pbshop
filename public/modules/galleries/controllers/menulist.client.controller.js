@@ -4,6 +4,12 @@ angular.module('galleries').controller('MenulistController', ['$scope',
 	function($scope) {
 		// Menulist controller controller logic
 		// ...
+        $scope.menuPic = true;
+
+        $scope.isHidden = false;
+        $scope.fadeIt = function() {
+            $scope.isHidden = !$scope.isHidden;
+        }
 
         $scope.contents = [
             {
