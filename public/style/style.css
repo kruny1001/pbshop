@@ -5719,9 +5719,9 @@ footer {
   padding: 20px; }
 
 .menu-box {
-  max-width: 10px;
-  max-height: 10px;
-  min-width: 10px;
+  max-width: 300px;
+  max-height: 200px;
+  min-width: 100px;
   position: relative;
   overflow: hidden;
   margin: 10px; }
