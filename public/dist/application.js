@@ -861,6 +861,7 @@ angular.module('galleries').directive('hideMe', [
       },
       templateUrl: '/modules/galleries/directives/menulist/menulist.html',
       link: function (scope, element, attr, ctrl) {
+        TweenMax.to(element.children().children(), 0.75, { borderRadius: '0px 20px' });
         scope.$watch(attr.hideMe, function (newVal) {
           if (newVal) {
             $animate.addClass(element, 'fade');
@@ -877,7 +878,6 @@ angular.module('galleries').directive('hideMe', [
           $scope.expandIt = function () {
             $scope.isExpanded = !$scope.isExpanded;
           };
-          console.log($element);
           $element.bind('click', function (elem) {
             if ($scope.picture === true) {
               $scope.picture = false;
@@ -896,17 +896,17 @@ angular.module('galleries').directive('hideMe', [
   return {
     addClass: function (element, className) {
       TweenMax.to(element, 2, {
-        rotationY: '+=180',
+        rotationY: '+=90',
         ease: Linear.easeNone
       });
-      TweenMax.to(element, 1, { opacity: 0 });
+      TweenMax.to(element, 2, { opacity: 0 });
     },
     removeClass: function (element, className) {
       TweenMax.to(element, 2, {
-        rotationY: '-=180',
+        rotationY: '-=90',
         ease: Linear.easeNone
       });
-      TweenMax.to(element, 1, { opacity: 1 });
+      TweenMax.to(element, 2, { opacity: 1 });
     }
   };
 }).animation('.expand', function () {
