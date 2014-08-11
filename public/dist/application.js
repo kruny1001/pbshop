@@ -320,6 +320,9 @@ angular.module('galleries').config([
     $stateProvider.state('menulist', {
       url: '/menulist',
       templateUrl: 'modules/galleries/views/menulist.client.view.html'
+    }).state('menuform', {
+      url: '/menulist/menuform',
+      templateUrl: 'modules/galleries/views/menuform.client.view.html'
     }).state('test-polymer', {
       url: '/test-polymer',
       templateUrl: 'modules/galleries/views/test-polymer.client.view.html'
@@ -669,6 +672,22 @@ angular.module('galleries').controller('GviewController', [
         yoyo: true
       });
       t1.restart();  //t1.reverse(2.5)
+    };
+  }
+]);/**
+ * Created by KevinSo on 8/11/2014.
+ */
+'use strict';
+angular.module('galleries').controller('MenuformController', [
+  '$scope',
+  function ($scope) {
+    $scope.title = 'Menu Form';
+    // function to submit the form after all validation has occurred
+    $scope.submitForm = function (isValid) {
+      // check to make sure the form is completely valid
+      if (isValid) {
+        alert('our form is amazing');
+      }
     };
   }
 ]);'use strict';
@@ -1303,6 +1322,16 @@ angular.module('galleries').factory('Galleries', [
   '$resource',
   function ($resource) {
     return $resource('galleries/:galleryId', { galleryId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);/**
+ * Created by KevinSo on 8/11/2014.
+ */
+'use strict';
+//Galleries service used to communicate Galleries REST endpoints
+angular.module('galleries').factory('menus', [
+  '$resource',
+  function ($resource) {
+    return $resource('menus/:menuId', { menuId: '@_id' }, { update: { method: 'get' } });
   }
 ]);/**
  * Created by KevinSo on 7/24/2014.
