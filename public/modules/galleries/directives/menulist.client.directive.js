@@ -86,12 +86,22 @@ angular.module('galleries')
     .animation('.expand', function() {
         return{
             addClass: function(element, className) {
-                TweenMax.to(element, 1, {left:0});
-                TweenMax.to(element, 1, {opacity: 1});
+                TweenMax.to(element, 1, {width:"100%"});
+                TweenMax.to(element, 1, {height:"300%"});
+                var imageTag = element.find('img');
+                var spanTag = element.find('span');
+                TweenMax.to(imageTag, 1, {opacity:0.2});
+                TweenMax.to(spanTag, 1, {opacity:0.8});
+
+                //TweenMax.to(element, 1, {opacity: 1});
             },
             removeClass: function(element, className) {
-                TweenMax.to(element, 1, {left:20});
-
+                TweenMax.to(element, 1, {width:"30%"});
+                TweenMax.to(element, 1, {height:"20%"});
+                var imageTag = element.find('img');
+                var spanTag = element.find('span');
+                TweenMax.to(imageTag, 1, {opacity:1});
+                TweenMax.to(spanTag, 1, {opacity:0});
             }
 
         }

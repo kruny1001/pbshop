@@ -32,7 +32,7 @@
   padding: 10px;
   text-align:center;
   color: #ffffff;
-  @include transparency(0);
+  //@include transparency(0);
 }
 
 .pic-image{
@@ -75,7 +75,8 @@ a ,a:hover,
 }
 /*Bottom to Top*/
 .bottom-to-top{
-  top:50%;
+  opacity:0;
+  top:0%;
   left:0;
 }
 .pic:hover .bottom-to-top{
@@ -84,7 +85,8 @@ a ,a:hover,
 }
 /*Top to Bottom*/
 .top-to-bottom{
-  bottom:50%;
+  //display:none;
+  bottom:90%;
   left:0;
 }
 .pic:hover .top-to-bottom{
