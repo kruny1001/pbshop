@@ -9,6 +9,10 @@ angular.module('galleries').config(['$stateProvider',
 			url: '/menulist',
 			templateUrl: 'modules/galleries/views/menulist.client.view.html'
 		}).
+        state('menuform', {
+            url: '/menulist/menuform',
+            templateUrl: 'modules/galleries/views/menuform.client.view.html'
+        }).
 		state('test-polymer', {
 			url: '/test-polymer',
 			templateUrl: 'modules/galleries/views/test-polymer.client.view.html'

@@ -173,3 +173,25 @@ Apply velocity and snap degree on the Draggable Directive
  
 #8_3#
 Add SCSS and responsive animated grid gallery
+
+#8_11#
+menuList
+
+##RestfulAPI(Backend)##
+app.route('/menus')
+        .get(menus.list) // working
+        .post(menus.create); // working
+
+app.route('/menus/:menusId')
+    .get(menus.read)
+    .put(users.requiresLogin, menus.hasAuthorization, menus.update)
+    .delete(users.requiresLogin, menus.hasAuthorization, menus.delete);
+
+##File Added(Fronend)##
+added route and view
+
+    (menuform.client.controller.js)
+    (menuform.client.view.js)
+    (menus.client.service.js)
+
+URL: /menulist/menuform
