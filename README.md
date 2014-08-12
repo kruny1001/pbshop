@@ -194,4 +194,8 @@ added route and view
     (menuform.client.view.js)
     (menus.client.service.js)
 
-URL: /menulist/menuform
+[Menu Form](http://kevangular.herokuapp.com/#!/menulist/menuform)
+
+#8_12#
+Added Google Map directive
+[Menu Form](http://kevangular.herokuapp.com/#!/menulist/menuform)

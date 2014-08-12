@@ -16,4 +16,12 @@ angular.module('galleries').controller('MenuformController', ['$scope', function
         }
 
     };
+
+    $scope.map = {
+        center: {
+            latitude: 44.9745411,
+            longitude: -93.2472289
+        },
+        zoom: 16
+    };
 }]);

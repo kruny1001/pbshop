@@ -8,7 +8,8 @@ var ApplicationConfiguration = function () {
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
-        'ui.utils'
+        'ui.utils',
+        'google-maps'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -688,6 +689,13 @@ angular.module('galleries').controller('MenuformController', [
       if (isValid) {
         alert('our form is amazing');
       }
+    };
+    $scope.map = {
+      center: {
+        latitude: 44.9745411,
+        longitude: -93.2472289
+      },
+      zoom: 16
     };
   }
 ]);'use strict';
