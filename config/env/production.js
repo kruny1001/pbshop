@@ -8,6 +8,7 @@ module.exports = {
                 'public/css/style.css'
 			],
 			js: [
+                'public/lib/ng-file-upload/angular-file-upload-shim.min.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.min.js',
 				'public/lib/angular-animate/angular-animate.min.js',
@@ -17,6 +18,7 @@ module.exports = {
                 'public/lib/lodash/dist/lodash.underscore.min.js',
                 'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
                 'public/lib/angular-wizard/dist/angular-wizard.min.js',
+                'public/lib/ng-file-upload/angular-file-upload.min.js',
                 //'public/lib/underscore/underscore.js',
                 //'public/lib/angular-bind-polymer/angular_bind_polymer.js',
                 //'public/lib/angular-wizard/dist/angular-wizard.min.js',
