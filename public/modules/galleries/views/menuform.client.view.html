@@ -3,7 +3,27 @@
 	<br>
 	<br>
 
-	<h1>{{title}}</h1>
+	<h2>{{title}}</h2>
+
+    <!---
+    Example of select element
+    <select ng-model="myColor" ng-options="cell.name group by cell.id for cell in cells">
+    </select>
+    <select ng-model="myColor" ng-options="cell.id as cell.name for cell in cells">
+        <option value="">-- choose color --</option>
+    </select>
+
+    uploading a files
+    <input type="text" ng-model="myModelObj">
+    <input type="file" ng-file-select="onFileSelect($files)">
+    <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
+    <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
+    <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
+         ng-show="dropSupported">drop files here</div>
+    <div ng-file-drop-available="dropSupported=true"
+         ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+    <button ng-click="upload.abort()">Cancel Upload</button>
+    --->
 	<div class="container">
 	<wizard on-finish="finishedWizard()" template="/modules/galleries/views/template.html">
 		<wz-step title="Starting">
@@ -52,4 +72,9 @@
 		</wz-step>
 	</wizard>
 	</div>
+
+    <!--
+    product Description directive
+    <product-description></product-description>
+    -->
 </section>

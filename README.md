@@ -199,3 +199,11 @@ added route and view
 #8_12#
 Added Google Map directive
 [Menu Form](http://kevangular.herokuapp.com/#!/menulist/menuform)
+
+#8_13#
+Image Drag and Drop directive
+
+#8_14#
+Request: 
+1. Top Nav Bar Shrink if it doesn't use for 30 second
+2. Expending a image

@@ -16,6 +16,8 @@
     "grunt-contrib-sass": "~0.7.3",
     "angular-google-maps": "~1.2.0",
     "lodash": "~2.4.1",
-    "angular-wizard": "~0.4.0"
+    "angular-wizard": "~0.4.0",
+    "ng-file-upload": "~1.6.5",
+    "ng-file-upload-shim": "~1.6.5"
   }
 }
