@@ -1,41 +1,55 @@
 <section data-ng-controller="MenuformController">
-    <br>
-    <br>
-    <br>
+	<br>
+	<br>
+	<br>
 
-    <h5>{{title}}</h5>
-    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
-        <!-- NAME -->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" ng-model="user.name" required>
-            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
-        </div>
+	<h1>{{title}}</h1>
+	<div class="container">
+	<wizard on-finish="finishedWizard()" template="/modules/galleries/views/template.html">
+		<wz-step title="Starting">
+			<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+				<!-- NAME -->
+				<div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+					<label>Name</label>
+					<input type="text" name="name" class="form-control" ng-model="user.name" required>
+					<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+				</div>
 
-        <!-- Images -->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" ng-model="user.name" required>
-            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
-        </div>
+				<!-- USERNAME -->
+				<div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+					<label>Username</label>
+					<input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="15">
+					<p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+					<p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+				</div>
 
-        <!-- USERNAME -->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-            <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
-            <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
-        </div>
+				<!-- EMAIL -->
+				<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+					<label>Email</label>
+					<input type="email" name="email" class="form-control" ng-model="user.email">
+					<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+				</div>
+			</form>
+			<input type="submit" wz-next value="Continue" class="btn btn-primary" ng-disabled="userForm.$invalid"/>
+		</wz-step>
 
-        <!-- EMAIL -->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" ng-model="user.email">
-            <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
-        </div>
-
-        <!-- SUBMIT BUTTON -->
-        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
-    </form>
-    <google-map center="map.center" zoom="map.zoom"></google-map>
+		<wz-step title="Continuing">
+			<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+				<div class="form-group" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
+					<label>Address</label>
+					<input type="text" name="name" class="form-control" ng-model="user.address" required>
+					<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+				</div>
+				<div style="width:30%">
+					<google-map center="map.center" zoom="map.zoom"></google-map>
+				</div>
+			</form>
+			<input type="submit" wz-next value="Go on" class="btn btn-primary" ng-disabled="userForm.$invalid"/>
+		</wz-step>
+		<wz-step title="More steps">
+			<p>Even more steps!!</p>
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+	</wizard>
+	</div>
 </section>
