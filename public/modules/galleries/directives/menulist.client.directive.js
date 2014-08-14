@@ -98,6 +98,12 @@ angular.module('galleries')
                 TweenMax.to(imageTag, 1, {opacity:0.2});
                 TweenMax.to(spanTag, 1, {opacity:0.8});
 
+                TweenMax.to(spanTag, 1, {backgroundColor:"#ffffff"});
+                TweenMax.to(element, .1, {
+                    //top-left and bottom-right | top-right and bottom-left
+                    borderRadius:"0px 0px"
+                });
+
                 //TweenMax.to(element, 1, {opacity: 1});
             },
             removeClass: function(element, className) {
@@ -107,6 +113,10 @@ angular.module('galleries')
                 var spanTag = element.find('span');
                 TweenMax.to(imageTag, 1, {opacity:1});
                 TweenMax.to(spanTag, 1, {opacity:0});
+                TweenMax.to(element, .1, {
+                    //top-left and bottom-right | top-right and bottom-left
+                    borderRadius:"0px 20px"
+                });
             }
 
         }

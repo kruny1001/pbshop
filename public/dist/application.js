@@ -1004,7 +1004,9 @@ angular.module('galleries').directive('hideMe', [
       var imageTag = element.find('img');
       var spanTag = element.find('span');
       TweenMax.to(imageTag, 1, { opacity: 0.2 });
-      TweenMax.to(spanTag, 1, { opacity: 0.8 });  //TweenMax.to(element, 1, {opacity: 1});
+      TweenMax.to(spanTag, 1, { opacity: 0.8 });
+      TweenMax.to(spanTag, 1, { backgroundColor: '#ffffff' });
+      TweenMax.to(element, 0.1, { borderRadius: '0px 0px' });  //TweenMax.to(element, 1, {opacity: 1});
     },
     removeClass: function (element, className) {
       TweenMax.to(element, 1, { width: '30%' });
@@ -1013,6 +1015,7 @@ angular.module('galleries').directive('hideMe', [
       var spanTag = element.find('span');
       TweenMax.to(imageTag, 1, { opacity: 1 });
       TweenMax.to(spanTag, 1, { opacity: 0 });
+      TweenMax.to(element, 0.1, { borderRadius: '0px 20px' });
     }
   };
 });/*

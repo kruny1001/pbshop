@@ -19,11 +19,4 @@ $brand-success:         #A0D468;
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 @import "productionDescription";
-
-body {
-  margin: 0;
-}
-
-.sample {
-  background: $brand-success;
-}
+@import "basic";

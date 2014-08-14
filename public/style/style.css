@@ -5872,8 +5872,15 @@ footer {
 .production-description a {
   font-wight: 700; }
 
+html body {
+  background: #ebeced; }
+
 body {
   margin: 0; }
 
 .sample {
   background: #a0d468; }
+
+.navbar {
+  background: -webkit-linear-gradient(top, #454b56, #393f48);
+  color: rgba(255, 255, 255, 0.85); }

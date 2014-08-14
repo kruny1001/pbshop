@@ -207,3 +207,6 @@ Image Drag and Drop directive
 Request: 
 1. Top Nav Bar Shrink if it doesn't use for 30 second
 2. Expending a image
+
+#8_15# 
+Designing a Background
