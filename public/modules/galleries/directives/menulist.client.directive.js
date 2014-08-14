@@ -16,13 +16,18 @@ angular.module('galleries')
             })
         }
     })
-    .directive("expandMe", function($animate){
+    .directive("expandMe", function($animate, $window){
         return function(scope, element, attrs) {
+            var page = angular.element(window)
+            console.debug(page);
             scope.$watch(attrs.expandMe, function(newVal) {
                 if (newVal) {
-                    $animate.addClass(element, "expand")
+                    $animate.addClass(element, "expand");
+                    //ScrollTo Y close to a targeting content
+                    TweenMax.to(window, 1, {scrollTo:{y:element.offset().top - 60}, ease:Back.easeOut});
+                    //window.scrollTo();
                 } else {
-                    $animate.removeClass(element, "expand")
+                    $animate.removeClass(element, "expand");
                 }
             })
         }
