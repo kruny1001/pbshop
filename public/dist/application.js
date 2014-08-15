@@ -1514,10 +1514,83 @@ angular.module('template').config([
   '$stateProvider',
   function ($stateProvider) {
     // Template state routing
-    $stateProvider.state('set-row-col', {
+    $stateProvider.state('draggable', {
+      url: '/draggable',
+      templateUrl: 'modules/template/views/draggable.client.view.html'
+    }).state('set-row-col', {
       url: '/setrowcol',
       templateUrl: 'modules/template/views/set-row-col.client.view.html'
     });
+  }
+]);'use strict';
+angular.module('template').controller('DraggableController', [
+  '$scope',
+  '$element',
+  function ($scope, $element) {
+    var snap = angular.element(document.querySelector('#snap')), liveSnap = angular.element(document.querySelector('#liveSnap')), container = angular.element(document.querySelector('#container')), gridWidth = 196, gridHeight = 100, gridRows = 6, gridColumns = 5, i, x, y;
+    //loop through and create the grid (a div for each cell). Feel free to tweak the variables above
+    for (i = 0; i < gridRows * gridColumns; i++) {
+      y = Math.floor(i / gridColumns) * gridHeight;
+      x = i * gridWidth % (gridColumns * gridWidth);  /*
+            var changeDiv= $element.find("div")
+                .css({
+                        position:"absolute",
+                        border:"1px solid #454545",
+                        width:gridWidth-1,
+                        height:gridHeight-1,
+                        top:y, left:x});
+            container.prepend(changeDiv);*/
+                                                      //$("<div/>").css({position:"absolute", border:"1px solid #454545", width:gridWidth-1, height:gridHeight-1, top:y, left:x}).prependTo($container);
+    }
+    //set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
+    TweenLite.set(container, {
+      height: gridRows * gridHeight + 1,
+      width: gridColumns * gridWidth + 1
+    });
+    TweenLite.set('.box', {
+      width: gridWidth,
+      height: gridHeight,
+      lineHeight: gridHeight + 'px'
+    });
+    //the update() function is what creates the Draggable according to the options selected (snapping).
+    function update() {
+      //var snap = snap.prop("checked"), liveSnap = $liveSnap.prop("checked");
+      Draggable.create('.box', {
+        bounds: container,
+        edgeResistance: 0.65,
+        type: 'x,y',
+        throwProps: true,
+        liveSnap: liveSnap,
+        snap: {
+          x: function (endValue) {
+            return snap || liveSnap ? Math.round(endValue / gridWidth) * gridWidth : endValue;
+          },
+          y: function (endValue) {
+            return snap || liveSnap ? Math.round(endValue / gridHeight) * gridHeight : endValue;
+          }
+        }
+      });
+    }
+    /*
+        //when the user toggles one of the "snap" modes, make the necessary updates...
+        snap.on("change", applySnap);
+        liveSnap.on("change", applySnap);
+
+        function applySnap() {
+            if (snap.prop("checked") || liveSnap.prop("checked")) {
+                angular.element(document.querySelector('.box')).each(function(index, element) {
+                    TweenLite.to(element, 0.5, {
+                        x:Math.round(element._gsTransform.x / gridWidth) * gridWidth,
+                        y:Math.round(element._gsTransform.y / gridHeight) * gridHeight,
+                        delay:0.1,
+                        ease:Power2.easeInOut
+                    });
+                });
+            }
+            update();
+        }
+        */
+    update();
   }
 ]);'use strict';
 angular.module('template').controller('SetrowcolController', [

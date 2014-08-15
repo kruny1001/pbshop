@@ -210,3 +210,15 @@ Request:
 
 #8_15# 
 Designing a Background
+
+http://www.java2s.com/Open-Source/Javascript_Free_Code/AngularJS/Download_angularJS_TwitterSearch_Free_Java_Code.htm
+http://codepen.io/GreenSock/pen/zDwEk
+
+##BezierPlugin##
+http://codepen.io/GreenSock/pen/Krfod
+
+##DirectionalRotationPlugin##
+http://codepen.io/GreenSock/pen/jiEyG
+
+##preloader##
+http://codepen.io/GreenSock/pen/KCaBn
