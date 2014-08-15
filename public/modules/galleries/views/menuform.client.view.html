@@ -27,15 +27,18 @@
 	<div class="container">
 	<wizard on-finish="finishedWizard()" template="/modules/galleries/views/template.html">
 		<wz-step title="Starting">
+			WHO ARE YOU SHOPPING FOR?
+			BOY GIRL
+			<!--
 			<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
-				<!-- NAME -->
+
 				<div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
 					<label>Name</label>
 					<input type="text" name="name" class="form-control" ng-model="user.name" required>
 					<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
 				</div>
 
-				<!-- USERNAME -->
+
 				<div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
 					<label>Username</label>
 					<input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="15">
@@ -43,17 +46,50 @@
 					<p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
 				</div>
 
-				<!-- EMAIL -->
+
 				<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
 					<label>Email</label>
 					<input type="email" name="email" class="form-control" ng-model="user.email">
 					<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
 				</div>
 			</form>
+			-->
 			<input type="submit" wz-next value="Continue" class="btn btn-primary" ng-disabled="userForm.$invalid"/>
 		</wz-step>
-
+		<wz-step title="Info">
+			WHAT IS HIS NAME?
+			<div class="form-group" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
+				<label>Name</label>
+				<input type="text" name="name" class="form-control" ng-model="user.address" required>
+				<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+			</div>
+			How OLD IS HE?
+			WHAT SIZE DOES HE WEAR?
+			<input type="submit" wz-next value="Continue" class="btn btn-primary" ng-disabled="userForm.$invalid"/>
+		</wz-step>
+		<wz-step title="Acitivity">
+			WHAT is {{name}}'s FAVORITE WEEKEND ACTIVITY?
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+		<wz-step title="Outfit">
+			WHAT OUTFIT WOULD D WEAR TO SCHOOL?
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+		<wz-step title="Preference">
+			WHAT ARE YOU LOOKING FOR FROM FABKIDS?
+			CAsual, Dressed up outfits, uniquee fashion, cool outfits
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+		<wz-step title="Brand">
+			RalphLauren QuikSilver, OldNavy, Gap, H&M, J.Crew
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
+		<wz-step title="SignUp">
+			RalphLauren QuikSilver, OldNavy, Gap, H&M, J.Crew
+			<input type="submit" wz-next value="Finish now" />
+		</wz-step>
 		<wz-step title="Continuing">
+
 			<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
 				<div class="form-group" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
 					<label>Address</label>
