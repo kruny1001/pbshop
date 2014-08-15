@@ -1526,6 +1526,97 @@ angular.module('template').controller('SetrowcolController', [
     $scope.title = 'Set Row and Col';
   }
 ]);'use strict';
+angular.module('template').directive('bannerFront', [function () {
+    return {
+      templateUrl: 'modules/template/directives/banner-front.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        // Banner front directive logic
+        // ...
+        var tl = new TimelineLite({ onUpdate: updateSlider });
+        tl.set('#content', { visibility: 'visible' }).from('h1', 0.5, {
+          left: 100,
+          autoAlpha: 0
+        }).from('h2', 0.5, {
+          left: -100,
+          autoAlpha: 0
+        }, '-=0.25').from('#feature', 0.5, {
+          scale: 0.5,
+          autoAlpha: 0
+        }, 'feature').from('#description', 0.5, {
+          left: 100,
+          autoAlpha: 0
+        }, 'feature+=0.25').staggerFrom('#nav img', 0.5, {
+          scale: 0,
+          rotation: -180,
+          autoAlpha: 0
+        }, 0.2, 'stagger');
+        /*
+                $("#play").click(function() {
+                    //play() only plays forward from current position. If timeline has finished, play() has nowhere to go.
+                    //if the timeline is not done then play() or else restart() (restart always restarts from the beginning).
+
+                    if(tl.progress() != 1){
+                        //carl just changed this again
+                        tl.play();
+                    } else {
+                        tl.restart();
+                    }
+                });
+
+                $("#pause").click(function() {
+                    tl.pause();
+                });
+
+                $("#reverse").click(function() {
+                    tl.reverse();
+                });
+
+                $("#resume").click(function() {
+                    tl.resume();
+                });
+
+                $("#restart").click(function() {
+                    tl.restart();
+                });
+
+                $("#slider").slider({
+                    range: false,
+                    min: 0,
+                    max: 100,
+                    step:.1,
+                    slide: function ( event, ui ) {
+                        tl.pause();
+                        //adjust the timeline's progress() based on slider value
+                        tl.progress( ui.value/100 );
+                    }
+                });
+                 */
+        scope.play = function () {
+          if (tl.progress() != 1) {
+            //carl just changed this again
+            tl.play();
+          } else {
+            tl.restart();
+          }
+        };
+        scope.pause = function () {
+          tl.pause();
+        };
+        scope.reverse = function () {
+          tl.reverse();
+        };
+        scope.resume = function () {
+          tl.resume();
+        };
+        scope.restart = function () {
+          tl.restart();
+        };
+        function updateSlider() {
+        }  //element.text('this is the bannerFront directive');
+      }
+    };
+  }]);'use strict';
 angular.module('template').directive('setRowCol', [function () {
     return {
       template: '<div></div>',
