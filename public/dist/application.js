@@ -178,6 +178,9 @@ angular.module('core').controller('HomeController', [
   function ($scope, Authentication) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
+    $scope.firstJumbo = 'first-jumbo-content';
+    $scope.secondJumbo = 'second-jumbo-content';
+    $scope.thirdJumbo = 'third-jumbo-content';
   }
 ]);'use strict';
 //Menu service used for managing  menus

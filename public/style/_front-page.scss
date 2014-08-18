@@ -1,0 +1,36 @@
+@import url(http://fonts.googleapis.com/css?family=Fredoka+One);
+
+
+
+.navbar-content-padding {//section
+  padding: 51px 0 80px;
+  background: linear-gradient(to bottom, #68c800, #5cb200);
+  height: 300px;
+  .base-jumbo-content{ //section inner
+    height: 300px;
+    display:table;
+    margin:0 auto;
+    padding:0 20px;
+    text-align: center;
+    .feature {
+      //vertical-align: middle;
+
+      display:table-cell;
+      padding:10px 30px;
+      width:300px;
+      color: #ffffff;
+      font-family: 'Fredoka One', cursive;
+      color: #ffffff;
+      .feature-img{
+        display:inline-block;
+        width:130px;
+      }
+      .desc{
+        text-align:"center";
+      }
+    }
+  }
+
+}
+
+

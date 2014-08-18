@@ -1,6 +1,7 @@
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 @import "http://font-style: em;googleapis.com/css?family=Open+Sans)";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Fredoka+One);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5876,7 +5877,8 @@ html body {
   background: #ebeced; }
 
 body {
-  margin: 0; }
+  max-width: 1200px;
+  margin: auto; }
 
 .sample {
   background: #a0d468; }
@@ -5884,3 +5886,46 @@ body {
 .navbar {
   background: -webkit-linear-gradient(top, #454b56, #393f48);
   color: rgba(255, 255, 255, 0.85); }
+
+/*
+@mixin MQ($XS){
+  color:red;
+}
+
+h1 {
+  @include MQ(XS) {
+    font-size: 1.1em;
+  }
+  @include MQ(S) {
+    font-size: 1em;
+  }
+  @include MQ(M) {
+    font-size: 0.9em;
+  }
+}
+*/
+footer[role="contentinfo"] {
+  clear: both; }
+
+.navbar-content-padding {
+  padding: 51px 0 80px;
+  background: linear-gradient(to bottom, #68c800, #5cb200);
+  height: 300px; }
+  .navbar-content-padding .base-jumbo-content {
+    height: 300px;
+    display: table;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center; }
+    .navbar-content-padding .base-jumbo-content .feature {
+      display: table-cell;
+      padding: 10px 30px;
+      width: 300px;
+      color: #ffffff;
+      font-family: 'Fredoka One', cursive;
+      color: #ffffff; }
+      .navbar-content-padding .base-jumbo-content .feature .feature-img {
+        display: inline-block;
+        width: 130px; }
+      .navbar-content-padding .base-jumbo-content .feature .desc {
+        text-align: "center"; }
