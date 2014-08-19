@@ -228,3 +228,6 @@ Front View
 http://kevangular.herokuapp.com/
 
 Model: https://testcenter.duolingo.com/
+
+#8/19#
+CSS 

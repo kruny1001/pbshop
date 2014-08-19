@@ -2,6 +2,7 @@
 @import "http://font-style: em;googleapis.com/css?family=Open+Sans)";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url(http://fonts.googleapis.com/css?family=Fredoka+One);
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5908,8 +5909,9 @@ footer[role="contentinfo"] {
   clear: both; }
 
 .navbar-content-padding {
+  margin-top: 50px;
   padding: 51px 0 80px;
-  background: linear-gradient(to bottom, #68c800, #5cb200);
+  background: linear-gradient(to bottom, #86c802, #55a700);
   height: 300px; }
   .navbar-content-padding .base-jumbo-content {
     height: 300px;
@@ -5922,10 +5924,35 @@ footer[role="contentinfo"] {
       padding: 10px 30px;
       width: 300px;
       color: #ffffff;
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Bree Serif', serif;
       color: #ffffff; }
       .navbar-content-padding .base-jumbo-content .feature .feature-img {
         display: inline-block;
+        border-radius: 20px;
         width: 130px; }
       .navbar-content-padding .base-jumbo-content .feature .desc {
+        text-align: "center"; }
+
+.second-content-padding {
+  padding: 51px 0 80px;
+  background: linear-gradient(to bottom, #00a4c8, #0073b2);
+  height: 300px; }
+  .second-content-padding .base-jumbo-content {
+    height: 300px;
+    display: table;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center; }
+    .second-content-padding .base-jumbo-content .feature {
+      display: table-cell;
+      padding: 10px 30px;
+      width: 300px;
+      color: #ffffff;
+      font-family: 'Bree Serif', serif;
+      color: #ffffff; }
+      .second-content-padding .base-jumbo-content .feature .feature-img {
+        display: inline-block;
+        border-radius: 20px;
+        width: 130px; }
+      .second-content-padding .base-jumbo-content .feature .desc {
         text-align: "center"; }

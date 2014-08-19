@@ -1,10 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Fredoka+One);
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
 
 
 
 .navbar-content-padding {//section
+  margin-top:50px;
   padding: 51px 0 80px;
-  background: linear-gradient(to bottom, #68c800, #5cb200);
+  background: linear-gradient(to bottom, #86c802, #55a700);
   height: 300px;
   .base-jumbo-content{ //section inner
     height: 300px;
@@ -13,16 +15,15 @@
     padding:0 20px;
     text-align: center;
     .feature {
-      //vertical-align: middle;
-
       display:table-cell;
       padding:10px 30px;
       width:300px;
       color: #ffffff;
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Bree Serif', serif;
       color: #ffffff;
       .feature-img{
         display:inline-block;
+        border-radius: 20px;
         width:130px;
       }
       .desc{
@@ -30,7 +31,34 @@
       }
     }
   }
-
 }
 
+.second-content-padding {//section
+  padding: 51px 0 80px;
+  background: linear-gradient(to bottom, #00a4c8, #0073b2);
+  height: 300px;
+  .base-jumbo-content{ //section inner
+    height: 300px;
+    display:table;
+    margin:0 auto;
+    padding:0 20px;
+    text-align: center;
+    .feature {
+      display:table-cell;
+      padding:10px 30px;
+      width:300px;
+      color: #ffffff;
+      font-family: 'Bree Serif', serif;
+      color: #ffffff;
+      .feature-img{
+        display:inline-block;
+        border-radius: 20px;
+        width:130px;
+      }
+      .desc{
+        text-align:"center";
+      }
+    }
+  }
+}
 
