@@ -57,9 +57,10 @@
  MidwestReliabilityOrganization(MRO)0.CargillPowerMarkets,LLC(CRGL|NCR01066)23.CompanySelf-Certification32927.20140101-2013AnnualSelf-Certification109776
 
 * */
-function retrieveTree() {
+function retrieveTree(DocLibLevel, DocLibParentID) {
     //alert('Hello');
-    console.debug($('#contentTree > LI#-1').html());
+    $crntul = $('#contentTree');
+
 }
 
 function getMaxDocLevel(arr){

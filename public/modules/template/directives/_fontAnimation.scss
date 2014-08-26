@@ -1,0 +1,20 @@
+
+.font-animation-button{
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: whitesmoke;
+  background-color: darkblue;
+}
+
+#font-animation-reporter{
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.font-animation-button, .font-animation-letters{
+  position: relative;
+  margin-left: 100px;
+}
