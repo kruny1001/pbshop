@@ -39,38 +39,7 @@
 .second-content-padding {
   @include content-mainpage(#00a4c8, #0073b2);
 }
-/*
-.navbar-content-padding {//section
-  margin-top:50px;
-  padding: 51px 0 80px;
-  background: linear-gradient(to bottom, #86c802, #55a700);
-  height: 300px;
-  .base-jumbo-content{ //section inner
-    height: 300px;
-    display:table;
-    margin:0 auto;
-    padding:0 20px;
-    text-align: center;
-    .feature {
-      display:table-cell;
-      padding:10px 30px;
-      width:300px;
-      color: #ffffff;
-      font-family: 'Bree Serif', serif;
-      color: #ffffff;
-      .feature-img{
-        display:inline-block;
-        border-radius: 20px;
-        width:130px;
-      }
 
-      .desc{
-        text-align:"center";
-      }
-    }
-  }
-}
-*/
 .stitched {
     padding: 2px;
     margin: 5px;
@@ -85,34 +54,3 @@
     text-shadow: -1px -1px #aa3030;
     font-weight: normal;
 }
-
-/*
-.second-content-padding {//section
-  padding: 51px 0 80px;
-  background: linear-gradient(to bottom, #00a4c8, #0073b2);
-  height: 300px;
-  .base-jumbo-content{ //section inner
-    height: 300px;
-    display:table;
-    margin:0 auto;
-    padding:0 20px;
-    text-align: center;
-    .feature {
-      display:table-cell;
-      padding:10px 30px;
-      width:300px;
-      color: #ffffff;
-      font-family: 'Bree Serif', serif;
-      color: #ffffff;
-      .feature-img{
-        display:inline-block;
-        border-radius: 20px;
-        width:130px;
-      }
-      .desc{
-        text-align:"center";
-      }
-    }
-  }
-}
-*/
