@@ -11,7 +11,8 @@ var ApplicationConfiguration = function () {
         'ui.utils',
         'google-maps',
         'mgo-angular-wizard',
-        'angularFileUpload'
+        'angularFileUpload',
+        'smart-table'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -49,6 +50,8 @@ ApplicationConfiguration.registerModule('articles');'use strict';
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('galleries');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('gwas');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('template');'use strict';
 // Use Applicaion configuration module to register a new module
@@ -1513,11 +1516,74 @@ angular.module('galleries').factory('Listusers', [
 */
 'use strict';
 //Setting up route
+angular.module('gwas').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Gwas state routing
+    $stateProvider.state('gwas-data-start', {
+      url: '/gwas-data/gwas-data-start',
+      templateUrl: 'modules/gwas/views/gwas-data-start.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('gwas').controller('GwasdatastartController', [
+  '$scope',
+  'Gwas',
+  function ($scope, Gwas) {
+    $scope.rowCollection = [
+      {
+        firstName: 'Kevin',
+        lastName: 'Son',
+        birthDate: new Date('1987-05-21'),
+        balance: 102,
+        email: 'whatever@gmail.com'
+      },
+      {
+        firstName: 'Kenny',
+        lastName: 'Park',
+        birthDate: new Date('1987-04-25'),
+        balance: -2323.22,
+        email: 'oufblandou@gmail.com'
+      },
+      {
+        firstName: 'Robert',
+        lastName: 'Frere',
+        birthDate: new Date('1955-08-27'),
+        balance: 42343,
+        email: 'raymondef@gmail.com'
+      }
+    ];
+    $scope.removeRow = function removeRow(row) {
+      var index = $scope.rowCollection.indexOf(row);
+      if (index !== -1) {
+        $scope.rowCollection.splice(index, 1);
+      }
+    };
+    $scope.find = function () {
+      $scope.Users = Gwas.query();
+      console.log($scope.Users);
+    };
+  }
+]);/**
+ * Created by KevinSo on 8/27/2014.
+ */
+'use strict';
+//Articles service used for communicating with the articles REST endpoints
+angular.module('gwas').factory('Gwas', [
+  '$resource',
+  function ($resource) {
+    return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
+  }
+]);'use strict';
+//Setting up route
 angular.module('template').config([
   '$stateProvider',
   function ($stateProvider) {
     // Template state routing
-    $stateProvider.state('draggable', {
+    $stateProvider.state('test-font-animation', {
+      url: '/test-font-animation',
+      templateUrl: 'modules/template/views/test-font-animation.client.view.html'
+    }).state('draggable', {
       url: '/draggable',
       templateUrl: 'modules/template/views/draggable.client.view.html'
     }).state('set-row-col', {
@@ -1597,6 +1663,15 @@ angular.module('template').controller('DraggableController', [
   }
 ]);'use strict';
 angular.module('template').controller('SetrowcolController', [
+  '$scope',
+  function ($scope) {
+    $scope.title = 'Set Row and Col';
+  }
+]);/**
+ * Created by KevinSo on 8/26/2014.
+ */
+'use strict';
+angular.module('template').controller('TestfontanimationController', [
   '$scope',
   function ($scope) {
     $scope.title = 'Set Row and Col';
@@ -1692,6 +1767,17 @@ angular.module('template').directive('bannerFront', [function () {
         }  //element.text('this is the bannerFront directive');
       }
     };
+  }]);/**
+ * Created by KevinSo on 8/26/2014.
+ */
+'use strict';
+angular.module('template').directive('fontAnimation', [function () {
+    return {
+      templateUrl: 'modules/template/directives/fontAnimation.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+      }
+    };
   }]);'use strict';
 angular.module('template').directive('setRowCol', [function () {
     return {
@@ -1703,10 +1789,7 @@ angular.module('template').directive('setRowCol', [function () {
         element.text('this is the setRowCol directive');
       }
     };
-  }]);/**
- * Created by Kevin on 8/15/2014.
- */
-'use strict';
+  }]);'use strict';
 // Config HTTP Error Handling
 angular.module('users').config([
   '$httpProvider',

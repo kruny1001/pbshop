@@ -383,9 +383,15 @@ exports.removeOAuthProvider = function(req, res, next) {
 
 // [Test] Extract Data from MongoDB
 exports.findUsers = function(req, res) {
-    User.findOne({
-        _id: 'kruny1001'
-    }).exec(function(err, user) {
-        res.jsonp({/*req.user.lastName,*/'message': 'chulwoo Minduhwa!'} || null);
+
+    User.find().sort('-created').populate('user', 'displayName').exec(function(err, users) {
+        if (err) {
+            return res.send(400, {
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(users);
+        }
     });
+
 };

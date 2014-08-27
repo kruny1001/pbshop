@@ -38,9 +38,10 @@ module.exports = {
                 'public/lib/gsap/src/minified/utils/Draggable.min.js',
                 'public/lib/gsap/src/minified/TweenMax.min.js',
                 'public/lib/gsap/src/minified/TimelineMax.min.js',
-                'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js'
+                'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js',
                 //'public/modules/galleries/temp/ThrowPropsPlugin.min.js',
                 //'public/lib/jquery/dist/jquery.min.js'
+                'public/lib/angular-smart-table/dist/smart-table.min.js'
 
 			]
 		},
