@@ -18,7 +18,7 @@ angular.module('gwas').controller('GwasdatastartController', ['$scope','Gwas',
 
         $scope.find = function() {
             $scope.Users = Gwas.query();
-            console.log($scope.Users);
+            //console.log($scope.Users);
         };
 	}
 ]);

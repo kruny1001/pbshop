@@ -771,44 +771,68 @@ angular.module('galleries').controller('MenulistController', [
     };
     $scope.contents = [
       {
-        title: 'pic1',
+        title: 'Info1',
         description: 'avatar1',
-        pic: '/modules/galleries/img/avatar-01.svg'
+        pic: '/modules/galleries/img/avatar-01.svg',
+        location: '',
+        Phone: '612-000-0001',
+        AverageScore: 5
       },
       {
-        title: 'pic2',
+        title: 'Info2',
         description: 'avatar2',
-        pic: '/modules/galleries/img/avatar-02.svg'
+        pic: '/modules/galleries/img/avatar-02.svg',
+        location: '',
+        Phone: '612-000-0002',
+        AverageScore: 5
       },
       {
-        title: 'pic3',
+        title: 'Info3',
         description: 'avatar3',
-        pic: '/modules/galleries/img/avatar-03.svg'
+        pic: '/modules/galleries/img/avatar-03.svg',
+        location: '',
+        Phone: '612-000-0003',
+        AverageScore: 5
       },
       {
-        title: 'pic4',
+        title: 'Info4',
         description: 'avatar4',
-        pic: '/modules/galleries/img/avatar-04.svg'
+        pic: '/modules/galleries/img/avatar-04.svg',
+        location: '',
+        Phone: '612-000-0004',
+        AverageScore: 5
       },
       {
-        title: 'pic5',
+        title: 'Info5',
         description: 'avatar5',
-        pic: '/modules/galleries/img/avatar-05.svg'
+        pic: '/modules/galleries/img/avatar-05.svg',
+        location: '',
+        Phone: '612-000-0005',
+        AverageScore: 5
       },
       {
-        title: 'pic6',
+        title: 'Info6',
         description: 'avatar6',
-        pic: '/modules/galleries/img/avatar-06.svg'
+        pic: '/modules/galleries/img/avatar-06.svg',
+        location: '',
+        Phone: '612-000-0006',
+        AverageScore: 5
       },
       {
-        title: 'pic7',
+        title: 'Info7',
         description: 'avatar',
-        pic: '/modules/galleries/img/avatar-07.svg'
+        pic: '/modules/galleries/img/avatar-07.svg',
+        location: '',
+        Phone: '612-000-0007',
+        AverageScore: 5
       },
       {
-        title: 'pic8',
+        title: 'Info6',
         description: 'avatar',
-        pic: '/modules/galleries/img/avatar-08.svg'
+        pic: '/modules/galleries/img/avatar-08.svg',
+        location: '',
+        Phone: '612-000-0008',
+        AverageScore: 5
       }
     ];
   }
@@ -1560,8 +1584,7 @@ angular.module('gwas').controller('GwasdatastartController', [
       }
     };
     $scope.find = function () {
-      $scope.Users = Gwas.query();
-      console.log($scope.Users);
+      $scope.Users = Gwas.query();  //console.log($scope.Users);
     };
   }
 ]);/**

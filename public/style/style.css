@@ -5480,7 +5480,7 @@ footer {
   background: rgba(44, 62, 80, 0.92);
   padding: 10px;
   text-align: center;
-  color: #ffffff; }
+  color: #ff7802; }
 
 .pic-title {
   font-size: 1.8em; }
@@ -5982,3 +5982,10 @@ footer[role="contentinfo"] {
 .font-animation-button, .font-animation-letters {
   position: relative;
   margin-left: 100px; }
+
+.core-title {
+  font-size: 200%;
+  margin-bottom: 10px; }
+
+.core-subtitle {
+  font-size: 150%; }

@@ -7,14 +7,18 @@
     <br/>
     <br/>
 
-    <h3>Menu Items</h3>
-    <p>Enter: Rotation += 180 Degree and Oapcity to 0<p>
-    <p>Leave: Rotation += 180 Degree and Oapcity to 0<p>
+    <div class="core-title">Menu Items</div>
+    <br>
+    <div class="well">
+        <ul>
+            <li>Enter: Rotation += 180 Degree and Oapcity to 0</li>
+            <li>Leave: Rotation += 180 Degree and Oapcity to 0</li>
+        </ul>
+    </div>
 
     <section class="wrapper cl">
-        <button class="btn-primary" ng-click="fadeIt()">Click</button>
-        <div class="badge" hide-me="isHidden">Fade me</div>
-        <div class="badge" hide-me="isHidden">or Not</div>
+        <div class="badge" hide-me="isHidden" ng-click="fadeIt()">Fade out(Click)</div>
+        <div class="badge" ng-if="isHidden" ng-click="fadeIt()">Fade in(Click)</div>
         <div hide-me="isHidden" ng-repeat="content in contents">
             <menulist source='content'
                       picture='menuPic'

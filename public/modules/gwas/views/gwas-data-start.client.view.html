@@ -1,6 +1,10 @@
 <section data-ng-controller="GwasdatastartController">
     <br><br><br>
-	This is the Gwas data start
+    <div class="core-title">User Management Dashboard</div>
+	<div class="well">
+        This is the Users Management Dashboard
+	</div>
+
     <table st-table="rowCollection" class="table table-striped">
         <thead>
         <tr>
@@ -39,10 +43,11 @@
             <td>{{row.birthDate | date}}</td>
             <td>{{row.balance | currency}}</td>
             <td>
-                <button class="btn btn-sm" popover-placement="top" popover="{{row.email}}" type="button">
+                <button class="btn btn-sm" popover-placement="top" popover="{{row.email}}">
                     <i class="glyphicon glyphicon-eye-open"></i>
                 </button>
-                <a ng-href="mailto:{{row.email}}">email</a></td>
+                <a ng-href="mailto:{{row.email}}">email</a>
+            </td>
             <td>
                 <button type="button" ng-click="removeRow(row)" class="btn btn-sm btn-danger">
                     <i class="glyphicon glyphicon-remove-circle">
