@@ -6,7 +6,11 @@ angular.module('galleries').controller('GalleriesController',
 	function($scope, $stateParams, $location, Authentication, Galleries ) {
 		$scope.authentication = Authentication;
 
-
+        $scope.examples = [
+            { name: 'Example One',
+                content:'<p style=""><img style="height: 39px; width: 430px; position: relative; margin: 0px; resize: none; zoom: 1; display: inline-block; top: 0px; left: 0px;" src="http://www.ilbe.com/mylogo/ilbe.png" title="" class=""></p><p style="">호옹이&nbsp;</p><p style=""><br></p>' },
+            { name: 'Example Two', content:'<h1>Ut enim consuetudo loquitur, id solum dicitur honestum, quod est populari fama gloriosum.</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Itaque contra est, ac dicitis; <b>Quid censes in Latino fore?</b> </p><p>Hic ambiguo ludimur. <a href="http://loripsum.net/" target="_blank">Disserendi artem nullam habuit.</a> <i>At multis se probavit.</i> Reguli reiciendam; </p><p>Quid autem habent admirationis, cum prope accesseris? Peccata paria. <i>Quid de Pythagora?</i> Illi enim inter se dissentiunt. <a href="http://loripsum.net/" target="_blank">Videamus animi partes, quarum est conspectus illustrior;</a> Utilitatis causa amicitia est quaesita. Duo Reges: constructio interrete. </p>'}
+        ];
 
 		// Create new Gallery
 		$scope.create = function() {

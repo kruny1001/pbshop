@@ -27,8 +27,11 @@ module.exports = {
                 'public/lib/gsap/src/minified/TweenMax.min.js',
                 'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js',
                 //'public/modules/galleries/temp/ThrowPropsPlugin.min.js',
-                //'public/lib/jquery/dist/jquery.min.js'
-                'public/lib/angular-smart-table/dist/smart-table.min.js'
+                'public/lib/jquery/dist/jquery.min.js',
+                'public/lib/angular-smart-table/dist/smart-table.min.js',
+                'public/lib/requirejs/require.js',
+                "public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js",
+                'public/lib/ng-aloha-editor/ng-aloha-editor.js'
 			]
 		},
 		css: 'public/dist/css/style.min.css',

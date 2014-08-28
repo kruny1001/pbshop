@@ -12,7 +12,8 @@ var ApplicationConfiguration = function () {
         'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
-        'smart-table'
+        'smart-table',
+        'ngAlohaEditor'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -321,6 +322,13 @@ angular.module('core').service('Menus', [function () {
 angular.module('galleries').run([
   'Menus',
   function (Menus) {
+    // Set top bar menu items
+    //Menus.addMenuItem(menuId, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
+    Menus.addMenuItem('topbar', 'Galleries', 'galleries', 'dropdown', '/galleries(/create)?');
+    //Menus.addSubMenuItem(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
+    Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
+    //Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/gview');
+    Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
   }
 ]);'use strict';
 //Setting up route
@@ -367,6 +375,16 @@ angular.module('galleries').controller('GalleriesController', [
   'Galleries',
   function ($scope, $stateParams, $location, Authentication, Galleries) {
     $scope.authentication = Authentication;
+    $scope.examples = [
+      {
+        name: 'Example One',
+        content: '<p style=""><img style="height: 39px; width: 430px; position: relative; margin: 0px; resize: none; zoom: 1; display: inline-block; top: 0px; left: 0px;" src="http://www.ilbe.com/mylogo/ilbe.png" title="" class=""></p><p style="">\ud638\uc639\uc774&nbsp;</p><p style=""><br></p>'
+      },
+      {
+        name: 'Example Two',
+        content: '<h1>Ut enim consuetudo loquitur, id solum dicitur honestum, quod est populari fama gloriosum.</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Itaque contra est, ac dicitis; <b>Quid censes in Latino fore?</b> </p><p>Hic ambiguo ludimur. <a href="http://loripsum.net/" target="_blank">Disserendi artem nullam habuit.</a> <i>At multis se probavit.</i> Reguli reiciendam; </p><p>Quid autem habent admirationis, cum prope accesseris? Peccata paria. <i>Quid de Pythagora?</i> Illi enim inter se dissentiunt. <a href="http://loripsum.net/" target="_blank">Videamus animi partes, quarum est conspectus illustrior;</a> Utilitatis causa amicitia est quaesita. Duo Reges: constructio interrete. </p>'
+      }
+    ];
     // Create new Gallery
     $scope.create = function () {
       // Create new Gallery object
