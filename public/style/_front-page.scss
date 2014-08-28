@@ -3,7 +3,7 @@
 
 @mixin content-mainpage($color1, $color2) {
   min-width: 872px;
-  margin-top:50px;
+
   padding: 51px 0 80px;
   background: linear-gradient(to bottom, $color1, $color2);
   height: 300px;
@@ -33,6 +33,7 @@
 }
 
 .navbar-content-padding{
+  margin-top:50px;
   @include content-mainpage(#86c802,#55a700);
 }
 

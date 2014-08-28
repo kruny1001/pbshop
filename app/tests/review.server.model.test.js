@@ -6,17 +6,17 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	Board = mongoose.model('Board');
+	Review = mongoose.model('Review');
 
 /**
  * Globals
  */
-var user, board;
+var user, review;
 
 /**
  * Unit tests
  */
-describe('Board Model Unit Tests:', function() {
+describe('Review Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		user = new User({
 			firstName: 'Full',
@@ -28,9 +28,9 @@ describe('Board Model Unit Tests:', function() {
 		});
 
 		user.save(function() { 
-			board = new Board({
-				// Add model fields
-				// ...
+			review = new Review({
+				name: 'Review Name',
+				user: user
 			});
 
 			done();
@@ -39,15 +39,24 @@ describe('Board Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
-			return board.save(function(err) {
+			return review.save(function(err) {
 				should.not.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without name', function(done) { 
+			review.name = '';
+
+			return review.save(function(err) {
+				should.exist(err);
 				done();
 			});
 		});
 	});
 
 	afterEach(function(done) { 
-		Board.remove().exec();
+		Review.remove().exec();
 		User.remove().exec();
 
 		done();

@@ -12,8 +12,7 @@ var ApplicationConfiguration = function () {
         'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
-        'smart-table',
-        'ngAlohaEditor'
+        'smart-table'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -53,6 +52,8 @@ ApplicationConfiguration.registerModule('core');'use strict';
 ApplicationConfiguration.registerModule('galleries');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('gwas');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('template');'use strict';
 // Use Applicaion configuration module to register a new module
@@ -178,13 +179,25 @@ angular.module('core').controller('HeaderController', [
 ]);'use strict';
 angular.module('core').controller('HomeController', [
   '$scope',
+  '$element',
   'Authentication',
-  function ($scope, Authentication) {
+  function ($scope, $element, Authentication) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.firstJumbo = 'first-jumbo-content';
     $scope.secondJumbo = 'second-jumbo-content';
     $scope.thirdJumbo = 'third-jumbo-content';
+    var texts = $('.core-text-anni');
+    var tl = new TimelineMax({
+        repeat: 6,
+        repeatDelay: 1,
+        yoyo: true
+      });
+    tl.staggerTo(texts, 0.2, {
+      className: '+=superShadow',
+      top: '-=10px',
+      ease: Power1.easeIn
+    }, '0.3', 'start');
   }
 ]);'use strict';
 //Menu service used for managing  menus
@@ -1616,6 +1629,99 @@ angular.module('gwas').factory('Gwas', [
     return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
+// Configuring the Articles module
+angular.module('reviews').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Reviews', 'reviews', 'dropdown', '/reviews(/create)?');
+    Menus.addSubMenuItem('topbar', 'reviews', 'List Reviews', 'reviews');
+    Menus.addSubMenuItem('topbar', 'reviews', 'New Review', 'reviews/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('reviews').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Reviews state routing
+    $stateProvider.state('listReviews', {
+      url: '/reviews',
+      templateUrl: 'modules/reviews/views/list-reviews.client.view.html'
+    }).state('createReview', {
+      url: '/reviews/create',
+      templateUrl: 'modules/reviews/views/create-review.client.view.html'
+    }).state('viewReview', {
+      url: '/reviews/:reviewId',
+      templateUrl: 'modules/reviews/views/view-review.client.view.html'
+    }).state('editReview', {
+      url: '/reviews/:reviewId/edit',
+      templateUrl: 'modules/reviews/views/edit-review.client.view.html'
+    });
+  }
+]);'use strict';
+// Reviews controller
+angular.module('reviews').controller('ReviewsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Reviews',
+  function ($scope, $stateParams, $location, Authentication, Reviews) {
+    $scope.authentication = Authentication;
+    // Create new Review
+    $scope.create = function () {
+      // Create new Review object
+      var review = new Reviews({ name: this.name });
+      // Redirect after save
+      review.$save(function (response) {
+        $location.path('reviews/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Review
+    $scope.remove = function (review) {
+      if (review) {
+        review.$remove();
+        for (var i in $scope.reviews) {
+          if ($scope.reviews[i] === review) {
+            $scope.reviews.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.review.$remove(function () {
+          $location.path('reviews');
+        });
+      }
+    };
+    // Update existing Review
+    $scope.update = function () {
+      var review = $scope.review;
+      review.$update(function () {
+        $location.path('reviews/' + review._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Reviews
+    $scope.find = function () {
+      $scope.reviews = Reviews.query();
+    };
+    // Find existing Review
+    $scope.findOne = function () {
+      $scope.review = Reviews.get({ reviewId: $stateParams.reviewId });
+    };
+  }
+]);'use strict';
+//Reviews service used to communicate Reviews REST endpoints
+angular.module('reviews').factory('Reviews', [
+  '$resource',
+  function ($resource) {
+    return $resource('reviews/:reviewId', { reviewId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 //Setting up route
 angular.module('template').config([
   '$stateProvider',
@@ -1819,7 +1925,205 @@ angular.module('template').directive('fontAnimation', [function () {
       link: function postLink(scope, element, attrs) {
       }
     };
-  }]);'use strict';
+  }]);/**
+ * Created by KevinSo on 8/28/2014.
+ */
+'use strict';
+/**
+ * This AngularJS Directive is to allow easy usage of the Aloha Editor inside an AngularJS project.
+ *
+ * @class ngAlohaEditor
+ */
+/*
+ Props to https://github.com/esvit/ng-ckeditor for a nice example to implement an editor
+ */
+var module = angular.module('template', []);
+if (typeof ngAlohaEditorConfig === 'undefined') {
+  var ngAlohaEditorConfig = { baseUrl: '' };
+}
+/**
+ * Defines the configuration for the Directive
+ *
+ * @example
+ * var ngAlohaEditorConfig = { baseUrl: 'bower_components/ng-aloha-editor/' };
+ *
+ * @property ngAlohaEditorConfig
+ * @type Array
+ **/
+Aloha = window.Aloha || {};
+Aloha.settings = Aloha.settings || {};
+var DirectiveSettings = {
+    baseUrl: ngAlohaEditorConfig.baseUrl + 'libs/alohaeditor-0.23.26/aloha/lib',
+    logLevels: {
+      'error': true,
+      'warn': true,
+      'info': false,
+      'debug': false
+    },
+    errorhandling: false
+  };
+jQuery.extend(Aloha.settings, DirectiveSettings);
+module.directive('aloha', [
+  '$location',
+  '$rootScope',
+  function ($location, $rootScope) {
+    var count = 0;
+    var fromAloha = false;
+    /**
+     * Because AngularJS would route clicks on any links, but we
+     * want the user to be able to click on links so he can edit them.
+     *
+     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
+     *
+     * @method preventAngularRouting
+     * @param {Object} elem DOM Element with Aloha bound to it
+     * @return {boolean} false
+     **/
+    function preventAngularRouting(elem) {
+      Aloha.jQuery(elem).click(function (e) {
+        return false;
+      });
+    }
+    /**
+     * @method replaceAngularLinkClickHandler
+     * @param {Object} elem DOM Element with Aloha bound to it
+     **/
+    function replaceAngularLinkClickHandler(elem) {
+      preventAngularRouting(elem);
+      Aloha.jQuery(elem).on('click', 'a', function (e) {
+        var href = $(this).attr('href');
+        // Use metaKey for OSX and ctrlKey for PC.
+        if (e.metaKey || e.ctrlKey) {
+          if ('/' === href.charAt(0)) {
+            // Relative links withing the angular app.
+            $location.url(href);
+            e.preventDefault();
+          } else {
+            // Absolute links pointing outside the angular app.
+            window.location.href = href;
+          }
+        }
+      });
+    }
+    /**
+     * Also, we don't want the default ctrl+click behaviour of aloha, which
+     * is to do window.location.href = href because that would reload the page.
+     *
+     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
+     *
+     * @method disableAlohaCtrlClickHandler
+     **/
+    function disableAlohaCtrlClickHandler() {
+      Aloha.ready(function () {
+        Aloha.bind('aloha-editable-activated', function (event, msg) {
+          // There is no simple way to disable Aloha's ctrl-click
+          // behaviour. We know the handler is bound when the editable
+          // is activated, and with the timeout we make sure it is
+          // unbound again afterwards.
+          var editable = msg.editable;
+          setTimeout(function () {
+            editable.obj.unbind('click.aloha-link.meta-click-link');
+          }, 10);
+        });
+      });
+    }
+    function alohaElement(element) {
+      Aloha.ready(function () {
+        Aloha.jQuery(element).aloha();
+      });
+    }
+    function mahaloElement(element) {
+      Aloha.ready(function () {
+        Aloha.jQuery(element).mahalo();
+      });
+    }
+    // Only do once for each page load.
+    disableAlohaCtrlClickHandler();
+    return {
+      priority: -1000,
+      terminal: true,
+      scope: { alohaContent: '=' },
+      link: function (scope, elem, attrs) {
+        var elementId = '' + count++;
+        var uniqeClass = 'angular-aloha-element' + elementId;
+        elem[0].classList.add(uniqeClass);
+        elem.data('ng-aloha-element-id', elementId);
+        Aloha.ready(function () {
+          /**
+                 * The Text Editor Javascript is Loaded and Ready
+                 * @event texteditor-js-ready
+                 **/
+          scope.$emit('texteditor-js-ready');
+          if (!elem.hasClass('aloha-editable')) {
+            alohaElement(elem);
+          }
+          /**
+                 * The Text Editor has been bound to the object
+                 * @event texteditor-ready
+                 * @param {Object} Element DOM Element that Aloha has bound to
+                 **/
+          scope.$emit('texteditor-ready', elem);
+          Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
+          scope.$watch('alohaContent', function () {
+            // Check if the change comes from inside of Aloha
+            if (!fromAloha) {
+              Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
+            }
+          });
+          Aloha.bind('aloha-selection-changed', function (jQueryEvent, alohaEditable) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor has detected a change in it's selection
+                         * @event texteditor-selection-changed
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-selection-changed', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-editable-deactivated', function (jQueryEvent, alohaEditable) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor had deactivated editability
+                         * @event texteditor-editable-deactivated
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-editable-deactivated', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-smart-content-changed', function (jQueryEvent, alohaEditable) {
+            // Reset {bool} fromAloha to the false state
+            fromAloha = false;
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              scope.alohaContent = alohaEditable.editable.getContents();
+              fromAloha = true;
+              $rootScope.$$phase || $rootScope.$apply();
+              /**
+                         * The Text Editor has detected a change in it's content
+                         * @event texteditor-content-changed
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-content-changed', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-command-executed', function (jQueryEvent, eventArgument) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor has executed a command
+                         * @event texteditor-command-executed
+                         * @param {String} eventArgument executed command name
+                         **/
+              scope.$emit('texteditor-command-executed', eventArgument);
+            }
+          });
+        });
+        replaceAngularLinkClickHandler(elem);
+      }
+    };
+  }
+]);'use strict';
 angular.module('template').directive('setRowCol', [function () {
     return {
       template: '<div></div>',

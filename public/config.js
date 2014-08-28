@@ -8,7 +8,7 @@ var ApplicationConfiguration = (function() {
         [
             'ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils',
             'google-maps', 'mgo-angular-wizard', 'angularFileUpload',
-            'smart-table', 'ngAlohaEditor'
+            'smart-table'//, 'ngAlohaEditor'
         ];
 
 	// Add a new vertical module
