@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('galleries').controller('MenuformController', ['$scope','$upload', function($scope, $upload) {
+angular.module('galleries').controller('MenuformController', ['$scope','$upload', '$element', function($scope, $upload, $element) {
     $scope.title = 'Form Steps';
     $scope.user = {
         name:'Kevin',
@@ -72,4 +72,17 @@ angular.module('galleries').controller('MenuformController', ['$scope','$upload'
         { name: 'SE', id: 3 },
         { name: 'SW', id: 4 }
     ];
+
+    /*
+    $scope.test1 = function test1(ele){
+        console.log(ele);
+        //console.log(this);
+        TweenMax.to(ele.fromElement, .2, {opacity:0.2});
+    };
+    $scope.test2 = function test2(ele){
+        console.log(ele);
+        //console.log(this);
+        TweenMax.to(ele.fromElement, .2, {opacity:1});
+    }
+    */
 }]);
