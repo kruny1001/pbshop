@@ -24,7 +24,7 @@ angular.module('galleries')
                 if (newVal) {
                     $animate.addClass(element, "expand");
                     //ScrollTo Y close to a targeting content
-                    TweenMax.to(window, 1, {scrollTo:{y:element.offset().top - 60}, ease:Back.easeOut});
+                    TweenMax.to(window, 1.5, {scrollTo:{y:element.offset().top - 60}, ease:Back.easeOut});
                     //window.scrollTo();
                 } else {
                     $animate.removeClass(element, "expand");
