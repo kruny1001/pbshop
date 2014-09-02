@@ -11,7 +11,8 @@ var ApplicationConfiguration = function () {
         'ui.utils',
         'google-maps',
         'mgo-angular-wizard',
-        'angularFileUpload'
+        'angularFileUpload',
+        'smart-table'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -48,7 +49,13 @@ ApplicationConfiguration.registerModule('articles');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('draggable');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('galleries');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('gwas');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('template');'use strict';
 // Use Applicaion configuration module to register a new module
@@ -174,10 +181,25 @@ angular.module('core').controller('HeaderController', [
 ]);'use strict';
 angular.module('core').controller('HomeController', [
   '$scope',
+  '$element',
   'Authentication',
-  function ($scope, Authentication) {
+  function ($scope, $element, Authentication) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
+    $scope.firstJumbo = 'first-jumbo-content';
+    $scope.secondJumbo = 'second-jumbo-content';
+    $scope.thirdJumbo = 'third-jumbo-content';
+    var texts = $('.core-text-anni');
+    var tl = new TimelineMax({
+        repeat: 6,
+        repeatDelay: 1,
+        yoyo: true
+      });
+    tl.staggerTo(texts, 0.2, {
+      className: '+=superShadow',
+      top: '-=10px',
+      ease: Power1.easeIn
+    }, '0.3', 'start');
   }
 ]);'use strict';
 //Menu service used for managing  menus
@@ -311,10 +333,95 @@ angular.module('core').service('Menus', [function () {
     //Adding the topbar menu
     this.addMenu('topbar');
   }]);'use strict';
+//Setting up route
+angular.module('draggable').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Draggable state routing
+    $stateProvider.state('draggable-main', {
+      url: '/draggable',
+      templateUrl: 'modules/draggable/views/draggable-main.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('draggable').controller('DraggableController', [
+  '$scope',
+  function ($scope) {
+    // Controller Logic
+    // ...
+    var $snap = $('#snap'), $liveSnap = $('#liveSnap'), $container = $('.draggable-container'), gridWidth = 196, gridHeight = 100, gridRows = 6, gridColumns = 5, i, x, y;
+    //loop through and create the grid (a div for each cell). Feel free to tweak the variables above
+    for (i = 0; i < gridRows * gridColumns; i++) {
+      y = Math.floor(i / gridColumns) * gridHeight;
+      x = i * gridWidth % (gridColumns * gridWidth);
+      $('<div/>').css({
+        position: 'absolute',
+        border: '1px solid #454545',
+        width: gridWidth - 1,
+        height: gridHeight - 1,
+        top: y,
+        left: x
+      }).prependTo($container);
+    }
+    //set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
+    TweenLite.set($container, {
+      height: gridRows * gridHeight + 1,
+      width: gridColumns * gridWidth + 1
+    });
+    TweenLite.set('.draggable-box', {
+      width: gridWidth,
+      height: gridHeight,
+      lineHeight: gridHeight + 'px'
+    });
+    //the update() function is what creates the Draggable according to the options selected (snapping).
+    function update() {
+      var snap = $snap.prop('checked'), liveSnap = $liveSnap.prop('checked');
+      Draggable.create('.draggable-box', {
+        bounds: $container,
+        edgeResistance: 0.65,
+        type: 'x,y',
+        throwProps: true,
+        liveSnap: liveSnap,
+        snap: {
+          x: function (endValue) {
+            return snap || liveSnap ? Math.round(endValue / gridWidth) * gridWidth : endValue;
+          },
+          y: function (endValue) {
+            return snap || liveSnap ? Math.round(endValue / gridHeight) * gridHeight : endValue;
+          }
+        }
+      });
+    }
+    //when the user toggles one of the "snap" modes, make the necessary updates...
+    $snap.on('change', applySnap);
+    $liveSnap.on('change', applySnap);
+    function applySnap() {
+      if ($snap.prop('checked') || $liveSnap.prop('checked')) {
+        $('.draggable-box').each(function (index, element) {
+          TweenLite.to(element, 0.5, {
+            x: Math.round(element._gsTransform.x / gridWidth) * gridWidth,
+            y: Math.round(element._gsTransform.y / gridHeight) * gridHeight,
+            delay: 0.1,
+            ease: Power2.easeInOut
+          });
+        });
+      }
+      update();
+    }
+    update();
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('galleries').run([
   'Menus',
   function (Menus) {
+    // Set top bar menu items
+    //Menus.addMenuItem(menuId, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
+    Menus.addMenuItem('topbar', 'Galleries', 'galleries', 'dropdown', '/galleries(/create)?');
+    //Menus.addSubMenuItem(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, [menuItemUIRoute], [isPublic], [roles]);
+    Menus.addSubMenuItem('topbar', 'galleries', 'List Galleries', 'galleries');
+    //Menus.addSubMenuItem('topbar', 'galleries', 'View Test', 'galleries/gview');
+    Menus.addSubMenuItem('topbar', 'galleries', 'New Gallery', 'galleries/create');
   }
 ]);'use strict';
 //Setting up route
@@ -361,6 +468,16 @@ angular.module('galleries').controller('GalleriesController', [
   'Galleries',
   function ($scope, $stateParams, $location, Authentication, Galleries) {
     $scope.authentication = Authentication;
+    $scope.examples = [
+      {
+        name: 'Example One',
+        content: '<p style="">Pic 1</p><p style=""><img style="height: 103px; width: 118px; position: relative; margin: 0px; resize: none; zoom: 1; display: inline-block; padding: 2px; top: 0px; left: 0px; float: none;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSObpe9xATvc5SpkrWEtGS5ZWlSxmSjHhV3yIE604Arh3aoANOyJPAuGSc" title="" class=""></p><p style="">Pic 2</p><p style=""><img style="height: 130px; width: 117px; position: relative; margin: 0px; resize: none; zoom: 1; display: inline-block; top: 0px; left: 0px; padding: 3px;" src="http://stylonica.com/wp-content/uploads/2014/02/Cute-marshmallow-Wallpapers-HD.jpg" title="" class=""></p><p style=""><br></p><p style=""><br></p><p style=""><br></p><p style=""><br></p>'
+      },
+      {
+        name: 'Example Two',
+        content: '<h1>Ut enim consuetudo loquitur, id solum dicitur honestum, quod est populari fama gloriosum.</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Itaque contra est, ac dicitis; <b>Quid censes in Latino fore?</b> </p><p>Hic ambiguo ludimur. <a href="http://loripsum.net/" target="_blank">Disserendi artem nullam habuit.</a> <i>At multis se probavit.</i> Reguli reiciendam; </p><p>Quid autem habent admirationis, cum prope accesseris? Peccata paria. <i>Quid de Pythagora?</i> Illi enim inter se dissentiunt. <a href="http://loripsum.net/" target="_blank">Videamus animi partes, quarum est conspectus illustrior;</a> Utilitatis causa amicitia est quaesita. Duo Reges: constructio interrete. </p>'
+      }
+    ];
     // Create new Gallery
     $scope.create = function () {
       // Create new Gallery object
@@ -686,7 +803,8 @@ angular.module('galleries').controller('GviewController', [
 angular.module('galleries').controller('MenuformController', [
   '$scope',
   '$upload',
-  function ($scope, $upload) {
+  '$element',
+  function ($scope, $upload, $element) {
     $scope.title = 'Form Steps';
     $scope.user = {
       name: 'Kevin',
@@ -750,7 +868,18 @@ angular.module('galleries').controller('MenuformController', [
         name: 'SW',
         id: 4
       }
-    ];
+    ];  /*
+    $scope.test1 = function test1(ele){
+        console.log(ele);
+        //console.log(this);
+        TweenMax.to(ele.fromElement, .2, {opacity:0.2});
+    };
+    $scope.test2 = function test2(ele){
+        console.log(ele);
+        //console.log(this);
+        TweenMax.to(ele.fromElement, .2, {opacity:1});
+    }
+    */
   }
 ]);'use strict';
 angular.module('galleries').controller('MenulistController', [
@@ -765,46 +894,165 @@ angular.module('galleries').controller('MenulistController', [
     };
     $scope.contents = [
       {
-        title: 'pic1',
+        title: 'Info1',
         description: 'avatar1',
-        pic: '/modules/galleries/img/avatar-01.svg'
+        pic: '/modules/galleries/img/avatar-01.svg',
+        location: '',
+        Phone: '612-000-0001',
+        AverageScore: 5
       },
       {
-        title: 'pic2',
+        title: 'Info2',
         description: 'avatar2',
-        pic: '/modules/galleries/img/avatar-02.svg'
+        pic: '/modules/galleries/img/avatar-02.svg',
+        location: '',
+        Phone: '612-000-0002',
+        AverageScore: 5
       },
       {
-        title: 'pic3',
+        title: 'Info3',
         description: 'avatar3',
-        pic: '/modules/galleries/img/avatar-03.svg'
+        pic: '/modules/galleries/img/avatar-03.svg',
+        location: '',
+        Phone: '612-000-0003',
+        AverageScore: 5
       },
       {
-        title: 'pic4',
+        title: 'Info4',
         description: 'avatar4',
-        pic: '/modules/galleries/img/avatar-04.svg'
+        pic: '/modules/galleries/img/avatar-04.svg',
+        location: '',
+        Phone: '612-000-0004',
+        AverageScore: 5
       },
       {
-        title: 'pic5',
+        title: 'Info5',
         description: 'avatar5',
-        pic: '/modules/galleries/img/avatar-05.svg'
+        pic: '/modules/galleries/img/avatar-05.svg',
+        location: '',
+        Phone: '612-000-0005',
+        AverageScore: 5
       },
       {
-        title: 'pic6',
+        title: 'Info6',
         description: 'avatar6',
-        pic: '/modules/galleries/img/avatar-06.svg'
+        pic: '/modules/galleries/img/avatar-06.svg',
+        location: '',
+        Phone: '612-000-0006',
+        AverageScore: 5
       },
       {
-        title: 'pic7',
+        title: 'Info7',
         description: 'avatar',
-        pic: '/modules/galleries/img/avatar-07.svg'
+        pic: '/modules/galleries/img/avatar-07.svg',
+        location: '',
+        Phone: '612-000-0007',
+        AverageScore: 5
       },
       {
-        title: 'pic8',
+        title: 'Info6',
         description: 'avatar',
-        pic: '/modules/galleries/img/avatar-08.svg'
+        pic: '/modules/galleries/img/avatar-08.svg',
+        location: '',
+        Phone: '612-000-0008',
+        AverageScore: 5
       }
-    ];
+    ];  /*
+        var preloader = new GSPreloader({
+            radius:42,
+            dotSize:15,
+            dotCount:10,
+            colors:["#61AC27","#555","purple","#FF6600"], //have as many or as few colors as you want.
+            boxOpacity:0.2,
+            boxBorder:"1px solid #AAA",
+            animationOffset: 1.8, //jump 1.8 seconds into the animation for a more active part of the spinning initially (just looks a bit better in my opinion)
+        });
+
+        //open the preloader
+        preloader.active(true);
+
+        //for testing: click the window to toggle open/close the preloader
+        document.onclick = document.ontouchstart = function() {
+            preloader.active( !preloader.active() );
+        };
+
+        //this is the whole preloader class/function
+        function GSPreloader(options) {
+            options = options || {};
+            var parent = options.parent || document.body,
+                element = this.element = document.createElement("div"),
+                radius = options.radius || 42,
+                dotSize = options.dotSize || 15,
+                animationOffset = options.animationOffset || 1.8, //jumps to a more active part of the animation initially (just looks cooler especially when the preloader isn't displayed for very long)
+                createDot = function(rotation) {
+                    var dot = document.createElement("div");
+                    element.appendChild(dot);
+                    TweenLite.set(dot, {width:dotSize, height:dotSize, transformOrigin:(-radius + "px 0px"), x: radius, backgroundColor:colors[colors.length-1], borderRadius:"50%", force3D:true, position:"absolute", rotation:rotation});
+                    dot.className = options.dotClass || "preloader-dot";
+                    return dot;
+                },
+                i = options.dotCount || 10,
+                rotationIncrement = 360 / i,
+                colors = options.colors || ["#61AC27","black"],
+                animation = new TimelineLite({paused:true}),
+                dots = [],
+                isActive = false,
+                box = document.createElement("div"),
+                tl, dot, closingAnimation, j;
+            colors.push(colors.shift());
+
+            //setup background box
+            TweenLite.set(box, {width: radius * 2 + 70, height: radius * 2 + 70, borderRadius:"14px", backgroundColor:options.boxColor || "white", border: options.boxBorder || "1px solid #AAA", position:"absolute", xPercent:-50, yPercent:-50, opacity:((options.boxOpacity != null) ? options.boxOpacity : 0.3)});
+            box.className = options.boxClass || "preloader-box";
+            element.appendChild(box);
+
+            parent.appendChild(element);
+            TweenLite.set(element, {position:"fixed", top:"45%", left:"50%", perspective:600, overflow:"visible", zIndex:2000});
+            animation.from(box, 0.1, {opacity:0, scale:0.1, ease:Power1.easeOut}, animationOffset);
+            while (--i > -1) {
+                dot = createDot(i * rotationIncrement);
+                dots.unshift(dot);
+                animation.from(dot, 0.1, {scale:0.01, opacity:0, ease:Power1.easeOut}, animationOffset);
+                //tuck the repeating parts of the animation into a nested TimelineMax (the intro shouldn't be repeated)
+                tl = new TimelineMax({repeat:-1, repeatDelay:0.25});
+                for (j = 0; j < colors.length; j++) {
+                    tl.to(dot, 2.5, {rotation:"-=360", ease:Power2.easeInOut}, j * 2.9)
+                        .to(dot, 1.2, {skewX:"+=360", backgroundColor:colors[j], ease:Power2.easeInOut}, 1.6 + 2.9 * j);
+                }
+                //stagger its placement into the master timeline
+                animation.add(tl, i * 0.07);
+            }
+            if (TweenLite.render) {
+                TweenLite.render(); //trigger the from() tweens' lazy-rendering (otherwise it'd take one tick to render everything in the beginning state, thus things may flash on the screen for a moment initially). There are other ways around this, but TweenLite.render() is probably the simplest in this case.
+            }
+
+            //call preloader.active(true) to open the preloader, preloader.active(false) to close it, or preloader.active() to get the current state.
+            this.active = function(show) {
+                if (!arguments.length) {
+                    return isActive;
+                }
+                if (isActive != show) {
+                    isActive = show;
+                    if (closingAnimation) {
+                        closingAnimation.kill(); //in case the preloader is made active/inactive/active/inactive really fast and there's still a closing animation running, kill it.
+                    }
+                    if (isActive) {
+                        element.style.visibility = "visible";
+                        TweenLite.set([element, box], {rotation:0});
+                        animation.play(animationOffset);
+                    } else {
+                        closingAnimation = new TimelineLite();
+                        if (animation.time() < animationOffset + 0.3) {
+                            animation.pause();
+                            closingAnimation.to(element, 1, {rotation:-360, ease:Power1.easeInOut}).to(box, 1, {rotation:360, ease:Power1.easeInOut}, 0);
+                        }
+                        closingAnimation.staggerTo(dots, 0.3, {scale:0.01, opacity:0, ease:Power1.easeIn, overwrite:false}, 0.05, 0).to(box, 0.4, {opacity:0, scale:0.2, ease:Power2.easeIn, overwrite:false}, 0).call(function() { animation.pause(); closingAnimation = null; }).set(element, {visibility:"hidden"});
+                    }
+                }
+                return this;
+            };
+        }
+        */
   }
 ]);'use strict';
 angular.module('galleries').controller('TestpolymerController', [
@@ -861,7 +1109,28 @@ angular.module('galleries').controller('UserlistController', [
       $scope.galleries = Listusers.query();
     };
   }
-]);/**
+]);'use strict';
+angular.module('galleries').directive('hoverExpandShrink', [function () {
+    return {
+      restrict: 'A',
+      link: function postLink(scope, element, attrs) {
+        // Hover expand shrink directive logic
+        element.on('mouseleave', function () {
+          TweenMax.to(element, 0.5, {
+            scale: 1,
+            ease: Back.easeOut
+          });
+        });
+        element.on('mouseenter', function () {
+          //console.log('enter');
+          TweenMax.to(element, 0.5, {
+            scale: 1.2,
+            ease: Back.easeOut
+          });
+        });
+      }
+    };
+  }]);/**
  * Created by KevinSo on 7/31/2014.
  */
 'use strict';
@@ -1510,11 +1779,166 @@ angular.module('galleries').factory('Listusers', [
 */
 'use strict';
 //Setting up route
+angular.module('gwas').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Gwas state routing
+    $stateProvider.state('gwas-data-start', {
+      url: '/gwas-data/gwas-data-start',
+      templateUrl: 'modules/gwas/views/gwas-data-start.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('gwas').controller('GwasdatastartController', [
+  '$scope',
+  'Gwas',
+  function ($scope, Gwas) {
+    $scope.rowCollection = [
+      {
+        firstName: 'Kevin',
+        lastName: 'Son',
+        birthDate: new Date('1987-05-21'),
+        balance: 102,
+        email: 'whatever@gmail.com'
+      },
+      {
+        firstName: 'Kenny',
+        lastName: 'Park',
+        birthDate: new Date('1987-04-25'),
+        balance: -2323.22,
+        email: 'oufblandou@gmail.com'
+      },
+      {
+        firstName: 'Robert',
+        lastName: 'Frere',
+        birthDate: new Date('1955-08-27'),
+        balance: 42343,
+        email: 'raymondef@gmail.com'
+      }
+    ];
+    $scope.removeRow = function removeRow(row) {
+      var index = $scope.rowCollection.indexOf(row);
+      if (index !== -1) {
+        $scope.rowCollection.splice(index, 1);
+      }
+    };
+    $scope.find = function () {
+      $scope.Users = Gwas.query();  //console.log($scope.Users);
+    };
+  }
+]);/**
+ * Created by KevinSo on 8/27/2014.
+ */
+'use strict';
+//Articles service used for communicating with the articles REST endpoints
+angular.module('gwas').factory('Gwas', [
+  '$resource',
+  function ($resource) {
+    return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
+  }
+]);'use strict';
+// Configuring the Articles module
+angular.module('reviews').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Reviews', 'reviews', 'dropdown', '/reviews(/create)?');
+    Menus.addSubMenuItem('topbar', 'reviews', 'List Reviews', 'reviews');
+    Menus.addSubMenuItem('topbar', 'reviews', 'New Review', 'reviews/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('reviews').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Reviews state routing
+    $stateProvider.state('listReviews', {
+      url: '/reviews',
+      templateUrl: 'modules/reviews/views/list-reviews.client.view.html'
+    }).state('createReview', {
+      url: '/reviews/create',
+      templateUrl: 'modules/reviews/views/create-review.client.view.html'
+    }).state('viewReview', {
+      url: '/reviews/:reviewId',
+      templateUrl: 'modules/reviews/views/view-review.client.view.html'
+    }).state('editReview', {
+      url: '/reviews/:reviewId/edit',
+      templateUrl: 'modules/reviews/views/edit-review.client.view.html'
+    });
+  }
+]);'use strict';
+// Reviews controller
+angular.module('reviews').controller('ReviewsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Reviews',
+  function ($scope, $stateParams, $location, Authentication, Reviews) {
+    $scope.authentication = Authentication;
+    // Create new Review
+    $scope.create = function () {
+      // Create new Review object
+      var review = new Reviews({ name: this.name });
+      // Redirect after save
+      review.$save(function (response) {
+        $location.path('reviews/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Review
+    $scope.remove = function (review) {
+      if (review) {
+        review.$remove();
+        for (var i in $scope.reviews) {
+          if ($scope.reviews[i] === review) {
+            $scope.reviews.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.review.$remove(function () {
+          $location.path('reviews');
+        });
+      }
+    };
+    // Update existing Review
+    $scope.update = function () {
+      var review = $scope.review;
+      review.$update(function () {
+        $location.path('reviews/' + review._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Reviews
+    $scope.find = function () {
+      $scope.reviews = Reviews.query();
+    };
+    // Find existing Review
+    $scope.findOne = function () {
+      $scope.review = Reviews.get({ reviewId: $stateParams.reviewId });
+    };
+  }
+]);'use strict';
+//Reviews service used to communicate Reviews REST endpoints
+angular.module('reviews').factory('Reviews', [
+  '$resource',
+  function ($resource) {
+    return $resource('reviews/:reviewId', { reviewId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
+//Setting up route
 angular.module('template').config([
   '$stateProvider',
   function ($stateProvider) {
     // Template state routing
-    $stateProvider.state('draggable', {
+    $stateProvider.state('test-font-animation', {
+      url: '/test-font-animation',
+      templateUrl: 'modules/template/views/test-font-animation.client.view.html'
+    }).state('draggable', {
       url: '/draggable',
       templateUrl: 'modules/template/views/draggable.client.view.html'
     }).state('set-row-col', {
@@ -1594,6 +2018,15 @@ angular.module('template').controller('DraggableController', [
   }
 ]);'use strict';
 angular.module('template').controller('SetrowcolController', [
+  '$scope',
+  function ($scope) {
+    $scope.title = 'Set Row and Col';
+  }
+]);/**
+ * Created by KevinSo on 8/26/2014.
+ */
+'use strict';
+angular.module('template').controller('TestfontanimationController', [
   '$scope',
   function ($scope) {
     $scope.title = 'Set Row and Col';
@@ -1689,7 +2122,216 @@ angular.module('template').directive('bannerFront', [function () {
         }  //element.text('this is the bannerFront directive');
       }
     };
-  }]);'use strict';
+  }]);/**
+ * Created by KevinSo on 8/26/2014.
+ */
+'use strict';
+angular.module('template').directive('fontAnimation', [function () {
+    return {
+      templateUrl: 'modules/template/directives/fontAnimation.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+      }
+    };
+  }]);/**
+ * Created by KevinSo on 8/28/2014.
+ */
+'use strict';
+/**
+ * This AngularJS Directive is to allow easy usage of the Aloha Editor inside an AngularJS project.
+ *
+ * @class ngAlohaEditor
+ */
+/*
+ Props to https://github.com/esvit/ng-ckeditor for a nice example to implement an editor
+ */
+var module = angular.module('template', []);
+if (typeof ngAlohaEditorConfig === 'undefined') {
+  var ngAlohaEditorConfig = { baseUrl: '' };
+}
+/**
+ * Defines the configuration for the Directive
+ *
+ * @example
+ * var ngAlohaEditorConfig = { baseUrl: 'bower_components/ng-aloha-editor/' };
+ *
+ * @property ngAlohaEditorConfig
+ * @type Array
+ **/
+Aloha = window.Aloha || {};
+Aloha.settings = Aloha.settings || {};
+var DirectiveSettings = {
+    baseUrl: ngAlohaEditorConfig.baseUrl + 'libs/alohaeditor-0.23.26/aloha/lib',
+    logLevels: {
+      'error': true,
+      'warn': true,
+      'info': false,
+      'debug': false
+    },
+    errorhandling: false
+  };
+jQuery.extend(Aloha.settings, DirectiveSettings);
+module.directive('aloha', [
+  '$location',
+  '$rootScope',
+  function ($location, $rootScope) {
+    var count = 0;
+    var fromAloha = false;
+    /**
+     * Because AngularJS would route clicks on any links, but we
+     * want the user to be able to click on links so he can edit them.
+     *
+     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
+     *
+     * @method preventAngularRouting
+     * @param {Object} elem DOM Element with Aloha bound to it
+     * @return {boolean} false
+     **/
+    function preventAngularRouting(elem) {
+      Aloha.jQuery(elem).click(function (e) {
+        return false;
+      });
+    }
+    /**
+     * @method replaceAngularLinkClickHandler
+     * @param {Object} elem DOM Element with Aloha bound to it
+     **/
+    function replaceAngularLinkClickHandler(elem) {
+      preventAngularRouting(elem);
+      Aloha.jQuery(elem).on('click', 'a', function (e) {
+        var href = $(this).attr('href');
+        // Use metaKey for OSX and ctrlKey for PC.
+        if (e.metaKey || e.ctrlKey) {
+          if ('/' === href.charAt(0)) {
+            // Relative links withing the angular app.
+            $location.url(href);
+            e.preventDefault();
+          } else {
+            // Absolute links pointing outside the angular app.
+            window.location.href = href;
+          }
+        }
+      });
+    }
+    /**
+     * Also, we don't want the default ctrl+click behaviour of aloha, which
+     * is to do window.location.href = href because that would reload the page.
+     *
+     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
+     *
+     * @method disableAlohaCtrlClickHandler
+     **/
+    function disableAlohaCtrlClickHandler() {
+      Aloha.ready(function () {
+        Aloha.bind('aloha-editable-activated', function (event, msg) {
+          // There is no simple way to disable Aloha's ctrl-click
+          // behaviour. We know the handler is bound when the editable
+          // is activated, and with the timeout we make sure it is
+          // unbound again afterwards.
+          var editable = msg.editable;
+          setTimeout(function () {
+            editable.obj.unbind('click.aloha-link.meta-click-link');
+          }, 10);
+        });
+      });
+    }
+    function alohaElement(element) {
+      Aloha.ready(function () {
+        Aloha.jQuery(element).aloha();
+      });
+    }
+    function mahaloElement(element) {
+      Aloha.ready(function () {
+        Aloha.jQuery(element).mahalo();
+      });
+    }
+    // Only do once for each page load.
+    disableAlohaCtrlClickHandler();
+    return {
+      priority: -1000,
+      terminal: true,
+      scope: { alohaContent: '=' },
+      link: function (scope, elem, attrs) {
+        var elementId = '' + count++;
+        var uniqeClass = 'angular-aloha-element' + elementId;
+        elem[0].classList.add(uniqeClass);
+        elem.data('ng-aloha-element-id', elementId);
+        Aloha.ready(function () {
+          /**
+                 * The Text Editor Javascript is Loaded and Ready
+                 * @event texteditor-js-ready
+                 **/
+          scope.$emit('texteditor-js-ready');
+          if (!elem.hasClass('aloha-editable')) {
+            alohaElement(elem);
+          }
+          /**
+                 * The Text Editor has been bound to the object
+                 * @event texteditor-ready
+                 * @param {Object} Element DOM Element that Aloha has bound to
+                 **/
+          scope.$emit('texteditor-ready', elem);
+          Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
+          scope.$watch('alohaContent', function () {
+            // Check if the change comes from inside of Aloha
+            if (!fromAloha) {
+              Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
+            }
+          });
+          Aloha.bind('aloha-selection-changed', function (jQueryEvent, alohaEditable) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor has detected a change in it's selection
+                         * @event texteditor-selection-changed
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-selection-changed', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-editable-deactivated', function (jQueryEvent, alohaEditable) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor had deactivated editability
+                         * @event texteditor-editable-deactivated
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-editable-deactivated', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-smart-content-changed', function (jQueryEvent, alohaEditable) {
+            // Reset {bool} fromAloha to the false state
+            fromAloha = false;
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              scope.alohaContent = alohaEditable.editable.getContents();
+              fromAloha = true;
+              $rootScope.$$phase || $rootScope.$apply();
+              /**
+                         * The Text Editor has detected a change in it's content
+                         * @event texteditor-content-changed
+                         * @param {Object} jQueryEvent jQuery Event
+                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
+                         **/
+              scope.$emit('texteditor-content-changed', jQueryEvent, alohaEditable);
+            }
+          });
+          Aloha.bind('aloha-command-executed', function (jQueryEvent, eventArgument) {
+            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
+              /**
+                         * The Text Editor has executed a command
+                         * @event texteditor-command-executed
+                         * @param {String} eventArgument executed command name
+                         **/
+              scope.$emit('texteditor-command-executed', eventArgument);
+            }
+          });
+        });
+        replaceAngularLinkClickHandler(elem);
+      }
+    };
+  }
+]);'use strict';
 angular.module('template').directive('setRowCol', [function () {
     return {
       template: '<div></div>',
@@ -1700,10 +2342,7 @@ angular.module('template').directive('setRowCol', [function () {
         element.text('this is the setRowCol directive');
       }
     };
-  }]);/**
- * Created by Kevin on 8/15/2014.
- */
-'use strict';
+  }]);'use strict';
 // Config HTTP Error Handling
 angular.module('users').config([
   '$httpProvider',

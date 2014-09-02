@@ -13,8 +13,6 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-				//'public/lib/bootstrap/dist/css/bootstrap.css',
-				//'public/lib/bootstrap/dist/css/bootstrap-theme.css',
                 'public/css/style.css'
 			],
 			js: [
@@ -25,29 +23,25 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-
                 'public/lib/lodash/dist/lodash.underscore.min.js',
                 'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
-
                 'public/lib/ng-file-upload/angular-file-upload.min.js',
-
-
-                //'public/lib/underscore/underscore.js',
-                //'public/lib/angular-bind-polymer/angular_bind_polymer.js',
                 'public/lib/angular-wizard/dist/angular-wizard.min.js',
-                'public/lib/gsap/src/minified/utils/Draggable.min.js',
+
                 'public/lib/gsap/src/minified/TweenMax.min.js',
                 'public/lib/gsap/src/minified/TimelineMax.min.js',
-                'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js'
-                //'public/modules/galleries/temp/ThrowPropsPlugin.min.js',
-                //'public/lib/jquery/dist/jquery.min.js'
-
+                'public/lib/gsap/src/minified/utils/Draggable.min.js',
+                'public/lib/gsap/src/minified/plugins/ThrowPropsPlugin.min.js',
+                "public/lib/gsap/src/minified/plugins/CSSPlugin.min.js",
+                'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js',
+                'public/lib/jquery/dist/jquery.min.js',
+                'public/lib/angular-smart-table/dist/smart-table.min.js',
+                'public/lib/requirejs/require.js',
+                "public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js"
 			]
 		},
 		css: [
             'public/dist/css/style.min.css'
-            //'public/css/*.css',
-            //'public/modules/**/css/*.css'
 		],
 		js: [
 			'public/config.js',

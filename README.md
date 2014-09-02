@@ -222,3 +222,12 @@ http://codepen.io/GreenSock/pen/jiEyG
 
 ##preloader##
 http://codepen.io/GreenSock/pen/KCaBn
+
+#8/18#
+Front View
+http://kevangular.herokuapp.com/
+
+Model: https://testcenter.duolingo.com/
+
+#8/19#
+CSS 

@@ -8,43 +8,20 @@
           content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-    <!--
-    <script src='/lib/lodash/dist/lodash.underscore.min.js'></script>
-    <script src='/lib/angular-google-maps/dist/angular-google-maps.min.js'></script>
-    -->
 
-    <!-- Polymer Integration
-    <script src="/lib/platform/platform.js"></script>
+    <!-- Aloha Editor-->
+    <script type="text/javascript">
+        var Aloha = window.Aloha || ( window.Aloha = {} );
 
-    <link rel="import" href="/lib/font-roboto/roboto.html">
-
-	<link rel="import" href="/lib/core-header-panel/core-header-panel.html">
-
-
-    <link rel="import" href="/lib/core-toolbar/core-toolbar.html">
-    <link rel="import" href="/lib/paper-tabs/paper-tabs.html">
-
-    <link rel="import" href="/lib/paper-elements/paper-elements.html">
-
-
-    <link rel="import" href="/lib/core-icon-button/core-icon-button.html">
-
-    <link rel="import" href="/lib/paper-dialog/paper-dialog-transition.html">
-    <link rel="import" href="/lib/paper-dialog/paper-dialog.html">
-
-    <style shim-shadowdom>
-        core-toolbar {
-            background-color: #CFA0E9;
+        Aloha.settings = {
+            plugins: {
+                load: "common/ui, common/format, common/paste, common/block, common/list, common/table, common/image"
+            }
         }
+    </script>
 
-        core-toolbar.dark-theme {
-            background-color: #7D25AC;
-            color: #f1f1f1;
-            fill: #f1f1f1;
-        }
-    </style>
+    <!-- END Aloha Editor-->
 
-	-->
 	<!-- General META -->
 	<meta charset="utf-8">
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -87,11 +64,7 @@
 
 	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
 
-	<section class="content">
-		<section class="container">
-			{% block content %}{% endblock %}
-		</section>
-	</section>
+    {% block content %}{% endblock %}
 
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
@@ -104,8 +77,9 @@
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
-	<script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+	<script async type="text/javascript" src="http://localhost:35729/livereload.js"></script>
 	{% endif %}
+
 </body>
 
 </html>

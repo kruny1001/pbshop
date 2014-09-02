@@ -4,7 +4,8 @@ html body {
 }
 
 body {
-  margin: 0;
+  max-width:1200px;
+  margin: auto;
 }
 
 .sample {
@@ -14,4 +15,8 @@ body {
 .navbar {
   background: -webkit-linear-gradient(top,#454B56,#393F48);
   color: rgba(255,255,255,0.85);
+}
+
+footer[role="contentinfo"]{
+  clear:both;
 }

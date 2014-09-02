@@ -18,6 +18,9 @@
     "lodash": "~2.4.1",
     "angular-wizard": "~0.4.0",
     "ng-file-upload": "~1.6.5",
-    "ng-file-upload-shim": "~1.6.5"
+    "ng-file-upload-shim": "~1.6.5",
+    "angular-smart-table": "*",
+    "ng-aloha-editor": "~0.0.2",
+    "requirejs": "~2.1.14"
   }
 }

@@ -1,0 +1,78 @@
+<section data-ng-controller="DraggableController">
+    <style>
+        .draggable-main{
+            background-color:black;
+            width:978px;
+            font-family: Signika Negative, Asap, sans-serif;
+        }
+        .draggable-container{
+            height:801px;
+            overflow:visible;
+            padding:0;
+            position:relative;
+        }
+        .draggable-box{
+            background-color: #91e600;
+            text-align: center;
+            font-family: Asap, Avenir, Arial, sans-serif;
+            width: 196px;
+            height: 100px;
+            line-height: 100px;
+            color: black;
+            position: absolute;
+            top:0;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .draggable-controls{
+            background-color: #222;
+            border: 1px solid #555;
+            color: #bbb;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .draggable-controls ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .draggable-controls li{
+            display: inline-block;
+            padding: 8px 0 8px 10px;
+            margin:0;
+        }
+        .draggable-controls input {
+            vertical-align:middle;
+            cursor: pointer;
+        }
+        .draggable-controls .controlsTitle {
+            border-right:1px solid #555;
+            border-bottom:none;
+            padding-right:10px;
+        }
+    </style>
+    <br>
+    <br>
+    <br>
+    This is the Draggable main
+    <div class="draggable-main">
+        <link href='http://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Signika+Negative:300,400,700' rel='stylesheet' type='text/css'>
+        <div class="draggable-container">
+            <div class="draggable-box" id="box1">Drag and throw me</div>
+            <div class="draggable-box" id="box2" style="left:392px; background-color:red;">Drag and throw me too</div>
+        </div>
+        <div class="draggable-controls">
+            <ul>
+                <li class="controlsTitle">Options</li>
+                <li>
+                    <label><input type="checkbox" name="snap" id="snap" value="1" /> Snap end position to grid</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" name="liveSnap" id="liveSnap" value="1" /> Live snap</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
