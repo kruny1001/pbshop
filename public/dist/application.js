@@ -12,7 +12,8 @@ var ApplicationConfiguration = function () {
         'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
-        'smart-table'
+        'smart-table',
+        'ui.ace'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -54,6 +55,8 @@ ApplicationConfiguration.registerModule('draggable');'use strict';
 ApplicationConfiguration.registerModule('galleries');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('gwas');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('opencpu');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
@@ -1837,6 +1840,45 @@ angular.module('gwas').factory('Gwas', [
     return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
+//Setting up route
+angular.module('opencpu').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Opencpu state routing
+    $stateProvider.state('gwas-t1', {
+      url: '/gwas-t1',
+      templateUrl: 'modules/opencpu/views/gwas-t1.client.view.html'
+    });
+  }
+]);/*
+ http://ramnathv.github.io/rCharts/
+
+*/
+'use strict';
+ocpu.seturl('//ramnathv.ocpu.io/rCharts/R');
+angular.module('opencpu').controller('GwasT1Controller', [
+  '$scope',
+  function ($scope) {
+    $scope.aceOptions = {
+      theme: 'solarized_dark',
+      mode: 'r',
+      useWrapMode: true
+    };
+    $scope.example1 = 'library(rCharts)\n' + 'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' + 'nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")';
+    $scope.example2 = 'library(rCharts)\n' + 'data(economics, package = "ggplot2")\n' + 'econ <- transform(economics, date = as.character(date))\n' + 'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)';
+    $scope.makeChart = function (num, example) {
+      console.log(num);
+      console.log(example);
+      var req = ocpu.call('make_chart', { text: example }, function (session) {
+          $('#output' + num).attr('src', session.getLoc() + 'files/output.html');
+        }).fail(function (text) {
+          alert('Error: ' + req.responseText);
+        });
+    };
+    $scope.makeChart(1, $scope.example1);
+    $scope.makeChart(2, $scope.example2);
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('reviews').run([
   'Menus',
@@ -2031,7 +2073,8 @@ angular.module('template').controller('TestfontanimationController', [
   function ($scope) {
     $scope.title = 'Set Row and Col';
   }
-]);'use strict';
+]);//D:\git\pbshop\public\modules\template\directives\banner-front.client.directive.js
+'use strict';
 angular.module('template').directive('bannerFront', [function () {
     return {
       templateUrl: 'modules/template/directives/banner-front.html',
@@ -2120,17 +2163,6 @@ angular.module('template').directive('bannerFront', [function () {
         };
         function updateSlider() {
         }  //element.text('this is the bannerFront directive');
-      }
-    };
-  }]);/**
- * Created by KevinSo on 8/26/2014.
- */
-'use strict';
-angular.module('template').directive('fontAnimation', [function () {
-    return {
-      templateUrl: 'modules/template/directives/fontAnimation.html',
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
       }
     };
   }]);/**
