@@ -19,5 +19,9 @@
 			<span data-ng-bind="article.user.displayName"></span>
 		</em>
 	</small>
-	<p class="lead" data-ng-bind="article.content"></p>
+
+    {{article.content}}
+
+    <div data-aloha-content='article.content'>
+    </div>
 </section>

@@ -96,10 +96,11 @@ angular.module('articles').config([
 angular.module('articles').controller('ArticlesController', [
   '$scope',
   '$stateParams',
+  '$sce',
   '$location',
   'Authentication',
   'Articles',
-  function ($scope, $stateParams, $location, Authentication, Articles) {
+  function ($scope, $stateParams, $sce, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
     $scope.create = function () {
       var article = new Articles({
@@ -141,6 +142,9 @@ angular.module('articles').controller('ArticlesController', [
     };
     $scope.findOne = function () {
       $scope.article = Articles.get({ articleId: $stateParams.articleId });
+    };
+    $scope.to_trusted = function (html_code) {
+      return $sce.trustAsHtml(html_code);
     };
   }
 ]);'use strict';
@@ -203,6 +207,31 @@ angular.module('core').controller('HomeController', [
       top: '-=10px',
       ease: Power1.easeIn
     }, '0.3', 'start');
+  }
+]);/**
+ * Created by KevinSo on 9/3/2014.
+ */
+'use strict';
+angular.module('core').controller('PlanController', [
+  '$scope',
+  '$element',
+  'Authentication',
+  'Getplans',
+  function ($scope, $element, Authentication, Getplans) {
+    $scope.plans = Getplans;
+    $scope.find = function () {
+      $scope.plans = Getplans.query();  //$scope.plans.contents = $sce.trustAsHtml($scope.plans.contents);
+    };
+    $scope.find();  //$scope.plans = [{title: 'test1', body:'content', date:""}];
+  }
+]);'use strict';
+angular.module('core').factory('Getplans', [
+  '$resource',
+  function ($resource) {
+    // Getplans service logic
+    // ...
+    // Public API
+    return $resource('/articles', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
 //Menu service used for managing  menus
@@ -1840,6 +1869,12 @@ angular.module('gwas').factory('Gwas', [
     return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
+// Opencpu module config
+angular.module('opencpu').run([
+  'Menus',
+  function (Menus) {
+  }
+]);'use strict';
 //Setting up route
 angular.module('opencpu').config([
   '$stateProvider',
@@ -1859,12 +1894,15 @@ ocpu.seturl('//ramnathv.ocpu.io/rCharts/R');
 angular.module('opencpu').controller('GwasT1Controller', [
   '$scope',
   function ($scope) {
+    // ace editor Setting
     $scope.aceOptions = {
       theme: 'solarized_dark',
       mode: 'r',
       useWrapMode: true
     };
+    //ex1
     $scope.example1 = 'library(rCharts)\n' + 'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' + 'nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")';
+    //ex2
     $scope.example2 = 'library(rCharts)\n' + 'data(economics, package = "ggplot2")\n' + 'econ <- transform(economics, date = as.character(date))\n' + 'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)';
     $scope.makeChart = function (num, example) {
       console.log(num);

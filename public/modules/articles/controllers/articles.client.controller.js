@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$sce','$location', 'Authentication', 'Articles',
+	function($scope, $stateParams, $sce, $location, Authentication, Articles) {
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
@@ -47,6 +47,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 		$scope.find = function() {
 			$scope.articles = Articles.query();
+
 		};
 
 		$scope.findOne = function() {
@@ -54,5 +55,9 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				articleId: $stateParams.articleId
 			});
 		};
+
+        $scope.to_trusted = function(html_code) {
+            return $sce.trustAsHtml(html_code);
+        }
 	}
 ]);

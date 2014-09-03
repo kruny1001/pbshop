@@ -7,16 +7,18 @@
 ocpu.seturl("//ramnathv.ocpu.io/rCharts/R");
 angular.module('opencpu').controller('GwasT1Controller', ['$scope',
 	function($scope) {
+        // ace editor Setting
         $scope.aceOptions = {
             theme: 'solarized_dark',
             mode: 'r',
             useWrapMode : true
         }
+        //ex1
         $scope.example1 = 'library(rCharts)\n'+
             'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' +
             'nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")';
 
-
+        //ex2
         $scope.example2 = 'library(rCharts)\n'+
             'data(economics, package = "ggplot2")\n'+
             'econ <- transform(economics, date = as.character(date))\n' +

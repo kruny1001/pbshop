@@ -47,8 +47,6 @@
     </div>
     -->
 
-    <banner-front></banner-front>
-
 	<!--
     <div class="jumbotron text-center">
 		<div class="row">
@@ -110,20 +108,22 @@
 	</div>
     <hr/>
     -->
-	<div class="well" style="margin-top: 50px">
-        <div class="core-title">Research</div>
-        <div class="well" style="margin:20px;">
+    <br><br><br>
+    <div class="core-title">Research</div>
+	    <div class="well" style="margin:20px;">
             <div class="core-subtitle">R</div>
-                <ul>
-                    <li><a href="/#!/gwas-t1"><h4><span class="glyphicon glyphicon-asterisk"></span>rChart Examples</h4></a></li>
-                </ul>
+            <ul>
+                <li><a href="/#!/gwas-t1"><h4><span class="glyphicon glyphicon-asterisk"></span> rChart Examples</h4></a></li>
+            </ul>
         </div>
+    </div>
+
 		<div class="core-title">History of Development</div>
         <div class="well" style="margin:20px;">
 			<div class="core-subtitle">UI</div>
 			<ul>
                 <li><a  href="/#!/gwas-data/gwas-data-start"><h4><span class="glyphicon glyphicon-asterisk"></span> Users Management Dashboard</h4></a></li>
-                <li><a  href="/#!/draggable"><h4><span class="glyphicon glyphicon-asterisk"></span>Draggable Interface </h4></a></li>
+                <li><a  href="/#!/draggable"><h4><span class="glyphicon glyphicon-asterisk"></span> Draggable Interface </h4></a></li>
                 <li><a  href="/#!/galleries/create"><h4><span class="glyphicon glyphicon-asterisk"></span> Editor Module</h4></a></li>
 
 				<li><a  href="/#!/galleries/gview"><h4><span class="glyphicon glyphicon-asterisk"></span> User Interface (animation)</h4></a></li>
@@ -139,4 +139,14 @@
             </ul>
         </div>
 	</div>
+
+    <div class="core-title">History of Research</div>
+    <div class="well" data-ng-controller="PlanController" style="margin:20px;">
+        <div class="core-subtitle">Plan</div>
+        <ul>
+            <li ng-repeat="plan in plans"><a  data-ng-href="#!/articles/{{plan._id}}"><h4><span class="glyphicon glyphicon-asterisk"></span> {{plan.title}} <small> by {{plan.user.displayName}}
+                (<span data-ng-bind="plan.created | date:'mediumDate'"></span>)
+            </small></h4></a></li>
+        </ul>
+    </div>
 </section>
