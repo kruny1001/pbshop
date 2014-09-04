@@ -19,6 +19,15 @@ Imports:
     yaml
 Suggests: opencpu (>= 1.2)
 Collate:
+    'areaplot.R'
+    'getcurrent.R'
+    'highlowplot.R'
+    'listbyindustry.R'
+    'liststocks.R'
+    'makestocktable.R'
+    'plotwrapper.R'
+    'smoothplot.R'
+    'yahoodata.R'
     'utils.R'
     'utils-rickshaw.R'
     'rChartsClass.R'
