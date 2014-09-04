@@ -5,7 +5,8 @@
 'use strict';
 
 ocpu.seturl("//ramnathv.ocpu.io/rCharts/R");
-//ocpup2 = ocpu.seturl("//http://kruny1001.ocpu.io/pbshop/R");
+ocpu.seturl("//kruny1001.ocpu.io/pbshop/R");
+
 angular.module('opencpu').controller('GwasT1Controller', ['$scope',
 	function($scope) {
         // ace editor Setting
@@ -42,6 +43,6 @@ angular.module('opencpu').controller('GwasT1Controller', ['$scope',
         }
         $scope.makeChart(1, $scope.example1);
         $scope.makeChart(2, $scope.example2);
-        $scope.makeChart2(3, $scope.example3);
+        //$scope.makeChart(3, $scope.example3);
 	}
 ]);

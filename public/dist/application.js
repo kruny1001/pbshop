@@ -1904,6 +1904,7 @@ angular.module('opencpu').config([
 */
 'use strict';
 ocpu.seturl('//ramnathv.ocpu.io/rCharts/R');
+ocpu.seturl('//kruny1001.ocpu.io/pbshop/R');
 angular.module('opencpu').controller('GwasT1Controller', [
   '$scope',
   function ($scope) {
@@ -1929,8 +1930,7 @@ angular.module('opencpu').controller('GwasT1Controller', [
         });
     };
     $scope.makeChart(1, $scope.example1);
-    $scope.makeChart(2, $scope.example2);
-    $scope.makeChart(3, $scope.example3);
+    $scope.makeChart(2, $scope.example2);  //$scope.makeChart(3, $scope.example3);
   }
 ]);'use strict';
 // Configuring the Articles module
