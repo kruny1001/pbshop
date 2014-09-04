@@ -10,5 +10,34 @@ Description: An OpenCPU Application to make charts of historical stock data
 License: GPL
 LazyData: yes
 Imports:
-    ggplot2
+    ggplot2,
+    plyr,
+    lattice,
+    RCurl,
+    RJSONIO,
+    whisker,
+    yaml
 Suggests: opencpu (>= 1.2)
+Collate:
+    'utils.R'
+    'utils-rickshaw.R'
+    'rChartsClass.R'
+    'Datatables.R'
+    'Dimple.R'
+    'Polycharts.R'
+    'Morris.R'
+    'Nvd3.R'
+    'Rickshaw.R'
+    'xCharts.R'
+    'toJSON.R'
+    'getLayer.R'
+    'renderChart.R'
+    'showOutput.R'
+    'gist.R'
+    'publish.R'
+    'Highcharts.R'
+    'Vega.R'
+    'Leaflet.R'
+    'makeExamples.R'
+    'Timeline.R'
+    'Uvcharts.R'
