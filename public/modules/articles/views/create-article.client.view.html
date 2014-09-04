@@ -1,4 +1,10 @@
 <section data-ng-controller="ArticlesController">
+    <script>
+        var ngAlohaEditorConfig = { baseUrl: 'lib/ng-aloha-editor/' };
+    </script>
+    <link href="http://cdn.aloha-editor.org/latest/css/aloha.css" rel="stylesheet" type="text/css" />
+    <!-- END Aloha Editor-->
+
     <br>
 	<div class="page-header">
 		<h1>New Article</h1>
@@ -16,30 +22,25 @@
 				<div class="form-group">
 					<label class="control-label" for="content">Content</label>
 
-					<div class="controls">
-                        <div class="form-group">
-                            <label class="control-label" for="content">Content</label>
-                            <div
-                                    id="content"
-                                    class="form-control"
-                                    style="height: 420px; border: 1px solid gray; overflow: scroll;"
-                                    data-aloha-content='content'
-                                    aloha>
-                            </div>
-                            <label class="control-label" for="content">Html output</label>
-                            <textarea data-ng-model="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+
+                        <div
+                                class="form-control"
+                                style="height: 420px; border: 1px solid gray; overflow: scroll;"
+                                data-aloha-content='content'
+                                aloha>
                         </div>
-                        <!--
-						<textarea data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
-						-->
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" class="btn btn-default">
-				</div>
+                        <label class="control-label" for="content">Html output</label>
+                        <textarea data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
+                </div>
 			</fieldset>
 		</form>
 	</div>

@@ -13,7 +13,8 @@ var ApplicationConfiguration = function () {
         'mgo-angular-wizard',
         'angularFileUpload',
         'smart-table',
-        'ui.ace'
+        'ui.ace',
+        'ngSanitize'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -142,9 +143,6 @@ angular.module('articles').controller('ArticlesController', [
     };
     $scope.findOne = function () {
       $scope.article = Articles.get({ articleId: $stateParams.articleId });
-    };
-    $scope.to_trusted = function (html_code) {
-      return $sce.trustAsHtml(html_code);
     };
   }
 ]);'use strict';

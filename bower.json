@@ -22,6 +22,7 @@
     "angular-smart-table": "*",
     "ng-aloha-editor": "~0.0.2",
     "requirejs": "~2.1.14",
-    "angular-ui-ace": "~0.1.1"
+    "angular-ui-ace": "~0.1.1",
+    "angular-sanitize": "~1.2.23"
   }
 }
