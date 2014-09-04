@@ -213,7 +213,6 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
                         'Sun	9:00 am - 2:00 pm'];
         $scope.menus = 'http://www.ganddpub.com/menus/main.pdf';
         $scope.introduction = '';
-
         $scope.yt = {
             width: 600,
             height: 480,
@@ -230,7 +229,6 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
         $scope.$on(YT_event.STATUS_CHANGE, function(event, data) {
             $scope.yt.playerStatus = data;
         });
-
         /**
          * DRAG event handler
          */

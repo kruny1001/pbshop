@@ -24,6 +24,10 @@ angular.module('opencpu').controller('GwasT1Controller', ['$scope',
             'econ <- transform(economics, date = as.character(date))\n' +
             'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)';
 
+
+        //ex3
+        $scope.example3 = '';
+
         $scope.makeChart = function(num, example){
             console.log(num);
             console.log(example);
@@ -37,5 +41,6 @@ angular.module('opencpu').controller('GwasT1Controller', ['$scope',
         }
         $scope.makeChart(1, $scope.example1);
         $scope.makeChart(2, $scope.example2);
+        $scope.makeChart(3, $scope.example3);
 	}
 ]);
