@@ -7,8 +7,8 @@ Author: kevin
 Maintainer: test <test@test.edu>
 Description: An OpenCPU Application to make charts of historical stock data
     from Yahoo Finance.
-License: GPL
-LazyData: yes
+License: AGPL
+LazyData: no
 Imports:
     ggplot2,
     plyr,
