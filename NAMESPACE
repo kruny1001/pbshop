@@ -1,0 +1,6 @@
+exportPattern("^[^\\.]")
+import(plyr)
+import(RJSONIO)
+import(whisker)
+import(yaml)
+importFrom(lattice,latticeParseFormula)

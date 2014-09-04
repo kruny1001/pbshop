@@ -188,7 +188,8 @@ angular.module('core').controller('HomeController', [
   '$scope',
   '$element',
   'Authentication',
-  function ($scope, $element, Authentication) {
+  'YT_event',
+  function ($scope, $element, Authentication, YT_event) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.firstJumbo = 'first-jumbo-content';
@@ -205,6 +206,20 @@ angular.module('core').controller('HomeController', [
       top: '-=10px',
       ease: Power1.easeIn
     }, '0.3', 'start');
+    // YouTube Directive Setting Start
+    $scope.yt = {
+      width: 600,
+      height: 480,
+      videoid: 'M7lc1UVf-VE',
+      playerStatus: 'NOT PLAYING'
+    };
+    $scope.YT_event = YT_event;
+    $scope.sendControlEvent = function (ctrlEvent) {
+      this.$broadcast(ctrlEvent);
+    };
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
+      $scope.yt.playerStatus = data;
+    });  // YouTube Directive Setting End
   }
 ]);/**
  * Created by KevinSo on 9/3/2014.
@@ -1902,6 +1917,8 @@ angular.module('opencpu').controller('GwasT1Controller', [
     $scope.example1 = 'library(rCharts)\n' + 'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' + 'nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")';
     //ex2
     $scope.example2 = 'library(rCharts)\n' + 'data(economics, package = "ggplot2")\n' + 'econ <- transform(economics, date = as.character(date))\n' + 'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)';
+    //ex3
+    $scope.example3 = '';
     $scope.makeChart = function (num, example) {
       console.log(num);
       console.log(example);
@@ -1913,6 +1930,7 @@ angular.module('opencpu').controller('GwasT1Controller', [
     };
     $scope.makeChart(1, $scope.example1);
     $scope.makeChart(2, $scope.example2);
+    $scope.makeChart(3, $scope.example3);
   }
 ]);'use strict';
 // Configuring the Articles module
