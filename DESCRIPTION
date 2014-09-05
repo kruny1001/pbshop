@@ -1,0 +1,52 @@
+Package: pbshop
+Type: Package
+Title: pbshop Web Application
+Version: 1.0
+Date: 2013-07-06
+Author: kevin
+Maintainer: test <test@test.edu>
+Description: An OpenCPU Application to make charts of historical stock data
+    from Yahoo Finance.
+License: AGPL
+LazyData: no
+Imports:
+    ggplot2,
+    plyr,
+    lattice,
+    RCurl,
+    RJSONIO,
+    whisker,
+    yaml
+Suggests: opencpu (>= 1.2)
+Collate:
+    'areaplot.R'
+    'getcurrent.R'
+    'highlowplot.R'
+    'listbyindustry.R'
+    'liststocks.R'
+    'makestocktable.R'
+    'plotwrapper.R'
+    'smoothplot.R'
+    'yahoodata.R'
+    'utils.R'
+    'utils-rickshaw.R'
+    'rChartsClass.R'
+    'Datatables.R'
+    'Dimple.R'
+    'Polycharts.R'
+    'Morris.R'
+    'Nvd3.R'
+    'Rickshaw.R'
+    'xCharts.R'
+    'toJSON.R'
+    'getLayer.R'
+    'renderChart.R'
+    'showOutput.R'
+    'gist.R'
+    'publish.R'
+    'Highcharts.R'
+    'Vega.R'
+    'Leaflet.R'
+    'makeExamples.R'
+    'Timeline.R'
+    'Uvcharts.R'

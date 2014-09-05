@@ -1,5 +1,6 @@
 <section data-ng-controller="HomeController">
 
+    <!--
     <div class="navbar-content-padding">
         <div class="base-jumbo-content">
             <div class="feature">
@@ -44,11 +45,8 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Banner Animation
-    <banner-front></banner-front>
     -->
+
 	<!--
     <div class="jumbotron text-center">
 		<div class="row">
@@ -71,65 +69,60 @@
 
 	</div>
     -->
-
-    <!-- Responsive columns
-	<div class="row">
-		<div class="col-md-3">
-			<h2>
-				<strong>U</strong>ser Interface
-			</h2>
-			<p>
-                Must be simple to use
-            </p>
-		</div>
-		<div class="col-md-3">
-			<h2>
-				<strong>D</strong>esign
-			</h2>
-			<p>
-                Responsive Design--compatibility all kind of platforms
-			</p>
-		</div>
-		<div class="col-md-3">
-			<h2>
-				<strong>A</strong>PI
-			</h2>
-			<p>
-                Backend Communication by using NodeJS and Express
-			</p>
-		</div>
-		<div class="col-md-3">
-			<h2>
-				<strong>D</strong>ocumentation
-			</h2>
-			<p>
-                All of code, history update and documentation is on the README
-                <a href="https://github.com/kruny1001/pbshop">Github</a>
-			</p>
-		</div>
-	</div>
-    <hr/>
-    -->
-	<div class="well">
-		<div class="core-title">History of Development</div>
-        <div class="well" style="margin:20px;">
-			<div class="core-subtitle">UI</h2></div>
-			<ul>
-                <li><a  href="/#!/gwas-data/gwas-data-start"><h4><span class="glyphicon glyphicon-asterisk"></span> Users Management Dashboard</h4></a></li>
-                <li><a  href="/#!/draggable"><h4><span class="glyphicon glyphicon-asterisk"></span>Draggable Interface </h4></a></li>
-                <li><a  href="/#!/galleries/create"><h4><span class="glyphicon glyphicon-asterisk"></span> Editor Module</h4></a></li>
-
-				<li><a  href="/#!/galleries/gview"><h4><span class="glyphicon glyphicon-asterisk"></span> User Interface (animation)</h4></a></li>
-                <li><a  href="/#!/menulist"><h4><span class="glyphicon glyphicon-asterisk"></span> Contents Listing</h4></a></li>
-                <li><a  href="/#!/setrowcol"><h4><span class="glyphicon glyphicon-asterisk"></span> Mobile Friendly page with admin functionality</h4></a></li>
-                <li><a  href="/#!/menulist/menuform"><h4><span class="glyphicon glyphicon-asterisk"></span> Quiz(Wizard) Based Registration</h4></a></li>
-            </ul>
-            <hr/>
-            <div class="core-subtitle">API</h2></div>
+    <br><br><br>
+    <div class="core-title">Research</div>
+	    <div class="well" style="margin:20px;">
+            <div class="core-subtitle">R</div>
             <ul>
-                <li><a target="_blank" href="/galleries"><h4><span class="glyphicon glyphicon-asterisk"></span> API Call 1</h4></a></li>
-                <li><a target="_blank" href="/users/all"><h4><span class="glyphicon glyphicon-asterisk"></span> API Call 2</h4></a></li>
+                <li><a href="/#!/gwas-t1"><h4><span class="glyphicon glyphicon-asterisk"></span> rChart Examples</h4></a></li>
             </ul>
         </div>
-	</div>
+    </div>
+
+    <div class="core-title">History of Research</div>
+    <div class="well" data-ng-controller="PlanController" style="margin:20px;">
+        <div class="core-subtitle">Plan</div>
+        <ul>
+            <li ng-repeat="plan in plans"><a  data-ng-href="#!/articles/{{plan._id}}"><h4><span class="glyphicon glyphicon-asterisk"></span> {{plan.title}} <small> by {{plan.user.displayName}}
+                (<span data-ng-bind="plan.created | date:'mediumDate'"></span>)
+            </small></h4></a></li>
+        </ul>
+    </div>
+
+    <div class="core-title">History of Development</div>
+    <div class="well" style="margin:20px;">
+        <div class="core-subtitle">UI</div>
+        <ul>
+            <li><a  href="/#!/gwas-data/gwas-data-start"><h4><span class="glyphicon glyphicon-asterisk"></span> Users Management Dashboard</h4></a></li>
+            <li><a  href="/#!/draggable"><h4><span class="glyphicon glyphicon-asterisk"></span> Draggable Interface </h4></a></li>
+            <li><a  href="/#!/galleries/create"><h4><span class="glyphicon glyphicon-asterisk"></span> Editor Module</h4></a></li>
+
+            <li><a  href="/#!/galleries/gview"><h4><span class="glyphicon glyphicon-asterisk"></span> User Interface (animation)</h4></a></li>
+            <li><a  href="/#!/menulist"><h4><span class="glyphicon glyphicon-asterisk"></span> Contents Listing</h4></a></li>
+            <li><a  href="/#!/setrowcol"><h4><span class="glyphicon glyphicon-asterisk"></span> Mobile Friendly page with admin functionality</h4></a></li>
+            <li><a  href="/#!/menulist/menuform"><h4><span class="glyphicon glyphicon-asterisk"></span> Quiz(Wizard) Based Registration</h4></a></li>
+        </ul>
+        <hr/>
+        <div class="core-subtitle">API</div>
+        <ul>
+            <li><a target="_blank" href="/galleries"><h4><span class="glyphicon glyphicon-asterisk"></span> API Call 1</h4></a></li>
+            <li><a target="_blank" href="/users/all"><h4><span class="glyphicon glyphicon-asterisk"></span> API Call 2</h4></a></li>
+        </ul>
+    </div>
+
+    <h2>YouTube Directive</h2>
+    <br />
+    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
+    <br />
+    Width:<input type="text" ng-model="yt.width">
+    Height:<input type="text" ng-model="yt.height">
+    Videoid:<input type="text" ng-model="yt.videoid">
+
+    <br />
+    <button ng-click="sendControlEvent(YT_event.PLAY)">Send Play</button>
+    <button ng-click="sendControlEvent(YT_event.PAUSE)">Send Pause</button>
+    <button ng-click="sendControlEvent(YT_event.STOP)">Send Stop</button>
+
+    <p>Player status is: {{yt.playerStatus}}</p>
+
 </section>

@@ -12,7 +12,9 @@ var ApplicationConfiguration = function () {
         'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
-        'smart-table'
+        'smart-table',
+        'ui.ace',
+        'ngSanitize'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -55,6 +57,8 @@ ApplicationConfiguration.registerModule('galleries');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('gwas');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('opencpu');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('template');'use strict';
@@ -93,10 +97,11 @@ angular.module('articles').config([
 angular.module('articles').controller('ArticlesController', [
   '$scope',
   '$stateParams',
+  '$sce',
   '$location',
   'Authentication',
   'Articles',
-  function ($scope, $stateParams, $location, Authentication, Articles) {
+  function ($scope, $stateParams, $sce, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
     $scope.create = function () {
       var article = new Articles({
@@ -183,7 +188,8 @@ angular.module('core').controller('HomeController', [
   '$scope',
   '$element',
   'Authentication',
-  function ($scope, $element, Authentication) {
+  'YT_event',
+  function ($scope, $element, Authentication, YT_event) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.firstJumbo = 'first-jumbo-content';
@@ -200,6 +206,45 @@ angular.module('core').controller('HomeController', [
       top: '-=10px',
       ease: Power1.easeIn
     }, '0.3', 'start');
+    // YouTube Directive Setting Start
+    $scope.yt = {
+      width: 600,
+      height: 480,
+      videoid: 'M7lc1UVf-VE',
+      playerStatus: 'NOT PLAYING'
+    };
+    $scope.YT_event = YT_event;
+    $scope.sendControlEvent = function (ctrlEvent) {
+      this.$broadcast(ctrlEvent);
+    };
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
+      $scope.yt.playerStatus = data;
+    });  // YouTube Directive Setting End
+  }
+]);/**
+ * Created by KevinSo on 9/3/2014.
+ */
+'use strict';
+angular.module('core').controller('PlanController', [
+  '$scope',
+  '$element',
+  'Authentication',
+  'Getplans',
+  function ($scope, $element, Authentication, Getplans) {
+    $scope.plans = Getplans;
+    $scope.find = function () {
+      $scope.plans = Getplans.query();  //$scope.plans.contents = $sce.trustAsHtml($scope.plans.contents);
+    };
+    $scope.find();  //$scope.plans = [{title: 'test1', body:'content', date:""}];
+  }
+]);'use strict';
+angular.module('core').factory('Getplans', [
+  '$resource',
+  function ($resource) {
+    // Getplans service logic
+    // ...
+    // Public API
+    return $resource('/articles', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
 //Menu service used for managing  menus
@@ -1837,6 +1882,57 @@ angular.module('gwas').factory('Gwas', [
     return $resource('users/all/:userID', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);'use strict';
+// Opencpu module config
+angular.module('opencpu').run([
+  'Menus',
+  function (Menus) {
+  }
+]);'use strict';
+//Setting up route
+angular.module('opencpu').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Opencpu state routing
+    $stateProvider.state('gwas-t1', {
+      url: '/gwas-t1',
+      templateUrl: 'modules/opencpu/views/gwas-t1.client.view.html'
+    });
+  }
+]);/*
+ http://ramnathv.github.io/rCharts/
+
+*/
+'use strict';
+ocpu.seturl('//ramnathv.ocpu.io/rCharts/R');
+ocpu.seturl('//kruny1001.ocpu.io/pbshop/R');
+angular.module('opencpu').controller('GwasT1Controller', [
+  '$scope',
+  function ($scope) {
+    // ace editor Setting
+    $scope.aceOptions = {
+      theme: 'solarized_dark',
+      mode: 'r',
+      useWrapMode: true
+    };
+    //ex1
+    $scope.example1 = 'library(rCharts)\n' + 'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' + 'nPlot(Freq ~ Hair, group = "Eye", data = hair_eye_male, type = "multiBarChart")';
+    //ex2
+    $scope.example2 = 'library(rCharts)\n' + 'data(economics, package = "ggplot2")\n' + 'econ <- transform(economics, date = as.character(date))\n' + 'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)';
+    //ex3
+    $scope.example3 = '';
+    $scope.makeChart = function (num, example) {
+      console.log(num);
+      console.log(example);
+      var req = ocpu.call('make_chart', { text: example }, function (session) {
+          $('#output' + num).attr('src', session.getLoc() + 'files/output.html');
+        }).fail(function (text) {
+          alert('Error: ' + req.responseText);
+        });
+    };
+    $scope.makeChart(1, $scope.example1);
+    $scope.makeChart(2, $scope.example2);  //$scope.makeChart(3, $scope.example3);
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('reviews').run([
   'Menus',
@@ -2031,7 +2127,8 @@ angular.module('template').controller('TestfontanimationController', [
   function ($scope) {
     $scope.title = 'Set Row and Col';
   }
-]);'use strict';
+]);//D:\git\pbshop\public\modules\template\directives\banner-front.client.directive.js
+'use strict';
 angular.module('template').directive('bannerFront', [function () {
     return {
       templateUrl: 'modules/template/directives/banner-front.html',
@@ -2120,17 +2217,6 @@ angular.module('template').directive('bannerFront', [function () {
         };
         function updateSlider() {
         }  //element.text('this is the bannerFront directive');
-      }
-    };
-  }]);/**
- * Created by KevinSo on 8/26/2014.
- */
-'use strict';
-angular.module('template').directive('fontAnimation', [function () {
-    return {
-      templateUrl: 'modules/template/directives/fontAnimation.html',
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
       }
     };
   }]);/**

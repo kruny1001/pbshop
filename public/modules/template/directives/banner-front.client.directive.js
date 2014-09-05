@@ -1,3 +1,4 @@
+//D:\git\pbshop\public\modules\template\directives\banner-front.client.directive.js
 'use strict';
 
 angular.module('template').directive('bannerFront', [

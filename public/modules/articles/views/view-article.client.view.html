@@ -19,5 +19,7 @@
 			<span data-ng-bind="article.user.displayName"></span>
 		</em>
 	</small>
-	<p class="lead" data-ng-bind="article.content"></p>
+
+    <div id="contnet"  class="well" ng-bind-html="article.content">
+    </div>
 </section>
