@@ -1,0 +1,13 @@
+<div class="well">
+    <div class="core-subtitle">{{rSource.title}}</h2></div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div ng-model='rSource.src' ui-ace="aceOptions"></div>
+            <input type='submit' value='Submit' class='btn btn-success' ng-click='makeChart(rSource)' />
+        </div>
+        <div class="col-md-8">
+            <iframe class="output" ng-src="{{result}}" seamless></iframe>
+        </div>
+    </div>
+</div>
