@@ -9,6 +9,7 @@ var ApplicationConfiguration = function () {
         'ui.router',
         'ui.bootstrap',
         'ui.utils',
+        'ui.calendar',
         'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
@@ -46,6 +47,8 @@ angular.element(document).ready(function () {
   //Then init the app
   angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('andrewkim');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('articles');'use strict';
 // Use Applicaion configuration module to register a new module
@@ -64,6 +67,295 @@ ApplicationConfiguration.registerModule('reviews');'use strict';
 ApplicationConfiguration.registerModule('template');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
+//Setting up route
+angular.module('andrewkim').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Andrewkim state routing
+    $stateProvider.state('a-map', {
+      url: '/a-map',
+      templateUrl: 'modules/andrewkim/views/a-map.client.view.html'
+    }).state('a-info', {
+      url: '/a-info',
+      templateUrl: 'modules/andrewkim/views/a-info.client.view.html'
+    }).state('a-events', {
+      url: '/a-events',
+      templateUrl: 'modules/andrewkim/views/a-event.client.view.html'
+    }).state('a-main', {
+      url: '/a-main',
+      templateUrl: 'modules/andrewkim/views/a-main.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AeventsController', [
+  '$scope',
+  function ($scope) {
+    // Aevents controller logic
+    // ...
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    $scope.changeTo = 'Hungarian';
+    /* event source that pulls from google.com */
+    $scope.eventSource = {
+      url: 'http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic',
+      className: 'gcal-event',
+      currentTimezone: 'America/Chicago'
+    };
+    /* event source that contains custom events on the scope */
+    $scope.events = [
+      {
+        title: 'All Day Event',
+        start: new Date(y, m, 1)
+      },
+      {
+        title: 'Long Event',
+        start: new Date(y, m, d - 5),
+        end: new Date(y, m, d - 2)
+      },
+      {
+        id: 999,
+        title: 'Repeating Event',
+        start: new Date(y, m, d - 3, 16, 0),
+        allDay: false
+      },
+      {
+        id: 999,
+        title: 'Repeating Event',
+        start: new Date(y, m, d + 4, 16, 0),
+        allDay: false
+      },
+      {
+        title: 'Birthday Party',
+        start: new Date(y, m, d + 1, 19, 0),
+        end: new Date(y, m, d + 1, 22, 30),
+        allDay: false
+      },
+      {
+        title: 'Click for Google',
+        start: new Date(y, m, 28),
+        end: new Date(y, m, 29),
+        url: 'http://google.com/'
+      }
+    ];
+    /* event source that calls a function on every view switch */
+    $scope.eventsF = function (start, end, callback) {
+      var s = new Date(start).getTime() / 1000;
+      var e = new Date(end).getTime() / 1000;
+      var m = new Date(start).getMonth();
+      var events = [{
+            title: 'Feed Me ' + m,
+            start: s + 50000,
+            end: s + 100000,
+            allDay: false,
+            className: ['customFeed']
+          }];
+      callback(events);
+    };
+    $scope.calEventsExt = {
+      color: '#f00',
+      textColor: 'yellow',
+      events: [
+        {
+          type: 'party',
+          title: 'Lunch',
+          start: new Date(y, m, d, 12, 0),
+          end: new Date(y, m, d, 14, 0),
+          allDay: false
+        },
+        {
+          type: 'party',
+          title: 'Lunch 2',
+          start: new Date(y, m, d, 12, 0),
+          end: new Date(y, m, d, 14, 0),
+          allDay: false
+        },
+        {
+          type: 'party',
+          title: 'Click for Google',
+          start: new Date(y, m, 28),
+          end: new Date(y, m, 29),
+          url: 'http://google.com/'
+        }
+      ]
+    };
+    /* alert on eventClick */
+    $scope.alertOnEventClick = function (event, allDay, jsEvent, view) {
+      $scope.alertMessage = event.title + ' was clicked ';
+    };
+    /* alert on Drop */
+    $scope.alertOnDrop = function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+      $scope.alertMessage = 'Event Droped to make dayDelta ' + dayDelta;
+    };
+    /* alert on Resize */
+    $scope.alertOnResize = function (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+      $scope.alertMessage = 'Event Resized to make dayDelta ' + minuteDelta;
+    };
+    /* add and removes an event source of choice */
+    $scope.addRemoveEventSource = function (sources, source) {
+      var canAdd = 0;
+      angular.forEach(sources, function (value, key) {
+        if (sources[key] === source) {
+          sources.splice(key, 1);
+          canAdd = 1;
+        }
+      });
+      if (canAdd === 0) {
+        sources.push(source);
+      }
+    };
+    /* add custom event*/
+    $scope.addEvent = function () {
+      $scope.events.push({
+        title: 'Open Sesame',
+        start: new Date(y, m, 28),
+        end: new Date(y, m, 29),
+        className: ['openSesame']
+      });
+    };
+    /* remove event */
+    $scope.remove = function (index) {
+      $scope.events.splice(index, 1);
+    };
+    /* Change View */
+    $scope.changeView = function (view, calendar) {
+      calendar.fullCalendar('changeView', view);
+    };
+    /* Change View */
+    $scope.renderCalender = function (calendar) {
+      calendar.fullCalendar('render');
+    };
+    /* config object */
+    $scope.uiConfig = {
+      calendar: {
+        height: 450,
+        editable: true,
+        header: {
+          left: 'title',
+          center: '',
+          right: 'today prev,next'
+        },
+        eventClick: $scope.alertOnEventClick,
+        eventDrop: $scope.alertOnDrop,
+        eventResize: $scope.alertOnResize
+      }
+    };
+    $scope.uiConfig2 = {
+      calendar: {
+        height: 450,
+        editable: false,
+        header: {
+          left: 'prev, next',
+          center: 'title',
+          right: 'agendaWeek AgeendaWeek'
+        },
+        eventClick: $scope.alertOnEventClick,
+        eventDrop: $scope.alertOnDrop,
+        eventResize: $scope.alertOnResize
+      }
+    };
+    $scope.changeLang = function () {
+      if ($scope.changeTo === 'Hungarian') {
+        $scope.uiConfig.calendar.dayNames = [
+          'Vas\xe1rnap',
+          'H\xe9tf\u0151',
+          'Kedd',
+          'Szerda',
+          'Cs\xfct\xf6rt\xf6k',
+          'P\xe9ntek',
+          'Szombat'
+        ];
+        $scope.uiConfig.calendar.dayNamesShort = [
+          'Vas',
+          'H\xe9t',
+          'Kedd',
+          'Sze',
+          'Cs\xfct',
+          'P\xe9n',
+          'Szo'
+        ];
+        $scope.changeTo = 'English';
+      } else {
+        $scope.uiConfig.calendar.dayNames = [
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday'
+        ];
+        $scope.uiConfig.calendar.dayNamesShort = [
+          'Sun',
+          'Mon',
+          'Tue',
+          'Wed',
+          'Thu',
+          'Fri',
+          'Sat'
+        ];
+        $scope.changeTo = 'Hungarian';
+      }
+    };
+    /* event sources array*/
+    $scope.eventSources = [
+      $scope.events,
+      $scope.eventSource,
+      $scope.eventsF
+    ];
+    $scope.eventSources2 = [
+      $scope.calEventsExt,
+      $scope.eventsF,
+      $scope.events
+    ];
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AinfoController', [
+  '$scope',
+  function ($scope) {
+    // Ainfo controller logic
+    // ...
+    $scope.infos = [
+      {
+        title: '\uc8fc\ubcf4\uc131\uc778',
+        content: '1821\ub144 \ucda9\ub0a8 \ub2f9\uc9c4\uad70\uc5d0\uc11c \uc2e0\uc559\uc2ec\uc774 \uae4a\uc740 \uc9d1\uc548\uc5d0 \ud0dc\uc5b4\ub09c \uadf8\ub294 1836\ub144, 15\uc138 \ub54c \uc870\uc120\uc778 \uc0ac\uc81c\uc758 \ud544\uc694\uc131\uc744 \ub290\ub07c\uace0 \uc788\ub358 \ud504\ub791\uc2a4 \uc2e0\ubd80 \ubaa8\ubc29\uc758 \ub208\uc5d0 \ub744\uc5b4 \uc2e0\ud559\uc0dd\uc73c\ub85c \uc911\uad6d \uc720\ud559\uae38\uc5d0 \uc624\ub978\ub2e4. 1844\ub144 12\uc6d4\uc5d0 \ubd80\uc81c\ud488\uc744,\uc774\ub4ec\ud574 8\uc6d4 \uc0c1\ud574 \ubd80\uadfc \uae40\uac00\ud56d(\u91d1\u5bb6\u6e2f)\uc2e0\ud559\uad50 \uc131\ub2f9\uc5d0\uc11c \ud55c\uad6d \ucd5c\ucd08\uc758 \uc2e0\ubd80\ub85c \uc0ac\uc81c \uc11c\ud488\uc744 \ubc1b\uc558\ub2e4. 1845\ub144 \ud398\ub808\uc62c \uc8fc\uad50\uc640 \ud568\uaed8 \ube44\ubc00\ub9ac\uc5d0 \uc785\uad6d\ud558\uc5ec \uc11c\uc6b8\uacfc \uc9c0\ubc29\uc744 \uc21c\ud68c\ud558\uba70 \uc804 \uad50\ud65c\ub3d9\uc744 \ud3b4\ub2e4\uac00 \ub73b\ud558\uc9c0 \uc54a\uac8c \uc2e0\ubd84\uc774 \ud0c4\ub85c\ub098\uc11c \uccb4\ud3ec\ub418\uace0, \uc11c\ud488\ubc1b\uc740\uc9c0 \uaca8\uc6b0 1 \ub144\uc774 \ub418\ub358 \ud574\uc778 1846\ub144 9\uc6d4 16\uc77c \uc0c8\ub0a8\ud130\uc5d0\uc11c \ucc38\uc218\ud615\uc744 \ub2f9\ud558\uac8c \ub41c\ub2e4. \ub6f0\uc5b4\ub09c \ud559\ub355\uacfc \ubaa9\uc228\uc744 \ubc14\uce58\uba74\uc11c\uae4c\uc9c0 \uc9c4\ub9ac\ub97c \uc99d\uac70\ud55c \uae40\ub300\uac74 \uc2e0\ubd80\uc758 \uc21c\uad50\uc815\uc2e0\uc740 \uc624\ub298\ub0a0 \uadf8\ub9ac\uc2a4\ub3c4\ub97c \ub530\ub974\ub294 \uc6b0\ub9ac \ubaa8\ub450\uc758 \uadc0\uac10\uc774 \ub418\uace0 \uc788\ub2e4.',
+        img: 'modules/andrewkim/img/standrewkim.jpg'
+      },
+      { title: '\uc131\ub2f9\uc5ed\uc0ac' },
+      { title: '\uc5ed\ub300 \uc2e0\ubd80\ub2d8' },
+      {
+        title: '\uc0ac\uba85\ub85d',
+        content: '\ud558\ub290\ub2d8\uc758 \uc740\ud61c\uc640 \uc790\ube44\ub85c \uc774 \ub545\uc5d0 \ucc3d\ub9bd\ub41c \ucc9c\uc8fc\uad50 \uc131 \uae40\ub300\uac74 \uad50\ud68c\ub294 \ud558\ub290\ub2d8\uc744 \uc12c\uae30\ub294 \ubbf8\ub124\uc18c\ud0c0 \uc9c0\uc5ed \ud55c\uc778\ub4e4\uc758 \uacf5\ub3d9\uccb4\ub85c\uc11c \ubab8\uacfc \ub9c8\uc74c\uc744 \ub2e4\ud558\uc5ec \uc8fc \uc608\uc218 \uadf8\ub9ac\uc2a4\ub3c4\ub97c \uc0ac\ub791\ud558\uba70, \ub9d0\uc500\uacfc \uae30\ub3c4\uc5d0 \ucda9\uc2e4\ud558\uace0, \uc11c\ub85c \ub098\ub204\uace0 \uc12c\uae30\ub294 \uc77c\uce58\uc758 \uacf5\ub3d9\uccb4\ub97c \uc774\ub8e8\uba70, \ubcf5\uc74c\uc744 \uc774\uc6c3\uc5d0 \uc804\ud30c\ud558\uace0 \uc2e4\ucc9c\ud558\uc5ec \ud558\ub290\ub2d8\uc758 \uc601\uad11\uc744 \ub4dc\ub7ec\ub0bc \uac83\uc785\ub2c8\ub2e4. \ub610\ud55c \uc131 \uc548\ub4dc\ub808\uc544 \uae40\ub300\uac74\uacfc 103\uc704 \uc21c\uad50 \uc131\uc778\uc758 \uc21c\uad50 \uc815\uc2e0\uc744 \ubcf8\ubc1b\uc544 \ud6c4\uc190\ub4e4\uc758 \uc2e0\uc559\uad50\uc721\uc5d0 \ud798\uc368 \uc774 \uacf5\ub3d9\uccb4\ub97c \ud56d\uad6c\ud558\uac8c \uc774\uc5b4 \uac08 \uac83\uc785\ub2c8\ub2e4. 1998\ub144 9\uc6d4 20\uc77c <br>We, the parishioners of the Church of St. Andrew Kim, the Korean Catholic community in Minnesota, which was founded through the grace and mercy of God, belong to a faith community called by Jesus to love God with all our hearts and minds, to be faithful to the Words of God and life of prayer, and to be one another as a spiritual family that one in faith and love, thereby revealing the glory of God and proclaiming the Good News. Following the example of St. Andrew Kim and his companion martyrs, we will be witness to the Faith for our descendants and our community to flourish forever. September 20, 1998'
+      },
+      { title: '\uc0ac\ubaa9\uc9c0\uce68' },
+      { title: '\ub2e8\uccb4\uc18c\uac1c' },
+      { title: '\uacf5\uc9c0\uc0ac\ud56d' },
+      { title: '\uc804\uc790\uc8fc\ubcf4' },
+      { title: '\uc131\ub2f9\uc57d\ub3c4' },
+      { title: '\uc0ac\ubb34\uc2e4 \ucf54\ub108' }
+    ];
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AmainController', [
+  '$scope',
+  function ($scope) {
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AmapController', [
+  '$scope',
+  function ($scope) {
+    // Amap controller logic
+    // ...
+    $scope.map = {
+      center: {
+        latitude: 44.8968555,
+        longitude: -93.1819971
+      },
+      zoom: 16
+    };
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',
@@ -1906,18 +2198,31 @@ angular.module('opencpu').config([
 angular.module('opencpu').controller('GwasT1Controller', [
   '$scope',
   function ($scope) {
+    // <rChart> Directive
     //ex1
     $scope.example1 = {
       src: 'library(rCharts)\n' + 'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' + 'nPlot(Freq ~ H' + 'air, group = "Eye", data = hair_eye_male, type = "multiBarChart")',
-      title: 'Multi Bar Chart'
+      title: 'Multi Bar Chart (NVD3)',
+      content: 'I demonstrate my all time favorite d3js library, NVD3, which produces amazing interactive visualizations with little customization.'
     };
     //ex2
     $scope.example2 = {
       src: 'library(rCharts)\n' + 'data(economics, package = "ggplot2")\n' + 'econ <- transform(economics, date = as.character(date))\n' + 'mPlot(x = "date", y = c("psavert", "uempmed"), type = "Line", data = econ, pointSize = 0, lineWidth = 1)',
-      title: 'Stock Info'
+      title: 'Stock Info (Morris)',
+      content: 'The next library I will be exploring is MorrisJS'
     };
     //ex3
-    $scope.example3 = '';
+    $scope.example3 = {
+      src: 'library(rCharts)\n' + 'rPlot(mpg ~ wt | am + vs, data = mtcars, type = "point", color = "gear")',
+      title: 'Stock Info (Morris)',
+      content: 'The next library I will be exploring is MorrisJS'
+    };
+    //ex4
+    $scope.example4 = {
+      src: 'library(rCharts)\n' + 'hPlot(x = "Wr.Hnd", y = "NW.Hnd", data = MASS::survey, type = c("line", "bubble", "scatter"), group = "Clap", size = "Age")',
+      title: 'Stock Info (HighCharts)',
+      content: 'The next library I will be exploring is HighCharts'
+    };
   }
 ]);'use strict';
 angular.module('opencpu').directive('rChart', [function () {

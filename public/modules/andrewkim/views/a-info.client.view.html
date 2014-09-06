@@ -1,0 +1,11 @@
+<section data-ng-controller="AinfoController">
+	<br><br><br>
+	<div class="well" ng-repeat="info in infos">
+		<h2>{{info.title}}</h2>
+		<img ng-src="{{info.img}}">
+		<p>
+			{{info.content}}
+		</p>
+	</div>
+
+</section>

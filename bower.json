@@ -23,6 +23,7 @@
     "ng-aloha-editor": "~0.0.2",
     "requirejs": "~2.1.14",
     "angular-ui-ace": "~0.1.1",
-    "angular-sanitize": "~1.2.23"
+    "angular-sanitize": "~1.2.23",
+    "angular-ui-calendar": "~0.8.1"
   }
 }
