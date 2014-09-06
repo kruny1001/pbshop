@@ -28,6 +28,6 @@
     "angular-ui-calendar": "~0.8.1"
   },
   "resolutions": {
-    "jquery": "~1.10.2"
+    "jquery": "~2.1.1"
   }
 }
