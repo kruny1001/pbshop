@@ -76,8 +76,8 @@
             <ul>
                 <li><a href="/#!/gwas-t1"><h4><span class="glyphicon glyphicon-asterisk"></span> rChart Examples</h4></a></li>
             </ul>
-        </div>
-    </div>
+		</div>
+
 
     <div class="core-title">History of Research</div>
     <div class="well" data-ng-controller="PlanController" style="margin:20px;">
@@ -110,20 +110,22 @@
             <li><a target="_blank" href="/users/all"><h4><span class="glyphicon glyphicon-asterisk"></span> API Call 2</h4></a></li>
         </ul>
     </div>
+		<div class="well" style="margin:20px;">
+	    <h2>YouTube Directive</h2>
+	    <br />
+	    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
+	    <br />
+	    Width:<input type="text" ng-model="yt.width">
+	    Height:<input type="text" ng-model="yt.height">
+	    Videoid:<input type="text" ng-model="yt.videoid">
 
-    <h2>YouTube Directive</h2>
-    <br />
-    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
-    <br />
-    Width:<input type="text" ng-model="yt.width">
-    Height:<input type="text" ng-model="yt.height">
-    Videoid:<input type="text" ng-model="yt.videoid">
-
-    <br />
-    <button ng-click="sendControlEvent(YT_event.PLAY)">Send Play</button>
-    <button ng-click="sendControlEvent(YT_event.PAUSE)">Send Pause</button>
-    <button ng-click="sendControlEvent(YT_event.STOP)">Send Stop</button>
+	    <br />
+	    <button ng-click="sendControlEvent(YT_event.PLAY)">Send Play</button>
+	    <button ng-click="sendControlEvent(YT_event.PAUSE)">Send Pause</button>
+	    <button ng-click="sendControlEvent(YT_event.STOP)">Send Stop</button>
 
     <p>Player status is: {{yt.playerStatus}}</p>
+
+	</div>
 
 </section>

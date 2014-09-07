@@ -5,6 +5,10 @@ angular.module('andrewkim').config(['$stateProvider',
 	function($stateProvider) {
 		// Andrewkim state routing
 		$stateProvider.
+		state('a-board', {
+			url: '/a-board',
+			templateUrl: 'modules/andrewkim/views/a-board.client.view.html'
+		}).
 		state('a-map', {
 			url: '/a-map',
 			templateUrl: 'modules/andrewkim/views/a-map.client.view.html'
