@@ -24,7 +24,8 @@
     "requirejs": "~2.1.14",
     "angular-ui-ace": "~0.1.1",
     "angular-sanitize": "~1.2.23",
-    "angular-ui-calendar": "~0.8.1"
+    "angular-ui-calendar": "~0.8.1",
+    "textAngular": "~1.2.2"
   },
   "resolutions": {
     "jquery": "~2.1.1"
