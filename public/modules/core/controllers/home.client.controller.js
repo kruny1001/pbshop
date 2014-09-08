@@ -11,7 +11,7 @@ angular.module('core').controller('HomeController', ['$scope', '$element', 'Auth
         $scope.thirdJumbo = 'third-jumbo-content';
         var texts = $('.core-text-anni');
         var tl = new TimelineMax({repeat:6, repeatDelay:1, yoyo:true});
-        tl.staggerTo(texts, 0.2, {className:"+=superShadow", top:"-=10px", ease:Power1.easeIn}, "0.3", "start")
+        tl.staggerTo(texts, 0.2, {className:'+=superShadow', top:'-=10px', ease:Power1.easeIn}, '0.3', 'start');
 
         // YouTube Directive Setting Start
         $scope.yt = {

@@ -231,3 +231,26 @@ Model: https://testcenter.duolingo.com/
 
 #8/19#
 CSS 
+
+#9/5#
+create rChart directive 
+
+Example
+controller
+
+    grunt
+    $scope.example1 = {
+                src: 'library(rCharts)\n'+
+                    'hair_eye_male <- subset(as.data.frame(HairEyeColor), Sex == "Male")\n' +
+                    'nPlot(Freq ~ H' +
+                    'air, group = "Eye", data = hair_eye_male, type = "multiBarChart")',
+                title:'Multi Bar Chart'
+            };
+    
+ view
+            
+    <code>
+    <r-chart r-source="example1"></r-chart>
+    <r-chart r-source="example2"></r-chart>
+    </code>
+    

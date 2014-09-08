@@ -49,9 +49,14 @@ module.exports = {
 
                 'public/lib/angular-smart-table/dist/smart-table.min.js',
                 'public/lib/requirejs/require.js',
-                'public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js',
+                //'public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js',
                 'public/3rdlib/opencpu/opencpu-0.5.js',
-                'public/lib/angular-ui-ace/ui-ace.js'
+                'public/lib/angular-ui-ace/ui-ace.js',
+
+                //text Angular
+
+                'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+                'public/lib/textAngular/dist/textAngular.min.js'
 			]
 		},
 		css: [

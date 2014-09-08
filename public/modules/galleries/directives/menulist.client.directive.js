@@ -44,13 +44,13 @@ angular.module('galleries')
                 link: function(scope, element, attr, ctrl) {
                     TweenMax.to(element.children().children(), .75, {
                         //top-left and bottom-right | top-right and bottom-left
-                        borderRadius:"0px 20px"
+                        borderRadius:'0px 20px'
                     });
                     scope.$watch(attr.hideMe, function(newVal) {
                         if (newVal) {
-                            $animate.addClass(element, "fade")
+                            $animate.addClass(element, 'fade')
                         } else {
-                            $animate.removeClass(element, "fade")
+                            $animate.removeClass(element, 'fade')
                         }
                     })
                 },
@@ -78,11 +78,11 @@ angular.module('galleries')
     .animation('.fade', function() {
         return{
             addClass: function(element, className) {
-                TweenMax.to(element, 2, {rotationY:"+=90", ease:Linear.easeNone});
+                TweenMax.to(element, 2, {rotationY:'+=90', ease:Linear.easeNone});
                 TweenMax.to(element, 2, {opacity: 0});
             },
             removeClass: function(element, className) {
-                TweenMax.to(element, 2, {rotationY:"-=90", ease:Linear.easeNone});
+                TweenMax.to(element, 2, {rotationY:'-=90', ease:Linear.easeNone});
                 TweenMax.to(element, 2, {opacity: 1});
             }
 
@@ -91,31 +91,31 @@ angular.module('galleries')
     .animation('.expand', function() {
         return{
             addClass: function(element, className) {
-                TweenMax.to(element, 1, {width:"100%"});
-                TweenMax.to(element, 1, {height:"300%"});
+                TweenMax.to(element, 1, {width:'100%'});
+                TweenMax.to(element, 1, {height:'300%'});
                 var imageTag = element.find('img');
                 var spanTag = element.find('span');
                 TweenMax.to(imageTag, 1, {opacity:0.2});
                 TweenMax.to(spanTag, 1, {opacity:0.8});
 
-                TweenMax.to(spanTag, 1, {backgroundColor:"#ffffff"});
+                TweenMax.to(spanTag, 1, {backgroundColor:'#ffffff'});
                 TweenMax.to(element, .1, {
                     //top-left and bottom-right | top-right and bottom-left
-                    borderRadius:"0px 0px"
+                    borderRadius:'0px 0px'
                 });
 
                 //TweenMax.to(element, 1, {opacity: 1});
             },
             removeClass: function(element, className) {
-                TweenMax.to(element, 1, {width:"30%"});
-                TweenMax.to(element, 1, {height:"20%"});
+                TweenMax.to(element, 1, {width:'30%'});
+                TweenMax.to(element, 1, {height:'20%'});
                 var imageTag = element.find('img');
                 var spanTag = element.find('span');
                 TweenMax.to(imageTag, 1, {opacity:1});
                 TweenMax.to(spanTag, 1, {opacity:0});
                 TweenMax.to(element, .1, {
                     //top-left and bottom-right | top-right and bottom-left
-                    borderRadius:"0px 20px"
+                    borderRadius:'0px 20px'
                 });
             }
 

@@ -23,14 +23,14 @@ angular.module('galleries').directive('mdraggable', function () {
                 onDrag  : function (){
                     scope.rotation = this.rotation;
                     scope.$apply(function () {
-                        scope.onDrag({rotation: scope.rotation})
+                        scope.onDrag({rotation: scope.rotation});
                     });
                 },
 
                 onDragEnd : function (){
                     scope.rotation = this.rotation;
                     scope.$apply(function () {
-                        scope.onDragEnd({rotation: scope.rotation})
+                        scope.onDragEnd({rotation: scope.rotation});
                     });
                 },
 
@@ -48,6 +48,6 @@ angular.module('galleries').directive('mdraggable', function () {
             });
         }
 
-    }
+    };
 
-})
+});
