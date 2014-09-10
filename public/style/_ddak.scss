@@ -16,6 +16,7 @@
 }
 
 .ddak-panel {
+  font-family: 'Hanna', serif;
   position:absolute;
   width:300px;
   height:250px;
@@ -28,21 +29,43 @@
 
 }
 
+#panel1-2 {
+  background: #7dd32a;
+}
+
 #panel2 {
   top:260px;
   background: url(http://www.ilbe.com/files/attach/new/20140721/377678/131058918/3931386396/0ee4054960260a01db4270055b09e62b.JPG);
   background-size: 100% 100%;
 }
 
+#panel2-1 {
+  top:260px;
+  background: url(http://www.ilbe.com/files/attach/new/20140910/377678/1268442755/4270502453/16a09fefebab8830abfc7228c6c9f683.jpeg);
+  background-size: 100% 100%;
+
+}
+
 #panel1 h1 {
   position: relative;
-  font-size:40px;
+  font-size:25px;
   line-height:240px;
   text-align:center;
   width:300px;
 }
 
+#panel1-2 h1 {
+  font-family: 'Hanna', serif;
+  position: relative;
+  font-size:25px;
+  line-height:240px;
+  text-align:center;
+  width:300px;
+}
+
+
 #panel2 h2{
+  font-family: 'Hanna', serif;
   margin: 0;
   position: absolute;
   top: 188px;
@@ -52,6 +75,19 @@
   padding: 20px;
   background: #7dd32a;
 }
+
+#panel2-1 h2 {
+  font-family: 'Hanna', serif;
+  margin: 0;
+  position: absolute;
+  top: 188px;
+  width: 100%;
+  font-size: 22px;
+  text-align: center;
+  padding: 20px;
+  background: #7dd32a;
+}
+
 
 #panel3 {
   top:520px;
@@ -67,18 +103,21 @@
 }
 
 #panel3 h1 {
+  font-family: 'Hanna', serif;
   font-size:34px;
   font-weight:700;
   letter-spacing: 1px;
 }
 
 #panel3 li {
+  font-family: 'Hanna', serif;
   position:relative;
   margin-top:10px;
   color: #ffffff;
 }
 
 #panel3 #orderNow {
+  font-family: 'Hanna', serif;
   position:absolute;
   top:75px;
   left:188px;
@@ -95,4 +134,91 @@
   background:#ffaa00;
   border: 4px solid #fff;
   cursor: pointer;
+}
+
+
+//////////////////////
+.product {
+  font-family: 'Hanna', serif;
+  display:inline-block;
+  color: #2a3d29;
+  font-size:60px;
+  font-weight:300;
+}
+
+.suffix {
+  display:inline-block;
+  font-family: 'Hanna', serif;
+  font-size:60px;
+  font-weight:400;
+  color:#86CC01;
+  font-weight:300;
+}
+
+.tagline {
+  display:inline-block;
+  font-family: 'Hanna', serif;
+  margin-left:20px;
+  font-size:36px;
+  color: #2a3d29;
+}
+
+#demo {
+  text-align:center;
+  position:relative;
+  visibility:hidden;
+}
+
+#controls {
+  margin-top:35px;
+  text-align: center;
+}
+
+.slider {
+  width:420px;
+  margin:auto;
+}
+.sliderValues {
+  margin:10px;
+}
+
+.sliderValues span {
+  font-size:24px;
+}
+
+#timeScaleSlider {
+  width:260px;
+
+}
+
+button {
+  padding:1em;
+  margin:20px 0 10px 0;
+  font-size:12px;
+  cursor:pointer;
+}
+
+li {
+  display:inline-block;
+  font-family: 'Hanna', serif;
+  margin-right:25px;
+  color:#aaa;
+}
+
+.ui-widget-content {
+  //background-color:rgba(255, 255, 255, 0.2);
+}
+
+.link {
+  display:inline-block;
+  padding-top:20px;
+  text-decoration:none;
+}
+
+a.link:link, a.link:visited {
+  color:rgba(255, 100, 0, 0.3);
+}
+
+a.link:hover {
+  color:rgba(255, 100, 0, 0.95);
 }

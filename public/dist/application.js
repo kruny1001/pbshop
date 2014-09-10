@@ -415,6 +415,32 @@ angular.module('andrewkim').directive('ddak', [function () {
       }
     };
   }]);'use strict';
+angular.module('andrewkim').directive('ganJab', [function () {
+    return {
+      templateUrl: 'modules/andrewkim/directives/ganJab.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        CSSPlugin.defaultTransformPerspective = 400;
+        var playBtn = $('#playBtn'), pauseBtn = $('#pauseBtn'), resumeBtn = $('#resumeBtn'), time = $('#time'), progress = $('#progress'), timeScale = $('#timeScale'), buttons = [
+            playBtn,
+            pauseBtn,
+            resumeBtn
+          ], lis = $('ddak').find('li');
+        var tl = new TimelineLite({ delay: 0.4 });
+        TweenLite.set('#demo', { visibility: 'visible' });
+        tl.from('#timeline_txt', 0.6, {
+          y: -30,
+          opacity: 0
+        }).from('#lite_txt', 0.6, {
+          y: 30,
+          opacity: 0
+        }, '-=0.3').staggerFrom(lis, 0.2, {
+          y: 20,
+          opacity: 0
+        }, 0.1).set(buttons, { opacity: 0.2 });
+      }
+    };
+  }]);'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',
@@ -2253,7 +2279,9 @@ angular.module('opencpu').config([
 'use strict';
 angular.module('opencpu').controller('GwasT1Controller', [
   '$scope',
-  function ($scope) {
+  'Getrresult',
+  'Readcsv',
+  function ($scope, Getrresult, Readcsv) {
     // <rChart> Directive
     //ex1
     $scope.example1 = {
@@ -2279,6 +2307,12 @@ angular.module('opencpu').controller('GwasT1Controller', [
       title: 'Stock Info (HighCharts)',
       content: 'The next library I will be exploring is HighCharts'
     };
+    //var movie1 = new Getrresult("Forgetting Sarah Marshall", "regular");
+    //console.debug(movie1.id);
+    var test = new Readcsv('fileName');
+    test.readFile().then(function (result) {
+      console.debug(result);
+    });
   }
 ]);'use strict';
 angular.module('opencpu').directive('rChart', [function () {
@@ -2304,6 +2338,52 @@ angular.module('opencpu').directive('rChart', [function () {
       }
     };
   }]);'use strict';
+angular.module('opencpu').factory('Getrresult', [function () {
+    return function Getrresult(title, type) {
+      this.id = _.uniqueId('movie');
+      this.title = title;
+      this.type = type;
+      this.charge = function (daysRented) {
+        return this[this.chargeFunctionNmae()](daysRented);
+      };
+      this.chargeFunctionName = function () {
+        return this.type.titleize().split(' ').join('').camelize() + 'Charge';
+      };
+      this.regularCharge = function (daysRented) {
+        if (daysRented > 2) {
+          return 2 + (daysRented - 2) * 1.5;
+        }
+        return 2;
+      };
+      this.newReleaseCharge = function (daysRented) {
+        return daysRented * 3;
+      };
+      this.childrensCharge = function (daysRented) {
+        if (daysRented > 3) {
+          return 1.5 + (daysRented - 3) * 1.5;
+        }
+        return 1.5;
+      };
+    };
+  }]);'use strict';
+angular.module('opencpu').factory('Readcsv', [
+  '$http',
+  function ($http) {
+    return function Readcsv(fileName) {
+      this.id = _.uniqueId('csv');
+      this.fileName = fileName;
+      this.readFile = function () {
+        //var URL = 'users/all';
+        var URL = 'modules/opencpu/data/introduction.json';
+        return $http.get(URL);
+      };
+      this.writeData = function (data) {
+        console.debug('wrtieData function is invoked');
+        console.debug(data);
+      };
+    };
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('reviews').run([
   'Menus',
