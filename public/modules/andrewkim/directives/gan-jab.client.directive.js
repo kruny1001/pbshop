@@ -1,11 +1,14 @@
 'use strict';
-
+/*
+    //top text animation
+* */
 angular.module('andrewkim').directive('ganJab', [
     function() {
         return {
             templateUrl: 'modules/andrewkim/directives/ganJab.html',
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
+                // top text animation
                 CSSPlugin.defaultTransformPerspective = 400;
                 var playBtn = $("#playBtn"),
                     pauseBtn = $("#pauseBtn"),
@@ -14,7 +17,7 @@ angular.module('andrewkim').directive('ganJab', [
                     progress = $("#progress"),
                     timeScale = $("#timeScale"),
                     buttons = [playBtn, pauseBtn, resumeBtn],
-                    lis = $('ddak').find('li');
+                    lis = $('#ganJab').find('li');
 
                 var tl = new TimelineLite({delay:0.4});
                 TweenLite.set("#demo", {visibility:"visible"});

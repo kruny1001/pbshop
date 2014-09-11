@@ -8,16 +8,16 @@
 		<div class="ddak-panel" id="panel2">
 			<h2>명이나물?</h2>
 		</div>
-		<div class="ddak-panel" id="panel3">
+		<div id="panel3">
 			<div id="info">
 				<h1>명이나물</h1>
 				<ul>
 					<li>무료배송</li>
 					<li>카톡: pray4u25</li>
 				</ul>
-				<div id="orderNow"><a ng-href="http://blog.naver.com/momsere">지금주문</a></div>
+				<div id="orderNow" ng-click="sendControlEvent(Ddak_event.OPEN)">지금주문</div>
 			</div>
 		</div>
-
 	</div>
+    <p style="color:black">{{testVar}}</p>
 </div>

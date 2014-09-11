@@ -16,15 +16,16 @@
 }
 
 .ddak-panel {
-  font-family: 'Hanna', serif;
+  font-family: 'Nanum Pen Script', serif;
   position:absolute;
+
   width:300px;
   height:250px;
   overflow:hidden;
-
 }
 
 #panel1 {
+  font-size: 45px;
   background: #7dd32a;
 
 }
@@ -34,6 +35,7 @@
 }
 
 #panel2 {
+  font-size: 45px;
   top:260px;
   background: url(http://www.ilbe.com/files/attach/new/20140721/377678/131058918/3931386396/0ee4054960260a01db4270055b09e62b.JPG);
   background-size: 100% 100%;
@@ -48,7 +50,7 @@
 
 #panel1 h1 {
   position: relative;
-  font-size:25px;
+  font-size:50px;
   line-height:240px;
   text-align:center;
   width:300px;
@@ -104,16 +106,17 @@
 
 #panel3 h1 {
   font-family: 'Hanna', serif;
-  font-size:34px;
-  font-weight:700;
+  font-size:37px;
+  color: #2a3d29;
+  font-weight:300;
   letter-spacing: 1px;
 }
 
 #panel3 li {
   font-family: 'Hanna', serif;
   position:relative;
+  color: #2a3d29;
   margin-top:10px;
-  color: #ffffff;
 }
 
 #panel3 #orderNow {
@@ -122,7 +125,7 @@
   top:75px;
   left:188px;
   background: #ffc318;
-  color: #ffffff;
+  color: #ff3c38;
   font-size:16px;
   font-weight:bold;
   padding:10px;
@@ -132,7 +135,7 @@
 
 #panel3 #orderNow:hover {
   background:#ffaa00;
-  border: 4px solid #fff;
+  border: 4px solid #ffffff;
   cursor: pointer;
 }
 
@@ -142,14 +145,14 @@
   font-family: 'Hanna', serif;
   display:inline-block;
   color: #2a3d29;
-  font-size:60px;
+  font-size:50px;
   font-weight:300;
 }
 
 .suffix {
   display:inline-block;
   font-family: 'Hanna', serif;
-  font-size:60px;
+  font-size:50px;
   font-weight:400;
   color:#86CC01;
   font-weight:300;
@@ -159,7 +162,7 @@
   display:inline-block;
   font-family: 'Hanna', serif;
   margin-left:20px;
-  font-size:36px;
+  font-size:30px;
   color: #2a3d29;
 }
 
@@ -198,10 +201,11 @@ button {
   cursor:pointer;
 }
 
-li {
+#ganJab li {
   display:inline-block;
-  font-family: 'Hanna', serif;
+  font-family: 'Nanum Pen Script', serif;
   margin-right:25px;
+  font-size:18px;
   color:#aaa;
 }
 
