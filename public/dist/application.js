@@ -348,28 +348,120 @@ angular.module('andrewkim').controller('AinfoController', [
 ]);'use strict';
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
-  function ($scope) {
+  '$upload',
+  'Images',
+  function ($scope, $upload, Images) {
     $scope.editorOptions = {
       language: 'ru',
       uiColor: '#000000'
     };
-    // Amain controller logic
-    // ...
-    var contents = $('.well');
-    var body = $('body');
-    //var tween = new TweenLite(contents, {autoAlpha:0})
-    function initCSS() {
-    }
-    function getIntro() {
-      var tl = new TimelineLite();
-      tl.from(contents, 1, {
-        scale: 0.2,
-        autoAlpha: 1,
-        ease: Back.easeOut
-      });
-    }
-    //initCSS();
-    getIntro();
+    $scope.image = Images.list(function (image) {
+      console.log(image);  //$scope.image = image;
+    });
+    $scope.slideActions = [
+      {
+        name: 'TB',
+        action: 'TB'
+      },
+      {
+        name: 'BT',
+        action: 'BT'
+      },
+      {
+        name: 'LR',
+        action: 'RL'
+      },
+      {
+        name: 'RL',
+        action: 'RL'
+      }
+    ];
+    $scope.onFileSelect = function ($files) {
+      //$files: an array of files selected, each file has name, size, and type.
+      for (var i = 0; i < $files.length; i++) {
+        var file = $files[i];
+        $scope.upload = $upload.upload({
+          url: 'server/upload/url',
+          data: { myObj: $scope.myModelObj },
+          file: file
+        }).progress(function (evt) {
+          console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+        }).success(function (data, status, headers, config) {
+          // file is uploaded successfully
+          console.log(data);
+        });  //.error(...)
+             //.then(success, error, progress);
+             // access or attach event listeners to the underlying XMLHttpRequest.
+             //.xhr(function(xhr){xhr.upload.addEventListener(...)})
+      }  /* alternative way of uploading, send the file binary with the file's content-type.
+             Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
+             It could also be used to monitor the progress of a normal http post/put request with large data*/
+         // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
+    };  ///////////
+        /*
+        if (typeof window.FileReader === 'undefined')
+            alert('File API & FileReader not supported');
+
+        var dropper = document.getElementById("dropper");
+        var results = document.getElementById("results");
+
+        dropper.ondragover = function () { dropper.className = 'hover'; return false; };
+        dropper.ondragend = function () { dropper.className = ''; return false; };
+        dropper.ondrop = function (e) {
+            e.preventDefault();
+            var file = e.dataTransfer.files[0],
+                reader = new FileReader();
+            reader.onload = function(event) {
+                fileLoaded(file.name, event.target.result);
+            };
+            reader.readAsDataURL(file);
+            dropper.className = '';
+            return false;
+        };
+
+        function fileLoaded(filename, dataUri) {
+
+            var div = document.createElement("div");
+            div.className = 'item';
+
+            var remove = document.createElement("button");
+            remove.className = 'remove';
+            remove.innerHTML = 'x';
+            remove.onclick = function() {
+                if(localStorage) localStorage.removeItem(filename);
+                results.removeChild(div);
+            };
+            div.appendChild(remove);
+
+            var name = document.createElement("div");
+            name.innerHTML = filename;
+            div.appendChild(name);
+
+            if(/^data:image/.test(dataUri)) {
+                var imgDiv = document.createElement("div");
+                var img = document.createElement("img");
+                img.src = dataUri;
+                img.style['max-width'] = '100px';
+                img.style['height-width'] = '100px';
+                imgDiv.appendChild(img);
+                div.appendChild(imgDiv);
+            }
+
+            var ta = document.createElement("textarea");
+            ta.onclick = function() {
+                ta.select();
+            };
+            ta.value = dataUri;
+            div.appendChild(ta);
+
+            results.appendChild(div);
+            if(localStorage) localStorage.setItem(filename, dataUri);
+        }
+
+        if(localStorage)
+            for(var filename in localStorage)
+                fileLoaded(filename, localStorage.getItem(filename));
+        */
   }
 ]);'use strict';
 angular.module('andrewkim').controller('AmapController', [
@@ -470,6 +562,26 @@ angular.module('andrewkim').directive('ganJab', [function () {
       }
     };
   }]);'use strict';
+angular.module('andrewkim').factory('Images', [
+  '$http',
+  function ($http) {
+    return {
+      list: function (callback) {
+        /*
+                $http({
+                    method:'GET',
+                    url:'/modules/andrewkim/data/main.json'
+                    //cache:true
+                }).success(function(data){console.log(data);})
+                    .error(function(data, status){
+                    console.log(data);
+                    console.log(status);
+                });*/
+        return 'ddd';
+      }
+    };
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',

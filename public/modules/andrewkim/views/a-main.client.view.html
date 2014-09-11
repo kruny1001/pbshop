@@ -4,22 +4,37 @@
 	<br>
 
     <div class="container">
-        <!--
-        Todo: the finding a directive should be applied by
-                element not find
+
+
+<!--
         <div class="well">
             <gan-jab></gan-jab>
             <ddak></ddak>
         </div>
-        -->
-        <div class="well">
-            <div class="well">
-                <gan-jab></gan-jab>
-                <ddak></ddak>
-            </div>
-        </div>
 
-	    <!--
+        <div class="well">
+            <div class="core-subtitle">creating a slider</div>
+            <div class="core-subtitle">options:</div>
+            <select ng-model="slideActions[0]" ng-options="slideAction.name for slideAction in slideActions"></select><br>
+            <div class="core-subtitle">background img</div>
+            <input type="text" ng-model="myModelObj">
+            <input type="file" ng-file-select="onFileSelect($files)">
+            <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
+            <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
+            <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
+                 ng-show="dropSupported">drop files here</div>
+            <div ng-file-drop-available="dropSupported=true"
+                 ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+            <button ng-click="upload.abort()">Cancel Upload</button>
+
+            <h2>Base64 File Encoder</h2>
+            <h4>Drop Files here</h4>
+            <div id="dropper"></div>
+            <div id="results"></div>
+
+        </div>
+        -->
+
         <div class="core-title">Main Page</div>
         <div class="well"><a href="/#!/a-map">오시는 길</a></div>
         <div class="well">
@@ -43,7 +58,7 @@
         <div class="well">성당 앨범</div>
         <div class="well"><a href="/#!/a-info">성당 안내</a></div>
         <div class="well"><a href="/#!/a-events">행사 일정</a></div>
-    -->
+
     </div>
 
 </section>
