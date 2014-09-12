@@ -59,7 +59,7 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
 
                 player = new YT.Player(element.children()[0], {
                     playerVars: {
-                        autoplay: 0,
+                        autoplay: 1,
                         html5: 1,
                         theme: 'light',
                         modesbranding: 0,
@@ -114,8 +114,14 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
             scope.$watch('videoid', function(newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
+                }else{
+                    console.log('id is changed');
+                    //player.seekTo(0);
+                    //player.stopVideo();
+                    player.cueVideoById(scope.videoid);
+                    player.playVideo();
                 }
-                player.cueVideoById(scope.videoid);
+
             });
 
             scope.$on(YT_event.STOP, function () {

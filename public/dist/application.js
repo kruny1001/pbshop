@@ -346,15 +346,86 @@ angular.module('andrewkim').controller('AinfoController', [
     ];
   }
 ]);'use strict';
+angular.module('andrewkim').constant('YT_event', {
+  PLAY: 0,
+  STOP: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3
+});
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
+  '$element',
   '$upload',
   'Images',
-  function ($scope, $upload, Images) {
+  'YT_event',
+  function ($scope, $element, $upload, Images, YT_event) {
     $scope.editorOptions = {
       language: 'ru',
       uiColor: '#000000'
     };
+    // YouTube Directive Setting Start
+    $scope.YT_event = YT_event;
+    $scope.playList = [
+      {
+        id: 0,
+        videoid: 'YMp8uYvZNZc',
+        name: 'Unji and let me go(Remastered Ver.)'
+      },
+      {
+        id: 1,
+        videoid: 'DRSFtoEyTio',
+        name: '\uae08\uc694\uc77c \ubc24'
+      },
+      {
+        id: 2,
+        videoid: 'YMp8uYvZNZc',
+        name: 'Rapstar'
+      },
+      {
+        id: 3,
+        videoid: '91gHDmn3RBw',
+        name: 'Rapstar'
+      },
+      {
+        id: 4,
+        videoid: 'AtbS9CXX2WM',
+        name: 'Control the gravity'
+      },
+      {
+        id: 5,
+        videoid: 'JwkqhfVkk0I',
+        name: 'Shake that'
+      },
+      {
+        id: 6,
+        videoid: 'i7kIF6WGe9U',
+        name: '\uae08\uc694\uc77c\ubc24'
+      },
+      {
+        id: 7,
+        videoid: 'vYibVU6Wbas',
+        name: '\uc751\ub514\uc2dc\ud2f0'
+      }
+    ];
+    $scope.dd = function (id) {
+      if ($scope.crntSong.id !== id) {
+        $scope.crntSong = $scope.playList[id];
+      }
+    };
+    $scope.crntSong = $scope.playList[0];
+    $scope.yt = {
+      width: 235,
+      height: 34,
+      videoid: 'YMp8uYvZNZc',
+      playerStatus: 'NOT PLAYING'
+    };
+    $scope.sendControlEvent2 = function (ctrlEvent) {
+      this.$broadcast(ctrlEvent);
+    };
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
+      $scope.yt.playerStatus = data;
+    });
+    // YouTube Directive Setting End
     $scope.image = Images.list(function (image) {
       console.log(image);  //$scope.image = image;
     });
@@ -490,22 +561,11 @@ angular.module('andrewkim').directive('ddak', [
     return {
       templateUrl: 'modules/andrewkim/directives/ddak.html',
       restrict: 'E',
-      controller: [
-        '$scope',
-        'Ddak_event',
-        function ($scope, Ddak_event) {
-          $scope.Ddak_event = Ddak_event;
-          $scope.sendControlEvent = function (ctrlEvent) {
-            this.$broadcast(ctrlEvent);
-          };
-          $scope.testVar = 'If you click an Order button, the main frame will be changed to shopping list view';
-        }
-      ],
       link: function postLink(scope, element, attrs) {
         var $panel1 = $('#panel1'), $panel2 = $('#panel2'), $panel3 = $('#panel3'), $panel1Text = $('#panel1 h1'), $panel2Text = $('#panel2 h2'), $info = $('#info'), $list = $('#ddak').find('li'), $orderNow = $('#orderNow');
         var tl = new TimelineMax({
             delay: 0.5,
-            repeat: 0,
+            repeat: 2,
             repeatDelay: 3
           });
         TweenMax.to($('#banner'), 0, { borderRadius: '0px 0px 25px 25px' });
@@ -528,13 +588,15 @@ angular.module('andrewkim').directive('ddak', [
           scale: 0,
           autoAlpha: 0,
           ease: Back.easeOut
-        });
-        scope.$on(Ddak_event.OPEN, function () {
-          console.log('scope on');
-          //console.log(element[0]);
-          var tl = new TimelineMax({ delay: 0.5 });
-          tl.to(element.children(), 1, { autoAlpha: 0 }).to(element.children(), 1, { autoAlpha: 1 });
-        });
+        });  /*
+                scope.$on(Ddak_event.OPEN, function() {
+                    console.log('scope on');
+                    //console.log(element[0]);
+                    var tl = new TimelineMax({delay: 0.5});
+                    tl.to(element.children(), 1, {autoAlpha: 0})
+                        .to(element.children(), 1, {autoAlpha: 1});
+                });
+                */
       }
     };
   }
@@ -2108,7 +2170,7 @@ angular.module('galleries').directive('youtube', [
         $window.onYouTubeIframeAPIReady = function () {
           player = new YT.Player(element.children()[0], {
             playerVars: {
-              autoplay: 0,
+              autoplay: 1,
               html5: 1,
               theme: 'light',
               modesbranding: 0,
@@ -2156,8 +2218,13 @@ angular.module('galleries').directive('youtube', [
         scope.$watch('videoid', function (newValue, oldValue) {
           if (newValue === oldValue) {
             return;
+          } else {
+            console.log('id is changed');
+            //player.seekTo(0);
+            //player.stopVideo();
+            player.cueVideoById(scope.videoid);
+            player.playVideo();
           }
-          player.cueVideoById(scope.videoid);
         });
         scope.$on(YT_event.STOP, function () {
           player.seekTo(0);

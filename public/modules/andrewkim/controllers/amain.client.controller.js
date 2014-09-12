@@ -1,11 +1,59 @@
 'use strict';
 
-angular.module('andrewkim').controller('AmainController', ['$scope','$upload', 'Images',
-	function($scope, $upload, Images) {
+angular.module('andrewkim').constant('YT_event', {
+    PLAY           : 0,
+    STOP          : 1,
+    PAUSE          : 2,
+    STATUS_CHANGE  : 3
+});
+
+angular.module('andrewkim').controller('AmainController', ['$scope','$element', '$upload', 'Images', 'YT_event',
+	function($scope, $element, $upload, Images, YT_event) {
         $scope.editorOptions = {
             language: 'ru',
             uiColor: '#000000'
         };
+
+        // YouTube Directive Setting Start
+        $scope.YT_event = YT_event;
+
+        $scope.playList = [
+            {id: 0, videoid: 'YMp8uYvZNZc', name:'Unji and let me go(Remastered Ver.)'},
+            {id: 1, videoid: 'DRSFtoEyTio', name:'금요일 밤'},
+            {id: 2,videoid: 'YMp8uYvZNZc', name: 'Rapstar'},
+            {id: 3, videoid: '91gHDmn3RBw', name: 'Rapstar'},
+            {id: 4, videoid: 'AtbS9CXX2WM', name: 'Control the gravity'},
+            {id: 5, videoid: 'JwkqhfVkk0I', name: 'Shake that'},
+            {id: 6, videoid: 'i7kIF6WGe9U', name: '금요일밤'},
+            {id: 7, videoid: 'vYibVU6Wbas', name: '응디시티'}
+        ];
+
+
+        $scope.dd = function(id) {
+            if($scope.crntSong.id !== id ) {
+                $scope.crntSong = $scope.playList[id];
+            }
+        };
+
+        $scope.crntSong = $scope.playList[0];
+
+        $scope.yt = {
+            width: 235,
+            height: 34,
+            videoid: 'YMp8uYvZNZc',
+            playerStatus: 'NOT PLAYING'
+        };
+
+
+
+        $scope.sendControlEvent2 = function (ctrlEvent) {
+            this.$broadcast(ctrlEvent);
+        };
+
+        $scope.$on(YT_event.STATUS_CHANGE, function(event, data) {
+            $scope.yt.playerStatus = data;
+        });
+        // YouTube Directive Setting End
 
 
         $scope.image = Images.list(function(image){
@@ -121,7 +169,6 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$upload', '
             for(var filename in localStorage)
                 fileLoaded(filename, localStorage.getItem(filename));
         */
-
 
 
 	}

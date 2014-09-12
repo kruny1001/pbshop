@@ -11,6 +11,35 @@
             <gan-jab></gan-jab>
             <ddak></ddak>
         </div>
+
+	    <div class="well">
+		    <div  style="font-family: 'Hanna', serif;
+              display:inline-block;
+              color: #2a3d29;
+              font-size:45px;
+              font-weight:300;">
+		    <h2>MC 무현 Collection</h2>
+		    </div>
+		    <br/>
+		    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
+
+		    <div style="font-family: 'Hanna', serif;">
+		    <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
+		    <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
+		    <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
+				</div>
+
+		    <p>Player status is: {{yt.playerStatus}}</p>
+
+		    <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
+		    <ul style="font-family: 'Hanna', serif;">
+			    <li ng-repeat="song in playList" ng-click="dd(song.id)">
+				    <h4>{{song.id+1}}: {{song.name}}</h4>
+			    </li>
+		    </ul>
+
+	    </div>
+
 	    <!--
 					<div class="well">
 							<div class="core-subtitle">creating a slider</div>
@@ -34,7 +63,7 @@
 
 					</div>
 					-->
-
+				<!--
         <div class="core-title">Main Page</div>
         <div class="well"><a href="/#!/a-map">오시는 길</a></div>
         <div class="well">
@@ -58,7 +87,7 @@
         <div class="well">성당 앨범</div>
         <div class="well"><a href="/#!/a-info">성당 안내</a></div>
         <div class="well"><a href="/#!/a-events">행사 일정</a></div>
-
+				-->
     </div>
 
 </section>

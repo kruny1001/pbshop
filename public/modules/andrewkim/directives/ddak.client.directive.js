@@ -12,13 +12,17 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
 		return {
             templateUrl: 'modules/andrewkim/directives/ddak.html',
 			restrict: 'E',
+            /*
             controller: ['$scope', 'Ddak_event', function($scope, Ddak_event){
+
                 $scope.Ddak_event = Ddak_event;
                 $scope.sendControlEvent = function(ctrlEvent){
                     this.$broadcast(ctrlEvent);
                 }
                 $scope.testVar = 'If you click an Order button, the main frame will be changed to shopping list view';
+
             }],
+             */
 			link: function postLink(scope, element, attrs) {
                 var
                     $panel1 = $('#panel1'),
@@ -30,7 +34,7 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
                     $list = $('#ddak').find('li'),
                     $orderNow = $('#orderNow');
 
-                var tl = new TimelineMax({delay:0.5, repeat:0, repeatDelay:3});
+                var tl = new TimelineMax({delay:0.5, repeat:2, repeatDelay:3});
                 TweenMax.to($('#banner'),0, {borderRadius:"0px 0px 25px 25px"});
                 TweenMax.to($panel1,0,{borderRadius:"0px 0px 25px 25px"});
                 TweenMax.to($panel2,0,{borderRadius:"0px 0px 25px 25px"});
@@ -49,6 +53,7 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
                     .to($panel2, 0.5, {top:-60}, 'final')
                     .staggerFrom($list, 0.3, {autoAlpha:0, left:50}, 0.1, '+=0.2')
                     .from($orderNow, 0.5, {scale:0, autoAlpha:0, ease:Back.easeOut});
+                /*
                 scope.$on(Ddak_event.OPEN, function() {
                     console.log('scope on');
                     //console.log(element[0]);
@@ -56,6 +61,7 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
                     tl.to(element.children(), 1, {autoAlpha: 0})
                         .to(element.children(), 1, {autoAlpha: 1});
                 });
+                */
             }
 		};
 	}
