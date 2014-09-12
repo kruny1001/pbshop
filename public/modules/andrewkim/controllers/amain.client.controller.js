@@ -40,7 +40,7 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
         $scope.yt = {
             width: 235,
             height: 34,
-            videoid: 'YMp8uYvZNZc',
+            videoid: 'YMp8uYvTZNZc',
             playerStatus: 'NOT PLAYING'
         };
 
@@ -170,6 +170,9 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
                 fileLoaded(filename, localStorage.getItem(filename));
         */
 
+        $scope.clickButton = function(){
+            $scope.$emit('Click');
+        }
 
 	}
 ]);

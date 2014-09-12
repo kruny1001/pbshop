@@ -416,7 +416,7 @@ angular.module('andrewkim').controller('AmainController', [
     $scope.yt = {
       width: 235,
       height: 34,
-      videoid: 'YMp8uYvZNZc',
+      videoid: 'YMp8uYvTZNZc',
       playerStatus: 'NOT PLAYING'
     };
     $scope.sendControlEvent2 = function (ctrlEvent) {
@@ -468,8 +468,9 @@ angular.module('andrewkim').controller('AmainController', [
              Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
              It could also be used to monitor the progress of a normal http post/put request with large data*/
          // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
-    };  ///////////
-        /*
+    };
+    ///////////
+    /*
         if (typeof window.FileReader === 'undefined')
             alert('File API & FileReader not supported');
 
@@ -533,6 +534,9 @@ angular.module('andrewkim').controller('AmainController', [
             for(var filename in localStorage)
                 fileLoaded(filename, localStorage.getItem(filename));
         */
+    $scope.clickButton = function () {
+      $scope.$emit('Click');
+    };
   }
 ]);'use strict';
 angular.module('andrewkim').controller('AmapController', [
@@ -549,6 +553,72 @@ angular.module('andrewkim').controller('AmapController', [
     };
   }
 ]);'use strict';
+angular.module('andrewkim').directive('bannerMainFrame', [
+  '$document',
+  function ($document) {
+    return {
+      restrict: 'EA',
+      transclude: true,
+      template: '<div ng-transclude></div>',
+      compile: function (tElem, tAttrs) {
+        console.log('compile');
+        tElem.addClass('bannerMainFrame');
+        console.log(tElem);
+        return {
+          pre: function (scope, iElem, iAttrs) {
+            console.log('pre link');
+            console.log(iElem);
+          },
+          post: function postLink(scope, element, attrs) {
+            console.log('post link');
+            //setting up the CSS
+            /*
+                         element.css({
+                         width: '50%',
+                         height: 450,
+                         left:"100px",
+                         backgroundColor: 'red',
+                         boxShadow:"10px 10px"
+                         });
+                         */
+            //element.addClass('bannerMainFrame');
+            //$compile(element)(scope);
+            /*
+                         element.on('mousedown', function(evnt){
+                         event.preventDefault();
+                         $document.on('click', clickBtn);
+                         $document.on('doubleclick', clickBtn);
+                         });
+                         */
+            scope.clickBtn = function clickBtn(event) {
+              console.log('from clickBtn');
+              console.log(event);
+              console.log(element);
+              TweenMax.to(element, 1, { opacity: 0.2 });
+            };
+            //element.text('this is main frame');
+            scope.$on('Click', function (t) {
+              console.log('Clicked');
+              console.log(event);
+              scope.test = 'test';
+            });
+          }
+        };
+      }
+    };
+  }
+]);'use strict';
+angular.module('andrewkim').directive('bannerSubFrame', [function () {
+    return {
+      template: '<div></div>',
+      restrict: 'EA',
+      link: function postLink(scope, element, attrs) {
+        // Banner sub frame directive logic
+        // ...
+        element.text('this is the bannerSubFrame directive');
+      }
+    };
+  }]);'use strict';
 angular.module('andrewkim').constant('Ddak_event', {
   OPEN: 0,
   CLOSE: 1,
@@ -2170,7 +2240,7 @@ angular.module('galleries').directive('youtube', [
         $window.onYouTubeIframeAPIReady = function () {
           player = new YT.Player(element.children()[0], {
             playerVars: {
-              autoplay: 1,
+              autoplay: 0,
               html5: 1,
               theme: 'light',
               modesbranding: 0,

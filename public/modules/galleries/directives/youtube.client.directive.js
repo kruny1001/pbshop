@@ -59,7 +59,7 @@ angular.module('galleries').directive('youtube', ['$window','YT_event', function
 
                 player = new YT.Player(element.children()[0], {
                     playerVars: {
-                        autoplay: 1,
+                        autoplay: 0,
                         html5: 1,
                         theme: 'light',
                         modesbranding: 0,
