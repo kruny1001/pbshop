@@ -6468,8 +6468,7 @@ table.fc-border-separate {
   color: white;
   margin: 1px;
   width: 235px;
-  height: 250px;
-  borderRadius: "0px 20px 50px"; }
+  height: 250px; }
 
 #banner {
   position: relative;
@@ -6637,8 +6636,8 @@ button {
 #ganJab li {
   display: inline-block;
   font-family: 'Nanum Pen Script', serif;
-  margin-right: 19px;
-  font-size: 13px;
+  margin-right: 5px;
+  font-size: 17px;
   color: #aaa; }
 
 .link {
