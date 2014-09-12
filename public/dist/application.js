@@ -508,6 +508,12 @@ angular.module('andrewkim').directive('ddak', [
             repeat: 0,
             repeatDelay: 3
           });
+        TweenMax.to($('#banner'), 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel1, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel2, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel3, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($info, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($orderNow, 0, { borderRadius: '25px 25px 25px 25px' });
         tl.from(panel1, 0.5, { autoAlpha: 0 }).from($panel1Text, 0.5, {
           scale: 0.5,
           autoAlpha: 0,
@@ -526,7 +532,8 @@ angular.module('andrewkim').directive('ddak', [
         scope.$on(Ddak_event.OPEN, function () {
           console.log('scope on');
           //console.log(element[0]);
-          TweenMax.to(element.children(), 1, { autoAlpha: 0 });
+          var tl = new TimelineMax({ delay: 0.5 });
+          tl.to(element.children(), 1, { autoAlpha: 0 }).to(element.children(), 1, { autoAlpha: 1 });
         });
       }
     };

@@ -3,13 +3,14 @@
   font-family:Asap;
   //background-color:#333;
   color:white;
-  margin:5px;
+  margin:1px;
+  width:235px;
+  height:250px;
 }
 
 #banner {
   position:relative;
   -webkit-backface-visibility:hidden;
-  width:300px;
   height:250px;
   background:white;
   overflow:hidden;
@@ -19,8 +20,8 @@
   font-family: 'Nanum Pen Script', serif;
   position:absolute;
 
-  width:300px;
-  height:250px;
+  min-width:235px;
+  height:100%;
   overflow:hidden;
 }
 
@@ -53,7 +54,8 @@
   font-size:50px;
   line-height:240px;
   text-align:center;
-  width:300px;
+  min-width:235px;
+  max-height: 300px;
 }
 
 #panel1-2 h1 {
@@ -98,7 +100,8 @@
 #panel3 #info{
   position:absolute;
   top:115px;
-  width:100%;
+  min-width:235px;
+  max-width:300px;
   padding:10px;
   height:125px;
   background: #7dd32a;
@@ -116,14 +119,13 @@
   font-family: 'Hanna', serif;
   position:relative;
   color: #2a3d29;
-  margin-top:10px;
 }
 
 #panel3 #orderNow {
   font-family: 'Hanna', serif;
   position:absolute;
   top:75px;
-  left:188px;
+  left:147px;
   background: #ffc318;
   color: #ff3c38;
   font-size:16px;
@@ -135,6 +137,7 @@
 
 #panel3 #orderNow:hover {
   background:#ffaa00;
+  color: #ff472e;
   border: 4px solid #ffffff;
   cursor: pointer;
 }
@@ -145,14 +148,14 @@
   font-family: 'Hanna', serif;
   display:inline-block;
   color: #2a3d29;
-  font-size:50px;
+  font-size:45px;
   font-weight:300;
 }
 
 .suffix {
   display:inline-block;
   font-family: 'Hanna', serif;
-  font-size:50px;
+  font-size:34px;
   font-weight:400;
   color:#86CC01;
   font-weight:300;
@@ -162,7 +165,7 @@
   display:inline-block;
   font-family: 'Hanna', serif;
   margin-left:20px;
-  font-size:30px;
+  font-size:24px;
   color: #2a3d29;
 }
 
@@ -204,8 +207,8 @@ button {
 #ganJab li {
   display:inline-block;
   font-family: 'Nanum Pen Script', serif;
-  margin-right:25px;
-  font-size:18px;
+  margin-right:19px;
+  font-size:13px;
   color:#aaa;
 }
 
