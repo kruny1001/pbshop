@@ -29,6 +29,6 @@ angular.module('andrewkim').controller('AinfoController', ['$scope',
             {title: '전자주보'},
             {title: '성당약도'},
             {title: '사무실 코너'}
-        ]
+        ];
 	}
 ]);

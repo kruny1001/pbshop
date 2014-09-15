@@ -91,6 +91,45 @@ angular.module('andrewkim').config([
     });
   }
 ]);'use strict';
+angular.module('andrewkim').controller('AAniGeneratorController', [
+  '$scope',
+  '$element',
+  'AniGenerator',
+  function ($scope, $element, AniGenerator) {
+    // A ani generator controller logic
+    // ...
+    /*
+        console.debug('from AAniGeneratorController');
+        console.log($element);
+        */
+    $scope.generateAdDirective = function () {
+      var ad = new AniGenerator();
+      ad.addMainFrame($element);
+    };  //$scope.generateAdDirective();
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AShopController', [
+  '$scope',
+  'Customers',
+  'Products',
+  'Rental',
+  function ($scope, Customers, Products, Rental) {
+    console.log('Customers, Products and Rental class Testing');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    console.log(products.title);
+    var customer = new Customers('Brett');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 5);
+    console.log(customer.statement());
+    var customer = new Customers('Brett');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 2);
+    console.log(customer.statement());
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 5);
+    console.log(customer.statement());
+  }
+]);'use strict';
 angular.module('andrewkim').controller('AboardController', [
   '$scope',
   function ($scope) {
@@ -365,6 +404,7 @@ angular.module('andrewkim').controller('AmainController', [
     };
     // YouTube Directive Setting Start
     $scope.YT_event = YT_event;
+    // Define Play List
     $scope.playList = [
       {
         id: 0,
@@ -407,7 +447,7 @@ angular.module('andrewkim').controller('AmainController', [
         name: '\uc751\ub514\uc2dc\ud2f0'
       }
     ];
-    $scope.dd = function (id) {
+    $scope.selectSong = function (id) {
       if ($scope.crntSong.id !== id) {
         $scope.crntSong = $scope.playList[id];
       }
@@ -456,10 +496,7 @@ angular.module('andrewkim').controller('AmainController', [
           data: { myObj: $scope.myModelObj },
           file: file
         }).progress(function (evt) {
-          console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
         }).success(function (data, status, headers, config) {
-          // file is uploaded successfully
-          console.log(data);
         });  //.error(...)
              //.then(success, error, progress);
              // access or attach event listeners to the underlying XMLHttpRequest.
@@ -537,6 +574,13 @@ angular.module('andrewkim').controller('AmainController', [
     $scope.clickButton = function () {
       $scope.$emit('Click');
     };
+    $scope.editMode = false;
+    $scope.clickBtn = function ($event) {
+      if (!$scope.editMode)
+        $scope.editMode = true;
+      else
+        $scope.editMode = false;
+    };
   }
 ]);'use strict';
 angular.module('andrewkim').controller('AmapController', [
@@ -559,26 +603,25 @@ angular.module('andrewkim').directive('bannerMainFrame', [
     return {
       restrict: 'EA',
       transclude: true,
-      template: '<div ng-transclude></div>',
+      template: '<div>' + '<button ng-click="clickBtnFromDirective()">Directive 1-1</button>' + '<div banner-sub-frame></div>' + '<p>{{test}}</p>' + '<div ng-transclude></div>' + '</div>',
+      scope: { EventHandler: '&eventFunction' },
       compile: function (tElem, tAttrs) {
         console.log('compile');
-        tElem.addClass('bannerMainFrame');
+        //tElem.addClass('bannerMainFrame');
         console.log(tElem);
         return {
           pre: function (scope, iElem, iAttrs) {
-            console.log('pre link');
-            console.log(iElem);
           },
           post: function postLink(scope, element, attrs) {
-            console.log('post link');
+            //console.log('post link');
             //setting up the CSS
             /*
                          element.css({
                          width: '50%',
                          height: 450,
-                         left:"100px",
+                         left:'100px',
                          backgroundColor: 'red',
-                         boxShadow:"10px 10px"
+                         boxShadow:'10px 10px'
                          });
                          */
             //element.addClass('bannerMainFrame');
@@ -590,11 +633,18 @@ angular.module('andrewkim').directive('bannerMainFrame', [
                          $document.on('doubleclick', clickBtn);
                          });
                          */
-            scope.clickBtn = function clickBtn(event) {
+            scope.editMode = false;
+            scope.clickBtnFromDirective = function () {
               console.log('from clickBtn');
-              console.log(event);
-              console.log(element);
-              TweenMax.to(element, 1, { opacity: 0.2 });
+              //console.log(event);
+              //console.log(element);
+              if (scope.editMode === false) {
+                TweenMax.to(element, 1, { opacity: 0.2 });
+                scope.editMode = true;
+              } else {
+                TweenMax.to(element, 1, { opacity: 1 });
+                scope.editMode = false;
+              }
             };
             //element.text('this is main frame');
             scope.$on('Click', function (t) {
@@ -700,6 +750,58 @@ angular.module('andrewkim').directive('ganJab', [function () {
         }, 0.1).set(buttons, { opacity: 0.2 });
       }
     };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('AniGenerator', [function () {
+    return function Customer(name, user, targetLink) {
+      this.name = _.uniqueId();
+      this.user = user;
+      this.targetLink = targetLink;
+      this.addMainFrame = function (element) {
+        var crntElement = element;
+        return crntElement.append('<div ng-class={{' + 'dd' + '}} banner-main-frame> <button ng-click="clickBtn()">factory</button></subFrame>');
+      };
+      this.isNameUnique = function () {
+        console.log('isNameUnique');
+        return true;
+      };
+      this.addSubFrame = function () {
+        return '<div ng-class={{' + 'well' + '}} banner-sub-frame></subFrame>';
+      };
+    };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Customers', [function () {
+    return function Customer(name) {
+      this.id = _.uniqueId();
+      this.name = name;
+      this.rentals = [];
+      this.charge = function () {
+        return this.rentals.sum('charge');
+      };
+      this.frequentRenterPoints = function () {
+        return this.rentals.sum('frequentRenterPoints');
+      };
+      this.rentals.sum = function (attribute) {
+        return _.chain(this).map(function (rental) {
+          return rental[attribute]();
+        }).inject(function (sum, value) {
+          return sum + value;
+        }).value();
+      };
+      this.statement = function () {
+        var result = 'Rental Record For ' + this.name + '\n';
+        _.each(this.rentals, function (rental) {
+          result += rental.movie.title + ' ' + rental.charge() + '\n';
+        });
+        // add footer notes
+        result += 'Amount owed is ' + this.charge() + '\n';
+        result += 'You earned ' + this.frequentRenterPoints() + ' frequent renter points.';
+        return result;
+      };
+    };
   }]);'use strict';
 angular.module('andrewkim').factory('Images', [
   '$http',
@@ -720,7 +822,57 @@ angular.module('andrewkim').factory('Images', [
       }
     };
   }
-]);'use strict';
+]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Products', [function () {
+    return function Products(title, type) {
+      this.id = _.uniqueId();
+      this.title = title;
+      this.type = type;
+      this.charge = function (daysRented) {
+        return this[this.chargeFunctionName()](daysRented);
+      };
+      this.chargeFunctionName = function () {
+        return this.type.split(' ').join('') + 'Charge';
+      };
+      this.regularCharge = function (daysRented) {
+        if (daysRented > 2) {
+          return 2 + (daysRented - 2) * 1.5;
+        }
+        return 2;
+      };
+      this.newReleaseCharge = function (daysRented) {
+        return daysRented * 3;
+      };
+      this.childrensCharge = function (daysRented) {
+        if (daysRented > 3) {
+          return 1.5 + (daysRented - 3) * 1.5;
+        }
+        return 1.5;
+      };
+    };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Rental', [function () {
+    return function Rental(customer, movie, daysRented) {
+      this.id = _.uniqueId();
+      this.customer = customer;
+      this.movie = movie;
+      this.daysRented = daysRented;
+      this.customer.rentals.push(this);
+      this.frequentRenterPoints = function () {
+        if (this.movie.type == 'new release' && this.daysRented > 1) {
+          return 2;
+        }
+        return 1;
+      };
+      this.charge = function () {
+        return this.movie.charge(this.daysRented);
+      };
+    };
+  }]);'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',

@@ -35,12 +35,12 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
                     $orderNow = $('#orderNow');
 
                 var tl = new TimelineMax({delay:0.5, repeat:2, repeatDelay:3});
-                TweenMax.to($('#banner'),0, {borderRadius:"0px 0px 25px 25px"});
-                TweenMax.to($panel1,0,{borderRadius:"0px 0px 25px 25px"});
-                TweenMax.to($panel2,0,{borderRadius:"0px 0px 25px 25px"});
-                TweenMax.to($panel3,0,{borderRadius:"0px 0px 25px 25px"});
-                TweenMax.to($info,0,{borderRadius:"0px 0px 25px 25px"});
-                TweenMax.to($orderNow,0,{borderRadius:"25px 25px 25px 25px"});
+                TweenMax.to($('#banner'),0, {borderRadius:'0px 0px 25px 25px'});
+                TweenMax.to($panel1,0,{borderRadius:'0px 0px 25px 25px'});
+                TweenMax.to($panel2,0,{borderRadius:'0px 0px 25px 25px'});
+                TweenMax.to($panel3,0,{borderRadius:'0px 0px 25px 25px'});
+                TweenMax.to($info,0,{borderRadius:'0px 0px 25px 25px'});
+                TweenMax.to($orderNow,0,{borderRadius:'25px 25px 25px 25px'});
 
                 tl.from(panel1, 0.5, {autoAlpha:0})
                     .from($panel1Text, 0.5, {scale:0.5, autoAlpha:0, ease:Back.easeOut})

@@ -14,9 +14,13 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
             uiColor: '#000000'
         };
 
+
+
+
         // YouTube Directive Setting Start
         $scope.YT_event = YT_event;
 
+        // Define Play List
         $scope.playList = [
             {id: 0, videoid: 'YMp8uYvZNZc', name:'Unji and let me go(Remastered Ver.)'},
             {id: 1, videoid: 'DRSFtoEyTio', name:'금요일 밤'},
@@ -29,7 +33,7 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
         ];
 
 
-        $scope.dd = function(id) {
+        $scope.selectSong = function(id) {
             if($scope.crntSong.id !== id ) {
                 $scope.crntSong = $scope.playList[id];
             }
@@ -86,10 +90,10 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
                     // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
                     //formDataAppender: function(formData, key, val){}
                 }).progress(function(evt) {
-                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                    //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
                 }).success(function(data, status, headers, config) {
                     // file is uploaded successfully
-                    console.log(data);
+                    //console.log(data);
                 });
                 //.error(...)
                 //.then(success, error, progress);
@@ -172,6 +176,15 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
 
         $scope.clickButton = function(){
             $scope.$emit('Click');
+        }
+
+        $scope.editMode = false;
+
+        $scope.clickBtn = function ($event){
+            if(!$scope.editMode)
+                $scope.editMode = true;
+            else
+                $scope.editMode = false;
         }
 
 	}
