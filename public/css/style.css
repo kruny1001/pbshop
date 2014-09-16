@@ -6646,7 +6646,9 @@ a.link:hover {
   color: rgba(255, 100, 0, 0.95); }
 
 .bannerMainFrame {
-  width: 50%;
-  height: 300px;
-  background-color: #ffd73e;
-  box-shadow: 5px 5px #cfff0d; }
+  font-family: Asap;
+  color: midnightblue;
+  margin: 1px;
+  width: 283px;
+  height: 411px;
+  font-size: 11px; }

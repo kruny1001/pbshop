@@ -11,5 +11,16 @@ angular.module('andrewkim').controller('AmapController', ['$scope',
             },
             zoom: 16
         };
+        $scope.marker = {
+            id:0,
+            title:'Andrew Kim Church',
+            coords: {
+                latitude: 44.8968555,
+                longitude: -93.1819971
+            },
+            options: { draggable: false }
+        }
+
+
 	}
 ]);

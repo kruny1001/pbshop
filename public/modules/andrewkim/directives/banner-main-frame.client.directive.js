@@ -6,18 +6,19 @@ angular.module('andrewkim').directive('bannerMainFrame', [ '$document',
 
             restrict: 'EA',
             transclude: true,
-            template:   '<div>' +
+            template:   '<div ng-transclude>' +/*
                             '<button ng-click="clickBtnFromDirective()">Directive 1-1</button>'+
                             '<div banner-sub-frame></div>'+
                             '<p>{{test}}</p>'+
                             '<div ng-transclude></div>'+
+                            */
                         '</div>',
             scope: {
                 EventHandler: '&eventFunction'
             },
             compile: function(tElem, tAttrs){
                 console.log('compile');
-                //tElem.addClass('bannerMainFrame');
+                tElem.addClass('bannerMainFrame');
                 console.log(tElem);
 
                 return{
@@ -57,7 +58,7 @@ angular.module('andrewkim').directive('bannerMainFrame', [ '$document',
                             //console.log(event);
                             //console.log(element);
                             if(scope.editMode === false) {
-                                TweenMax.to(element, 1, {opacity:0.2})
+                                TweenMax.to(element, 0.5, {autoAlpha:0, display:"none"})
                                 scope.editMode = true;
                             }
                             else {

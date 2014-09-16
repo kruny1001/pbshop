@@ -27,9 +27,9 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$element', 
             {id: 2,videoid: 'YMp8uYvZNZc', name: 'Rapstar'},
             {id: 3, videoid: '91gHDmn3RBw', name: 'Rapstar'},
             {id: 4, videoid: 'AtbS9CXX2WM', name: 'Control the gravity'},
-            {id: 5, videoid: 'JwkqhfVkk0I', name: 'Shake that'},
-            {id: 6, videoid: 'i7kIF6WGe9U', name: '금요일밤'},
-            {id: 7, videoid: 'vYibVU6Wbas', name: '응디시티'}
+            {id: 5, videoid: 'JwkqhfVkk0I', name: 'Shake that'}//,
+            //{id: 6, videoid: 'i7kIF6WGe9U', name: '금요일밤'},
+            //{id: 7, videoid: 'vYibVU6Wbas', name: '응디시티'}
         ];
 
 

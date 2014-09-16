@@ -435,16 +435,6 @@ angular.module('andrewkim').controller('AmainController', [
         id: 5,
         videoid: 'JwkqhfVkk0I',
         name: 'Shake that'
-      },
-      {
-        id: 6,
-        videoid: 'i7kIF6WGe9U',
-        name: '\uae08\uc694\uc77c\ubc24'
-      },
-      {
-        id: 7,
-        videoid: 'vYibVU6Wbas',
-        name: '\uc751\ub514\uc2dc\ud2f0'
       }
     ];
     $scope.selectSong = function (id) {
@@ -595,6 +585,15 @@ angular.module('andrewkim').controller('AmapController', [
       },
       zoom: 16
     };
+    $scope.marker = {
+      id: 0,
+      title: 'Andrew Kim Church',
+      coords: {
+        latitude: 44.8968555,
+        longitude: -93.1819971
+      },
+      options: { draggable: false }
+    };
   }
 ]);'use strict';
 angular.module('andrewkim').directive('bannerMainFrame', [
@@ -603,11 +602,11 @@ angular.module('andrewkim').directive('bannerMainFrame', [
     return {
       restrict: 'EA',
       transclude: true,
-      template: '<div>' + '<button ng-click="clickBtnFromDirective()">Directive 1-1</button>' + '<div banner-sub-frame></div>' + '<p>{{test}}</p>' + '<div ng-transclude></div>' + '</div>',
+      template: '<div ng-transclude>' + '</div>',
       scope: { EventHandler: '&eventFunction' },
       compile: function (tElem, tAttrs) {
         console.log('compile');
-        //tElem.addClass('bannerMainFrame');
+        tElem.addClass('bannerMainFrame');
         console.log(tElem);
         return {
           pre: function (scope, iElem, iAttrs) {
@@ -639,7 +638,10 @@ angular.module('andrewkim').directive('bannerMainFrame', [
               //console.log(event);
               //console.log(element);
               if (scope.editMode === false) {
-                TweenMax.to(element, 1, { opacity: 0.2 });
+                TweenMax.to(element, 0.5, {
+                  autoAlpha: 0,
+                  display: 'none'
+                });
                 scope.editMode = true;
               } else {
                 TweenMax.to(element, 1, { opacity: 1 });
@@ -2049,7 +2051,7 @@ angular.module('galleries').directive('hideMe', [
         if (newVal) {
           $animate.addClass(element, 'expand');
           //ScrollTo Y close to a targeting content
-          TweenMax.to(window, 1, {
+          TweenMax.to(window, 1.5, {
             scrollTo: { y: element.offset().top - 60 },
             ease: Back.easeOut
           });  //window.scrollTo();

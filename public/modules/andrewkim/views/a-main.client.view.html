@@ -6,40 +6,9 @@
     <div class="container">
 
         <div class="row">
-            <!-- MC MuHyun
-            <div class="well col-md-4">
-                <div  style="font-family: 'Hanna', serif;
-                  display:inline-block;
-                  color: #2a3d29;
-                  font-size:45px;
-                  font-weight:300;">
-                        <h2>MC 무현 Collection</h2>
-                    </div>
-                    <br/>
-                    <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
 
-                    <div style="font-family: 'Hanna', serif;">
-                        <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
-                        <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
-                        <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
-                    </div>
 
-                    <p>Player status is: {{yt.playerStatus}}</p>
 
-                    <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
-                    <ul style="font-family: 'Hanna', serif;">
-                        <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
-                            <h4>{{song.id+1}}: {{song.name}}</h4>
-                        </li>
-                    </ul>
-            </div>
-            -->
-            <!-- Myung-E
-            <div class="well col-md-4">
-                <gan-jab></gan-jab>
-                <ddak></ddak>
-            </div>
-            -->
             <div data-ng-controller="AAniGeneratorController">
                 <div id="adList"></div>
             </div>
@@ -48,32 +17,41 @@
             <div class=" col-md-4">
                 <div class="row">
                     <div  class="well" banner-main-frame>
-                        <!--//$emit('Click')
-                        <button ng-click="clickBtn()">Directive 1</button>
-                        <div banner-sub-frame></div>
-                        <p>{{test}}</p>
-                        -->
-                        <p>Space 1-1</p>
+                        <gan-jab></gan-jab>
+                        <ddak></ddak>
                     </div>
 
                     <div  class="well" banner-main-frame>
-                        <!--//$emit('Click')
-                        <button ng-click="clickBtn()">Directive 2</button>
-                        <div banner-sub-frame></div>
-                        <p>{{test}}</p>
-                        -->
-                        <p>Space 1-2</p>
+                        <div  style="font-family: 'Hanna', serif;
+                            display:inline-block;
+                            color: #2a3d29;
+                            font-size:45px;
+                            font-weight:300;">
+                            <h2>MC 무현 Collection</h2>
+                        </div>
+                        <br/>
+                        <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
+                        <div style="font-family: 'Hanna', serif;">
+                            <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
+                            <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
+                            <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
+                        </div>
+
+                        <p>Player status is: {{yt.playerStatus}}</p>
+
+                        <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
+                        <ul style="font-family: 'Hanna', serif;">
+                            <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
+                                <h4>{{song.id+1}}: {{song.name}}</h4>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class=" col-md-4">
                 <div class="row">
                     <div  class="well" banner-main-frame>
-                        <!--//$emit('Click')
-                        <button ng-click="clickBtn()">Directive 1</button>
-                        <div banner-sub-frame></div>
-                        <p>{{test}}</p>
-                        -->
+
                         <p>Space 2</p>
                     </div>
 
