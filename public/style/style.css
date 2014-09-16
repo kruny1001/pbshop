@@ -6870,4 +6870,5 @@ a.link:hover {
   /* reset the text-align */
   text-align: initial;
   /* inline-block space fix */
+  margin-right: 20px;
   width: 250px; }
