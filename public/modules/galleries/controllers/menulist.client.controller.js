@@ -8,7 +8,7 @@ angular.module('galleries').controller('MenulistController', ['$scope',
         $scope.isHidden = false;
         $scope.fadeIt = function() {
             $scope.isHidden = !$scope.isHidden;
-        }
+        };
 
         $scope.contents = [
             {

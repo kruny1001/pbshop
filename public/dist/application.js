@@ -15,7 +15,8 @@ var ApplicationConfiguration = function () {
         'angularFileUpload',
         'smart-table',
         'ui.ace',
-        'ngSanitize'
+        'ngSanitize',
+        'textAngular'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -88,6 +89,45 @@ angular.module('andrewkim').config([
       url: '/a-main',
       templateUrl: 'modules/andrewkim/views/a-main.client.view.html'
     });
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AAniGeneratorController', [
+  '$scope',
+  '$element',
+  'AniGenerator',
+  function ($scope, $element, AniGenerator) {
+    // A ani generator controller logic
+    // ...
+    /*
+        console.debug('from AAniGeneratorController');
+        console.log($element);
+        */
+    $scope.generateAdDirective = function () {
+      var ad = new AniGenerator();
+      ad.addMainFrame($element);
+    };  //$scope.generateAdDirective();
+  }
+]);'use strict';
+angular.module('andrewkim').controller('AShopController', [
+  '$scope',
+  'Customers',
+  'Products',
+  'Rental',
+  function ($scope, Customers, Products, Rental) {
+    console.log('Customers, Products and Rental class Testing');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    console.log(products.title);
+    var customer = new Customers('Brett');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 5);
+    console.log(customer.statement());
+    var customer = new Customers('Brett');
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 2);
+    console.log(customer.statement());
+    var products = new Products('Forgetting Sarah Marshall', 'regular');
+    var rental = new Rental(customer, products, 5);
+    console.log(customer.statement());
   }
 ]);'use strict';
 angular.module('andrewkim').controller('AboardController', [
@@ -345,9 +385,202 @@ angular.module('andrewkim').controller('AinfoController', [
     ];
   }
 ]);'use strict';
+angular.module('andrewkim').constant('YT_event', {
+  PLAY: 0,
+  STOP: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3
+});
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
-  function ($scope) {
+  '$element',
+  '$upload',
+  'Images',
+  'YT_event',
+  function ($scope, $element, $upload, Images, YT_event) {
+    $scope.editorOptions = {
+      language: 'ru',
+      uiColor: '#000000'
+    };
+    // YouTube Directive Setting Start
+    $scope.YT_event = YT_event;
+    // Define Play List
+    $scope.playList = [
+      {
+        id: 0,
+        videoid: 'YMp8uYvZNZc',
+        name: 'Unji and let me go(Remastered Ver.)'
+      },
+      {
+        id: 1,
+        videoid: 'DRSFtoEyTio',
+        name: '\uae08\uc694\uc77c \ubc24'
+      },
+      {
+        id: 2,
+        videoid: 'YMp8uYvZNZc',
+        name: 'Rapstar'
+      },
+      {
+        id: 3,
+        videoid: '91gHDmn3RBw',
+        name: 'Rapstar'
+      },
+      {
+        id: 4,
+        videoid: 'AtbS9CXX2WM',
+        name: 'Control the gravity'
+      },
+      {
+        id: 5,
+        videoid: 'JwkqhfVkk0I',
+        name: 'Shake that'
+      },
+      {
+        id: 6,
+        videoid: 'i7kIF6WGe9U',
+        name: '\uae08\uc694\uc77c\ubc24'
+      },
+      {
+        id: 7,
+        videoid: 'vYibVU6Wbas',
+        name: '\uc751\ub514\uc2dc\ud2f0'
+      }
+    ];
+    $scope.selectSong = function (id) {
+      if ($scope.crntSong.id !== id) {
+        $scope.crntSong = $scope.playList[id];
+      }
+    };
+    $scope.crntSong = $scope.playList[0];
+    $scope.yt = {
+      width: 235,
+      height: 34,
+      videoid: 'YMp8uYvTZNZc',
+      playerStatus: 'NOT PLAYING'
+    };
+    $scope.sendControlEvent2 = function (ctrlEvent) {
+      this.$broadcast(ctrlEvent);
+    };
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
+      $scope.yt.playerStatus = data;
+    });
+    // YouTube Directive Setting End
+    $scope.image = Images.list(function (image) {
+      console.log(image);  //$scope.image = image;
+    });
+    $scope.slideActions = [
+      {
+        name: 'TB',
+        action: 'TB'
+      },
+      {
+        name: 'BT',
+        action: 'BT'
+      },
+      {
+        name: 'LR',
+        action: 'RL'
+      },
+      {
+        name: 'RL',
+        action: 'RL'
+      }
+    ];
+    $scope.onFileSelect = function ($files) {
+      //$files: an array of files selected, each file has name, size, and type.
+      for (var i = 0; i < $files.length; i++) {
+        var file = $files[i];
+        $scope.upload = $upload.upload({
+          url: 'server/upload/url',
+          data: { myObj: $scope.myModelObj },
+          file: file
+        }).progress(function (evt) {
+        }).success(function (data, status, headers, config) {
+        });  //.error(...)
+             //.then(success, error, progress);
+             // access or attach event listeners to the underlying XMLHttpRequest.
+             //.xhr(function(xhr){xhr.upload.addEventListener(...)})
+      }  /* alternative way of uploading, send the file binary with the file's content-type.
+             Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
+             It could also be used to monitor the progress of a normal http post/put request with large data*/
+         // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
+    };
+    ///////////
+    /*
+        if (typeof window.FileReader === 'undefined')
+            alert('File API & FileReader not supported');
+
+        var dropper = document.getElementById("dropper");
+        var results = document.getElementById("results");
+
+        dropper.ondragover = function () { dropper.className = 'hover'; return false; };
+        dropper.ondragend = function () { dropper.className = ''; return false; };
+        dropper.ondrop = function (e) {
+            e.preventDefault();
+            var file = e.dataTransfer.files[0],
+                reader = new FileReader();
+            reader.onload = function(event) {
+                fileLoaded(file.name, event.target.result);
+            };
+            reader.readAsDataURL(file);
+            dropper.className = '';
+            return false;
+        };
+
+        function fileLoaded(filename, dataUri) {
+
+            var div = document.createElement("div");
+            div.className = 'item';
+
+            var remove = document.createElement("button");
+            remove.className = 'remove';
+            remove.innerHTML = 'x';
+            remove.onclick = function() {
+                if(localStorage) localStorage.removeItem(filename);
+                results.removeChild(div);
+            };
+            div.appendChild(remove);
+
+            var name = document.createElement("div");
+            name.innerHTML = filename;
+            div.appendChild(name);
+
+            if(/^data:image/.test(dataUri)) {
+                var imgDiv = document.createElement("div");
+                var img = document.createElement("img");
+                img.src = dataUri;
+                img.style['max-width'] = '100px';
+                img.style['height-width'] = '100px';
+                imgDiv.appendChild(img);
+                div.appendChild(imgDiv);
+            }
+
+            var ta = document.createElement("textarea");
+            ta.onclick = function() {
+                ta.select();
+            };
+            ta.value = dataUri;
+            div.appendChild(ta);
+
+            results.appendChild(div);
+            if(localStorage) localStorage.setItem(filename, dataUri);
+        }
+
+        if(localStorage)
+            for(var filename in localStorage)
+                fileLoaded(filename, localStorage.getItem(filename));
+        */
+    $scope.clickButton = function () {
+      $scope.$emit('Click');
+    };
+    $scope.editMode = false;
+    $scope.clickBtn = function ($event) {
+      if (!$scope.editMode)
+        $scope.editMode = true;
+      else
+        $scope.editMode = false;
+    };
   }
 ]);'use strict';
 angular.module('andrewkim').controller('AmapController', [
@@ -364,6 +597,282 @@ angular.module('andrewkim').controller('AmapController', [
     };
   }
 ]);'use strict';
+angular.module('andrewkim').directive('bannerMainFrame', [
+  '$document',
+  function ($document) {
+    return {
+      restrict: 'EA',
+      transclude: true,
+      template: '<div>' + '<button ng-click="clickBtnFromDirective()">Directive 1-1</button>' + '<div banner-sub-frame></div>' + '<p>{{test}}</p>' + '<div ng-transclude></div>' + '</div>',
+      scope: { EventHandler: '&eventFunction' },
+      compile: function (tElem, tAttrs) {
+        console.log('compile');
+        //tElem.addClass('bannerMainFrame');
+        console.log(tElem);
+        return {
+          pre: function (scope, iElem, iAttrs) {
+          },
+          post: function postLink(scope, element, attrs) {
+            //console.log('post link');
+            //setting up the CSS
+            /*
+                         element.css({
+                         width: '50%',
+                         height: 450,
+                         left:'100px',
+                         backgroundColor: 'red',
+                         boxShadow:'10px 10px'
+                         });
+                         */
+            //element.addClass('bannerMainFrame');
+            //$compile(element)(scope);
+            /*
+                         element.on('mousedown', function(evnt){
+                         event.preventDefault();
+                         $document.on('click', clickBtn);
+                         $document.on('doubleclick', clickBtn);
+                         });
+                         */
+            scope.editMode = false;
+            scope.clickBtnFromDirective = function () {
+              console.log('from clickBtn');
+              //console.log(event);
+              //console.log(element);
+              if (scope.editMode === false) {
+                TweenMax.to(element, 1, { opacity: 0.2 });
+                scope.editMode = true;
+              } else {
+                TweenMax.to(element, 1, { opacity: 1 });
+                scope.editMode = false;
+              }
+            };
+            //element.text('this is main frame');
+            scope.$on('Click', function (t) {
+              console.log('Clicked');
+              console.log(event);
+              scope.test = 'test';
+            });
+          }
+        };
+      }
+    };
+  }
+]);'use strict';
+angular.module('andrewkim').directive('bannerSubFrame', [function () {
+    return {
+      template: '<div></div>',
+      restrict: 'EA',
+      link: function postLink(scope, element, attrs) {
+        // Banner sub frame directive logic
+        // ...
+        element.text('this is the bannerSubFrame directive');
+      }
+    };
+  }]);'use strict';
+angular.module('andrewkim').constant('Ddak_event', {
+  OPEN: 0,
+  CLOSE: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3
+});
+angular.module('andrewkim').directive('ddak', [
+  'Ddak_event',
+  function (Ddak_event) {
+    return {
+      templateUrl: 'modules/andrewkim/directives/ddak.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        var $panel1 = $('#panel1'), $panel2 = $('#panel2'), $panel3 = $('#panel3'), $panel1Text = $('#panel1 h1'), $panel2Text = $('#panel2 h2'), $info = $('#info'), $list = $('#ddak').find('li'), $orderNow = $('#orderNow');
+        var tl = new TimelineMax({
+            delay: 0.5,
+            repeat: 2,
+            repeatDelay: 3
+          });
+        TweenMax.to($('#banner'), 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel1, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel2, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel3, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($info, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($orderNow, 0, { borderRadius: '25px 25px 25px 25px' });
+        tl.from(panel1, 0.5, { autoAlpha: 0 }).from($panel1Text, 0.5, {
+          scale: 0.5,
+          autoAlpha: 0,
+          ease: Back.easeOut
+        }).set($panel2, { top: 0 }, '+=1').from($panel2, 0.2, {
+          autoAlpha: 0,
+          scale: 1.5
+        }).from($panel2Text, 0.2, { top: 250 }, '+=0.5').to($panel2Text, 0.2, { top: 250 }, '+=0.5').set($panel3, { top: 0 }, 'final').from($info, 0.5, { top: 250 }, 'final').to($panel2, 0.5, { top: -60 }, 'final').staggerFrom($list, 0.3, {
+          autoAlpha: 0,
+          left: 50
+        }, 0.1, '+=0.2').from($orderNow, 0.5, {
+          scale: 0,
+          autoAlpha: 0,
+          ease: Back.easeOut
+        });  /*
+                scope.$on(Ddak_event.OPEN, function() {
+                    console.log('scope on');
+                    //console.log(element[0]);
+                    var tl = new TimelineMax({delay: 0.5});
+                    tl.to(element.children(), 1, {autoAlpha: 0})
+                        .to(element.children(), 1, {autoAlpha: 1});
+                });
+                */
+      }
+    };
+  }
+]);'use strict';
+/*
+    //top text animation
+* */
+angular.module('andrewkim').directive('ganJab', [function () {
+    return {
+      templateUrl: 'modules/andrewkim/directives/ganJab.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        // top text animation
+        CSSPlugin.defaultTransformPerspective = 400;
+        var playBtn = $('#playBtn'), pauseBtn = $('#pauseBtn'), resumeBtn = $('#resumeBtn'), time = $('#time'), progress = $('#progress'), timeScale = $('#timeScale'), buttons = [
+            playBtn,
+            pauseBtn,
+            resumeBtn
+          ], lis = $('#ganJab').find('li');
+        var tl = new TimelineLite({ delay: 0.4 });
+        TweenLite.set('#demo', { visibility: 'visible' });
+        tl.from('#timeline_txt', 0.6, {
+          y: -30,
+          opacity: 0
+        }).from('#lite_txt', 0.6, {
+          y: 30,
+          opacity: 0
+        }, '-=0.3').staggerFrom(lis, 0.2, {
+          y: 20,
+          opacity: 0
+        }, 0.1).set(buttons, { opacity: 0.2 });
+      }
+    };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('AniGenerator', [function () {
+    return function Customer(name, user, targetLink) {
+      this.name = _.uniqueId();
+      this.user = user;
+      this.targetLink = targetLink;
+      this.addMainFrame = function (element) {
+        var crntElement = element;
+        return crntElement.append('<div ng-class={{' + 'dd' + '}} banner-main-frame> <button ng-click="clickBtn()">factory</button></subFrame>');
+      };
+      this.isNameUnique = function () {
+        console.log('isNameUnique');
+        return true;
+      };
+      this.addSubFrame = function () {
+        return '<div ng-class={{' + 'well' + '}} banner-sub-frame></subFrame>';
+      };
+    };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Customers', [function () {
+    return function Customer(name) {
+      this.id = _.uniqueId();
+      this.name = name;
+      this.rentals = [];
+      this.charge = function () {
+        return this.rentals.sum('charge');
+      };
+      this.frequentRenterPoints = function () {
+        return this.rentals.sum('frequentRenterPoints');
+      };
+      this.rentals.sum = function (attribute) {
+        return _.chain(this).map(function (rental) {
+          return rental[attribute]();
+        }).inject(function (sum, value) {
+          return sum + value;
+        }).value();
+      };
+      this.statement = function () {
+        var result = 'Rental Record For ' + this.name + '\n';
+        _.each(this.rentals, function (rental) {
+          result += rental.movie.title + ' ' + rental.charge() + '\n';
+        });
+        // add footer notes
+        result += 'Amount owed is ' + this.charge() + '\n';
+        result += 'You earned ' + this.frequentRenterPoints() + ' frequent renter points.';
+        return result;
+      };
+    };
+  }]);'use strict';
+angular.module('andrewkim').factory('Images', [
+  '$http',
+  function ($http) {
+    return {
+      list: function (callback) {
+        /*
+                $http({
+                    method:'GET',
+                    url:'/modules/andrewkim/data/main.json'
+                    //cache:true
+                }).success(function(data){console.log(data);})
+                    .error(function(data, status){
+                    console.log(data);
+                    console.log(status);
+                });*/
+        return 'ddd';
+      }
+    };
+  }
+]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Products', [function () {
+    return function Products(title, type) {
+      this.id = _.uniqueId();
+      this.title = title;
+      this.type = type;
+      this.charge = function (daysRented) {
+        return this[this.chargeFunctionName()](daysRented);
+      };
+      this.chargeFunctionName = function () {
+        return this.type.split(' ').join('') + 'Charge';
+      };
+      this.regularCharge = function (daysRented) {
+        if (daysRented > 2) {
+          return 2 + (daysRented - 2) * 1.5;
+        }
+        return 2;
+      };
+      this.newReleaseCharge = function (daysRented) {
+        return daysRented * 3;
+      };
+      this.childrensCharge = function (daysRented) {
+        if (daysRented > 3) {
+          return 1.5 + (daysRented - 3) * 1.5;
+        }
+        return 1.5;
+      };
+    };
+  }]);/**
+ * Created by KevinSo on 9/15/2014.
+ */
+angular.module('andrewkim').factory('Rental', [function () {
+    return function Rental(customer, movie, daysRented) {
+      this.id = _.uniqueId();
+      this.customer = customer;
+      this.movie = movie;
+      this.daysRented = daysRented;
+      this.customer.rentals.push(this);
+      this.frequentRenterPoints = function () {
+        if (this.movie.type == 'new release' && this.daysRented > 1) {
+          return 2;
+        }
+        return 1;
+      };
+      this.charge = function () {
+        return this.movie.charge(this.daysRented);
+      };
+    };
+  }]);'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',
@@ -692,8 +1201,6 @@ angular.module('draggable').config([
 angular.module('draggable').controller('DraggableController', [
   '$scope',
   function ($scope) {
-    // Controller Logic
-    // ...
     var $snap = $('#snap'), $liveSnap = $('#liveSnap'), $container = $('.draggable-container'), gridWidth = 196, gridHeight = 100, gridRows = 6, gridColumns = 5, i, x, y;
     //loop through and create the grid (a div for each cell). Feel free to tweak the variables above
     for (i = 0; i < gridRows * gridColumns; i++) {
@@ -1111,7 +1618,6 @@ angular.module('galleries').controller('GviewController', [
          */
     $scope.onDragEnd = function (value) {
       $scope.currentRotation = value;
-      console.log('DRAG_END', value);
     };
     $scope.testDraggable = function () {
     };
@@ -1934,8 +2440,13 @@ angular.module('galleries').directive('youtube', [
         scope.$watch('videoid', function (newValue, oldValue) {
           if (newValue === oldValue) {
             return;
+          } else {
+            console.log('id is changed');
+            //player.seekTo(0);
+            //player.stopVideo();
+            player.cueVideoById(scope.videoid);
+            player.playVideo();
           }
-          player.cueVideoById(scope.videoid);
         });
         scope.$on(YT_event.STOP, function () {
           player.seekTo(0);
@@ -2205,7 +2716,9 @@ angular.module('opencpu').config([
 'use strict';
 angular.module('opencpu').controller('GwasT1Controller', [
   '$scope',
-  function ($scope) {
+  'Getrresult',
+  'Readcsv',
+  function ($scope, Getrresult, Readcsv) {
     // <rChart> Directive
     //ex1
     $scope.example1 = {
@@ -2231,6 +2744,12 @@ angular.module('opencpu').controller('GwasT1Controller', [
       title: 'Stock Info (HighCharts)',
       content: 'The next library I will be exploring is HighCharts'
     };
+    //var movie1 = new Getrresult("Forgetting Sarah Marshall", "regular");
+    //console.debug(movie1.id);
+    var test = new Readcsv('fileName');
+    test.readFile().then(function (result) {
+      console.debug(result);
+    });
   }
 ]);'use strict';
 angular.module('opencpu').directive('rChart', [function () {
@@ -2256,6 +2775,52 @@ angular.module('opencpu').directive('rChart', [function () {
       }
     };
   }]);'use strict';
+angular.module('opencpu').factory('Getrresult', [function () {
+    return function Getrresult(title, type) {
+      this.id = _.uniqueId('movie');
+      this.title = title;
+      this.type = type;
+      this.charge = function (daysRented) {
+        return this[this.chargeFunctionNmae()](daysRented);
+      };
+      this.chargeFunctionName = function () {
+        return this.type.titleize().split(' ').join('').camelize() + 'Charge';
+      };
+      this.regularCharge = function (daysRented) {
+        if (daysRented > 2) {
+          return 2 + (daysRented - 2) * 1.5;
+        }
+        return 2;
+      };
+      this.newReleaseCharge = function (daysRented) {
+        return daysRented * 3;
+      };
+      this.childrensCharge = function (daysRented) {
+        if (daysRented > 3) {
+          return 1.5 + (daysRented - 3) * 1.5;
+        }
+        return 1.5;
+      };
+    };
+  }]);'use strict';
+angular.module('opencpu').factory('Readcsv', [
+  '$http',
+  function ($http) {
+    return function Readcsv(fileName) {
+      this.id = _.uniqueId('csv');
+      this.fileName = fileName;
+      this.readFile = function () {
+        //var URL = 'users/all';
+        var URL = 'modules/opencpu/data/introduction.json';
+        return $http.get(URL);
+      };
+      this.writeData = function (data) {
+        console.debug('wrtieData function is invoked');
+        console.debug(data);
+      };
+    };
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('reviews').run([
   'Menus',
@@ -2542,205 +3107,7 @@ angular.module('template').directive('bannerFront', [function () {
         }  //element.text('this is the bannerFront directive');
       }
     };
-  }]);/**
- * Created by KevinSo on 8/28/2014.
- */
-'use strict';
-/**
- * This AngularJS Directive is to allow easy usage of the Aloha Editor inside an AngularJS project.
- *
- * @class ngAlohaEditor
- */
-/*
- Props to https://github.com/esvit/ng-ckeditor for a nice example to implement an editor
- */
-var module = angular.module('template', []);
-if (typeof ngAlohaEditorConfig === 'undefined') {
-  var ngAlohaEditorConfig = { baseUrl: '' };
-}
-/**
- * Defines the configuration for the Directive
- *
- * @example
- * var ngAlohaEditorConfig = { baseUrl: 'bower_components/ng-aloha-editor/' };
- *
- * @property ngAlohaEditorConfig
- * @type Array
- **/
-Aloha = window.Aloha || {};
-Aloha.settings = Aloha.settings || {};
-var DirectiveSettings = {
-    baseUrl: ngAlohaEditorConfig.baseUrl + 'libs/alohaeditor-0.23.26/aloha/lib',
-    logLevels: {
-      'error': true,
-      'warn': true,
-      'info': false,
-      'debug': false
-    },
-    errorhandling: false
-  };
-jQuery.extend(Aloha.settings, DirectiveSettings);
-module.directive('aloha', [
-  '$location',
-  '$rootScope',
-  function ($location, $rootScope) {
-    var count = 0;
-    var fromAloha = false;
-    /**
-     * Because AngularJS would route clicks on any links, but we
-     * want the user to be able to click on links so he can edit them.
-     *
-     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
-     *
-     * @method preventAngularRouting
-     * @param {Object} elem DOM Element with Aloha bound to it
-     * @return {boolean} false
-     **/
-    function preventAngularRouting(elem) {
-      Aloha.jQuery(elem).click(function (e) {
-        return false;
-      });
-    }
-    /**
-     * @method replaceAngularLinkClickHandler
-     * @param {Object} elem DOM Element with Aloha bound to it
-     **/
-    function replaceAngularLinkClickHandler(elem) {
-      preventAngularRouting(elem);
-      Aloha.jQuery(elem).on('click', 'a', function (e) {
-        var href = $(this).attr('href');
-        // Use metaKey for OSX and ctrlKey for PC.
-        if (e.metaKey || e.ctrlKey) {
-          if ('/' === href.charAt(0)) {
-            // Relative links withing the angular app.
-            $location.url(href);
-            e.preventDefault();
-          } else {
-            // Absolute links pointing outside the angular app.
-            window.location.href = href;
-          }
-        }
-      });
-    }
-    /**
-     * Also, we don't want the default ctrl+click behaviour of aloha, which
-     * is to do window.location.href = href because that would reload the page.
-     *
-     * Comment and method taken from: https://groups.google.com/d/msg/angular/g3eNa360oMo/0-plw8zm-okJ
-     *
-     * @method disableAlohaCtrlClickHandler
-     **/
-    function disableAlohaCtrlClickHandler() {
-      Aloha.ready(function () {
-        Aloha.bind('aloha-editable-activated', function (event, msg) {
-          // There is no simple way to disable Aloha's ctrl-click
-          // behaviour. We know the handler is bound when the editable
-          // is activated, and with the timeout we make sure it is
-          // unbound again afterwards.
-          var editable = msg.editable;
-          setTimeout(function () {
-            editable.obj.unbind('click.aloha-link.meta-click-link');
-          }, 10);
-        });
-      });
-    }
-    function alohaElement(element) {
-      Aloha.ready(function () {
-        Aloha.jQuery(element).aloha();
-      });
-    }
-    function mahaloElement(element) {
-      Aloha.ready(function () {
-        Aloha.jQuery(element).mahalo();
-      });
-    }
-    // Only do once for each page load.
-    disableAlohaCtrlClickHandler();
-    return {
-      priority: -1000,
-      terminal: true,
-      scope: { alohaContent: '=' },
-      link: function (scope, elem, attrs) {
-        var elementId = '' + count++;
-        var uniqeClass = 'angular-aloha-element' + elementId;
-        elem[0].classList.add(uniqeClass);
-        elem.data('ng-aloha-element-id', elementId);
-        Aloha.ready(function () {
-          /**
-                 * The Text Editor Javascript is Loaded and Ready
-                 * @event texteditor-js-ready
-                 **/
-          scope.$emit('texteditor-js-ready');
-          if (!elem.hasClass('aloha-editable')) {
-            alohaElement(elem);
-          }
-          /**
-                 * The Text Editor has been bound to the object
-                 * @event texteditor-ready
-                 * @param {Object} Element DOM Element that Aloha has bound to
-                 **/
-          scope.$emit('texteditor-ready', elem);
-          Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
-          scope.$watch('alohaContent', function () {
-            // Check if the change comes from inside of Aloha
-            if (!fromAloha) {
-              Aloha.getEditableById(elem.attr('id')).setContents(scope.alohaContent);
-            }
-          });
-          Aloha.bind('aloha-selection-changed', function (jQueryEvent, alohaEditable) {
-            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
-              /**
-                         * The Text Editor has detected a change in it's selection
-                         * @event texteditor-selection-changed
-                         * @param {Object} jQueryEvent jQuery Event
-                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
-                         **/
-              scope.$emit('texteditor-selection-changed', jQueryEvent, alohaEditable);
-            }
-          });
-          Aloha.bind('aloha-editable-deactivated', function (jQueryEvent, alohaEditable) {
-            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
-              /**
-                         * The Text Editor had deactivated editability
-                         * @event texteditor-editable-deactivated
-                         * @param {Object} jQueryEvent jQuery Event
-                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
-                         **/
-              scope.$emit('texteditor-editable-deactivated', jQueryEvent, alohaEditable);
-            }
-          });
-          Aloha.bind('aloha-smart-content-changed', function (jQueryEvent, alohaEditable) {
-            // Reset {bool} fromAloha to the false state
-            fromAloha = false;
-            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
-              scope.alohaContent = alohaEditable.editable.getContents();
-              fromAloha = true;
-              $rootScope.$$phase || $rootScope.$apply();
-              /**
-                         * The Text Editor has detected a change in it's content
-                         * @event texteditor-content-changed
-                         * @param {Object} jQueryEvent jQuery Event
-                         * @param {Object} alohaEditable DOM Element that Aloha has bound to
-                         **/
-              scope.$emit('texteditor-content-changed', jQueryEvent, alohaEditable);
-            }
-          });
-          Aloha.bind('aloha-command-executed', function (jQueryEvent, eventArgument) {
-            if (jQueryEvent.target.activeEditable.originalObj[0].id == elem.attr('id')) {
-              /**
-                         * The Text Editor has executed a command
-                         * @event texteditor-command-executed
-                         * @param {String} eventArgument executed command name
-                         **/
-              scope.$emit('texteditor-command-executed', eventArgument);
-            }
-          });
-        });
-        replaceAngularLinkClickHandler(elem);
-      }
-    };
-  }
-]);'use strict';
+  }]);'use strict';
 angular.module('template').directive('setRowCol', [function () {
     return {
       template: '<div></div>',

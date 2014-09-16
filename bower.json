@@ -16,16 +16,16 @@
     "bootstrap-sass-official": "~3.2.0",
     "grunt-contrib-sass": "~0.7.3",
     "angular-google-maps": "~1.2.0",
-    "lodash": "~2.4.1",
+    "lodash": "latest",
     "angular-wizard": "~0.4.0",
     "ng-file-upload": "~1.6.5",
     "ng-file-upload-shim": "~1.6.5",
     "angular-smart-table": "*",
-    "ng-aloha-editor": "~0.0.2",
     "requirejs": "~2.1.14",
     "angular-ui-ace": "~0.1.1",
     "angular-sanitize": "~1.2.23",
-    "angular-ui-calendar": "~0.8.1"
+    "angular-ui-calendar": "~0.8.1",
+    "textAngular": "~1.2.2"
   },
   "resolutions": {
     "jquery": "~2.1.1"

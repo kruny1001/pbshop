@@ -241,11 +241,10 @@ angular.module('galleries').controller('GviewController', ['$scope','$http','YT_
          */
         $scope.onDragEnd = function(value) {
             $scope.currentRotation = value;
-            console.log ('DRAG_END', value)
         };
 
         $scope.testDraggable = function(){
-        }
+        };
 
         $scope.expandAnimation = function(element) {
             console.log('!!');

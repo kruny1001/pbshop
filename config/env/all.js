@@ -16,11 +16,13 @@ module.exports = {
                 'public/css/style.css'
 			],
 			js: [
+                'public/lib/jquery/dist/jquery.min.js',
+                'public/lib/jquery-ui/ui/jquary-ui.js',
+
                 'public/lib/ng-file-upload/angular-file-upload-shim.min.js',
                 'public/lib/ace-builds/src-min-noconflict/ace.js',
 
-                'public/lib/jquery/dist/jquery.min.js',
-                'public/lib/jquery-ui/ui/jquary-ui.js',
+
 
                 'public/lib/angular/angular.js',
                 'public/lib/angular-sanitize/angular-sanitize.min.js',
@@ -44,14 +46,22 @@ module.exports = {
                 'public/lib/gsap/src/minified/TimelineMax.min.js',
                 'public/lib/gsap/src/minified/utils/Draggable.min.js',
                 //'public/lib/gsap/src/minified/plugins/ThrowPropsPlugin.min.js',
-                "public/lib/gsap/src/minified/plugins/CSSPlugin.min.js",
+                'public/lib/gsap/src/minified/plugins/CSSPlugin.min.js',
+                'public/lib/gsap/src/minified/plugins/TextPlugin.min.js',
                 'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js',
 
                 'public/lib/angular-smart-table/dist/smart-table.min.js',
                 'public/lib/requirejs/require.js',
-                'public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js',
-                'public/3rdlib/opencpu/opencpu-0.5.js',
-                'public/lib/angular-ui-ace/ui-ace.js'
+                //'public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js',
+
+                //opencpu disabled for a while
+                //'public/3rdlib/opencpu/opencpu-0.5.js',
+                'public/lib/angular-ui-ace/ui-ace.js',
+
+                //text Angular
+
+                'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+                'public/lib/textAngular/dist/textAngular.min.js'
 			]
 		},
 		css: [

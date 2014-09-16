@@ -2,12 +2,9 @@
 
 angular.module('draggable').controller('DraggableController', ['$scope',
 	function($scope) {
-		// Controller Logic
-		// ...
-
-        var $snap = $("#snap"),
-            $liveSnap = $("#liveSnap"),
-            $container = $(".draggable-container"),
+        var $snap = $('#snap'),
+            $liveSnap = $('#liveSnap'),
+            $container = $('.draggable-container'),
             gridWidth = 196,
             gridHeight = 100,
             gridRows = 6,
@@ -18,21 +15,21 @@ angular.module('draggable').controller('DraggableController', ['$scope',
         for (i = 0; i < gridRows * gridColumns; i++) {
             y = Math.floor(i / gridColumns) * gridHeight;
             x = (i * gridWidth) % (gridColumns * gridWidth);
-            $("<div/>").css({position:"absolute", border:"1px solid #454545", width:gridWidth-1, height:gridHeight-1, top:y, left:x}).prependTo($container);
+            $('<div/>').css({position:'absolute', border:'1px solid #454545', width:gridWidth-1, height:gridHeight-1, top:y, left:x}).prependTo($container);
         }
 
         //set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
         TweenLite.set($container, {height: gridRows * gridHeight + 1, width: gridColumns * gridWidth + 1});
-        TweenLite.set(".draggable-box", {width:gridWidth, height:gridHeight, lineHeight:gridHeight + "px"});
+        TweenLite.set('.draggable-box', {width:gridWidth, height:gridHeight, lineHeight:gridHeight + 'px'});
 
         //the update() function is what creates the Draggable according to the options selected (snapping).
         function update() {
-            var snap = $snap.prop("checked"),
-                liveSnap = $liveSnap.prop("checked");
-            Draggable.create(".draggable-box", {
+            var snap = $snap.prop('checked'),
+                liveSnap = $liveSnap.prop('checked');
+            Draggable.create('.draggable-box', {
                 bounds:$container,
                 edgeResistance:0.65,
-                type:"x,y",
+                type:'x,y',
                 throwProps:true,
                 liveSnap:liveSnap,
                 snap:{
@@ -47,12 +44,12 @@ angular.module('draggable').controller('DraggableController', ['$scope',
         }
 
 //when the user toggles one of the "snap" modes, make the necessary updates...
-        $snap.on("change", applySnap);
-        $liveSnap.on("change", applySnap);
+        $snap.on('change', applySnap);
+        $liveSnap.on('change', applySnap);
 
         function applySnap() {
-            if ($snap.prop("checked") || $liveSnap.prop("checked")) {
-                $(".draggable-box").each(function(index, element) {
+            if ($snap.prop('checked') || $liveSnap.prop('checked')) {
+                $('.draggable-box').each(function(index, element) {
                     TweenLite.to(element, 0.5, {
                         x:Math.round(element._gsTransform.x / gridWidth) * gridWidth,
                         y:Math.round(element._gsTransform.y / gridHeight) * gridHeight,

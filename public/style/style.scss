@@ -9,7 +9,8 @@ $brand-success:         #A0D468;
 
 // Import scss Files
 // Reset
-@import "reset";
+//@import "reset";
+@import "unreset";
 // Some Mixins
 @import "mixins";
 // Page body style
@@ -17,11 +18,17 @@ $brand-success:         #A0D468;
 // Incontent
 @import "incontent";
 @import "gview";
+
 @import "menubox";
 @import "googlemap";
 @import "wizard";
+
+//fonts
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,900,700);
+@import url(http://fonts.googleapis.com/css?family=Asap:400,700);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
 @import "productionDescription";
 
@@ -32,3 +39,7 @@ $brand-success:         #A0D468;
 //@import '../modules/template/directives/fontAnimation';
 @import 'core-home';
 @import 'ui-calendar';
+
+
+@import 'ddak';
+@import 'banner';

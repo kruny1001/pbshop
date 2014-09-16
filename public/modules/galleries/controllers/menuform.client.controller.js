@@ -11,7 +11,7 @@ angular.module('galleries').controller('MenuformController', ['$scope','$upload'
         username: 'kruny1001',
         email: 'test@test.com',
         address: '123 1st st. M 12345'
-    }
+    };
 
     // function to submit the form after all validation has occurred
     $scope.submitForm = function(isValid) {

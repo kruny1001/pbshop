@@ -1,12 +1,4 @@
 <section data-ng-controller="GalleriesController">
-    <!-- Aloha Editor-->
-
-    <script>
-        var ngAlohaEditorConfig = { baseUrl: 'lib/ng-aloha-editor/' };
-    </script>
-    <link href="http://cdn.aloha-editor.org/latest/css/aloha.css" rel="stylesheet" type="text/css" />
-    <!-- END Aloha Editor-->
-
     <br>
     <div class="container">
         <div class="page-header">
@@ -31,6 +23,8 @@
                     -->
                     <div class="form-group">
                         <label class="control-label" for="content">Content</label>
+                        <div text-angular="" ng-model="examples[0].content"></div>
+
                         <div
                                 class="form-control"
                                 style="height: 420px; border: 1px solid gray; overflow: scroll;"

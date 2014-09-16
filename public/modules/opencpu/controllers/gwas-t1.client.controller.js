@@ -4,8 +4,8 @@
  */
 'use strict';
 
-angular.module('opencpu').controller('GwasT1Controller', ['$scope',
-    function($scope) {
+angular.module('opencpu').controller('GwasT1Controller', ['$scope','Getrresult','Readcsv',
+    function($scope, Getrresult, Readcsv) {
         // <rChart> Directive
         //ex1
         $scope.example1 = {
@@ -42,5 +42,14 @@ angular.module('opencpu').controller('GwasT1Controller', ['$scope',
             title:'Stock Info (HighCharts)',
             content:'The next library I will be exploring is HighCharts'
         };
+
+        //var movie1 = new Getrresult("Forgetting Sarah Marshall", "regular");
+        //console.debug(movie1.id);
+
+        var test = new Readcsv("fileName");
+
+        test.readFile()
+            .then(function(result){
+                console.debug(result)});
     }
 ]);
