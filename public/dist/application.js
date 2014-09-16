@@ -52,6 +52,8 @@ angular.element(document).ready(function () {
 ApplicationConfiguration.registerModule('andrewkim');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('articles');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('banners');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
@@ -596,6 +598,16 @@ angular.module('andrewkim').controller('AmapController', [
     };
   }
 ]);'use strict';
+angular.module('andrewkim').controller('BannerController', [
+  '$scope',
+  function ($scope) {
+    // Banner controller logic
+    // ...
+    $scope.findOne = function () {
+      $scope.article = Articles.get({ articleId: $stateParams.articleId });
+    };
+  }
+]);'use strict';
 angular.module('andrewkim').directive('bannerMainFrame', [
   '$document',
   function ($document) {
@@ -710,7 +722,8 @@ angular.module('andrewkim').directive('ddak', [
           scale: 0,
           autoAlpha: 0,
           ease: Back.easeOut
-        });  /*
+        });
+        /*
                 scope.$on(Ddak_event.OPEN, function() {
                     console.log('scope on');
                     //console.log(element[0]);
@@ -719,6 +732,80 @@ angular.module('andrewkim').directive('ddak', [
                         .to(element.children(), 1, {autoAlpha: 1});
                 });
                 */
+        scope.clickBtnFromDirective = function () {
+          console.log('from clickBtn');
+          //console.log(event);
+          //console.log(element);
+          if (scope.editMode === false) {
+            TweenMax.to(element, 0.5, {
+              autoAlpha: 0,
+              display: 'none'
+            });
+            scope.editMode = true;
+          } else {
+            TweenMax.to(element, 1, { opacity: 1 });
+            scope.editMode = false;
+          }
+        };
+      }
+    };
+  }
+]);'use strict';
+angular.module('andrewkim').constant('Ddak_event', {
+  OPEN: 0,
+  CLOSE: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3
+});
+angular.module('andrewkim').directive('fireya', [
+  'Ddak_event',
+  function (Ddak_event) {
+    return {
+      templateUrl: 'modules/andrewkim/directives/fireya.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        var $panel1 = $('banner-title'), $panel2 = $('sub-title'), $panel3 = $('banner-info'), $panel1Text = $('banner-title h1'), $panel2Text = $('sub-title h2'), $info = $('info-content'), $list = $('info-content').find('li'), $orderNow = $('info-button');
+        var tl = new TimelineMax({
+            delay: 0.5,
+            repeat: 2,
+            repeatDelay: 3
+          });
+        TweenMax.to($('banner-body'), 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel1, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel2, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($panel3, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($info, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to($orderNow, 0, { borderRadius: '25px 25px 25px 25px' });
+        tl.from($panel1, 0.5, { autoAlpha: 0 }).from($panel1Text, 0.5, {
+          scale: 0.5,
+          autoAlpha: 0,
+          ease: Back.easeOut
+        }).set($panel2, { top: 0 }, '+=1').from($panel2, 0.2, {
+          autoAlpha: 0,
+          scale: 1.5
+        }).from($panel2Text, 0.2, { top: 250 }, '+=0.5').to($panel2Text, 0.2, { top: 250 }, '+=0.5').set($panel3, { top: 0 }, 'final').from($info, 0.5, { top: 250 }, 'final').to($panel2, 0.5, { top: -60 }, 'final').staggerFrom($list, 0.3, {
+          autoAlpha: 0,
+          left: 50
+        }, 0.1, '+=0.2').from($orderNow, 0.5, {
+          scale: 0,
+          autoAlpha: 0,
+          ease: Back.easeOut
+        });
+        scope.clickBtnFromDirective = function () {
+          console.log('from clickBtn');
+          //console.log(event);
+          //console.log(element);
+          if (scope.editMode === false) {
+            TweenMax.to(element, 0.5, {
+              autoAlpha: 0,
+              display: 'none'
+            });
+            scope.editMode = true;
+          } else {
+            TweenMax.to(element, 1, { opacity: 1 });
+            scope.editMode = false;
+          }
+        };
       }
     };
   }
@@ -773,6 +860,16 @@ angular.module('andrewkim').factory('AniGenerator', [function () {
       };
     };
   }]);/**
+ * Created by KevinSo on 9/16/2014.
+ */
+'use strict';
+//Articles service used for communicating with the articles REST endpoints
+angular.module('andrewkim').factory('Banners', [
+  '$resource',
+  function ($resource) {
+    return $resource('banners/:bannerId', { articleId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);/**
  * Created by KevinSo on 9/15/2014.
  */
 angular.module('andrewkim').factory('Customers', [function () {
@@ -962,6 +1059,99 @@ angular.module('articles').factory('Articles', [
   '$resource',
   function ($resource) {
     return $resource('articles/:articleId', { articleId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
+// Configuring the Articles module
+angular.module('banners').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Banners', 'banners', 'dropdown', '/banners(/create)?');
+    Menus.addSubMenuItem('topbar', 'banners', 'List Banners', 'banners');
+    Menus.addSubMenuItem('topbar', 'banners', 'New Banner', 'banners/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('banners').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Banners state routing
+    $stateProvider.state('listBanners', {
+      url: '/banners',
+      templateUrl: 'modules/banners/views/list-banners.client.view.html'
+    }).state('createBanner', {
+      url: '/banners/create',
+      templateUrl: 'modules/banners/views/create-banner.client.view.html'
+    }).state('viewBanner', {
+      url: '/banners/:bannerId',
+      templateUrl: 'modules/banners/views/view-banner.client.view.html'
+    }).state('editBanner', {
+      url: '/banners/:bannerId/edit',
+      templateUrl: 'modules/banners/views/edit-banner.client.view.html'
+    });
+  }
+]);'use strict';
+// Banners controller
+angular.module('banners').controller('BannersController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Banners',
+  function ($scope, $stateParams, $location, Authentication, Banners) {
+    $scope.authentication = Authentication;
+    // Create new Banner
+    $scope.create = function () {
+      // Create new Banner object
+      var banner = new Banners({ name: this.name });
+      // Redirect after save
+      banner.$save(function (response) {
+        $location.path('banners/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Banner
+    $scope.remove = function (banner) {
+      if (banner) {
+        banner.$remove();
+        for (var i in $scope.banners) {
+          if ($scope.banners[i] === banner) {
+            $scope.banners.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.banner.$remove(function () {
+          $location.path('banners');
+        });
+      }
+    };
+    // Update existing Banner
+    $scope.update = function () {
+      var banner = $scope.banner;
+      banner.$update(function () {
+        $location.path('banners/' + banner._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Banners
+    $scope.find = function () {
+      $scope.banners = Banners.query();
+    };
+    // Find existing Banner
+    $scope.findOne = function () {
+      $scope.banner = Banners.get({ bannerId: $stateParams.bannerId });
+    };
+  }
+]);'use strict';
+//Banners service used to communicate Banners REST endpoints
+angular.module('banners').factory('Banners', [
+  '$resource',
+  function ($resource) {
+    return $resource('banners/:bannerId', { bannerId: '@_id' }, { update: { method: 'PUT' } });
   }
 ]);'use strict';
 // Setting up route

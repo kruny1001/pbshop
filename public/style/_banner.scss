@@ -7,3 +7,18 @@
   height:411px;
   font-size: 11px;
 }
+
+.row-centered {
+  text-align:center;
+  margin-left:45px;
+}
+.col-centered {
+  display:inline-block;
+  float:left;
+  /* reset the text-align */
+  text-align: initial;
+  /* inline-block space fix */
+  //margin-right:45px;
+  //fixed width
+  width:250px;
+}
