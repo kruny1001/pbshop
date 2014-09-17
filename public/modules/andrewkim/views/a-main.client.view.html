@@ -1,12 +1,24 @@
-<section data-ng-controller="AmainController">
+<section data-ng-controller="AmainController" data-ng-init="find()">
 
 <br>
 <br>
 <br>
+<ul>
+	<li ng-repeat="plan in plans">
+		<a  data-ng-href="#!/articles/{{plan._id}}">
+			<h4><span class="glyphicon glyphicon-asterisk"></span> {{plan.title}} <small> by {{plan.user.displayName}}
+		(<span data-ng-bind="plan.created | date:'mediumDate'"></span>)
+	</small></h4></a></li>
+</ul>
 <div class="row row-centered">
     <div class=" col-md-3 col-centered">
         <div  class="well" banner-main-frame>
-            <gan-jab></gan-jab>
+	        <button type="button" class="admin-edit btn btn-default btn-sm">
+		        <span class="glyphicon glyphicon-pencil"></span>
+	        </button>
+            <gan-jab>
+
+            </gan-jab>
             <ddak></ddak>
         </div>
     </div>

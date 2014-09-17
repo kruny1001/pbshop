@@ -7,8 +7,18 @@ angular.module('andrewkim').constant('YT_event', {
     STATUS_CHANGE  : 3
 });
 
-angular.module('andrewkim').controller('AmainController', ['$scope','$element', '$upload', 'Images', 'YT_event',
-	function($scope, $element, $upload, Images, YT_event) {
+angular.module('andrewkim').controller('AmainController', ['$scope','$element', '$upload', 'Images', 'YT_event', 'Authentication', 'BannersService',
+	function($scope, $element, $upload, Images, YT_event, Authentication, BannersService) {
+
+        $scope.authentication = Authentication;
+        // Find a list of Banners
+        $scope.find = function() {
+            $scope.banners = BannersService.query();
+        };
+
+        $scope.find();
+        console.debug($scope.banners);
+
         $scope.editorOptions = {
             language: 'ru',
             uiColor: '#000000'

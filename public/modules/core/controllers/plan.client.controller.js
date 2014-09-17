@@ -7,7 +7,7 @@
 
 angular.module('core').controller('PlanController', ['$scope', '$element', 'Authentication', 'Getplans',
     function($scope, $element, Authentication, Getplans) {
-        $scope.plans = Getplans;
+        //$scope.plans = Getplans;
 
         $scope.find = function() {
             $scope.plans = Getplans.query();

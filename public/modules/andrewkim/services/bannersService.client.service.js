@@ -5,13 +5,13 @@
 'use strict';
 
 //Articles service used for communicating with the articles REST endpoints
-angular.module('andrewkim').factory('Banners', ['$resource',
+angular.module('andrewkim').factory('BannersService', ['$resource',
     function($resource) {
-        return $resource('banners/:bannerId', {
-            articleId: '@_id'
+        return $resource('/banners', {
+            userID: '@_id'
         }, {
             update: {
-                method: 'PUT'
+                method: 'GET'
             }
         });
     }

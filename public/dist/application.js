@@ -399,7 +399,16 @@ angular.module('andrewkim').controller('AmainController', [
   '$upload',
   'Images',
   'YT_event',
-  function ($scope, $element, $upload, Images, YT_event) {
+  'Authentication',
+  'BannersService',
+  function ($scope, $element, $upload, Images, YT_event, Authentication, BannersService) {
+    $scope.authentication = Authentication;
+    // Find a list of Banners
+    $scope.find = function () {
+      $scope.banners = BannersService.query();
+    };
+    $scope.find();
+    console.debug($scope.banners);
     $scope.editorOptions = {
       language: 'ru',
       uiColor: '#000000'
@@ -864,10 +873,10 @@ angular.module('andrewkim').factory('AniGenerator', [function () {
  */
 'use strict';
 //Articles service used for communicating with the articles REST endpoints
-angular.module('andrewkim').factory('Banners', [
+angular.module('andrewkim').factory('BannersService', [
   '$resource',
   function ($resource) {
-    return $resource('banners/:bannerId', { articleId: '@_id' }, { update: { method: 'PUT' } });
+    return $resource('/banners', { userID: '@_id' }, { update: { method: 'GET' } });
   }
 ]);/**
  * Created by KevinSo on 9/15/2014.
@@ -1232,7 +1241,7 @@ angular.module('core').controller('PlanController', [
   'Authentication',
   'Getplans',
   function ($scope, $element, Authentication, Getplans) {
-    $scope.plans = Getplans;
+    //$scope.plans = Getplans;
     $scope.find = function () {
       $scope.plans = Getplans.query();  //$scope.plans.contents = $sce.trustAsHtml($scope.plans.contents);
     };
