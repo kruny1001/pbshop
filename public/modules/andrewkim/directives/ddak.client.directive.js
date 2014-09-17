@@ -11,7 +11,7 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
 	function(Ddak_event) {
 		return {
             templateUrl: 'modules/andrewkim/directives/ddak.html',
-			restrict: 'E',
+			restrict: 'EA',
             /*
             controller: ['$scope', 'Ddak_event', function($scope, Ddak_event){
 

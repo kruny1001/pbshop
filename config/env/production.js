@@ -28,7 +28,7 @@ module.exports = {
                 'public/lib/fullcalendar/gcal.js',
 
                 'public/lib/lodash/dist/lodash.underscore.min.js',
-                'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
+                //'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
                 'public/lib/ng-file-upload/angular-file-upload.min.js',
                 'public/lib/angular-wizard/dist/angular-wizard.min.js',
 

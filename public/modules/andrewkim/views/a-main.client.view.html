@@ -1,28 +1,12 @@
-<section data-ng-controller="AmainController" data-ng-init="find()">
+<section data-ng-controller="AmainController" data-ng-init="find()" style="width:100px">
 
 <br>
 <br>
 <br>
-<ul>
-	<li ng-repeat="plan in plans">
-		<a  data-ng-href="#!/articles/{{plan._id}}">
-			<h4><span class="glyphicon glyphicon-asterisk"></span> {{plan.title}} <small> by {{plan.user.displayName}}
-		(<span data-ng-bind="plan.created | date:'mediumDate'"></span>)
-	</small></h4></a></li>
-</ul>
+<div class="container">
 <div class="row row-centered">
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-	        <button type="button" class="admin-edit btn btn-default btn-sm">
-		        <span class="glyphicon glyphicon-pencil"></span>
-	        </button>
-            <gan-jab>
 
-            </gan-jab>
-            <ddak></ddak>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
+    <div class=" col-md-4 col-centered">
         <div  class="well" banner-main-frame>
             <div  style="font-family: 'Hanna', serif;
                             display:inline-block;
@@ -49,150 +33,12 @@
             </ul>
         </div>
     </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>
-                <h2>화덕게이배너</h2>
-                <h4>Coming Soon</h4>
-            </p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 4</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 5</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
-    </div>
-    <div class=" col-md-3 col-centered">
-        <div  class="well" banner-main-frame>
-            <p>Space 6</p>
-        </div>
+
+    <div class=" col-md-4 col-centered" ng-repeat="banner in banners">
+        <div  class="well" ng-bind-html="trustAsHtml(banner.bannerTag)" banner-main-frame compile-template></div>
     </div>
 </div>
-
-<!--
-        <div class="row">
-            <div data-ng-controller="AAniGeneratorController">
-                <div id="adList"></div>
-            </div>
-
-
-            <div class=" col-md-4">
-                <div class="row">
-                    <div  class="well" banner-main-frame>
-                        <gan-jab></gan-jab>
-                        <ddak></ddak>
-                    </div>
-
-                    <div  class="well" banner-main-frame>
-                        <div  style="font-family: 'Hanna', serif;
-                            display:inline-block;
-                            color: #2a3d29;
-                            font-size:45px;
-                            font-weight:300;">
-                            <h2>MC 무현 Collection</h2>
-                        </div>
-                        <br/>
-                        <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
-                        <div style="font-family: 'Hanna', serif;">
-                            <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
-                            <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
-                            <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
-                        </div>
-
-                        <p>Player status is: {{yt.playerStatus}}</p>
-
-                        <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
-                        <ul style="font-family: 'Hanna', serif;">
-                            <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
-                                <h4>{{song.id+1}}: {{song.name}}</h4>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-md-4">
-                <div class="row">
-                    <div  class="well" banner-main-frame>
-
-                        <p>Space 2</p>
-                    </div>
-
-                    <div  class="well" banner-main-frame>
-                        <p>Space 2-2</p>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-md-4">
-                <div class="row">
-                    <div  class="well" banner-main-frame>
-                        <p>Space 3</p>
-                    </div>
-
-                    <div  class="well" banner-main-frame>
-                        <p>Space 3-2</p>
-                    </div>
-                </div>
-            </div>
-        </div>
--->
-<!--
-            <div class="well">
-                    <div class="core-subtitle">creating a slider</div>
-                    <div class="core-subtitle">options:</div>
-                    <select ng-model="slideActions[0]" ng-options="slideAction.name for slideAction in slideActions"></select><br>
-                    <div class="core-subtitle">background img</div>
-                    <input type="text" ng-model="myModelObj">
-                    <input type="file" ng-file-select="onFileSelect($files)">
-                    <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
-                    <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
-                    <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
-                             ng-show="dropSupported">drop files here</div>
-                    <div ng-file-drop-available="dropSupported=true"
-                             ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-                    <button ng-click="upload.abort()">Cancel Upload</button>
-
-                    <h2>Base64 File Encoder</h2>
-                    <h4>Drop Files here</h4>
-                    <div id="dropper"></div>
-                    <div id="results"></div>
-
-            </div>
-            -->
+</div>
 
 <!--
 <div class="core-title">Main Page</div>
@@ -230,6 +76,5 @@
     </div>
 </div>
 -->
-
 
 </section>

@@ -6,7 +6,7 @@ angular.module('andrewkim').directive('ganJab', [
     function() {
         return {
             templateUrl: 'modules/andrewkim/directives/ganJab.html',
-            restrict: 'E',
+            restrict: 'EA',
             link: function postLink(scope, element, attrs) {
                 // top text animation
                 CSSPlugin.defaultTransformPerspective = 400;

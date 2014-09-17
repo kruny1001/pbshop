@@ -10,7 +10,6 @@ var ApplicationConfiguration = function () {
         'ui.bootstrap',
         'ui.utils',
         'ui.calendar',
-        'google-maps',
         'mgo-angular-wizard',
         'angularFileUpload',
         'smart-table',
@@ -395,20 +394,28 @@ angular.module('andrewkim').constant('YT_event', {
 });
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
+  '$sce',
   '$element',
   '$upload',
   'Images',
   'YT_event',
   'Authentication',
   'BannersService',
-  function ($scope, $element, $upload, Images, YT_event, Authentication, BannersService) {
+  function ($scope, $sce, $element, $upload, Images, YT_event, Authentication, BannersService) {
     $scope.authentication = Authentication;
     // Find a list of Banners
     $scope.find = function () {
-      $scope.banners = BannersService.query();
+      $scope.banners = BannersService.query(function () {
+        //console.debug($scope.banners.length);
+        //console.debug($scope.banners);
+        $scope.banners.forEach(function (data) {
+          if (data.bannerTag == '')
+            data.bannerTag = '<h2>' + data.name + '</h1>';
+        });
+      });
     };
-    $scope.find();
-    console.debug($scope.banners);
+    //assign trustAsHtml function
+    $scope.trustAsHtml = $sce.trustAsHtml;
     $scope.editorOptions = {
       language: 'ru',
       uiColor: '#000000'
@@ -470,108 +477,6 @@ angular.module('andrewkim').controller('AmainController', [
     $scope.image = Images.list(function (image) {
       console.log(image);  //$scope.image = image;
     });
-    $scope.slideActions = [
-      {
-        name: 'TB',
-        action: 'TB'
-      },
-      {
-        name: 'BT',
-        action: 'BT'
-      },
-      {
-        name: 'LR',
-        action: 'RL'
-      },
-      {
-        name: 'RL',
-        action: 'RL'
-      }
-    ];
-    $scope.onFileSelect = function ($files) {
-      //$files: an array of files selected, each file has name, size, and type.
-      for (var i = 0; i < $files.length; i++) {
-        var file = $files[i];
-        $scope.upload = $upload.upload({
-          url: 'server/upload/url',
-          data: { myObj: $scope.myModelObj },
-          file: file
-        }).progress(function (evt) {
-        }).success(function (data, status, headers, config) {
-        });  //.error(...)
-             //.then(success, error, progress);
-             // access or attach event listeners to the underlying XMLHttpRequest.
-             //.xhr(function(xhr){xhr.upload.addEventListener(...)})
-      }  /* alternative way of uploading, send the file binary with the file's content-type.
-             Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
-             It could also be used to monitor the progress of a normal http post/put request with large data*/
-         // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
-    };
-    ///////////
-    /*
-        if (typeof window.FileReader === 'undefined')
-            alert('File API & FileReader not supported');
-
-        var dropper = document.getElementById("dropper");
-        var results = document.getElementById("results");
-
-        dropper.ondragover = function () { dropper.className = 'hover'; return false; };
-        dropper.ondragend = function () { dropper.className = ''; return false; };
-        dropper.ondrop = function (e) {
-            e.preventDefault();
-            var file = e.dataTransfer.files[0],
-                reader = new FileReader();
-            reader.onload = function(event) {
-                fileLoaded(file.name, event.target.result);
-            };
-            reader.readAsDataURL(file);
-            dropper.className = '';
-            return false;
-        };
-
-        function fileLoaded(filename, dataUri) {
-
-            var div = document.createElement("div");
-            div.className = 'item';
-
-            var remove = document.createElement("button");
-            remove.className = 'remove';
-            remove.innerHTML = 'x';
-            remove.onclick = function() {
-                if(localStorage) localStorage.removeItem(filename);
-                results.removeChild(div);
-            };
-            div.appendChild(remove);
-
-            var name = document.createElement("div");
-            name.innerHTML = filename;
-            div.appendChild(name);
-
-            if(/^data:image/.test(dataUri)) {
-                var imgDiv = document.createElement("div");
-                var img = document.createElement("img");
-                img.src = dataUri;
-                img.style['max-width'] = '100px';
-                img.style['height-width'] = '100px';
-                imgDiv.appendChild(img);
-                div.appendChild(imgDiv);
-            }
-
-            var ta = document.createElement("textarea");
-            ta.onclick = function() {
-                ta.select();
-            };
-            ta.value = dataUri;
-            div.appendChild(ta);
-
-            results.appendChild(div);
-            if(localStorage) localStorage.setItem(filename, dataUri);
-        }
-
-        if(localStorage)
-            for(var filename in localStorage)
-                fileLoaded(filename, localStorage.getItem(filename));
-        */
     $scope.clickButton = function () {
       $scope.$emit('Click');
     };
@@ -623,36 +528,16 @@ angular.module('andrewkim').directive('bannerMainFrame', [
     return {
       restrict: 'EA',
       transclude: true,
-      template: '<div ng-transclude>' + '</div>',
+      template: '<div ng-transclude>' + '<button ng-click="clickBtnFromDirective()">Directive 1-1</button>' + '</div>',
       scope: { EventHandler: '&eventFunction' },
       compile: function (tElem, tAttrs) {
-        console.log('compile');
+        //console.log('compile');
         tElem.addClass('bannerMainFrame');
-        console.log(tElem);
+        //console.log(tElem);
         return {
           pre: function (scope, iElem, iAttrs) {
           },
           post: function postLink(scope, element, attrs) {
-            //console.log('post link');
-            //setting up the CSS
-            /*
-                         element.css({
-                         width: '50%',
-                         height: 450,
-                         left:'100px',
-                         backgroundColor: 'red',
-                         boxShadow:'10px 10px'
-                         });
-                         */
-            //element.addClass('bannerMainFrame');
-            //$compile(element)(scope);
-            /*
-                         element.on('mousedown', function(evnt){
-                         event.preventDefault();
-                         $document.on('click', clickBtn);
-                         $document.on('doubleclick', clickBtn);
-                         });
-                         */
             scope.editMode = false;
             scope.clickBtnFromDirective = function () {
               console.log('from clickBtn');
@@ -669,12 +554,6 @@ angular.module('andrewkim').directive('bannerMainFrame', [
                 scope.editMode = false;
               }
             };
-            //element.text('this is main frame');
-            scope.$on('Click', function (t) {
-              console.log('Clicked');
-              console.log(event);
-              scope.test = 'test';
-            });
           }
         };
       }
@@ -691,7 +570,28 @@ angular.module('andrewkim').directive('bannerSubFrame', [function () {
         element.text('this is the bannerSubFrame directive');
       }
     };
-  }]);'use strict';
+  }]);/**
+ * Created by KevinSo on 9/17/2014.
+ */
+angular.module('andrewkim').directive('compileTemplate', [
+  '$compile',
+  '$parse',
+  function ($compile, $parse) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        var parsed = $parse(attr.ngBindHtml);
+        function getStringValue() {
+          return (parsed(scope) || '').toString();
+        }
+        //Recompile if the template changes
+        scope.$watch(getStringValue, function () {
+          $compile(element, null, -9999)(scope);  //The -9999 makes it skip directives so that we do not recompile ourselves
+        });
+      }
+    };
+  }
+]);'use strict';
 angular.module('andrewkim').constant('Ddak_event', {
   OPEN: 0,
   CLOSE: 1,
@@ -703,7 +603,7 @@ angular.module('andrewkim').directive('ddak', [
   function (Ddak_event) {
     return {
       templateUrl: 'modules/andrewkim/directives/ddak.html',
-      restrict: 'E',
+      restrict: 'EA',
       link: function postLink(scope, element, attrs) {
         var $panel1 = $('#panel1'), $panel2 = $('#panel2'), $panel3 = $('#panel3'), $panel1Text = $('#panel1 h1'), $panel2Text = $('#panel2 h2'), $info = $('#info'), $list = $('#ddak').find('li'), $orderNow = $('#orderNow');
         var tl = new TimelineMax({
@@ -825,7 +725,7 @@ angular.module('andrewkim').directive('fireya', [
 angular.module('andrewkim').directive('ganJab', [function () {
     return {
       templateUrl: 'modules/andrewkim/directives/ganJab.html',
-      restrict: 'E',
+      restrict: 'EA',
       link: function postLink(scope, element, attrs) {
         // top text animation
         CSSPlugin.defaultTransformPerspective = 400;
@@ -876,7 +776,12 @@ angular.module('andrewkim').factory('AniGenerator', [function () {
 angular.module('andrewkim').factory('BannersService', [
   '$resource',
   function ($resource) {
-    return $resource('/banners', { userID: '@_id' }, { update: { method: 'GET' } });
+    return $resource('/banners', {
+      query: {
+        method: 'GET',
+        isArray: true
+      }
+    });
   }
 ]);/**
  * Created by KevinSo on 9/15/2014.
@@ -1112,7 +1017,10 @@ angular.module('banners').controller('BannersController', [
     // Create new Banner
     $scope.create = function () {
       // Create new Banner object
-      var banner = new Banners({ name: this.name });
+      var banner = new Banners({
+          name: this.name,
+          bannerTag: this.bannerTag
+        });
       // Redirect after save
       banner.$save(function (response) {
         $location.path('banners/' + response._id);
@@ -1121,6 +1029,7 @@ angular.module('banners').controller('BannersController', [
       });
       // Clear form fields
       this.name = '';
+      this.bannerTag = '';
     };
     // Remove existing Banner
     $scope.remove = function (banner) {

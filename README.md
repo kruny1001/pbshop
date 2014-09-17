@@ -253,4 +253,8 @@ controller
     <r-chart r-source="example1"></r-chart>
     <r-chart r-source="example2"></r-chart>
     </code>
-    
+
+#9/17#
+/#!/a-main
+responsive column and rendering custom directive and 
+http://stackoverflow.com/questions/20297638/call-function-inside-sce-trustashtml-string-in-angular-js

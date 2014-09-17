@@ -9,7 +9,9 @@ angular.module('banners').controller('BannersController', ['$scope', '$statePara
 		$scope.create = function() {
 			// Create new Banner object
 			var banner = new Banners ({
-				name: this.name
+				name: this.name,
+                bannerTag: this.bannerTag
+
 			});
 
 			// Redirect after save
@@ -21,6 +23,7 @@ angular.module('banners').controller('BannersController', ['$scope', '$statePara
 
 			// Clear form fields
 			this.name = '';
+            this.bannerTag = '';
 		};
 
 		// Remove existing Banner

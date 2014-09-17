@@ -8,11 +8,11 @@
 angular.module('andrewkim').factory('BannersService', ['$resource',
     function($resource) {
         return $resource('/banners', {
-            userID: '@_id'
-        }, {
-            update: {
-                method: 'GET'
+            query: {
+                method: 'GET',
+                isArray: true
             }
+
         });
     }
 ]);

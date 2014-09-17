@@ -15,7 +15,7 @@
     "gsap": "~1.13.1",
     "bootstrap-sass-official": "~3.2.0",
     "grunt-contrib-sass": "~0.7.3",
-    "angular-google-maps": "~1.2.0",
+    //"angular-google-maps": "~1.2.0",
     "lodash": "latest",
     "angular-wizard": "~0.4.0",
     "ng-file-upload": "~1.6.5",

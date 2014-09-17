@@ -23,7 +23,13 @@ var BannerSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+    bannerTag: {
+        type: String,
+        default:'',
+        trim: true
+
+    }
 });
 
 mongoose.model('Banner', BannerSchema);
