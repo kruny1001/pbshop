@@ -4,12 +4,15 @@
   //background-color:#333;
   color:white;
   margin:1px;
+
   width:235px;
   height:250px;
+
 }
 
 #banner {
   position:relative;
+  margin-left: 22px;
   -webkit-backface-visibility:hidden;
   height:250px;
   background:white;
@@ -203,7 +206,9 @@ button {
   font-size:12px;
   cursor:pointer;
 }
-
+#ganJab {
+  margin-left: 20px;
+}
 #ganJab li {
   display:inline-block;
   font-family: 'Nanum Pen Script', serif;

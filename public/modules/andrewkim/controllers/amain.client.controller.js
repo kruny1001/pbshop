@@ -7,8 +7,8 @@ angular.module('andrewkim').constant('YT_event', {
     STATUS_CHANGE  : 3
 });
 
-angular.module('andrewkim').controller('AmainController', ['$scope','$sce', '$element', '$upload', 'Images', 'YT_event', 'Authentication', 'BannersService',
-	function($scope, $sce, $element, $upload, Images, YT_event, Authentication, BannersService) {
+angular.module('andrewkim').controller('AmainController', ['$scope','$sce', '$upload', 'Images', 'YT_event', 'Authentication', 'BannersService',
+	function($scope, $sce, $upload, Images, YT_event, Authentication, BannersService) {
 
         $scope.authentication = Authentication;
 
@@ -16,11 +16,9 @@ angular.module('andrewkim').controller('AmainController', ['$scope','$sce', '$el
         $scope.find = function() {
             $scope.banners = BannersService.query(
                 function(){
-                    //console.debug($scope.banners.length);
-                    //console.debug($scope.banners);
                     $scope.banners.forEach(function(data){
                         if(data.bannerTag=="")
-                            data.bannerTag = "<h2>" + data.name + "</h1>";
+                            data.bannerTag = "<div class='core-subtitle'>" + data.name + "</div>";
                     });
                 }
             );

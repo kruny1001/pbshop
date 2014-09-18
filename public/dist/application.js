@@ -395,22 +395,19 @@ angular.module('andrewkim').constant('YT_event', {
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
   '$sce',
-  '$element',
   '$upload',
   'Images',
   'YT_event',
   'Authentication',
   'BannersService',
-  function ($scope, $sce, $element, $upload, Images, YT_event, Authentication, BannersService) {
+  function ($scope, $sce, $upload, Images, YT_event, Authentication, BannersService) {
     $scope.authentication = Authentication;
     // Find a list of Banners
     $scope.find = function () {
       $scope.banners = BannersService.query(function () {
-        //console.debug($scope.banners.length);
-        //console.debug($scope.banners);
         $scope.banners.forEach(function (data) {
           if (data.bannerTag == '')
-            data.bannerTag = '<h2>' + data.name + '</h1>';
+            data.bannerTag = '<div class=\'core-subtitle\'>' + data.name + '</div>';
         });
       });
     };
@@ -599,7 +596,9 @@ angular.module('andrewkim').directive('compileTemplate', [
       }
     };
   }
-]);'use strict';
+]);// Todo:
+//
+'use strict';
 angular.module('andrewkim').constant('Ddak_event', {
   OPEN: 0,
   CLOSE: 1,
@@ -1113,10 +1112,9 @@ angular.module('core').controller('HeaderController', [
 ]);'use strict';
 angular.module('core').controller('HomeController', [
   '$scope',
-  '$element',
   'Authentication',
   'YT_event',
-  function ($scope, $element, Authentication, YT_event) {
+  function ($scope, Authentication, YT_event) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
     $scope.firstJumbo = 'first-jumbo-content';

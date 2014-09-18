@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', '$element', 'Authentication', 'YT_event',
-	function($scope, $element, Authentication, YT_event) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'YT_event',
+	function($scope, Authentication, YT_event) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 

@@ -4,12 +4,15 @@
 <br>
 <br>
 
-
 <div class="container">
     <div class="row">
-    <!--
-    <div class=" col-md-4 col-centered">
-        <div  class="well" banner-main-frame>
+
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+
+            <div class="ribbon-wrapper" banner-main-frame>
+                <div class="ribbon-wrapper-green"><div class="ribbon-green">NEW</div></div>
+            <div style="text-align: center">
             <div  style="font-family: 'Hanna', serif;
                             display:inline-block;
                             color: #2a3d29;
@@ -28,56 +31,22 @@
             <p>Player status is: {{yt.playerStatus}}</p>
 
             <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
-            <ul style="font-family: 'Hanna', serif;">
+            <ul style="font-family: 'Hanna', serif; text-align: left; margin-left:10px">
                 <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
                     <h4>{{song.id+1}}: {{song.name}}</h4>
                 </li>
             </ul>
+            </div>
         </div>
     </div>
-    -->
 
     <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="banner in banners">
-        <div  class="well" ng-bind-html="trustAsHtml(banner.bannerTag)" banner-main-frame compile-template></div>
+        <div class="ribbon-wrapper">
+            <div class="ribbon-wrapper-green"><div class="ribbon-green">NEW</div></div>
+            <div ng-bind-html="trustAsHtml(banner.bannerTag)" compile-template>
+        </div>
     </div>
 
     </div>
 </div>
-<!--
-<div class="core-title">Main Page</div>
-<div class="row">
-
-    <div class=" col-md-4">
-        <div class="well">
-            <a href="/#!/a-map">오시는 길</a>
-        </div>
-        <div class="well">
-            <label>평일미사</label> <br>
-            금요일 저녁 7:00 <br>
-            <label>특전 미사</label> <br>
-            토요일 오후 4:00 <br>
-            <label>고백성사</label> <br>
-            매 미사 전 <br>
-            <label>주일미사(영어)</label> <br>
-            매 주일 오전10:00 <br>
-            <label>주일미사(한국어)</label> <br>
-            매 주일 오전11:15 <br>
-        </div>
-    </div>
-    <div class=" col-md-4">
-        <div class="well">구역 정보</div>
-        <div class="well"><a href="/#!/a-board">게시판</a></div>
-        <div class="well">구역 정보</div>
-        <div class="well">링크</div>
-        <div class="well">레지오 마리애</div>
-    </div>
-    <div class=" col-md-4">
-        <div class="well">전자주보</div>
-        <div class="well">성당 앨범</div>
-        <div class="well"><a href="/#!/a-info">성당 안내</a></div>
-        <div class="well"><a href="/#!/a-events">행사 일정</a></div>
-    </div>
-</div>
--->
-
 </section>
