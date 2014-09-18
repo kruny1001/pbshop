@@ -550,10 +550,18 @@ angular.module('andrewkim').directive('bannerMainFrame', [
                 });
                 scope.editMode = true;
               } else {
-                TweenMax.to(element, 1, { opacity: 1 });
+                TweenMax.to(element, 1, { opacity: 1.5 });
                 scope.editMode = false;
               }
             };
+            element.bind('click', function () {
+              console.log('element is clicked');
+              TweenMax.from(element, 0.5, { scale: 1.2 });
+            });
+            element.bind('mouseover', function () {
+              console.log('mouseover');
+              element.css('cursor', 'pointer');
+            });
           }
         };
       }
@@ -602,6 +610,7 @@ angular.module('andrewkim').directive('ddak', [
   'Ddak_event',
   function (Ddak_event) {
     return {
+      scope: { banner: '@bannerInfo' },
       templateUrl: 'modules/andrewkim/directives/ddak.html',
       restrict: 'EA',
       link: function postLink(scope, element, attrs) {
@@ -643,13 +652,12 @@ angular.module('andrewkim').directive('ddak', [
                 */
         scope.clickBtnFromDirective = function () {
           console.log('from clickBtn');
+          //console.log(banner);
+          console.log(scope.banner);
           //console.log(event);
           //console.log(element);
           if (scope.editMode === false) {
-            TweenMax.to(element, 0.5, {
-              autoAlpha: 0,
-              display: 'none'
-            });
+            //TweenMax.to(element, 0.5, {autoAlpha:0, display:"none"})
             scope.editMode = true;
           } else {
             TweenMax.to(element, 1, { opacity: 1 });

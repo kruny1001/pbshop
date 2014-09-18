@@ -40,10 +40,22 @@ angular.module('andrewkim').directive('bannerMainFrame', [ '$document',
                                 scope.editMode = true;
                             }
                             else {
-                                TweenMax.to(element, 1, {opacity:1});
+                                TweenMax.to(element, 1, {opacity:1.5});
                                 scope.editMode = false;
                             }
                         }
+
+                        element.bind('click', function(){
+                            console.log('element is clicked');
+                            TweenMax.from(element, 0.5, {scale:1.2});
+                        })
+
+                        element.bind('mouseover', function(){
+                            console.log('mouseover');
+                            element.css('cursor', 'pointer');
+
+                        })
+
                     }
                 }
             }

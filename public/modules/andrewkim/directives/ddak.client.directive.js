@@ -10,6 +10,9 @@ angular.module('andrewkim').constant('Ddak_event', {
 angular.module('andrewkim').directive('ddak', ['Ddak_event',
 	function(Ddak_event) {
 		return {
+            scope:{
+                banner: '@bannerInfo'
+            },
             templateUrl: 'modules/andrewkim/directives/ddak.html',
 			restrict: 'EA',
             /*
@@ -65,10 +68,12 @@ angular.module('andrewkim').directive('ddak', ['Ddak_event',
 
                 scope.clickBtnFromDirective = function (){
                     console.log('from clickBtn');
+                    //console.log(banner);
+                    console.log(scope.banner);
                     //console.log(event);
                     //console.log(element);
                     if(scope.editMode === false) {
-                        TweenMax.to(element, 0.5, {autoAlpha:0, display:"none"})
+                        //TweenMax.to(element, 0.5, {autoAlpha:0, display:"none"})
                         scope.editMode = true;
                     }
                     else {

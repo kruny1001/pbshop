@@ -1,11 +1,13 @@
-<section data-ng-controller="AmainController" data-ng-init="find()" style="width:100px">
+<section data-ng-controller="AmainController" data-ng-init="find()">
 
 <br>
 <br>
 <br>
+
+
 <div class="container">
-<div class="row row-centered">
-
+    <div class="row">
+    <!--
     <div class=" col-md-4 col-centered">
         <div  class="well" banner-main-frame>
             <div  style="font-family: 'Hanna', serif;
@@ -33,13 +35,14 @@
             </ul>
         </div>
     </div>
+    -->
 
-    <div class=" col-md-4 col-centered" ng-repeat="banner in banners">
+    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="banner in banners">
         <div  class="well" ng-bind-html="trustAsHtml(banner.bannerTag)" banner-main-frame compile-template></div>
     </div>
-</div>
-</div>
 
+    </div>
+</div>
 <!--
 <div class="core-title">Main Page</div>
 <div class="row">
