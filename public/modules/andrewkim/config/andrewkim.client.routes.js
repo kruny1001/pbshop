@@ -5,6 +5,10 @@ angular.module('andrewkim').config(['$stateProvider',
 	function($stateProvider) {
 		// Andrewkim state routing
 		$stateProvider.
+		state('slider-editor', {
+			url: '/slider-editor',
+			templateUrl: 'modules/andrewkim/views/slider-editor.client.view.html'
+		}).
 		state('a-board', {
 			url: '/a-board',
 			templateUrl: 'modules/andrewkim/views/a-board.client.view.html'

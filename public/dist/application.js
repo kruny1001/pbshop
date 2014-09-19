@@ -74,7 +74,10 @@ angular.module('andrewkim').config([
   '$stateProvider',
   function ($stateProvider) {
     // Andrewkim state routing
-    $stateProvider.state('a-board', {
+    $stateProvider.state('slider-editor', {
+      url: '/slider-editor',
+      templateUrl: 'modules/andrewkim/views/slider-editor.client.view.html'
+    }).state('a-board', {
       url: '/a-board',
       templateUrl: 'modules/andrewkim/views/a-board.client.view.html'
     }).state('a-map', {
@@ -517,6 +520,14 @@ angular.module('andrewkim').controller('BannerController', [
     $scope.findOne = function () {
       $scope.article = Articles.get({ articleId: $stateParams.articleId });
     };
+  }
+]);'use strict';
+angular.module('andrewkim').controller('SlidereditorController', [
+  '$scope',
+  function ($scope) {
+    // Slidereditor controller logic
+    // ...
+    $scope.title = 'Slider Editor';
   }
 ]);'use strict';
 angular.module('andrewkim').directive('bannerMainFrame', [
