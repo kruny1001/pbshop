@@ -4,7 +4,47 @@
 angular.module('banners').controller('BannersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Banners',
 	function($scope, $stateParams, $location, Authentication, Banners ) {
 		$scope.authentication = Authentication;
+        //////////////// Temp Code
+        $scope.products = [
+            {
+                name:'Product1',
+                img:'modules/andrewkim/img/my1.jpg'
+            },
+            {
+                name:'Product2',
+                img:'modules/andrewkim/img/my2.jpg'
+            },
+            {
+                name:'Product3',
+                img:'modules/andrewkim/img/my3.jpg'
+            },
+            {
+                name:'Product4',
+                img:'modules/andrewkim/img/my3.jpg'
+            },
+            {
+                name:'Product5',
+                img:'modules/andrewkim/img/my2.jpg'
+            },
+            {
+                name:'Product6',
+                img:'modules/andrewkim/img/my1.jpg'
+            },
+            {
+                name:'Product7',
+                img:'modules/andrewkim/img/my3.jpg'
+            },
+            {
+                name:'Product8',
+                img:'modules/andrewkim/img/my1.jpg'
+            },
+            {
+                name:'Product9',
+                img:'modules/andrewkim/img/my2.jpg'
+            }
+        ];
 
+        ///////////////
 		// Create new Banner
 		$scope.create = function() {
 			// Create new Banner object
