@@ -66,6 +66,8 @@ ApplicationConfiguration.registerModule('opencpu');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('slider-editor');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('template');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
@@ -520,14 +522,6 @@ angular.module('andrewkim').controller('BannerController', [
     $scope.findOne = function () {
       $scope.article = Articles.get({ articleId: $stateParams.articleId });
     };
-  }
-]);'use strict';
-angular.module('andrewkim').controller('SlidereditorController', [
-  '$scope',
-  function ($scope) {
-    // Slidereditor controller logic
-    // ...
-    $scope.title = 'Slider Editor';
   }
 ]);'use strict';
 angular.module('andrewkim').directive('bannerMainFrame', [
@@ -3081,6 +3075,117 @@ angular.module('reviews').factory('Reviews', [
     return $resource('reviews/:reviewId', { reviewId: '@_id' }, { update: { method: 'PUT' } });
   }
 ]);'use strict';
+//Setting up route
+angular.module('slider-editor').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Slider editor state routing
+    $stateProvider.state('Slidereditor', {
+      url: '/sliderEditor/editor',
+      templateUrl: 'modules/slider-editor/views/editor.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('slider-editor').controller('SlidereditorController', [
+  '$scope',
+  function ($scope) {
+    $scope.showMe = true;
+    $scope.initialWidth = 200;
+    $scope.initialHeight = 200;
+    //var view = angular.element.find('initial-view');
+    //TweenLite.to(view, 1, {height:'100px', width:'100px', backgroundColor:'red'});
+    $scope.addSlider = function () {
+      angular.element.find;
+    };
+    $scope.deleteSlider = function (targetElement) {
+    };
+  }
+]);'use strict';
+angular.module('slider-editor').animation('.show-hide-animation', function () {
+  //the reason why we're using beforeAddClass and removeClass is because we're working
+  //around the .ng-hide class (which is added when ng-show evaluates to false). The
+  //.ng-hide class sets display:none!important and we want to apply the animation only
+  //when the class is removed (removeClass) or before it's added (beforeAddClass).
+  return {
+    beforeAddClass: function (element, className, done) {
+      if (className == 'ng-hide') {
+        TweenMax.set(element, {
+          height: 0,
+          onComplete: done
+        });
+        //this function is called when the animation ends or is cancelled
+        return function () {
+          //remove the style so that the CSS inheritance kicks in
+          element[0].style.height = '';
+        };
+      } else {
+        done();
+      }
+    },
+    removeClass: function (element, className, done) {
+      if (className == 'ng-hide') {
+        //set the height back to zero to make the animation work properly
+        var height = element.height();
+        element.css('height', 0);
+        TweenMax.set(element, {
+          height: height,
+          onComplete: done
+        });
+        //this function is called when the animation ends or is cancelled
+        return function () {
+          //remove the style so that the CSS inheritance kicks in
+          element[0].style.height = '';
+        };
+      } else {
+        done();
+      }
+    }
+  };
+});
+angular.module('slider-editor').directive('initialView', [function () {
+    return {
+      template: '<div class="testClass"></div>',
+      restrict: 'E',
+      scope: {
+        width: '@widthInit',
+        height: '@heightInit'
+      },
+      link: function postLink(scope, element, attrs) {
+        var targetInitView = element.children();
+        TweenLite.defaultEase = Power3.easeInOut;
+        TweenLite.set(targetInitView, {
+          height: scope.height,
+          width: scope.width
+        });
+        TweenLite.set(targetInitView, { backgroundColor: 'white' });
+        TweenLite.set(targetInitView, {
+          xPercent: -50,
+          yPercent: 0
+        });
+        var tl = new TimelineMax({ paused: true });
+        function setTimeLine(tlVar, event) {
+          //from right to left
+          tlVar.set(targetInitView, {
+            xPercent: -50,
+            yPercent: 0,
+            delay: 2
+          }).from(targetInitView, 1, {
+            xPercent: 60,
+            force3D: true
+          }).to(targetInitView, 1, {
+            xPercent: -160,
+            force3D: true,
+            delay: 1
+          });
+          return tlVar;
+        }
+        ;  //tl=setTimeLine(tl, 'd');
+           //tl.play();
+           //tl.play();
+           //tl.stop();
+      }
+    };
+  }]);'use strict';
 //Setting up route
 angular.module('template').config([
   '$stateProvider',

@@ -1,0 +1,24 @@
+<section data-ng-controller="SlidereditorController">
+	<br><br><br>
+    <style>
+        .testClass{
+            position: relative;
+            left:50%;
+            top:50%;
+        }
+    </style>
+    <div class="container">
+        <div class="core-title">S Editor</div>
+        <div class="well show-hide-animation" ng-show="showMe" result-editor-view>
+            <initial-view width-init={{initialWidth}} height-init={{initialHeight}}></initial-view>
+        </div>
+
+        <div class="show-hide-animation" ng-show="showMe">
+            <h5>Width : <input type="text"></h5>
+            <h5>Height: <input type="text"></h5>
+            <input type="button" ng-click="click1()" value="Add Slider">
+            <input type="button" ng-click="deleteSlider(target)" value="Delete Slider">
+        </div>
+        <button ng-click="showMe = !showMe">Toggle Show Hide</button>
+    </div>
+</section>
