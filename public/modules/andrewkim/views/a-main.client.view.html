@@ -8,43 +8,45 @@
     <div class="row">
 
 
-    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="col-sm-6 col-md-4 col-lg-3">
 
-            <div class="ribbon-wrapper" banner-main-frame>
-                <div class="ribbon-wrapper-green"><div class="ribbon-green">NEW</div></div>
-            <div style="text-align: center">
-            <div  style="font-family: 'Hanna', serif;
-                            display:inline-block;
-                            color: #2a3d29;
-                            font-size:45px;
-                            font-weight:300;">
-                <h2>MC 무현 Collection</h2>
-            </div>
-            <br/>
-            <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
-            <div style="font-family: 'Hanna', serif;">
-                <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
-                <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
-                <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
-            </div>
+                <div class="ribbon-wrapper" banner-main-frame>
+                    <div class="ribbon-wrapper-green"><div class="ribbon-green">NEW</div></div>
+                <div style="text-align: center">
+                <div  style="font-family: 'Hanna', serif;
+                                display:inline-block;
+                                color: #2a3d29;
+                                font-size:45px;
+                                font-weight:300;">
+                    <h2>MC 무현 Collection</h2>
+                </div>
+                <br/>
+                <youtube width="{{yt.width}}" height="{{yt.height}}" videoid="{{crntSong.videoid}}"></youtube>
+                <div style="font-family: 'Hanna', serif;">
+                    <button id="pbutton" ng-click="sendControlEvent2(YT_event.PLAY)"> Play </button>
+                    <button id="pabutton" ng-click="sendControlEvent2(YT_event.PAUSE)"> Pause </button>
+                    <button id="sbutton" ng-click="sendControlEvent2(YT_event.STOP)"> Stop </button>
+                </div>
 
-            <p>Player status is: {{yt.playerStatus}}</p>
+                <p>Player status is: {{yt.playerStatus}}</p>
 
-            <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
-            <ul style="font-family: 'Hanna', serif; text-align: left; margin-left:10px">
-                <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
-                    <h4>{{song.id+1}}: {{song.name}}</h4>
-                </li>
-            </ul>
+                <div style="font-family: 'Hanna', serif;">듣고 싶은 노래를 클릭하자!</div>
+                <ul style="font-family: 'Hanna', serif; text-align: left; margin-left:10px">
+                    <li ng-repeat="song in playList" ng-click="selectSong(song.id)">
+                        <h4>{{song.id+1}}: {{song.name}}</h4>
+                    </li>
+                </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="banner in banners">
+        <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="banner in banners">
         <div class="ribbon-wrapper">
             <div class="ribbon-wrapper-green"><div class="ribbon-green">NEW</div></div>
             <div ng-bind-html="trustAsHtml(banner.bannerTag)" compile-template>
         </div>
+    </div>
+
     </div>
 
     </div>

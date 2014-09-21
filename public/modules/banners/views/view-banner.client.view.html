@@ -31,6 +31,20 @@
 			<div class="row">
 				<div style= "padding:2px 2px 2px 2px" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
 					<img ng-src={{product.img}} class="img-responsive">
+                    <h2
+                            style="font-family: 'Hanna', serif;
+                                  margin: 0;
+                                  position: absolute;
+                                  bottom: 0;
+                                  width: 99%;
+                                  font-size: 18px;
+                                  text-align: center;
+                                  padding: 20px;
+                                  opacity: 0.8;
+                                  background: #7dd32a;">
+                        {{product.name}}
+                        <input type="button" value="Order">
+                    </h2>
 				</div>
 			</div>
 	</div>

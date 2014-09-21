@@ -64,6 +64,8 @@ ApplicationConfiguration.registerModule('gwas');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('opencpu');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('products');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('slider-editor');'use strict';
@@ -2980,6 +2982,95 @@ angular.module('opencpu').factory('Readcsv', [
         console.debug(data);
       };
     };
+  }
+]);'use strict';
+//Setting up route
+angular.module('products').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Products state routing
+    $stateProvider.state('listProducts', {
+      url: '/products',
+      templateUrl: 'modules/products/views/list-products.client.view.html'
+    }).state('createProduct', {
+      url: '/products/create',
+      templateUrl: 'modules/products/views/create-product.client.view.html'
+    }).state('viewProduct', {
+      url: '/products/:productId',
+      templateUrl: 'modules/products/views/view-product.client.view.html'
+    }).state('editProduct', {
+      url: '/products/:productId/edit',
+      templateUrl: 'modules/products/views/edit-product.client.view.html'
+    });
+  }
+]);'use strict';
+// Products controller
+angular.module('products').controller('ProductsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Products',
+  function ($scope, $stateParams, $location, Authentication, Products) {
+    $scope.authentication = Authentication;
+    // Create new Product
+    $scope.create = function () {
+      // Create new Product object
+      var product = new Products({
+          name: this.name,
+          mainimg: this.mainimg,
+          imgs: this.imgs,
+          price: this.price,
+          description: this.description
+        });
+      // Redirect after save
+      product.$save(function (response) {
+        $location.path('products/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Product
+    $scope.remove = function (product) {
+      if (product) {
+        product.$remove();
+        for (var i in $scope.products) {
+          if ($scope.products[i] === product) {
+            $scope.products.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.product.$remove(function () {
+          $location.path('products');
+        });
+      }
+    };
+    // Update existing Product
+    $scope.update = function () {
+      var product = $scope.product;
+      product.$update(function () {
+        $location.path('products/' + product._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Products
+    $scope.find = function () {
+      $scope.products = Products.query();
+    };
+    // Find existing Product
+    $scope.findOne = function () {
+      $scope.product = Products.get({ productId: $stateParams.productId });
+    };
+  }
+]);'use strict';
+//Products service used to communicate Products REST endpoints
+angular.module('products').factory('Products', [
+  '$resource',
+  function ($resource) {
+    return $resource('products/:productId', { productId: '@_id' }, { update: { method: 'PUT' } });
   }
 ]);'use strict';
 // Configuring the Articles module

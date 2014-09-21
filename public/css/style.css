@@ -5876,6 +5876,9 @@ body {
   max-width: 1200px;
   margin: auto; }
 
+.container-top {
+  margin-top: 10px; }
+
 .sample {
   background: #a0d468; }
 

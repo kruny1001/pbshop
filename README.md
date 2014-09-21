@@ -258,3 +258,7 @@ controller
 /#!/a-main
 responsive column and rendering custom directive and 
 http://stackoverflow.com/questions/20297638/call-function-inside-sce-trustashtml-string-in-angular-js
+
+#9/20#
+Google Permallinks
+http://gdurl.com/
