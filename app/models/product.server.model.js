@@ -16,6 +16,10 @@ var ProductSchema = new Schema({
 		required: 'Please fill Product name',
 		trim: true
 	},
+    parentId:{
+        type: String,
+        required: ''
+    },
     mainimg:{
         type: String,
         default: ''

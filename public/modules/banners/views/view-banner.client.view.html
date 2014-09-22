@@ -1,53 +1,52 @@
 <section class="container" data-ng-controller="BannersController" data-ng-init="findOne()">
-    <br>
+    <div class="container container-top">
+        <div class="page-header">
+            <div class="core-title" data-ng-bind="banner.name"></div>
 
-	<div class="page-header">
-		<h4 data-ng-bind="banner.name"></h4>
+            <em class="text-muted">
+            {{banner.bannerTag}}
+            </em>
+            <input type="button" ng-if="products===null" value="Add New Product" data-ng-click="toCreateProduct()">
+            <input type="button" ng-if="products!==null" value="Edit Product">
+        </div>
 
-		<em class="text-muted">
-        {{banner.bannerTag}}
-		</em>
-
-	</div>
-
-	<div class="pull-right" data-ng-show="authentication.user._id == banner.user._id">
-		<a class="btn btn-primary" href="/#!/banners/{{banner._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<!--
-	<small>
-		<em class="text-muted">
-			Posted on <span data-ng-bind="banner.created | date:'mediumDate'"></span>
-			by <span data-ng-bind="banner.user.displayName"></span>
-		</em>
-	</small>
-	-->
-	<div class="row">
-		<div class="core-subtitle">Products List</div>
-			<div class="row">
-				<div style= "padding:2px 2px 2px 2px" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
-					<img ng-src={{product.img}} class="img-responsive">
-                    <h2
-                            style="font-family: 'Hanna', serif;
-                                  margin: 0;
-                                  position: absolute;
-                                  bottom: 0;
-                                  width: 99%;
-                                  font-size: 18px;
-                                  text-align: center;
-                                  padding: 20px;
-                                  opacity: 0.8;
-                                  background: #7dd32a;">
-                        {{product.name}}
-                        <input type="button" value="Order">
-                    </h2>
-				</div>
-			</div>
-	</div>
-
-
+        <div class="pull-right" data-ng-show="authentication.user._id == banner.user._id">
+            <a class="btn btn-primary" href="/#!/banners/{{banner._id}}/edit">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a class="btn btn-primary" data-ng-click="remove();">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
+        <!--
+        <small>
+            <em class="text-muted">
+                Posted on <span data-ng-bind="banner.created | date:'mediumDate'"></span>
+                by <span data-ng-bind="banner.user.displayName"></span>
+            </em>
+        </small>
+        -->
+        <div class="row">
+            <div class="core-subtitle">Products List</div>
+                <div class="row">
+                    <div style= "padding:2px 2px 2px 2px" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
+                        <img ng-src={{product.img}} class="img-responsive">
+                        <h2
+                                style="font-family: 'Hanna', serif;
+                                      margin: 0;
+                                      position: absolute;
+                                      bottom: 0;
+                                      width: 99%;
+                                      font-size: 18px;
+                                      text-align: center;
+                                      padding: 20px;
+                                      opacity: 0.8;
+                                      background: #7dd32a;">
+                            {{product.name}}
+                            <input type="button" value="Order">
+                        </h2>
+                    </div>
+                </div>
+        </div>
+    </div>
 </section>

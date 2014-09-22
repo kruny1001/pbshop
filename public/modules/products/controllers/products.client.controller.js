@@ -4,7 +4,7 @@
 angular.module('products').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Products',
     function($scope, $stateParams, $location, Authentication, Products) {
         $scope.authentication = Authentication;
-
+        $scope.parentId=$stateParams.bannerId;
         // Create new Product
         $scope.create = function() {
         	// Create new Product object
@@ -13,8 +13,8 @@ angular.module('products').controller('ProductsController', ['$scope', '$statePa
                 mainimg: this.mainimg,
                 imgs: this.imgs,
                 price: this.price,
-                description: this.description
-
+                description: this.description,
+                parentId: $scope.parentId // Product record is under banner content
             });
 
             // Redirect after save
@@ -26,6 +26,10 @@ angular.module('products').controller('ProductsController', ['$scope', '$statePa
 
             // Clear form fields
             this.name = '';
+            this.mainimg ='';
+            this.imgs='';
+            this.price=0;
+            this.description = '';
         };
 
         // Remove existing Product

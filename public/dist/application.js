@@ -1026,7 +1026,8 @@ angular.module('banners').controller('BannersController', [
   '$location',
   'Authentication',
   'Banners',
-  function ($scope, $stateParams, $location, Authentication, Banners) {
+  'Products',
+  function ($scope, $stateParams, $location, Authentication, Banners, Products) {
     $scope.authentication = Authentication;
     //////////////// Temp Code
     $scope.products = [
@@ -1067,6 +1068,7 @@ angular.module('banners').controller('BannersController', [
         img: 'modules/andrewkim/img/my2.jpg'
       }
     ];
+    $scope.products = null;
     ///////////////
     // Create new Banner
     $scope.create = function () {
@@ -1116,6 +1118,12 @@ angular.module('banners').controller('BannersController', [
     // Find existing Banner
     $scope.findOne = function () {
       $scope.banner = Banners.get({ bannerId: $stateParams.bannerId });
+    };
+    $scope.findProductOne = function () {
+      $scope.products = Products.get({ bannerId: $stateParams.bannerId });
+    };
+    $scope.toCreateProduct = function () {
+      $location.path('products/create/' + $stateParams.bannerId);
     };
   }
 ]);'use strict';
@@ -2993,7 +3001,7 @@ angular.module('products').config([
       url: '/products',
       templateUrl: 'modules/products/views/list-products.client.view.html'
     }).state('createProduct', {
-      url: '/products/create',
+      url: '/products/create/:bannerId',
       templateUrl: 'modules/products/views/create-product.client.view.html'
     }).state('viewProduct', {
       url: '/products/:productId',
@@ -3013,6 +3021,7 @@ angular.module('products').controller('ProductsController', [
   'Products',
   function ($scope, $stateParams, $location, Authentication, Products) {
     $scope.authentication = Authentication;
+    $scope.parentId = $stateParams.bannerId;
     // Create new Product
     $scope.create = function () {
       // Create new Product object
@@ -3021,7 +3030,8 @@ angular.module('products').controller('ProductsController', [
           mainimg: this.mainimg,
           imgs: this.imgs,
           price: this.price,
-          description: this.description
+          description: this.description,
+          parentId: $scope.parentId
         });
       // Redirect after save
       product.$save(function (response) {
@@ -3031,6 +3041,10 @@ angular.module('products').controller('ProductsController', [
       });
       // Clear form fields
       this.name = '';
+      this.mainimg = '';
+      this.imgs = '';
+      this.price = 0;
+      this.description = '';
     };
     // Remove existing Product
     $scope.remove = function (product) {

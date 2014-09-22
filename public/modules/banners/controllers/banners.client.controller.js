@@ -1,8 +1,8 @@
 'use strict';
 
 // Banners controller
-angular.module('banners').controller('BannersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Banners',
-	function($scope, $stateParams, $location, Authentication, Banners ) {
+angular.module('banners').controller('BannersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Banners', 'Products',
+	function($scope, $stateParams, $location, Authentication, Banners, Products) {
 		$scope.authentication = Authentication;
         //////////////// Temp Code
         $scope.products = [
@@ -43,7 +43,7 @@ angular.module('banners').controller('BannersController', ['$scope', '$statePara
                 img:'modules/andrewkim/img/my2.jpg'
             }
         ];
-
+        $scope.products = null;
         ///////////////
 		// Create new Banner
 		$scope.create = function() {
@@ -104,5 +104,17 @@ angular.module('banners').controller('BannersController', ['$scope', '$statePara
 				bannerId: $stateParams.bannerId
 			});
 		};
+
+        $scope.findProductOne = function(){
+            $scope.products= Products.get({
+                bannerId: $stateParams.bannerId
+            });
+        };
+
+        $scope.toCreateProduct = function(){
+            $location.path('products/create/'+$stateParams.bannerId);
+        };
+
+
 	}
 ]);

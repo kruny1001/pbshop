@@ -1,5 +1,6 @@
 <section data-ng-controller="ProductsController" data-ng-init="findOne()">
-	<div class="page-header">
+	<div class="container container-top">
+    <div class="page-header">
 		<h1>{{product.name}}</h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == product.user._id">
@@ -13,4 +14,5 @@
 	<small>
 		<em class="text-muted">Posted on {{product.created | date:'mediumDate'}} by {{product.user.displayName}}</em>
 	</small>
+    </div>
 </section>
