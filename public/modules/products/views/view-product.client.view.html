@@ -1,18 +1,29 @@
 <section data-ng-controller="ProductsController" data-ng-init="findOne()">
 	<div class="container container-top">
-    <div class="page-header">
-		<h1>{{product.name}}</h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == product.user._id">
-		<a class="btn btn-primary" href="/#!/products/{{product._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">Posted on {{product.created | date:'mediumDate'}} by {{product.user.displayName}}</em>
-	</small>
-    </div>
+			<br><br>
+			<div class="core-title">{{product.name}}</div>
+			<div class="pull-right" data-ng-show="authentication.user._id == product.user._id">
+					<a class="btn btn-primary" href="/#!/products/{{product._id}}/edit">
+							<i class="glyphicon glyphicon-edit"></i>
+					</a>
+					<a class="btn btn-primary" data-ng-click="remove();">
+							<i class="glyphicon glyphicon-trash"></i>
+					</a>
+			</div>
+			<small>
+					<em class="text-muted"><a style="color:#777; text-decoration:blink;">Home</a>/<a>명이나물</a>/<a>명이나물</a></em><br>
+					<em class="text-muted">Posted on {{product.created | date:'mediumDate'}} by {{product.user.displayName}}</em>
+			</small>
+			<p>
+					<h4>Name: {{product.name}}</h4>
+					<h4>Price: {{product.price}}</h4>
+					<h4>Description: {{product.description}}</h4>
+					<h4>Img:  {{product.mainimg}}</h4>
+					<h4>Imgs: {{product.imgs}}</h4>
+			</p>
+			<div>
+					<img ng-src={{product.mainimg}}>
+			</div>
+  </div>
+
 </section>

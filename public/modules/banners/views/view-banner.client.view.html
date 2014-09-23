@@ -1,4 +1,4 @@
-<section class="container" data-ng-controller="BannersController" data-ng-init="findOne()">
+<section class="container" data-ng-controller="BannersController" data-ng-init="findProductOne(); ">
     <div class="container container-top">
         <div class="page-header">
             <div class="core-title" data-ng-bind="banner.name"></div>
@@ -6,8 +6,8 @@
             <em class="text-muted">
             {{banner.bannerTag}}
             </em>
-            <input type="button" ng-if="products===null" value="Add New Product" data-ng-click="toCreateProduct()">
-            <input type="button" ng-if="products!==null" value="Edit Product">
+            <input type="button" value="Add New Product" data-ng-click="toCreateProduct()">
+            <input type="button" ng-if="products!==null" value="Edit Product" data-ng-click="toEditPoduct()">
         </div>
 
         <div class="pull-right" data-ng-show="authentication.user._id == banner.user._id">
@@ -26,11 +26,14 @@
             </em>
         </small>
         -->
-        <div class="row">
+        <div class="well row">
             <div class="core-subtitle">Products List</div>
                 <div class="row">
+
                     <div style= "padding:2px 2px 2px 2px" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="product in products">
-                        <img ng-src={{product.img}} class="img-responsive">
+
+                        <img ng-src={{product.mainimg}} class="img-responsive">
+
                         <h2
                                 style="font-family: 'Hanna', serif;
                                       margin: 0;

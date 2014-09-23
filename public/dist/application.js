@@ -1029,47 +1029,6 @@ angular.module('banners').controller('BannersController', [
   'Products',
   function ($scope, $stateParams, $location, Authentication, Banners, Products) {
     $scope.authentication = Authentication;
-    //////////////// Temp Code
-    $scope.products = [
-      {
-        name: 'Product1',
-        img: 'modules/andrewkim/img/my1.jpg'
-      },
-      {
-        name: 'Product2',
-        img: 'modules/andrewkim/img/my2.jpg'
-      },
-      {
-        name: 'Product3',
-        img: 'modules/andrewkim/img/my3.jpg'
-      },
-      {
-        name: 'Product4',
-        img: 'modules/andrewkim/img/my3.jpg'
-      },
-      {
-        name: 'Product5',
-        img: 'modules/andrewkim/img/my2.jpg'
-      },
-      {
-        name: 'Product6',
-        img: 'modules/andrewkim/img/my1.jpg'
-      },
-      {
-        name: 'Product7',
-        img: 'modules/andrewkim/img/my3.jpg'
-      },
-      {
-        name: 'Product8',
-        img: 'modules/andrewkim/img/my1.jpg'
-      },
-      {
-        name: 'Product9',
-        img: 'modules/andrewkim/img/my2.jpg'
-      }
-    ];
-    $scope.products = null;
-    ///////////////
     // Create new Banner
     $scope.create = function () {
       // Create new Banner object
@@ -1120,10 +1079,14 @@ angular.module('banners').controller('BannersController', [
       $scope.banner = Banners.get({ bannerId: $stateParams.bannerId });
     };
     $scope.findProductOne = function () {
-      $scope.products = Products.get({ bannerId: $stateParams.bannerId });
+      $scope.products = Products.query({ bannerId: $stateParams.bannerId });
     };
     $scope.toCreateProduct = function () {
       $location.path('products/create/' + $stateParams.bannerId);
+    };
+    // should be changed
+    $scope.toEditPoduct = function () {
+      $location.path('products/list/' + $stateParams.bannerId);
     };
   }
 ]);'use strict';
@@ -1131,7 +1094,13 @@ angular.module('banners').controller('BannersController', [
 angular.module('banners').factory('Banners', [
   '$resource',
   function ($resource) {
-    return $resource('banners/:bannerId', { bannerId: '@_id' }, { update: { method: 'PUT' } });
+    return $resource('banners/:bannerId', { bannerId: '@_id' }, {
+      update: { method: 'PUT' },
+      query: {
+        method: 'GET',
+        isArray: true
+      }
+    });
   }
 ]);'use strict';
 // Setting up route
@@ -3194,6 +3163,7 @@ angular.module('slider-editor').config([
 angular.module('slider-editor').controller('SlidereditorController', [
   '$scope',
   function ($scope) {
+    $scope.title = 'Slider Editor';
     $scope.showMe = true;
     $scope.initialWidth = 200;
     $scope.initialHeight = 200;

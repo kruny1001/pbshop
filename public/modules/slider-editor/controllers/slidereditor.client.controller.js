@@ -2,6 +2,7 @@
 
 angular.module('slider-editor').controller('SlidereditorController', ['$scope',
 	function($scope) {
+        $scope.title = 'Slider Editor';
         $scope.showMe=true;
         $scope.initialWidth = 200;
         $scope.initialHeight = 200;
