@@ -7,8 +7,8 @@ angular.module('andrewkim').constant('YT_event', {
     STATUS_CHANGE  : 3
 });
 
-angular.module('andrewkim').controller('AmainController', ['$scope','$sce', '$upload', 'Images', 'YT_event', 'Authentication', 'BannersService',
-	function($scope, $sce, $upload, Images, YT_event, Authentication, BannersService) {
+angular.module('andrewkim').controller('AmainController', ['$scope','$sce', 'Images', 'YT_event', 'Authentication', 'BannersService',
+	function($scope, $sce, Images, YT_event, Authentication, BannersService) {
 
         $scope.authentication = Authentication;
 

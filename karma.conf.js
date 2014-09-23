@@ -10,6 +10,12 @@ var applicationConfiguration = require('./config/config');
 // Karma configuration
 module.exports = function(config) {
 	config.set({
+        preprocessors: {
+            // source files, that you wanna generate coverage for
+            // do not include tests or libraries
+            // (these files will be instrumented by Istanbul)
+            'src/*.js': ['coverage']
+        },
 		// Frameworks to use
 		frameworks: ['jasmine'],
 

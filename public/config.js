@@ -7,7 +7,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies =
         [
             'ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ui.calendar',
-            /*'google-maps',*/ 'mgo-angular-wizard', 'angularFileUpload',
+            /*'google-maps',*/ 'mgo-angular-wizard', /*'angularFileUpload',*/
             'smart-table', 'ui.ace', 'ngSanitize','textAngular'
         ];
 

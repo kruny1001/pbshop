@@ -30,6 +30,11 @@ describe('Product Model Unit Tests:', function() {
 		user.save(function() { 
 			product = new Product ({
 				name: 'Product Name',
+                mainimg: '1',
+                imgs: '11',
+                price: 20,
+                description: 'Description Test',
+                parentId: '1212',
 				user: user
 			});
 
@@ -47,7 +52,7 @@ describe('Product Model Unit Tests:', function() {
 
 		it('should be able to show an error when try to save without name', function(done) { 
 			product .name = '';
-
+            console.log('!!!');
 			return product .save(function(err) {
 				should.exist(err);
 				done();

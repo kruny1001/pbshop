@@ -11,7 +11,6 @@ var ApplicationConfiguration = function () {
         'ui.utils',
         'ui.calendar',
         'mgo-angular-wizard',
-        'angularFileUpload',
         'smart-table',
         'ui.ace',
         'ngSanitize',
@@ -402,12 +401,11 @@ angular.module('andrewkim').constant('YT_event', {
 angular.module('andrewkim').controller('AmainController', [
   '$scope',
   '$sce',
-  '$upload',
   'Images',
   'YT_event',
   'Authentication',
   'BannersService',
-  function ($scope, $sce, $upload, Images, YT_event, Authentication, BannersService) {
+  function ($scope, $sce, Images, YT_event, Authentication, BannersService) {
     $scope.authentication = Authentication;
     // Find a list of Banners
     $scope.find = function () {
@@ -1079,6 +1077,7 @@ angular.module('banners').controller('BannersController', [
       $scope.banner = Banners.get({ bannerId: $stateParams.bannerId });
     };
     $scope.findProductOne = function () {
+      $scope.banner = Banners.get({ bannerId: $stateParams.bannerId });
       $scope.products = Products.query({ bannerId: $stateParams.bannerId });
     };
     $scope.toCreateProduct = function () {
@@ -2988,7 +2987,8 @@ angular.module('products').controller('ProductsController', [
   '$location',
   'Authentication',
   'Products',
-  function ($scope, $stateParams, $location, Authentication, Products) {
+  'Banners',
+  function ($scope, $stateParams, $location, Authentication, Products, Banners) {
     $scope.authentication = Authentication;
     $scope.parentId = $stateParams.bannerId;
     // Create new Product
@@ -3042,6 +3042,9 @@ angular.module('products').controller('ProductsController', [
     // Find a list of Products
     $scope.find = function () {
       $scope.products = Products.query();
+    };
+    $scope.findBanners = function () {
+      $scope.banners = Banners.query();
     };
     // Find existing Product
     $scope.findOne = function () {

@@ -48,6 +48,7 @@
 			BannersController = $controller('BannersController', {
 				$scope: scope
 			});
+
 		}));
 
 		it('$scope.find() should create an array with at least one Banner object fetched from XHR', inject(function(Banners) {

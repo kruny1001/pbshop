@@ -65,6 +65,10 @@ angular.module('banners').controller('BannersController', ['$scope', '$statePara
 		};
 
         $scope.findProductOne = function(){
+            $scope.banner = Banners.get({
+                bannerId: $stateParams.bannerId
+            });
+
             $scope.products= Products.query({
                 bannerId: $stateParams.bannerId
             });
