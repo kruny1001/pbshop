@@ -14,14 +14,16 @@ module.exports = function(config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            'src/*.js': ['coverage']
+            'src/*.js': ['coverage'],
+            // generate js files from html templates
+            '../**/*.html': ['ng-html2js']
         },
 		// Frameworks to use
 		frameworks: ['jasmine'],
 
 		// List of files / patterns to load in the browser
 		files:
-            applicationConfiguration.assets.lib.js.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests)
+            applicationConfiguration.assets.lib.js.concat(applicationConfiguration.assets.js, applicationConfiguration.assets.tests, applicationConfiguration.assets.htmls)
         ,
 
 		// Test results reporter to use
@@ -57,6 +59,16 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// If true, it capture browsers, run tests and exit
-		singleRun: true
+		singleRun: true,
+        ngHtml2JsPreprocessor: {
+            // If your build process changes the path to your templates,
+            // use stripPrefix and prependPrefix to adjust it.
+            //stripPrefix: "source/path/to/templates/.*/",
+            //prependPrefix: "web/path/to/templates/",
+
+            // the name of the Angular module to create
+            moduleName: "my.templates"
+        }
+
 	});
 };

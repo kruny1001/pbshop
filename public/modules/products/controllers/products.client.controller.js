@@ -1,8 +1,8 @@
 'use strict';
 
 // Products controller
-angular.module('products').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Products', 'Banners',
-    function($scope, $stateParams, $location, Authentication, Products, Banners) {
+angular.module('products').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Products', 'Banners', 'ProductsBanner',
+    function($scope, $stateParams, $location, Authentication, Products, Banners, ProductsBanner) {
         $scope.authentication = Authentication;
         $scope.parentId=$stateParams.bannerId;
 
@@ -76,5 +76,10 @@ angular.module('products').controller('ProductsController', ['$scope', '$statePa
                 productId: $stateParams.productId
             });
         };
+
+        $scope.findProductUnderBanner = function() {
+            console.log('banner id is '+ $scope.parentId);
+            $scope.products = ProductsBanner.query({},{bannerId:$scope.parentId});
+        }
     }
 ]);

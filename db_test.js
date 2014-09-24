@@ -19,7 +19,7 @@ var user, user2;
 /**
  * Unit tests
  */
-describe('User Model Unit Tests:', function() {
+describe('##########:', function() {
     before(function(done) {
         user = new User({
             firstName: 'Full',

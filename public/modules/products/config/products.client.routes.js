@@ -9,6 +9,10 @@ angular.module('products').config(['$stateProvider',
                 url: '/products',
                 templateUrl: 'modules/products/views/list-products.client.view.html'
             }).
+            state('listProductsUnderBanner', {
+                url: '/products/list/:bannerId',
+                templateUrl: 'modules/products/views/list-products-banner.client.view.html'
+            }).
             state('createProduct', {
                 url: '/products/create/:bannerId',
                 templateUrl: 'modules/products/views/create-product.client.view.html'

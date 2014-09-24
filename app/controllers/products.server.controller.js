@@ -133,7 +133,7 @@ exports.hasAuthorization = function(req, res, next) {
  * List of Products
  */
 exports.listByParentId = function(req, res) {
-    Product.find().sort('-created').populate('user', 'displayName').exec(function(err, products) {
+    Product. find({parentId:req.params.bannerId}).sort('-created').populate('user', 'displayName').exec(function(err, products) {
         if (err) {
             return res.send(400, {
                 message: getErrorMessage(err)

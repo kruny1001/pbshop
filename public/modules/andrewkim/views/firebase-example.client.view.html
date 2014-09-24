@@ -1,0 +1,8 @@
+<section class="container container-top" data-ng-controller="SampleCtrlController">
+    <br><br><br>
+    <!-- anything typed in here is magically saved to Firebase! -->
+    <input type="text" data-ng-model="data.text"/>
+    <!-- all changes from Firebase magically appear here! -->
+    <h1>You said: {{ data.text }}</h1>
+
+</section>

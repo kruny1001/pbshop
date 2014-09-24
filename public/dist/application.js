@@ -14,7 +14,8 @@ var ApplicationConfiguration = function () {
         'smart-table',
         'ui.ace',
         'ngSanitize',
-        'textAngular'
+        'textAngular',
+        'firebase'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -77,7 +78,10 @@ angular.module('andrewkim').config([
   '$stateProvider',
   function ($stateProvider) {
     // Andrewkim state routing
-    $stateProvider.state('slider-editor', {
+    $stateProvider.state('firebase-example', {
+      url: '/firebase-example',
+      templateUrl: 'modules/andrewkim/views/firebase-example.client.view.html'
+    }).state('slider-editor', {
       url: '/slider-editor',
       templateUrl: 'modules/andrewkim/views/slider-editor.client.view.html'
     }).state('a-board', {
@@ -524,6 +528,23 @@ angular.module('andrewkim').controller('BannerController', [
     };
   }
 ]);'use strict';
+angular.module('andrewkim').controller('SampleCtrlController', [
+  '$scope',
+  '$firebase',
+  function ($scope, $firebase) {
+    // Sample ctrl controller logic
+    // ...
+    var ref = new Firebase('https://restapi.firebaseio.com/');
+    // create an AngularFile reference to the data
+    var sync = $firebase(ref);
+    // download the data into a local object
+    var syncObject = sync.$asObject();
+    //synchronize the object with a three-way data binding
+    //click on 'index.html' above to see it used in the DOM!
+    syncObject.$bindTo($scope, 'data');
+    $scope.data = sync.$asObject();
+  }
+]);'use strict';
 angular.module('andrewkim').directive('bannerMainFrame', [
   '$document',
   function ($document) {
@@ -618,29 +639,29 @@ angular.module('andrewkim').directive('ddak', [
       templateUrl: 'modules/andrewkim/directives/ddak.html',
       restrict: 'EA',
       link: function postLink(scope, element, attrs) {
-        var $panel1 = $('#panel1'), $panel2 = $('#panel2'), $panel3 = $('#panel3'), $panel1Text = $('#panel1 h1'), $panel2Text = $('#panel2 h2'), $info = $('#info'), $list = $('#ddak').find('li'), $orderNow = $('#orderNow');
+        var panel1 = $('#panel1'), panel2 = $('#panel2'), panel3 = $('#panel3'), panel1Text = $('#panel1 h1'), panel2Text = $('#panel2 h2'), info = $('#info'), list = $('#ddak').find('li'), orderNow = $('#orderNow');
         var tl = new TimelineMax({
             delay: 0.5,
             repeat: 2,
             repeatDelay: 3
           });
         TweenMax.to($('#banner'), 0, { borderRadius: '0px 0px 25px 25px' });
-        TweenMax.to($panel1, 0, { borderRadius: '0px 0px 25px 25px' });
-        TweenMax.to($panel2, 0, { borderRadius: '0px 0px 25px 25px' });
-        TweenMax.to($panel3, 0, { borderRadius: '0px 0px 25px 25px' });
-        TweenMax.to($info, 0, { borderRadius: '0px 0px 25px 25px' });
-        TweenMax.to($orderNow, 0, { borderRadius: '25px 25px 25px 25px' });
-        tl.from(panel1, 0.5, { autoAlpha: 0 }).from($panel1Text, 0.5, {
+        TweenMax.to(panel1, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to(panel2, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to(panel3, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to(info, 0, { borderRadius: '0px 0px 25px 25px' });
+        TweenMax.to(orderNow, 0, { borderRadius: '25px 25px 25px 25px' });
+        tl.from(panel1, 0.5, { autoAlpha: 0 }).from(panel1Text, 0.5, {
           scale: 0.5,
           autoAlpha: 0,
           ease: Back.easeOut
-        }).set($panel2, { top: 0 }, '+=1').from($panel2, 0.2, {
+        }).set(panel2, { top: 0 }, '+=1').from(panel2, 0.2, {
           autoAlpha: 0,
           scale: 1.5
-        }).from($panel2Text, 0.2, { top: 250 }, '+=0.5').to($panel2Text, 0.2, { top: 250 }, '+=0.5').set($panel3, { top: 0 }, 'final').from($info, 0.5, { top: 250 }, 'final').to($panel2, 0.5, { top: -60 }, 'final').staggerFrom($list, 0.3, {
+        }).from(panel2Text, 0.2, { top: 250 }, '+=0.5').to(panel2Text, 0.2, { top: 250 }, '+=0.5').set(panel3, { top: 0 }, 'final').from(info, 0.5, { top: 250 }, 'final').to(panel2, 0.5, { top: -60 }, 'final').staggerFrom(list, 0.3, {
           autoAlpha: 0,
           left: 50
-        }, 0.1, '+=0.2').from($orderNow, 0.5, {
+        }, 0.1, '+=0.2').from(orderNow, 0.5, {
           scale: 0,
           autoAlpha: 0,
           ease: Back.easeOut
@@ -672,6 +693,11 @@ angular.module('andrewkim').directive('ddak', [
     };
   }
 ]);'use strict';
+angular.module('andrewkim').directive('ehSimple', [function () {
+    return function (scope, element) {
+      element.addClass('plain');
+    };
+  }]);'use strict';
 angular.module('andrewkim').constant('Ddak_event', {
   OPEN: 0,
   CLOSE: 1,
@@ -1025,7 +1051,8 @@ angular.module('banners').controller('BannersController', [
   'Authentication',
   'Banners',
   'Products',
-  function ($scope, $stateParams, $location, Authentication, Banners, Products) {
+  'ProductsBanner',
+  function ($scope, $stateParams, $location, Authentication, Banners, Products, ProductsBanner) {
     $scope.authentication = Authentication;
     // Create new Banner
     $scope.create = function () {
@@ -1086,6 +1113,10 @@ angular.module('banners').controller('BannersController', [
     // should be changed
     $scope.toEditPoduct = function () {
       $location.path('products/list/' + $stateParams.bannerId);
+    };
+    $scope.findProductUnderBanner = function () {
+      console.log('banner id is ' + $stateParams.bannerId);
+      $scope.products = ProductsBanner.query({}, { bannerId: $stateParams.bannerId });
     };
   }
 ]);'use strict';
@@ -2968,6 +2999,9 @@ angular.module('products').config([
     $stateProvider.state('listProducts', {
       url: '/products',
       templateUrl: 'modules/products/views/list-products.client.view.html'
+    }).state('listProductsUnderBanner', {
+      url: '/products/list/:bannerId',
+      templateUrl: 'modules/products/views/list-products-banner.client.view.html'
     }).state('createProduct', {
       url: '/products/create/:bannerId',
       templateUrl: 'modules/products/views/create-product.client.view.html'
@@ -2988,7 +3022,8 @@ angular.module('products').controller('ProductsController', [
   'Authentication',
   'Products',
   'Banners',
-  function ($scope, $stateParams, $location, Authentication, Products, Banners) {
+  'ProductsBanner',
+  function ($scope, $stateParams, $location, Authentication, Products, Banners, ProductsBanner) {
     $scope.authentication = Authentication;
     $scope.parentId = $stateParams.bannerId;
     // Create new Product
@@ -3050,6 +3085,26 @@ angular.module('products').controller('ProductsController', [
     $scope.findOne = function () {
       $scope.product = Products.get({ productId: $stateParams.productId });
     };
+    $scope.findProductUnderBanner = function () {
+      console.log('banner id is ' + $scope.parentId);
+      $scope.products = ProductsBanner.query({}, { bannerId: $scope.parentId });
+    };
+  }
+]);/**
+ * Created by KevinSo on 9/24/2014.
+ */
+'use strict';
+//Products service used to communicate Products REST endpoints
+angular.module('products').factory('ProductsBanner', [
+  '$resource',
+  function ($resource) {
+    return $resource('products/list/:bannerId', { bannerId: '@bannerId' }, {
+      update: { method: 'PUT' },
+      query: {
+        method: 'GET',
+        isArray: true
+      }
+    });
   }
 ]);'use strict';
 //Products service used to communicate Products REST endpoints

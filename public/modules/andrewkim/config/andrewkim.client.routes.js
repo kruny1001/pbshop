@@ -5,6 +5,10 @@ angular.module('andrewkim').config(['$stateProvider',
 	function($stateProvider) {
 		// Andrewkim state routing
 		$stateProvider.
+		state('firebase-example', {
+			url: '/firebase-example',
+			templateUrl: 'modules/andrewkim/views/firebase-example.client.view.html'
+		}).
 		state('slider-editor', {
 			url: '/slider-editor',
 			templateUrl: 'modules/andrewkim/views/slider-editor.client.view.html'

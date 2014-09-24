@@ -61,7 +61,11 @@ module.exports = {
                 //text Angular
 
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-                'public/lib/textAngular/dist/textAngular.min.js'
+                'public/lib/textAngular/dist/textAngular.min.js',
+
+                //firebase
+                'public/lib/angularfire/dist/angularfire.min.js',
+                'public/lib/firebase/firebase.js'
 			]
 		},
 		css: [
@@ -76,6 +80,10 @@ module.exports = {
 		tests: [
 			'public/lib/angular-mocks/angular-mocks.js',
 			'public/modules/*/tests/*.js'
-		]
+		],
+        htmls:[
+            'public/modules/*/directives/*.html'
+        ]
+
 	}
 };
