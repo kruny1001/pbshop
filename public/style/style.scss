@@ -42,3 +42,7 @@ $brand-success:         #A0D468;
 @import 'banner';
 
 @import 'ribbon'; //Upper right corner ribbon
+
+body{
+  overflow-x:hidden;
+}

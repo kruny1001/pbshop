@@ -262,3 +262,7 @@ http://stackoverflow.com/questions/20297638/call-function-inside-sce-trustashtml
 #9/20#
 Google Permallinks
 http://gdurl.com/
+
+#9/25#
+https://github.com/googledrive/realtime-tasks/blob/master/app/scripts/app.js
+implementing a Google Drive
