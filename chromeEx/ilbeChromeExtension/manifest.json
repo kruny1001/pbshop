@@ -1,0 +1,27 @@
+{
+    "name": "IlbeChromeExtension",
+    "description": "A simple ilbe article application.",
+    "manifest_version": 2,
+    "version": "0.0.1",
+    "minimum_chrome_version": "23",
+    "app": {
+        "background": {
+            "scripts": ["main.js"]
+        }
+    },
+    "icons": {
+        "16": "img/icon.png",
+        "64": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "permissions": [
+        "geolocation",
+        "https://www.ilbe.com/*/",
+        "http://*/",
+        "storage",
+        "<all_urls>"
+    ],
+    "content_security_policy":{
+        "content_security_policy": "script-src 'self'; object-src 'self'; img-src 'self'"
+    }
+}

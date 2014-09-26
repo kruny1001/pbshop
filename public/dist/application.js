@@ -2811,7 +2811,10 @@ angular.module('gdriveapps').config([
   '$stateProvider',
   function ($stateProvider) {
     // Gdriveapps state routing
-    $stateProvider.state('listGdriveapps', {
+    $stateProvider.state('weather', {
+      url: '/weather',
+      templateUrl: 'modules/gdriveapps/views/weather.client.view.html'
+    }).state('listGdriveapps', {
       url: '/gdriveapps',
       templateUrl: 'modules/gdriveapps/views/list-gdriveapps.client.view.html'
     }).state('createGdriveapp', {
@@ -2922,6 +2925,64 @@ angular.module('gdriveapps').controller('GdriveappsController', [
     $scope.findOne = function () {
       $scope.gdriveapp = Gdriveapps.get({ gdriveappId: $stateParams.gdriveappId });
     };
+  }
+]);'use strict';
+angular.module('gdriveapps').provider('Weather', function () {
+  var apiKey = '';
+  this.setApiKey = function (key) {
+    if (key)
+      this.apiKey = key;
+  };
+  this.$get = [
+    '$q',
+    '$http',
+    function ($q, $http) {
+      var self = this;
+      return {
+        getWeatherForecast: function (city) {
+          var d = $q.defer();
+          $http({
+            method: 'GET',
+            url: self.getUrl('forecast', city),
+            cache: true
+          }).success(function (data) {
+            // The wunderground API returns the
+            // object that nests the forecasts inside
+            // the forecast.simpleforecast key
+            d.resolve(data.forecast.simpleforecast);
+          }).error(function (err) {
+            d.reject(err);
+          });
+          return d.promise;
+        }
+      };
+    }
+  ];
+  this.getUrl = function (type, ext) {
+    return 'http://api.wunderground.com/api/' + this.apiKey + '/' + type + '/p/' + ext + '.json';
+  };
+}).config([
+  'WeatherProvider',
+  function (WeatherProvider) {
+    WeatherProvider.setApiKey('963b4eccel134894a');
+  }
+]);
+angular.module('gdriveapps').controller('WeatherController', [
+  '$scope',
+  '$timeout',
+  'Weather',
+  function ($scope, $timeout, Weather) {
+    $scope.date = {};
+    var updateTime = function () {
+      $scope.date.raw = new Date();
+      $timeout(updateTime, 1000);
+    };
+    updateTime();
+    //963b4eccel134894a
+    $scope.weather = {};
+    Weather.getWeatherForecast('CA/San_Francisco').then(function (data) {
+      $scope.weather.forecast = data;
+    });
   }
 ]);'use strict';
 angular.module('gdriveapps').factory('Gdocs', [function () {

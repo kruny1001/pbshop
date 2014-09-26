@@ -5,6 +5,10 @@ angular.module('gdriveapps').config(['$stateProvider',
 	function($stateProvider) {
 		// Gdriveapps state routing
 		$stateProvider.
+		state('weather', {
+			url: '/weather',
+			templateUrl: 'modules/gdriveapps/views/weather.client.view.html'
+		}).
 		state('listGdriveapps', {
 			url: '/gdriveapps',
 			templateUrl: 'modules/gdriveapps/views/list-gdriveapps.client.view.html'
