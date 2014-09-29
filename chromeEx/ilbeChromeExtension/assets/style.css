@@ -646,6 +646,6 @@ input[type=text].form-error{
     font-size: 1.0em;
 }
 
-.well h1, h2{
+.well h1, h2, h3, h4{
     color:#3f4d55;
 }

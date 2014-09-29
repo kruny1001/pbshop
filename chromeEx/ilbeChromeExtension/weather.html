@@ -12,15 +12,27 @@
         -->
     </head>
 
-    <body data-ng-controller="MainCtrl">
+    <body data-ng-controller="MainCtrl"  data-ng-click="console.log('11');">
         <br/>
         <div class="well" id="datetime">
             <h1>{{ date.raw | date:'hh : mm : ss' }}</h1>
             <h2>{{ date.raw | date:'EEEE, MMMM yyyy' }}</h2>
         </div>
         <hr>
-        <h4> JJal Best </h4>
+        
+        <div class="well">
+          <h3>오늘의 운세</h3>
+          <h4> Loading ... </h4>
+        </div>
+        <!--
+        <select ng-model="myBoard" ng-options="board.name for board in boards" ng-change="changeValue(myBoard)">
+        </select><br>
+        <h4 data-ng-mouseover="console.log('11');"> JJal Best </h4>
         <h5 data-ng-repeat="article in articles">{{article.innerText}}</h5>
+        <!--
+        <webview id="foo" src="http://kevangular.herokuapp.com/#!/a-main" style="width:640px; height:480px"></webview>
+        -->
+        <webview id="foo" src="http://m.ilbe.com/" style="width:355px; height:600px"></webview>
 
     <!--
         <div id="close"></div>
@@ -60,13 +72,15 @@
           <div id="weather"></div>
         </div>
 
-        <div id="dots">
+        <div id="dots">https://www.google.com/images/srpr/logo11w.png
             <div id="prev"></div>
             <div id="next"></div>
         </div>
 -->
         <script src="js/angular.min.js"></script>
+        <!--
         <script src="js/angular-route.min.js"></script>
+        -->
         <script src="js/app.js"></script>
     </body>
 </html>
