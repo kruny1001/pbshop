@@ -109,11 +109,17 @@ productEditor.controller('productEditorCtrl', function($scope, $window, $documen
 
 productEditor.directive('smoothButton', function(){
     var linker = function (scope, element, attrs) {
-        var tl = new TimelineLite();
+        var path=[{x:0, y:0}, {x:50, y:100}, {x:300, y:20}, {x:400, y:200}, {x:500, y:0}];
+        var position = {x:path[0].x, y:path[0].y};
+        var tween = TweenMax.to(position, 10, {bezier:path, ease:Linear.easeNone});
+
+        var tl = new TimelineMax({repeat:-1, yoyo:true});
+
         tl.add(TweenLite.to(element.find('.red'), 0.4, {scaleX:1.8, scaleY:1.8, ease: Power2.easeOut}));
         tl.add(TweenLite.to(element.find('.orange'), 0.4, {scaleX:1.6, scaleY:1.6, ease: Power2.easeOut}), '-=0.2');
         tl.add(TweenLite.to(element.find('.yellow'), 0.4, {scaleX:1.4, scaleY:1.4, ease: Power2.easeOut}), '-=0.2');
-        tl.add(TweenLite.to(element, 1, {x:200}));
+        tl.add(TweenLite.to(element, 5, {bezier:{type:'quadratic', values:path}, ease:Linear.easeNone}));
+        tl.add(TweenLite.to(element, 1, {colorProps:{borderColor:"red", myCustomProp:"rgb(204,51,0)"}, ease:Linear.easeNone}));
         tl.add(TweenLite.to(element, 1, {y:200}, "+=1"));
         tl.add(TweenLite.to(element, 1, {scale:4}, 6));
         tl.stop();
