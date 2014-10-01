@@ -1,0 +1,25 @@
+{
+    "name": "uri Product Editor",
+    "description": "Product Editor",
+    "manifest_version": 2,
+    "version": "0.0.1",
+    "minimum_chrome_version": "23",
+    "app": {
+        "background": {
+            "scripts": ["main.js"]
+        }
+    },
+    "icons": {
+        "16": "img/icon.png",
+        "64": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "permissions": [
+        "webview",
+        "geolocation",
+        "http://*/",
+        "https://kevangular.herokuapp.com/",
+        "storage"
+    ]
+
+}
