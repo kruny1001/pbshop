@@ -116,6 +116,30 @@ productEditor.controller('productEditorCtrl', function($scope, $window, $documen
     }
 });
 
+productEditor.directive('framesAnni', function(){
+    return {
+        restrict: 'AE', //E = element, A = attribute, C = class, M = comment
+        templateUrl: 'tmpl/frame.html',
+        scope: {
+            title: '@'
+        },
+        link: function ($scope, element, attrs) {
+            var element1 = element.find('#fCreate');
+            var element2 = element.find('#fAdd');
+            var element3 = element.find('#fRun');
+
+            element1.bind('click', function(){
+                console.log('create clicked');
+            });
+            element2.bind('click', function(){
+                console.log('add clicked');
+            });
+            element3.bind('click', function(){
+                console.log('run clicked');
+            });
+        }
+    }
+});
 
 productEditor.directive('smoothButton', function(){
     var linker = function (scope, element, attrs) {
