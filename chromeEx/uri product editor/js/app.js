@@ -4,7 +4,7 @@
 
 'use strict';
 var body = '';
-var productEditor = angular.module('productEditor', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+var productEditor = angular.module('productEditor', ['ngRoute', 'ngResource', 'ui.bootstrap', 'gDriveApp']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',
@@ -32,6 +32,14 @@ productEditor.config( [
             .when('/register', {
                 templateUrl: 'views/product_editor/register.html',
                 controller: 'registerFormCtrl'
+            })
+            .when('/identity', {
+                templateUrl: 'views/product_editor/identity.html',
+                controller: 'IdentityCtrl'
+            })
+            .when('/gdoc', {
+                templateUrl: 'views/product_editor/gdrive.html',
+                controller: 'DocsController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -72,7 +80,9 @@ productEditor.controller('TabCtrl', function($scope, $location){
         { title:'Home', url:'/', content:'Dynamic content 1' },
         { title:'About', url:'/about', content:'Dynamic content 2'},
         { title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'Register', url:'/register', content:'Dynamic content 2'}
+        { title:'Register', url:'/register', content:'Dynamic content 2'},
+        { title:'Identity', url:'/identity', content:'Dynamic content 2'},
+        { title:'GDrive', url:'/gdoc', content:'Dynamic content 2'}
     ];
 
     $scope.alertMe = function() {
@@ -114,12 +124,12 @@ productEditor.directive('smoothButton', function(){
         var tween = TweenMax.to(position, 10, {bezier:path, ease:Linear.easeNone});
 
         var tl = new TimelineMax({repeat:-1, yoyo:true});
-
+        var body = angular.element.find('h1');
         tl.add(TweenLite.to(element.find('.red'), 0.4, {scaleX:1.8, scaleY:1.8, ease: Power2.easeOut}));
         tl.add(TweenLite.to(element.find('.orange'), 0.4, {scaleX:1.6, scaleY:1.6, ease: Power2.easeOut}), '-=0.2');
         tl.add(TweenLite.to(element.find('.yellow'), 0.4, {scaleX:1.4, scaleY:1.4, ease: Power2.easeOut}), '-=0.2');
         tl.add(TweenLite.to(element, 5, {bezier:{type:'quadratic', values:path}, ease:Linear.easeNone}));
-        tl.add(TweenLite.to(element, 1, {colorProps:{borderColor:"red", myCustomProp:"rgb(204,51,0)"}, ease:Linear.easeNone}));
+        tl.add(TweenLite.to(body, 6, {colorProps:{setColor:"rgba(77, 10, 10, 0.39)"}, ease:Linear.easeNone}));
         tl.add(TweenLite.to(element, 1, {y:200}, "+=1"));
         tl.add(TweenLite.to(element, 1, {scale:4}, 6));
         tl.stop();

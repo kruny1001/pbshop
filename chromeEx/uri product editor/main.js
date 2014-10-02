@@ -18,6 +18,14 @@ window.chrome.app.runtime.onRestarted.addListener(function() {
     runApp();
 });
 
+chrome.runtime.onInstalled.addListener(function() {
+    console.log('installed');
+});
+
+chrome.runtime.onSuspend.addListener(function() {
+    // Do some simple clean-up tasks.
+});
+
 /**
  * Creates the window for the application.
  *

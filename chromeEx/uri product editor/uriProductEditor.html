@@ -1,10 +1,12 @@
 <html ng-app="productEditor" ng-csp="">
 <head>
-    <title>Frameless Window</title>
+    <meta charset="utf-8" />
+    <title>Urimium Editor</title>
     <link rel="stylesheet" type="text/css" href="assets/style.css" />
     <link rel="stylesheet" type="text/css" href="assets/animme.css" />
     <link rel="stylesheet" type="text/css" href="assets/fonts.css" />
     <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
+    <base target="_blank">
 </head>
 
 <body>
@@ -24,19 +26,31 @@
     <div class="top-titlebar-close-button" ng-click="closeWindow()"><img id="top-titlebar-close-button" src="button_close.png"></div>
     <div class="top-titlebar-divider"></div>
 </div>
-    <script src="public/lib/jquery/dist/jquery.min.js"></script>
-    <script src="public/lib/angular/angular.min.js"></script>
-    <script src="public/lib/angular-route/angular-route.min.js"></script>
-    <script src="public/lib/angular-resource/angular-resource.min.js"></script>
-    <script src="public/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script src="public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="lib/GreenSock-js/src/minified/TweenMax.min.js"></script>
-    <script src="lib/GreenSock-js/src/minified/TweenLite.min.js"></script>
-    <scirpt src="lib/GreenSock-js/src/minified/plugins/BeierPlugin.min.js"></scirpt>
-    <scirpt src="lib/GreenSock-js/src/minified/plugins/CSSPlugin.min.js"></scirpt>
-    <scirpt src="lib/GreenSock-js/src/minified/plugins/ColorPropsPlugin.min.js"></scirpt>
+
+<script src="public/lib/jquery/dist/jquery.min.js"></script>
+<script src="public/lib/angular/angular.min.js"></script>
+<script src="public/lib/angular-route/angular-route.min.js"></script>
+<script src="public/lib/angular-resource/angular-resource.min.js"></script>
+<script src="public/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="public/lib/gsap/src/minified/TweenMax.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/CSSPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/BezierPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/ColorPropsPlugin.min.js"></script>
+<script src="lib/GreenSock-js/src/minified/TweenMax.min.js"></script>
+<script src="lib/GreenSock-js/src/minified/TweenLite.min.js"></script>
+
+
+    <script src="js/util.js"></script>
+    <script src="js/dnd.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/gdocs.js"></script>
 
     <script src="js/app.js"></script>
     <script src="js/app2.js"></script>
+    <script src="js/identity.js"></script>
+    <script src="js/gdrive.js"></script>
+
+
 </body>
 </html>

@@ -42,7 +42,9 @@
     "grunt-cli": "~0.1.13",
     "glob": "~3.2.9",
     "bcryptjs": "~1.0.5",
-    "googleapis": "~1.0.14"
+    "googleapis": "~1.0.14",
+    "gridfs-stream": "~0.5.1",
+    "mongodb": "~1.4.17"
   },
   "devDependencies": {
     "supertest": "~0.12.1",

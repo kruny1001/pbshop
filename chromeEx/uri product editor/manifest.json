@@ -17,9 +17,27 @@
     "permissions": [
         "webview",
         "geolocation",
+        "identity",
+        "https://accounts.google.com/*",
+        "https://www.googleapis.com/*",
         "http://*/",
         "https://kevangular.herokuapp.com/",
-        "storage"
-    ]
+        "storage",
+
+        "https://docs.google.com/feeds/",
+        "https://docs.googleusercontent.com/",
+        "https://spreadsheets.google.com/feeds/",
+        "https://ssl.gstatic.com/",
+        "https://www.googleapis.com/"
+    ],
+    "oauth2": {
+        // client_id below is specifc to the application key. Follow the
+        // documentation to obtain one for your app.
+        "client_id": "574563539488-5i8f8t7frgdc4k2uehatdiuha7mu5338.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/plus.login",
+            "https://www.googleapis.com/auth/drive"
+        ]
+    }
 
 }
