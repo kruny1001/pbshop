@@ -36,7 +36,7 @@ function runApp() {
         frame: "none",
         id: 'productEditor',
         innerBounds: {
-            width: 360,
+            width: 460,
             height: 300,
             left:600,
             minWidth:220,

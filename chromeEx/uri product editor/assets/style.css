@@ -197,3 +197,7 @@ div#inner-content {
     height: 100%;
     background-color: #2a2c2c;
 }
+
+.appBody {
+    background-color: #e9ffee;
+}

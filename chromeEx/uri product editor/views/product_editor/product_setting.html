@@ -1,0 +1,49 @@
+
+<div data-ng-controller="settingCtrl">
+    <div class="panel panel-primary" style="margin:5px 5px 5px 5px">
+        <div class="panel-heading">
+            <h3 class="panel-title">Setting Page</h3>
+        </div>
+
+        <div class="panel-body">
+            <form role="form">
+                <div class="form-group">
+                    <label for="eml">Email address</label>
+                    <input id="eml"
+                           type="email"
+                           class="form-control"
+                           placeholder="Email address"
+                           ng-model="user.email">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password</label>
+                    <input id="pwd"
+                           type="password"
+                           class="form-control"
+                           placeholder="Password"
+                           ng-change="onChange()"
+                           ng-model="user.password">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                <!-- This could call an "updatePassword" method on the controller
+                      to modify this value. That method could also call $scope.$apply
+                      so that the value would be updated with a digest cycle -->
+                <button class="btn btn-danger"
+                        ng-click="user.password = 'pwd'">Please Hack Me</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-danger" ng-show="showReqs" style="margin:5px 5px 5px 5px">
+        <div class="panel-heading">
+            <h3 class="panel-title">Password Requirements</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li ng-repeat="req in reqs">{{ req }}</li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
