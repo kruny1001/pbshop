@@ -3,13 +3,30 @@
  */
 
 'use strict';
+
+/*
+var loadImage = function(uri, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function() {
+        //writeFile(xhr.response);
+        callback(window.URL.createObjectURL(xhr.response), uri);
+    }
+    xhr.open('GET', uri, true);
+    xhr.send();
+}
+*/
 var body = '';
-var productEditor = angular.module('productEditor', ['ngRoute', 'ngResource', 'ui.bootstrap', 'gDriveApp', 'keyBoardModule']);
+var productEditor = angular.module('productEditor',
+    ['ngRoute', 'ngResource', 'ui.bootstrap',
+        'gDriveApp', 'keyBoardModule', 'ngTouch']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',
     function( $compileProvider, $httpProvider, $routeProvider)
     {
+        var oldWhiteList = $compileProvider.imgSrcSanitizationWhitelist();
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob):|data:image\//);
         //$compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -96,7 +113,7 @@ productEditor.controller('TabCtrl', function($scope, $location){
         $location.path(target.tab.url);
     }
 
-    $location.path('/editor');
+    //$location.path('/editor');
 });
 
 productEditor.controller('settingCtrl', function($scope){
@@ -138,13 +155,32 @@ productEditor.controller('ChampCtrl', function($scope, $http, $routeParams){
 });
 
 productEditor.controller('mainCtrl', function($scope, $window, $http){
+    /*
+    TODO: this is the official implementation
+    call actual API from kevangular.herokuapp.com
     $http.get('http://kevangular.herokuapp.com/banners', {responseType: 'json'}).success(function(result) {
         $scope.products = result;
     });
-
+    */
+    $scope.todos = [];
+    $scope.products = [
+        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"5424791b254f310800385bfd","__v":0,"bannerTag":"","created":"2014-09-25T20:20:43.578Z","name":"가구", color:"blue"},
+        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"542478fb254f310800385bfc","__v":0,"bannerTag":"","created":"2014-09-25T20:20:11.322Z","name":"사과"},
+        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"명이나물"}];
     $scope.closeWindow = function(){
         $window.close();
     }
+
+    var todos = [{uri:'http://placekitten.com/600/400'}];
+    $scope.loadImages = function() {
+            $http.get(todos[0].uri, {responseType: 'blob'}).success(function(blob) {
+                console.log('Fetched icon via XHR');
+                todos[0].uri = window.URL.createObjectURL(blob);
+                $scope.todos.push(todos[0]);
+                //console.log(todos[0]);
+            });
+    };
+    $scope.loadImages();
 });
 productEditor.controller('productEditorCtrl', function($scope, $window, $document, $location, keyboardManager){
     $scope.title='homeView';

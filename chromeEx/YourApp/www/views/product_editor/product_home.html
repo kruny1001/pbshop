@@ -1,11 +1,18 @@
 <div data-ng-controller="mainCtrl">
-    <div ng-repeat="product in products" style="background-color: {{product.color}}">
-        <div class="container">
-                <h3 style="font-family: 'jejuhallasan', serif;">{{product.name}}</h3>
-                <!--
-                <h6 style="font-family: 'jejugothic', serif;">{{product.user.displayName}}</h6>
-                <h6 style="font-family: 'jejugothic', serif;">Short Description</h6>
-                -->
+    <div class="home-box">
+        <div ng-repeat="product in products"
+             class="home-product-well home-product-title" home-select-anni>
+                {{product.name}}
         </div>
     </div>
+    <!-- Test Product -->
+    <section class="posts">
+
+        <div class="post-preview">
+            <img class="photo"
+                 data-ng-src="{{todos[0].uri}}"/>
+            <h3>냐옹찡</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac enim dapibus, tempus lectus ac, vestibulum turpis. Mauris risus quam, egestas a blandit non, faucibus at tortor.</p>
+        </div>
+    </section>
 </div>

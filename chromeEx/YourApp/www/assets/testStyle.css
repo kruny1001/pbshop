@@ -1,0 +1,26 @@
+.posts {
+  width: 298px;
+  margin: 20px auto 10px auto; }
+  .posts .post-preview {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #FFF; }
+    .posts .post-preview .photo {
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 199px;
+      margin: -10px -10px 10px -10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px; }
+    .posts .post-preview h3 {
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+      color: #333; }
+    .posts .post-preview p {
+      margin: 0;
+      padding: 0;
+      font-weight: 300;
+      font-size: 11pt;
+      color: #777; }

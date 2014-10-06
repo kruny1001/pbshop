@@ -1,0 +1,30 @@
+.posts {
+  width: 298px;
+  margin: 20px auto 10px auto;
+  .post-preview {
+    box-shadow: 0px 1px 3px rgba(black, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    background-color:#FFF;
+    .photo {
+      //background-image:url('http://placekitten.com/600/400');
+      background-repeat:no-repeat;
+      background-size:cover;
+      height: 199px;
+      margin: -10px -10px 10px -10px;
+      border-top-left-radius:5px;
+      border-top-right-radius: 5px;
+    }
+    h3 {
+      margin: 0; padding:0;
+      font-weight:400;
+      color:#333;
+    }
+    p {
+      margin:0; padding:0;
+      font-weight:300;
+      font-size:11pt;
+      color:#777;
+    }
+  }
+}

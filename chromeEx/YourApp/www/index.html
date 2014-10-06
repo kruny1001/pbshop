@@ -6,17 +6,20 @@
     <link rel="stylesheet" type="text/css" href="assets/animme.css" />
     <link rel="stylesheet" type="text/css" href="assets/fonts.css" />
     <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/testStyle.css" />
     <base target="_blank">
 </head>
 
 <body class="appBody">
 <br><br>
-<div ng-controller="TabCtrl" style="margin: 5px 5px 5px 5px">
+<div ng-controller="TabCtrl" style="margin: 5px 5px 5px 5px; font-size:small">
     <ul class="nav nav-pills" role="tablist">
-        <li ng-repeat="tab in tabs" my-change ng-class="{active: tab.class}"><a ng-click="directToUrl(this)">{{tab.title}}</a></li>
+        <li class="tab-nav" ng-repeat="tab in tabs" my-change ng-class="{active: tab.class}"><a ng-click="directToUrl(this)">{{tab.title}}</a></li>
     </ul>
     <div ng-view></div>
 </div>
+
+<div ng-controller="menuCtrl"></div>
 
 <div data-ng-controller="mainCtrl" id="top-titlebar" class="top-titlebar" style="background-color: rgb(122, 124, 124);">
     <div class="top-titlebar-icon">
@@ -29,6 +32,7 @@
 
 <script src="public/lib/jquery/dist/jquery.min.js"></script>
 <script src="public/lib/angular/angular.min.js"></script>
+<script src="public/lib/angular-touch/angular-touch.min.js"></script>
 <script src="public/lib/angular-route/angular-route.min.js"></script>
 <script src="public/lib/angular-resource/angular-resource.min.js"></script>
 <script src="public/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
@@ -43,7 +47,6 @@
 <script src="public/lib/gsap/src/minified/TweenMax.min.js"></script>
 <script src="public/lib/gsap/src/minified/TweenLite.min.js"></script>
 
-
     <script src="js/util.js"></script>
     <script src="js/dnd.js"></script>
     <script src="js/upload.js"></script>
@@ -55,7 +58,8 @@
     <script src="js/identity.js"></script>
     <script src="js/gdrive.js"></script>
     <script src="js/keyboardEventModule.js"></script>
-
+    <script src="js/selectAnni.client.directive.js"></script>
+    <script src="js/menu.client.directive.js"></script>
 
 </body>
 </html>
