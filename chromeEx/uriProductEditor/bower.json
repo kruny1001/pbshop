@@ -1,0 +1,32 @@
+{
+  "name": "urimium",
+  "version": "0.0.1",
+  "homepage": "http://kevangular.herokuapp.com",
+  "authors": [
+    "kruny1001 <kruny1001@gmail.com>"
+  ],
+  "description": "urimium shop",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "ilbe"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.11.2",
+    "angular-route": "~1.2.25",
+    "angular-resource": "~1.2.25",
+    "jquery": "~2.1.1",
+    "gsap": "~1.13.2"
+  }
+}

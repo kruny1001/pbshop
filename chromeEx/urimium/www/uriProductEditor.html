@@ -1,0 +1,61 @@
+<html ng-app="productEditor" ng-csp="">
+<head>
+    <meta charset="utf-8" />
+    <title>Urimium Editor</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/animme.css" />
+    <link rel="stylesheet" type="text/css" href="assets/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
+    <base target="_blank">
+</head>
+
+<body class="appBody">
+<br><br>
+<div ng-controller="TabCtrl" style="margin: 5px 5px 5px 5px">
+    <ul class="nav nav-pills" role="tablist">
+        <li ng-repeat="tab in tabs" my-change ng-class="{active: tab.class}"><a ng-click="directToUrl(this)">{{tab.title}}</a></li>
+    </ul>
+    <div ng-view></div>
+</div>
+
+<div data-ng-controller="mainCtrl" id="top-titlebar" class="top-titlebar" style="background-color: rgb(122, 124, 124);">
+    <div class="top-titlebar-icon">
+        <img id="top-titlebaricon" src="top-titlebar.png">
+    </div>
+    <div class="top-titlebar-text">Urimium Editor</div>
+    <div class="top-titlebar-close-button" ng-click="closeWindow()"><img id="top-titlebar-close-button" src="button_close.png"></div>
+    <div class="top-titlebar-divider"></div>
+</div>
+
+<script src="public/lib/jquery/dist/jquery.min.js"></script>
+<script src="public/lib/angular/angular.min.js"></script>
+<script src="public/lib/angular-route/angular-route.min.js"></script>
+<script src="public/lib/angular-resource/angular-resource.min.js"></script>
+<script src="public/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="public/lib/gsap/src/minified/TweenMax.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/CSSPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/BezierPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/ColorPropsPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/TextPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/easing/EasePack.min.js"></script>
+<script src="public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
+<script src="public/lib/gsap/src/minified/TweenMax.min.js"></script>
+<script src="public/lib/gsap/src/minified/TweenLite.min.js"></script>
+
+
+    <script src="js/util.js"></script>
+    <script src="js/dnd.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/gdocs.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/app2.js"></script>
+    <script src="js/anniFramework.js"></script>
+    <script src="js/identity.js"></script>
+    <script src="js/gdrive.js"></script>
+    <script src="js/keyboardEventModule.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.your.company.uriProductEditor" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>uri Product Editor</name>
+    <description>Product Editor</description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">Author name and email</author>
+    <content src="plugins/org.chromium.bootstrap/chromeapp.html" />
+    <access origin="https://accounts.google.com/*" />
+    <access origin="https://www.googleapis.com/*" />
+    <access origin="http://*/*" />
+    <access origin="https://kevangular.herokuapp.com/*" />
+    <access origin="https://docs.google.com/*" />
+    <access origin="https://docs.googleusercontent.com/*" />
+    <access origin="https://spreadsheets.google.com/*" />
+    <access origin="https://ssl.gstatic.com/*" />
+    <access origin="https://www.googleapis.com/*" />
+</widget>
