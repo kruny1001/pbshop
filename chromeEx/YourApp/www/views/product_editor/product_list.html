@@ -1,0 +1,11 @@
+
+<div data-ng-controller="ProductListCtrl">
+    <div class="home-product-title">상품 페이지</div>
+    <div class="container">
+        <div class="home-product-well home-product-title" ng-repeat="product in products" home-select-anni>
+            <h4>{{product.name}}</h4>
+            <h4>{{product.price}}원</h4>
+            <h4>{{product.description}}</h4>
+        </div>
+    </div>
+</div>

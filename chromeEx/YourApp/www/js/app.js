@@ -19,7 +19,7 @@ var loadImage = function(uri, callback) {
 var body = '';
 var productEditor = angular.module('productEditor',
     ['ngRoute', 'ngResource', 'ui.bootstrap',
-        'gDriveApp', 'keyBoardModule', 'ngTouch']);
+        'gDriveApp', 'keyBoardModule', 'ngAnimate']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',
@@ -36,10 +36,9 @@ productEditor.config( [
             .when('/', {
             templateUrl: 'views/product_editor/product_home.html'
             })
-            .when('/champ/:id', {
-                templateUrl: 'views/product_editor/champ.html',
-                controller: 'ChampCtrl',
-                controllerAs: 'champ'
+            .when('/products/:id', {
+                templateUrl: 'views/product_editor/product_list.html',
+                controller: 'ProductListCtrl'
             })
             .when('/setting', {
                 templateUrl: 'views/product_editor/product_setting.html',
@@ -146,11 +145,9 @@ productEditor.controller('settingCtrl', function($scope){
     }
 });
 
-productEditor.controller('ChampCtrl', function($scope, $http, $routeParams){
-    $scope.title = "Loading...";
-
-    $http.get('http://kevangular.herokuapp.com/banners', {responseType: 'json'}).success(function(result) {
-        $scope.ads = result;
+productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams){
+    $http.get('http://kevangular.herokuapp.com/products/list/'+ $routeParams.id, {responseType: 'json'}).success(function(result) {
+        $scope.products = result;
     });
 });
 
@@ -162,11 +159,14 @@ productEditor.controller('mainCtrl', function($scope, $window, $http){
         $scope.products = result;
     });
     */
+    $scope.active = false;
+
     $scope.todos = [];
     $scope.products = [
         {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"5424791b254f310800385bfd","__v":0,"bannerTag":"","created":"2014-09-25T20:20:43.578Z","name":"가구", color:"blue"},
         {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"542478fb254f310800385bfc","__v":0,"bannerTag":"","created":"2014-09-25T20:20:11.322Z","name":"사과"},
-        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"명이나물"}];
+        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"명이나물"},
+        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"식당"}];
     $scope.closeWindow = function(){
         $window.close();
     }
