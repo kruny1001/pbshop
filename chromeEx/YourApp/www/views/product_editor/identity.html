@@ -1,6 +1,9 @@
 <div data-ng-controller="IdentityCtrl" data-ng-init="googlePlusUserLoader.onload()">
     <div class="header">
-        <h1>Identity API</h1>
+        <div class="home-product-title">
+            Identity API
+        </div>
+        <div class="links">(experimental)</div>
         <div class="links">
             Learn more:
             <a target="_blank" href="http://developer.chrome.com/apps/app_identity.html">API docs</a>
@@ -9,11 +12,11 @@
         <hr>
     </div>
     <div class="flows">
-        <h2>OAuth on Google properties</h2>
+        <h5>OAuth on Google properties</h5>
         <div class="flow">
             <button log-in id="signin">Sign in</button>
-            <button id="getxhr" disabled>Get personal data</button>
-            <button id="revoke" disabled>Revoke token</button>
+            <button id="getxhr">Get personal data</button>
+            <button id="revoke">Revoke token</button>
             <div id="user_info"></div>
         </div>
     </div>

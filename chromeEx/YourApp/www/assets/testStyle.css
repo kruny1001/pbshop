@@ -24,3 +24,9 @@
       font-weight: 300;
       font-size: 11pt;
       color: #777; }
+
+.home-back-button {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  opacity: 0.6; }

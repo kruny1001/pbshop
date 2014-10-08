@@ -4,18 +4,6 @@
 
 'use strict';
 
-/*
-var loadImage = function(uri, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = function() {
-        //writeFile(xhr.response);
-        callback(window.URL.createObjectURL(xhr.response), uri);
-    }
-    xhr.open('GET', uri, true);
-    xhr.send();
-}
-*/
 var body = '';
 var productEditor = angular.module('productEditor',
     ['ngRoute', 'ngResource', 'ui.bootstrap',
@@ -93,25 +81,37 @@ productEditor.directive('myChange', function() {
     };
 });
 
-productEditor.controller('TabCtrl', function($scope, $location){
+productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $location, $window){
 
     $scope.tabs = [
         { title:'Home', url:'/', content:'Dynamic content 1', class:true },
         { title:'Editor', url:'/editor', content:'Dynamic content 2'},
         { title:'Settings', url:'/setting', content:'Dynamic content 2'},
         //{ title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'Register', url:'/register', content:'Dynamic content 2'}
-
+        { title:'Register', url:'/register', content:'Dynamic content 2'},
+        { title:'Identity', url:'/identity', content:'Dynamic content 2'}
         /* TODO: experimental Implementation
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
         { title:'GDrive', url:'/gdoc', content:'Dynamic content 2'}
         */
     ];
+    $scope.history =[];
 
     $scope.directToUrl = function(target){
         $location.path(target.tab.url);
     }
 
+    $rootScope.$on("$routeChangeSuccess",
+        function (event, current, previous, rejection) {
+            //console.log($scope, $rootScope, $route, $location);
+            $scope.history.push($location.path());
+        });
+
+    $scope.backButton = function(){
+        var prevPath = $scope.history[$scope.history.length-2];
+        $location.path(prevPath);
+        //$window.history.back();
+    }
     //$location.path('/editor');
 });
 
@@ -174,7 +174,7 @@ productEditor.controller('mainCtrl', function($scope, $window, $http){
     var todos = [{uri:'http://placekitten.com/600/400'}];
     $scope.loadImages = function() {
             $http.get(todos[0].uri, {responseType: 'blob'}).success(function(blob) {
-                console.log('Fetched icon via XHR');
+                //console.log('Fetched icon via XHR');
                 todos[0].uri = window.URL.createObjectURL(blob);
                 $scope.todos.push(todos[0]);
                 //console.log(todos[0]);
@@ -196,32 +196,32 @@ productEditor.controller('productEditorCtrl', function($scope, $window, $documen
 
     // Bind two callback on a
     keyboardManager.bind('a', function() {
-        console.log('Callback a - 00');
+        //console.log('Callback a - 00');
     });
     keyboardManager.bind('a', function() {
-        console.log('Callback a - 01');
+        //console.log('Callback a - 01');
     });
     // Bind ctrl+a
     keyboardManager.bind('shift+space', function() {
-        console.log('Callback shift+space');
+        //console.log('Callback shift+space');
         yLocation = yLocation + 100;
         var doc = document.documentElement;
         if(yLocation > doc.scrollHeight) yLocation=doc.scrollHeight;
         TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
-        console.log(yLocation);
+        //console.log(yLocation);
     });
     // Bind ctrl+shift+d
     keyboardManager.bind('alt+shift', function() {
-        console.log('Callback all+shift');
+        //console.log('Callback all+shift');
         yLocation = yLocation - 100;
         var doc = document.documentElement;
         if(yLocation < 0) yLocation=0;
         TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
-        console.log(yLocation);
+        //console.log(yLocation);
     });
     // Bind z and disabled input,textarea
     keyboardManager.bind('z', function() {
-        console.log('Callback z');
+        //console.log('Callback z');
     }, {
         'inputDisabled': true
     });
@@ -242,13 +242,13 @@ productEditor.directive('framesAnni', function(){
             var element3 = element.find('#fRun');
 
             element1.bind('click', function(){
-                console.log('create clicked');
+                //console.log('create clicked');
             });
             element2.bind('click', function(){
-                console.log('add clicked');
+                //console.log('add clicked');
             });
             element3.bind('click', function(){
-                console.log('run clicked');
+                //console.log('run clicked');
             });
         }
     }
