@@ -207,6 +207,11 @@ div#inner-content {
     font-size: xx-large;
     text-align: center;
 }
+.home-menu-text {
+    font-family: 'jejuhallasan', serif;
+    font-size: small;
+    text-align: center;
+}
 
 .home-product-well {
     min-height:20px;

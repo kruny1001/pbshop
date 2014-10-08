@@ -1,10 +1,11 @@
 <div data-ng-controller="ProductListCtrl">
     <div class="home-product-title">상품 페이지</div>
-    <div class="container">
-        <div class="home-product-well home-product-title" ng-repeat="product in products" home-select-anni>
-            <h4>{{product.name}}</h4>
-            <h4>{{product.price}}원</h4>
-            <h4>{{product.description}}</h4>
+    <section class="posts" ng-repeat="product in products">
+        <div class="post-preview home-product-title">
+            <img class="photo" data-ng-src="{{product.mainimg}}"/>
+            <h3>{{product.name}}</h3>
+            <h5>{{product.price}}원</h5>
+            <p>{{product.description}}</p>
         </div>
-    </div>
+    </section>
 </div>

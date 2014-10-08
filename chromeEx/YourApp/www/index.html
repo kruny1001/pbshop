@@ -14,14 +14,22 @@
 <br><br>
 
 <div ng-controller="TabCtrl" style="margin: 5px 5px 5px 5px; font-size:small">
+
     <ul class="nav nav-pills" role="tablist">
-        <li class="tab-nav" ng-repeat="tab in tabs" my-change ng-class="{active: tab.class}"><a ng-click="directToUrl(this)">{{tab.title}}</a></li>
+        <li class="tab-nav" ng-repeat="tab in tabs" my-change ng-class="{active: tab.class}">
+            <a class="home-menu-text" ng-click="directToUrl(this)">{{tab.title}}</a>
+        </li>
     </ul>
+
+
     <div ng-view></div>
 
     <!-- back button-->
-    <button class="btn btn-danger home-back-button" type="button" value="Back" ng-click="backButton()">
+    <button class="btn btn-danger home-back-button home-menu-text" type="button" ng-click="backButton()">
+        <!--
         <span class="glyphicon glyphicon-circle-arrow-left"></span>
+        -->
+        뒤로
     </button>
 </div>
 
@@ -31,7 +39,7 @@
     <div class="top-titlebar-icon">
         <img id="top-titlebaricon" src="top-titlebar.png">
     </div>
-    <div class="top-titlebar-text">Urimium Editor</div>
+    <div class="top-titlebar-text">Urimium Market</div>
     <div class="top-titlebar-close-button" ng-click="closeWindow()"><img id="top-titlebar-close-button" src="button_close.png"></div>
     <div class="top-titlebar-divider"></div>
 </div>

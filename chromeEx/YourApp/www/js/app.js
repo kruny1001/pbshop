@@ -70,7 +70,6 @@ productEditor.factory('SelectChamp', ['$resource', function($resource) {
 productEditor.directive('myChange', function() {
     return function(scope, element) {
         element.bind('click', function() {
-            //console.log('click on ',element);
             var list = element[0].parentElement.children
             angular.forEach(list, function(value){
                 var allElem = angular.element(value);
@@ -84,12 +83,12 @@ productEditor.directive('myChange', function() {
 productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $location, $window){
 
     $scope.tabs = [
-        { title:'Home', url:'/', content:'Dynamic content 1', class:true },
-        { title:'Editor', url:'/editor', content:'Dynamic content 2'},
-        { title:'Settings', url:'/setting', content:'Dynamic content 2'},
+        { title:'홈', url:'/', content:'Dynamic content 1', class:true },
+        { title:'에디터', url:'/editor', content:'Dynamic content 2'},
+        { title:'세팅', url:'/setting', content:'Dynamic content 2'},
         //{ title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'Register', url:'/register', content:'Dynamic content 2'},
-        { title:'Identity', url:'/identity', content:'Dynamic content 2'}
+        { title:'로그인', url:'/register', content:'Dynamic content 2'},
+        //{ title:'Identity', url:'/identity', content:'Dynamic content 2'}
         /* TODO: experimental Implementation
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
         { title:'GDrive', url:'/gdoc', content:'Dynamic content 2'}
@@ -146,9 +145,22 @@ productEditor.controller('settingCtrl', function($scope){
 });
 
 productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams){
+    $scope.products = [];
+    var results = [];
     $http.get('http://kevangular.herokuapp.com/products/list/'+ $routeParams.id, {responseType: 'json'}).success(function(result) {
-        $scope.products = result;
+        results = result;
+        angular.forEach(results, function(value, key){
+            $scope.loadImages(value);
+        });
     });
+
+    $scope.loadImages = function(product) {
+        $http.get('http://kevangular.herokuapp.com/' + product.mainimg, {responseType: 'blob'}).success(function(blob) {
+            //console.log('Fetched icon via XHR');
+            product.mainimg = window.URL.createObjectURL(blob);
+            $scope.products.push(product);
+        });
+    };
 });
 
 productEditor.controller('mainCtrl', function($scope, $window, $http){
