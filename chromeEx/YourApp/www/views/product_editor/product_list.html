@@ -1,4 +1,9 @@
 <div data-ng-controller="ProductListCtrl">
+    <div class="debug-mode">
+        view: product_list.html<br/>
+        ctrl: {{controllerName}}
+    </div>
+
     <div class="home-product-title">상품 페이지</div>
     <section class="posts" ng-repeat="product in products">
         <div class="post-preview home-product-title">

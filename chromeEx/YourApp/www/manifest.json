@@ -24,6 +24,8 @@
         }
     },
     "permissions": [
+        "notifications",
+        "alarms",
         "identity",
         "storage",
         "webview",

@@ -1,5 +1,17 @@
 
 <div data-ng-controller="productEditorCtrl" ng-init="init()">
+    <div class="debug-mode">
+        view: product_editor.html<br/>
+        ctrl: {{controllerName}}
+    </div>
+
+    <div class="home-box">
+        <div ng-repeat="brand in brands"
+             class="home-product-well home-product-title" home-select-anni>
+            {{brand.name}}
+        </div>
+    </div>
+
     <!--
     <h3 id="title">Editor Page</h3>
     <frames-anni>

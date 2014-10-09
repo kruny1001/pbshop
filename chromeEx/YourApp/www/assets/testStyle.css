@@ -30,3 +30,11 @@
   left: 5px;
   bottom: 5px;
   opacity: 0.6; }
+
+.debug-mode {
+  font-size: 10px;
+  color: blue;
+  top: 32px;
+  right: 1px;
+  position: absolute;
+  -webkit-app-region: drag; }

@@ -7,7 +7,7 @@
 var body = '';
 var productEditor = angular.module('productEditor',
     ['ngRoute', 'ngResource', 'ui.bootstrap',
-        'gDriveApp', 'keyBoardModule', 'ngAnimate']);
+        'gDriveApp', 'keyBoardModule', 'ngAnimate', 'product.services']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',
@@ -22,31 +22,31 @@ productEditor.config( [
 
         $routeProvider
             .when('/', {
-            templateUrl: 'views/product_editor/product_home.html'
+                templateUrl: 'views/product_editor/product_home.html'
             })
             .when('/products/:id', {
                 templateUrl: 'views/product_editor/product_list.html',
-                controller: 'ProductListCtrl'
+                //controller: 'ProductListCtrl'
             })
             .when('/setting', {
                 templateUrl: 'views/product_editor/product_setting.html',
-                controller: 'settingCtrl'
+                //controller: 'settingCtrl'
             })
             .when('/editor', {
                 templateUrl: 'views/product_editor/product_editor.html',
-                controller: 'productEditorCtrl'
+                //controller: 'productEditorCtrl'
             })
             .when('/register', {
                 templateUrl: 'views/product_editor/register.html',
-                controller: 'registerFormCtrl'
+                //controller: 'registerFormCtrl'
             })
             .when('/identity', {
                 templateUrl: 'views/product_editor/identity.html',
-                controller: 'IdentityCtrl'
+                //controller: 'IdentityCtrl'
             })
             .when('/gdoc', {
                 templateUrl: 'views/product_editor/gdrive.html',
-                controller: 'DocsController'
+                //controller: 'DocsController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -82,12 +82,17 @@ productEditor.directive('myChange', function() {
 
 productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $location, $window){
 
+    // config setting
+    $scope.controllerName = 'TabCtrl';
+    //
+
     $scope.tabs = [
-        { title:'홈', url:'/', content:'Dynamic content 1', class:true },
-        { title:'에디터', url:'/editor', content:'Dynamic content 2'},
-        { title:'세팅', url:'/setting', content:'Dynamic content 2'},
+        { title:'마켓', url:'/', class:true },
+        { title:'카테고리', url:'/editor'},
+        { title:'세팅', url:'/setting'},
+        { title:'리뷰', url:'/review'},
         //{ title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'로그인', url:'/register', content:'Dynamic content 2'},
+        { title:'로그인', url:'/register'}
         //{ title:'Identity', url:'/identity', content:'Dynamic content 2'}
         /* TODO: experimental Implementation
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
@@ -115,6 +120,11 @@ productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $locati
 });
 
 productEditor.controller('settingCtrl', function($scope){
+
+    // config setting
+    $scope.controllerName = 'settingCtrl';
+    //
+
     function isLongEnough (pwd) {
         return pwd.length > 4;
     }
@@ -144,12 +154,16 @@ productEditor.controller('settingCtrl', function($scope){
     }
 });
 
-productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams){
+productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams, ProductServiceDetailEntry){
+    // config setting
+    $scope.controllerName = 'ProductListCtrl';
     $scope.products = [];
-    var results = [];
-    $http.get('http://kevangular.herokuapp.com/products/list/'+ $routeParams.id, {responseType: 'json'}).success(function(result) {
-        results = result;
-        angular.forEach(results, function(value, key){
+
+    var entries = ProductServiceDetailEntry.list({id:$routeParams.id}, function(){
+        // this should not be in this moment because of the image need download separately
+        //$scope.products = entry;
+
+        angular.forEach(entries, function(value, key){
             $scope.loadImages(value);
         });
     });
@@ -161,40 +175,111 @@ productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams
             $scope.products.push(product);
         });
     };
+
 });
 
-productEditor.controller('mainCtrl', function($scope, $window, $http){
+productEditor.controller('mainCtrl', function($scope, $window, ProductServiceEntry){
+
+    //config setting
+    $scope.controllerName = 'mainCtrl';
+
     /*
-    TODO: this is the official implementation
-    call actual API from kevangular.herokuapp.com
+    //TODO: this is the official implementation
+    //call actual API from kevangular.herokuapp.com
     $http.get('http://kevangular.herokuapp.com/banners', {responseType: 'json'}).success(function(result) {
         $scope.products = result;
     });
     */
+
+    var entries = ProductServiceEntry.query(function(){
+        $scope.products = entries;
+    });
+
+    $scope.id = '543605bc5a70b30800277c6e';
+    var entry = ProductServiceEntry.get({id:$scope.id}, function(){
+    });
+
     $scope.active = false;
 
-    $scope.todos = [];
-    $scope.products = [
-        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"5424791b254f310800385bfd","__v":0,"bannerTag":"","created":"2014-09-25T20:20:43.578Z","name":"가구", color:"blue"},
-        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"542478fb254f310800385bfc","__v":0,"bannerTag":"","created":"2014-09-25T20:20:11.322Z","name":"사과"},
-        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"명이나물"},
-        {"user":{"displayName":"kevin s","_id":"53bc47cd10a5bf0800bf940f"},"_id":"541b108a72b7bc0800d9c5b1","__v":0,"bannerTag":"<gan-jab></gan-jab><ddak banner-info={{banner._id}}></ddak>","created":"2014-09-18T17:04:10.811Z","name":"식당"}];
     $scope.closeWindow = function(){
         $window.close();
     }
 
-    var todos = [{uri:'http://placekitten.com/600/400'}];
-    $scope.loadImages = function() {
-            $http.get(todos[0].uri, {responseType: 'blob'}).success(function(blob) {
-                //console.log('Fetched icon via XHR');
-                todos[0].uri = window.URL.createObjectURL(blob);
-                $scope.todos.push(todos[0]);
-                //console.log(todos[0]);
-            });
+    // Test alarm --------------------------
+    $scope.alarmTest = function (){
+        chrome.alarms.create("My First Alarm",{delayInMinutes:0.25,periodInMinutes:0.125 });
+        chrome.alarms.get("My First Alarm",function(alarm){
+            console.log("Scheduled Time  "+ alarm.scheduledTime);
+            console.log("Alarm Name "+alarm.name);
+        });
+        chrome.alarms.getAll(function(alarms){
+            for(i=0;i<alarms.length;i++){
+                console.log("Scheduled Time  "+alarms[0].scheduledTime);
+                console.log("Alarm Name "+alarms[0].name);
+            }
+        });
+        chrome.alarms.onAlarm.addListener(function(alarm){
+            console.log("Alarm Elapsed Name "+alarm.name);
+            console.log("This is Over");
+            //chrome.alarms.clear("My First Alarm");
+            console.log(" Alarms Cleared");
+
+        });
+        //chrome.alarms.clear("My First Alarm");
+    }
+
+    var options = {
+        type: "basic",
+        title: "Primary Title",
+        message: "Primary message to display",
+        iconUrl: "/assets/icons/icon48.png"
     };
-    $scope.loadImages();
+    var options2 = {
+        type: "list",
+        title: "Primary Title",
+        message: "Primary message to display",
+        iconUrl: "/assets/icons/icon48.png",
+        items: [{ title: "Item1", message: "This is item 1."},
+            { title: "Item2", message: "This is item 2."},
+            { title: "Item3", message: "This is item 3."}]
+    }
+    var options3 = {
+        type: "progress",
+        title: "Primary Title",
+        message: "Primary message to display",
+        iconUrl: "/assets/icons/icon48.png",
+        progress: 72
+    }
+
+
+
+    function crCallback(notID) {
+        console.log("Succesfully created " + notID + " notification");
+    }
+    chrome.notifications.create("id1", options, crCallback);
+    chrome.notifications.create("id2", options2, crCallback);
+    chrome.notifications.create("id3", options3, crCallback);
+    //chrome.notifications.create("id4", options, crCallback);
+
+    window.onload=$scope.alarmTest;
+
+
+
+    // END Test alarm ----------------------
+
 });
 productEditor.controller('productEditorCtrl', function($scope, $window, $document, $location, keyboardManager){
+
+    //config setting
+    $scope.controllerName = 'productEditorCtrl';
+
+    $scope.brands = [
+        {name:'사과게이',author:'abc1',path:''},
+        {name:'화덕게이',author:'abc2',path:''},
+        {name:'가구게이',author:'abc3',path:''},
+        {name:'명이게이',author:'abc4',path:''}
+    ];
+
     $scope.title='homeView';
     $scope.t = function(location_name){
         $location.path('/'+location_name);
