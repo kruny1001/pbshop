@@ -4,10 +4,9 @@
 
 'use strict';
 
-var body = '';
-var productEditor = angular.module('productEditor',
-    ['ngRoute', 'ngResource', 'ui.bootstrap',
-        'gDriveApp', 'keyBoardModule', 'ngAnimate', 'product.services']);
+//var body = '';
+var productEditor = angular.module('productEditor',['ngRoute', 'ngResource', 'ui.bootstrap',
+        'gDriveApp', 'keyBoardModule', 'ngAnimate', 'product.services', 'payment','ilbeReview']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',
@@ -25,27 +24,30 @@ productEditor.config( [
                 templateUrl: 'views/product_editor/product_home.html'
             })
             .when('/products/:id', {
-                templateUrl: 'views/product_editor/product_list.html',
+                templateUrl: 'views/product_editor/product_list.html'
                 //controller: 'ProductListCtrl'
             })
+            .when('/detail/:productId/:id', {
+                templateUrl: 'views/product_editor/product_detail.html'
+            })
             .when('/setting', {
-                templateUrl: 'views/product_editor/product_setting.html',
+                templateUrl: 'views/product_editor/product_setting.html'
                 //controller: 'settingCtrl'
             })
             .when('/editor', {
-                templateUrl: 'views/product_editor/product_editor.html',
+                templateUrl: 'views/product_editor/product_editor.html'
                 //controller: 'productEditorCtrl'
             })
-            .when('/register', {
-                templateUrl: 'views/product_editor/register.html',
+            .when('/login', {
+                templateUrl: 'views/product_editor/login.html'
                 //controller: 'registerFormCtrl'
             })
             .when('/identity', {
-                templateUrl: 'views/product_editor/identity.html',
+                templateUrl: 'views/product_editor/identity.html'
                 //controller: 'IdentityCtrl'
             })
             .when('/gdoc', {
-                templateUrl: 'views/product_editor/gdrive.html',
+                templateUrl: 'views/product_editor/gdrive.html'
                 //controller: 'DocsController'
             })
             .otherwise({
@@ -56,7 +58,9 @@ productEditor.config( [
 
 //reference
 //http://fdietz.github.io/recipes-with-angular-js/consuming-external-services/consuming-restful-apis.html
-productEditor.factory('SelectChamp', ['$resource', function($resource) {
+/*
+    Example of $resource
+    productEditor.factory('SelectChamp', ['$resource', function($resource) {
     return $resource('http://:url/:action',
         {
             url:'kevangular.herokuapp.com',
@@ -66,33 +70,23 @@ productEditor.factory('SelectChamp', ['$resource', function($resource) {
             'get': { method:'JSONP' }
         });
 }]);
-
-productEditor.directive('myChange', function() {
-    return function(scope, element) {
-        element.bind('click', function() {
-            var list = element[0].parentElement.children
-            angular.forEach(list, function(value){
-                var allElem = angular.element(value);
-                allElem.removeClass('active');
-            })
-            element.addClass('active');
-        });
-    };
-});
+*/
 
 productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $location, $window){
 
-    // config setting
+    // config setting ----------------------------
     $scope.controllerName = 'TabCtrl';
-    //
+    // End config setting ------------------------
 
     $scope.tabs = [
         { title:'마켓', url:'/', class:true },
         { title:'카테고리', url:'/editor'},
-        { title:'세팅', url:'/setting'},
-        { title:'리뷰', url:'/review'},
+        //{ title:'세팅', url:'/setting'},
+        //{ title:'리뷰', url:'/review'},
         //{ title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'로그인', url:'/register'}
+        { title:'로그인', url:'/login'},
+        { title:'Identity', url:'/identity', content:'Dynamic content 2'},
+        { title:'GDrive', url:'/gdoc', content:'Dynamic content 2'}
         //{ title:'Identity', url:'/identity', content:'Dynamic content 2'}
         /* TODO: experimental Implementation
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
@@ -154,12 +148,19 @@ productEditor.controller('settingCtrl', function($scope){
     }
 });
 
-productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams, ProductServiceDetailEntry){
+// From Home view, click banner
+productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams, ProductServiceDetailEntry, ProductServiceDetailListEntry){
     // config setting
     $scope.controllerName = 'ProductListCtrl';
     $scope.products = [];
+    $scope.detailProduct = {};
+    var entry = ProductServiceDetailEntry.get({id:$routeParams.id}, function(){
+        $scope.detailProduct = entry;
+        console.log(entry);
+    });
 
-    var entries = ProductServiceDetailEntry.list({id:$routeParams.id}, function(){
+    // Assign entries
+    var entries = ProductServiceDetailListEntry.list({id:$routeParams.id}, function(){
         // this should not be in this moment because of the image need download separately
         //$scope.products = entry;
 
@@ -176,8 +177,14 @@ productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams
         });
     };
 
+    $scope.visitDetailPage = function() {
+
+    };
+
+
 });
 
+// Home route(/)
 productEditor.controller('mainCtrl', function($scope, $window, ProductServiceEntry){
 
     //config setting
@@ -191,21 +198,27 @@ productEditor.controller('mainCtrl', function($scope, $window, ProductServiceEnt
     });
     */
 
+    // query for app of product records
     var entries = ProductServiceEntry.query(function(){
         $scope.products = entries;
     });
 
+    // Test query by ID ---------------------------------------
+    /*
+    test for query by ID
     $scope.id = '543605bc5a70b30800277c6e';
     var entry = ProductServiceEntry.get({id:$scope.id}, function(){
     });
+    */
+    // END Test Query by ID  ----------------------
 
     $scope.active = false;
-
     $scope.closeWindow = function(){
         $window.close();
     }
 
     // Test alarm --------------------------
+    /*
     $scope.alarmTest = function (){
         chrome.alarms.create("My First Alarm",{delayInMinutes:0.25,periodInMinutes:0.125 });
         chrome.alarms.get("My First Alarm",function(alarm){
@@ -262,16 +275,43 @@ productEditor.controller('mainCtrl', function($scope, $window, ProductServiceEnt
     //chrome.notifications.create("id4", options, crCallback);
 
     window.onload=$scope.alarmTest;
-
-
-
+    */
     // END Test alarm ----------------------
 
+    // Google Wallet Test --------------------------------------------
+    // TODO: This portion of code should be replaced with other method
+    $scope.runDemoButton = function() {
+        google.payments.inapp.buy({
+            parameters: {},
+            jwt: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwODI0MzM2MjAwNzE3N" +
+                "DcwMDQ2NiIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" +
+                "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxNDEyOTQ3M" +
+                "zI3LCJleHAiOjE0MTMwMzM3MjcsInJlcXVlc3QiOnsiY3VycmV" +
+                "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIxMy4wMCIsIm5hbWUiO" +
+                "iJHb2xkIFN0YXIiLCJzZWxsZXJEYXRhIjoic29tZSBvcGFxdWU" +
+                "gZGF0YSIsImRlc2NyaXB0aW9uIjoiQSBzaGluaW5nIGJhZGdlI" +
+                "G9mIGRpc3RpbmN0aW9uIn19.mUUuyw6dZ0YT1qxKrcMRayE7_8" +
+                "D1E4En3u6hQRePmFc",
+            success: function() {
+                // Send GMS
+                window.alert('success')
+            },
+            failure: function() {
+                window.alert('failure')
+            }
+        })
+    };
+    // END Google Wallet Test  ---------------------------------------
 });
-productEditor.controller('productEditorCtrl', function($scope, $window, $document, $location, keyboardManager){
+
+//
+productEditor.controller('productEditorCtrl', function($scope, $window, $document, $location, keyboardManager, googleWallet){
 
     //config setting
     $scope.controllerName = 'productEditorCtrl';
+
+    //test
+    googleWallet.validate();
 
     $scope.brands = [
         {name:'사과게이',author:'abc1',path:''},
@@ -351,8 +391,7 @@ productEditor.directive('framesAnni', function(){
     }
 });
 
-
-
+//
 productEditor.directive('smoothButton', function(){
     var linker = function (scope, element, attrs) {
         var path=[{x:0, y:0}, {x:50, y:100}, {x:300, y:20}, {x:400, y:200}, {x:500, y:0}];

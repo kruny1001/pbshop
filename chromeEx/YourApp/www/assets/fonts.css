@@ -2,17 +2,17 @@
 
 @font-face {
     font-family: hanna;
-    src: url(BM-HANNA.ttf) format('truetype');
+    src: url(fonts/BM-HANNA.ttf) format('truetype');
 }
 
 @font-face {
     font-family: jejugothic;
-    src: url(JejuGothic-Regular.ttf) format('truetype');
+    src: url(fonts/JejuGothic-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: jejuhallasan;
-    src: url(JejuHallasan-Regular.ttf) format('truetype');
+    src: url(fonts/JejuHallasan-Regular.ttf) format('truetype');
 }
 
 .class1{color:red}

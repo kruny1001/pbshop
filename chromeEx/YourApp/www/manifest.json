@@ -1,6 +1,6 @@
 {
-    "name": "YourApp",
-    "description": "A Sample Chrome App",
+    "name": "Urimium",
+    "description": "Urimium is a platform to provide a e-commerce functionalities for a small buisiness",
     "manifest_version": 2,
     "minimum_chrome_version": "23",
     "version": "0.1.1",
@@ -24,6 +24,7 @@
         }
     },
     "permissions": [
+        "fileSystem",
         "notifications",
         "alarms",
         "identity",

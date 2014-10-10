@@ -9,3 +9,6 @@ app/tests/coverage/
 .idea/
 .env/
 test
+chromeEx/ilbeChromeExtension
+chromeEx/uriProductEditor
+chromeEx/DeliveryKorea

@@ -22,6 +22,27 @@ productEditor.directive('homeSelectAnni', function ($location, $http) {
     }
 });
 
+'use strict';
+productEditor.directive('productSelectDetail', function ($location, $http) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var redirectPath = function(productId, id) {
+                scope.$apply(function(){
+                    $location.path('/detail/'+productId+'/'+id);
+                });
+            }
+
+            element.bind('click', function(){
+                // It scare from 0.8 to 1
+                var id = element.scope().this.product._id;
+                var productId = element.scope().this.product.parentId;
+                TweenLite.from(element, 0.5, {scale:0.9, ease:Back.easeOut, onComplete:function(){redirectPath(productId, id)}});
+            });
+        }
+    }
+});
+
 
 productEditor.directive('menuItem', function () {
     var controller = function ($scope) {

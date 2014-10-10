@@ -4,12 +4,20 @@
 
 var productService = angular.module('product.services', []);
 
+//banner
 productService.factory('ProductServiceEntry', function($resource){
     return $resource('http://kevangular.herokuapp.com/banners/:id', {id: '@_id'}, {});
 });
 
-//http://kevangular.herokuapp.com/products/list/
+
+//product
 productService.factory('ProductServiceDetailEntry', function($resource){
+    return $resource('http://kevangular.herokuapp.com/products/:id', {id: '@_id'}, {});
+});
+
+//http://kevangular.herokuapp.com/products/list/
+//banner's product list
+productService.factory('ProductServiceDetailListEntry', function($resource){
     return $resource('http://kevangular.herokuapp.com/products/list/:id', {id: '@_id'}, {
         'list':  {
             method:'GET',
@@ -19,6 +27,7 @@ productService.factory('ProductServiceDetailEntry', function($resource){
     });
 });
 
+// Example how to use the service
 productService.controller('ProductTestCtrl', function($scope, ProductServiceEntry) {
     //get() returns a single entry
     var entry = ProductServiceEntry.get({id:$scope.id}, function(){

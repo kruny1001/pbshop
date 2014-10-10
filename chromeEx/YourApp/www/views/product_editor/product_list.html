@@ -4,9 +4,10 @@
         ctrl: {{controllerName}}
     </div>
 
+    <!-- TODO: title must be changed -->
     <div class="home-product-title">상품 페이지</div>
     <section class="posts" ng-repeat="product in products">
-        <div class="post-preview home-product-title">
+        <div class="post-preview home-product-title" product-select-detail>
             <img class="photo" data-ng-src="{{product.mainimg}}"/>
             <h3>{{product.name}}</h3>
             <h5>{{product.price}}원</h5>

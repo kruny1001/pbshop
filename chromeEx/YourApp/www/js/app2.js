@@ -59,3 +59,18 @@ productEditor.directive('logIn', function () {
     }
 });
 
+
+//
+productEditor.directive('myChange', function() {
+    return function(scope, element) {
+        element.bind('click', function() {
+            var list = element[0].parentElement.children
+            angular.forEach(list, function(value){
+                var allElem = angular.element(value);
+                allElem.removeClass('active');
+            })
+            element.addClass('active');
+        });
+    };
+});
+
