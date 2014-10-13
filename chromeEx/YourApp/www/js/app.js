@@ -155,8 +155,10 @@ productEditor.controller('ProductListCtrl', function($scope, $http, $routeParams
     $scope.products = [];
     $scope.detailProduct = {};
     var entry = ProductServiceDetailEntry.get({id:$routeParams.id}, function(){
-        $scope.detailProduct = entry;
-        console.log(entry);
+        $http.get('http://kevangular.herokuapp.com/' + entry.mainimg, {responseType: 'blob'}).success(function(blob) {
+            entry.mainimg = window.URL.createObjectURL(blob);
+            $scope.detailProduct = entry;
+        })
     });
 
     // Assign entries

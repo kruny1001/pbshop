@@ -38,8 +38,8 @@ angular.module('ilbeReview').controller('ilbeReviewCtrl', ['$scope', 'ilbeReview
             $scope.articles = $(data).find('#copy_layer_1').find('p, img');
             $scope.contents = $scope.articles.text();
             //$scope.articlesImg = $(data).find('#copy_layer_1').find('img');
-            console.log('articles', $scope.articles);
-            console.log($scope.articlesImg);
+            //console.log('articles', $scope.articles);
+            //console.log($scope.articlesImg);
         });
 
         console.log('mainCtrl-ilbeReview');

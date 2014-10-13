@@ -8,13 +8,15 @@
         <div class="post-preview home-product-title" product-select-detail>
             <img class="photo" data-ng-src="{{detailProduct.mainimg}}"/>
             <h3>{{detailProduct.name}}</h3>
-        </div>
 
-        <h5>{{detailProduct.price}}원</h5>
-        <p>{{detailProduct.description}}</p>
+
+            <h5>{{detailProduct.price}}원</h5>
+            <p>{{detailProduct.description}}</p>
+            <h5>Detail View</h5>
+            <button ng-click="runDemoButton()"><i class="fa fa-credit-card fa-lg"></i> Payment</button>
+        </div>
         <!-- TODO: Product options -->
         <!-- TODO: Product Payment Form -->
         <!-- TODO: Payment -->
-        {{products}}
     </section>
 </div>
