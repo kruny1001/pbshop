@@ -210,8 +210,8 @@
  * yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.
  *
  * ```js
- * //!annotate="YourApp" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.
- * var ngModule = angular.module('YourApp', ['ngAnimate']);
+ * //!annotate="OpenMarket" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.
+ * var ngModule = angular.module('OpenMarket', ['ngAnimate']);
  * ngModule.animation('.my-crazy-animation', function() {
  *   return {
  *     enter: function(element, done) {

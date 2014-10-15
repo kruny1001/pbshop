@@ -79,14 +79,16 @@ productEditor.controller('TabCtrl', function($rootScope, $route, $scope, $locati
     // End config setting ------------------------
 
     $scope.tabs = [
-        { title:'마켓', url:'/', class:true },
-        { title:'카테고리', url:'/editor'},
+        { title:'Market', url:'/', class:true },
+        { title:'Category', url:'/editor'},
         //{ title:'세팅', url:'/setting'},
         //{ title:'리뷰', url:'/review'},
         //{ title:'Settings', url:'/champ/1234', content:'Dynamic content 2'},
-        { title:'로그인', url:'/login'},
+        { title:'Login', url:'/login'}
+        /*
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
         { title:'GDrive', url:'/gdoc', content:'Dynamic content 2'}
+        */
         //{ title:'Identity', url:'/identity', content:'Dynamic content 2'}
         /* TODO: experimental Implementation
         { title:'Identity', url:'/identity', content:'Dynamic content 2'},
@@ -129,17 +131,13 @@ productEditor.controller('settingCtrl', function($scope){
 
     function checkPassword (value) {
         if (!value) return;
-
         $scope.reqs = [];
-
         if (!isLongEnough(value)) {
             $scope.reqs.push('Too short');
         }
-
         if (!hasNumbers(value)) {
             $scope.reqs.push('Must include numbers');
         }
-
         $scope.showReqs = $scope.reqs.length;
     }
 
@@ -307,64 +305,69 @@ productEditor.controller('mainCtrl', function($scope, $window, ProductServiceEnt
 });
 
 //
-productEditor.controller('productEditorCtrl', function($scope, $window, $document, $location, keyboardManager, googleWallet){
+productEditor.controller('productEditorCtrl',
+    ['$scope', '$window', '$document', '$location', 'keyboardManager', 'googleWallet',
+    function($scope, $window, $document, $location, keyboardManager, googleWallet){
 
-    //config setting
-    $scope.controllerName = 'productEditorCtrl';
+        //config setting
+        $scope.controllerName = 'productEditorCtrl';
 
-    //test
-    googleWallet.validate();
+        //test ----------------
+        googleWallet.validate();
+        googleWallet.generateJWT();
+        googleWallet.payment();
+        // END test ----------------
+        $scope.brands = [
+            {name:'사과게이',author:'abc1',path:''},
+            {name:'화덕게이',author:'abc2',path:''},
+            {name:'가구게이',author:'abc3',path:''},
+            {name:'명이게이',author:'abc4',path:''}
+        ];
 
-    $scope.brands = [
-        {name:'사과게이',author:'abc1',path:''},
-        {name:'화덕게이',author:'abc2',path:''},
-        {name:'가구게이',author:'abc3',path:''},
-        {name:'명이게이',author:'abc4',path:''}
-    ];
+        $scope.title='homeView';
+        $scope.t = function(location_name){
+            $location.path('/'+location_name);
+        }
+        var yLocation = 0;
 
-    $scope.title='homeView';
-    $scope.t = function(location_name){
-        $location.path('/'+location_name);
+        $scope.init = function(){
+            var title = angular.element('#title');
+            TweenLite.from(title, 0.5, {scaleX:0, scaleY:0});
+        }
+
+        // Bind two callback on a
+        keyboardManager.bind('a', function() {
+            //console.log('Callback a - 00');
+        });
+        keyboardManager.bind('a', function() {
+            //console.log('Callback a - 01');
+        });
+        // Bind ctrl+a
+        keyboardManager.bind('shift+space', function() {
+            //console.log('Callback shift+space');
+            yLocation = yLocation + 100;
+            var doc = document.documentElement;
+            if(yLocation > doc.scrollHeight) yLocation=doc.scrollHeight;
+            TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
+            //console.log(yLocation);
+        });
+        // Bind ctrl+shift+d
+        keyboardManager.bind('alt+shift', function() {
+            //console.log('Callback all+shift');
+            yLocation = yLocation - 100;
+            var doc = document.documentElement;
+            if(yLocation < 0) yLocation=0;
+            TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
+            //console.log(yLocation);
+        });
+        // Bind z and disabled input,textarea
+        keyboardManager.bind('z', function() {
+            //console.log('Callback z');
+        }, {
+            'inputDisabled': true
+        });
     }
-    var yLocation = 0;
-
-    $scope.init = function(){
-        var title = angular.element('#title');
-        TweenLite.from(title, 0.5, {scaleX:0, scaleY:0});
-    }
-
-    // Bind two callback on a
-    keyboardManager.bind('a', function() {
-        //console.log('Callback a - 00');
-    });
-    keyboardManager.bind('a', function() {
-        //console.log('Callback a - 01');
-    });
-    // Bind ctrl+a
-    keyboardManager.bind('shift+space', function() {
-        //console.log('Callback shift+space');
-        yLocation = yLocation + 100;
-        var doc = document.documentElement;
-        if(yLocation > doc.scrollHeight) yLocation=doc.scrollHeight;
-        TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
-        //console.log(yLocation);
-    });
-    // Bind ctrl+shift+d
-    keyboardManager.bind('alt+shift', function() {
-        //console.log('Callback all+shift');
-        yLocation = yLocation - 100;
-        var doc = document.documentElement;
-        if(yLocation < 0) yLocation=0;
-        TweenLite.to($window, 2, {scrollTo:{y: yLocation}, ease: Power2.easeOut});
-        //console.log(yLocation);
-    });
-    // Bind z and disabled input,textarea
-    keyboardManager.bind('z', function() {
-        //console.log('Callback z');
-    }, {
-        'inputDisabled': true
-    });
-});
+]);
 
 // Editor for GreenShock slide
 productEditor.directive('framesAnni', function(){

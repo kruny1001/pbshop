@@ -1,19 +1,55 @@
-PBShop_test
+#PBShop_test#
 
 [ ![Codeship Status for kruny1001/pbshop](https://www.codeship.io/projects/f178be40-e8db-0131-6f99-0e1215f8c699/status)](https://www.codeship.io/projects/26110)
 
 [![Build Status](https://travis-ci.org/meanjs/mean.svg?branch=master)](https://travis-ci.org/meanjs/mean)
 //[![Dependencies Status](https://david-dm.org/meanjs/mean.svg)](https://david-dm.org/meanjs/mean)
 
-History
-module userMgnt
-create user list directive
+##Purpose of this project##
+This project is for personal training for JavaScript stem technologies. 
 
-module cart
+###Front-Side###
+AngularJS
+SASS
 
-module gallery
-    gallery-grid directive
-        https://github.com/passy/angular-masonry
+###Back-End-Side###
+MongoDB
+Mongoose
+NodeJS
+Express
+
+##Screen shot##
+http://kevangular.herokuapp.com/#!/a-main
+
+###Desktop Version###
+![IMAGE ALT TEXT HERE](http://goo.gl/3OH7iy)
+
+###Mobile Version###
+![IMAGE ALT TEXT HERE](http://goo.gl/Qy7VOh)
+
+###Mobile###
+Chrome App
+
+Apache Codova 
+
+## RESTFUL API ##
+###List Banners Information### 
+http://kevangular.herokuapp.com/banners
+
+###Get Banner Information###
+http://kevangular.herokuapp.com/banners/:bannerId
+Example: 
+http://kevangular.herokuapp.com/banners/5424791b254f310800385bfd
+
+###List Product Information###
+http://kevangular.herokuapp.com/products
+
+###List Product Information Under a specific banner ###
+http://kevangular.herokuapp.com/products/list/:bannerId
+
+Example:
+http://kevangular.herokuapp.com/products/list/5424791b254f310800385bfd
+
 
 7_10
 =========

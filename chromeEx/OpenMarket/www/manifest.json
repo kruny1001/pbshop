@@ -34,7 +34,7 @@
         "<all_urls>"
     ],
     "oauth2": {
-        "client_id": "574563539488-5i8f8t7frgdc4k2uehatdiuha7mu5338.apps.googleusercontent.com",
+        "client_id": "574563539488-fimp15n88devcjuibblas56glhtej07u.apps.googleusercontent.com",
         "scopes": [
             "https://www.googleapis.com/auth/plus.login",
             "https://www.googleapis.com/auth/drive"

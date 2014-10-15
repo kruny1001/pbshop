@@ -15,7 +15,14 @@ paymentApp.factory('googleWallet', [
         return {
             validate: function(){
                 console.log('validation');
+            },
+            generateJWT: function(){
+                console.log('generateJWT');
+            },
+            payment: function(){
+                console.log('payment');
             }
+
         }
     }
 ]);
