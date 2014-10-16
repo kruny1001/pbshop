@@ -1,11 +1,14 @@
 <div data-ng-controller="ProductListCtrl">
+    <!-- Right Top cornere Debug Information-->
     <div class="debug-mode">
         view: product_list.html<br/>
         ctrl: {{controllerName}}
     </div>
 
-    <!-- TODO: title must be changed -->
+    <!-- TODO: title must be changed
     <div class="home-product-title">상품 페이지</div>
+    -->
+    <div>상품종류: {{products.length}}</div>
     <section class="posts" ng-repeat="product in products">
         <div class="post-preview home-product-title" product-select-detail>
             <img class="photo" data-ng-src="{{product.mainimg}}"/>

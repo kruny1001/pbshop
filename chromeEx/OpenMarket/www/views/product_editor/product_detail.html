@@ -1,3 +1,7 @@
+<!--
+Style Asset Info:
+TestStyle.scss
+-->
 <div ng-controller="ProductListCtrl">
     <div class="debug-mode">
         view: product_detail.html<br/>
@@ -5,16 +9,16 @@
     </div>
 
     <section class="posts">
-        <div class="post-preview home-product-title" product-select-detail>
+        <div class="post-preview home-product-title">
             <img class="photo" data-ng-src="{{detailProduct.mainimg}}"/>
             <h3>{{detailProduct.name}}</h3>
-
-
-            <h5>{{detailProduct.price}}원</h5>
+            <h5>상세정보</h5>
+            <h5>{{detailProduct.price}}원
+                <button class="btn btn-success btn-sm" ng-click="runDemoButton()"><i class="fa fa-credit-card fa-lg"></i> 구매하기</button>
+            </h5>
             <p>{{detailProduct.description}}</p>
-            <h5>Detail View</h5>
-            <button ng-click="runDemoButton()"><i class="fa fa-credit-card fa-lg"></i> Payment</button>
         </div>
+
         <!-- TODO: Product options -->
         <!-- TODO: Product Payment Form -->
         <!-- TODO: Payment -->

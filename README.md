@@ -9,46 +9,48 @@
 This project is for personal training for JavaScript stem technologies. 
 
 ###Front-Side###
-AngularJS
-SASS
+* AngularJS
+* SASS
+* GSAP
 
 ###Back-End-Side###
-MongoDB
-Mongoose
-NodeJS
-Express
+* MongoDB
+* Mongoose
+* NodeJS
+* Express
 
 ##Screen shot##
 http://kevangular.herokuapp.com/#!/a-main
 
 ###Desktop Version###
-![IMAGE ALT TEXT HERE](http://goo.gl/3OH7iy)
+![IMAGE ALT TEXT HERE](https://dl.dropboxusercontent.com/u/6542602/pbShop/2014-10-15_12-34-10.png)
 
 ###Mobile Version###
-![IMAGE ALT TEXT HERE](http://goo.gl/Qy7VOh)
+![IMAGE ALT TEXT HERE](https://dl.dropboxusercontent.com/u/6542602/pbShop/2014-10-15_12-37-08.png)
 
 ###Mobile###
-Chrome App
+Chrome App (Apache CODOVA), Android and IOS version
 
-Apache Codova 
+![IMG Mobile](https://dl.dropboxusercontent.com/u/6542602/pbShop/chrome%20app.PNG)
 
 ## RESTFUL API ##
 ###List Banners Information### 
-http://kevangular.herokuapp.com/banners
+[http://kevangular.herokuapp.com/banners](http://kevangular.herokuapp.com/banners)
 
 ###Get Banner Information###
 http://kevangular.herokuapp.com/banners/:bannerId
+
 Example: 
-http://kevangular.herokuapp.com/banners/5424791b254f310800385bfd
+[http://kevangular.herokuapp.com/banners/5424791b254f310800385bfd](http://kevangular.herokuapp.com/banners/5424791b254f310800385bfd)
 
 ###List Product Information###
-http://kevangular.herokuapp.com/products
+[http://kevangular.herokuapp.com/products](http://kevangular.herokuapp.com/products)
 
 ###List Product Information Under a specific banner ###
 http://kevangular.herokuapp.com/products/list/:bannerId
 
 Example:
-http://kevangular.herokuapp.com/products/list/5424791b254f310800385bfd
+[http://kevangular.herokuapp.com/products/list/5424791b254f310800385bfd](http://kevangular.herokuapp.com/products/list/5424791b254f310800385bfd)
 
 
 7_10
