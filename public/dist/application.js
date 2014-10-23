@@ -1153,7 +1153,8 @@ angular.module('core').controller('HeaderController', [
   '$scope',
   'Authentication',
   'Menus',
-  function ($scope, Authentication, Menus) {
+  'AuthTokenFactory',
+  function ($scope, Authentication, Menus, AuthTokenFactory) {
     $scope.authentication = Authentication;
     $scope.isCollapsed = false;
     $scope.menu = Menus.getMenu('topbar');
@@ -1164,6 +1165,9 @@ angular.module('core').controller('HeaderController', [
     $scope.$on('$stateChangeSuccess', function () {
       $scope.isCollapsed = false;
     });
+    $scope.signout = function () {
+      AuthTokenFactory.setToken();
+    };
   }
 ]);'use strict';
 angular.module('core').controller('HomeController', [
@@ -3780,7 +3784,8 @@ angular.module('users').controller('AuthenticationController', [
   '$http',
   '$location',
   'Authentication',
-  function ($scope, $http, $location, Authentication) {
+  'AuthTokenFactory',
+  function ($scope, $http, $location, Authentication, AuthTokenFactory) {
     $scope.authentication = Authentication;
     //If user is signed in then redirect back home
     if ($scope.authentication.user)
@@ -3798,7 +3803,8 @@ angular.module('users').controller('AuthenticationController', [
     $scope.signin = function () {
       $http.post('/auth/signin', $scope.credentials).success(function (response) {
         //If successful we assign the response to the global user model
-        $scope.authentication.user = response;
+        $scope.authentication.user = response.user;
+        AuthTokenFactory.setToken(response.token);
         //And redirect to the index page
         $location.path('/');
       }).error(function (response) {
@@ -3862,6 +3868,30 @@ angular.module('users').controller('SettingsController', [
         $scope.error = response.message;
       });
     };
+  }
+]);/**
+ * Created by Kevin on 2014-10-22.
+ */
+'use strict';
+angular.module('users').factory('AuthTokenFactory', [
+  '$window',
+  function AuthTokenFactory($window) {
+    var store = $window.localStorage;
+    var key = 'auth-token-kev';
+    return {
+      getToken: getToken,
+      setToken: setToken
+    };
+    function getToken() {
+      return store.getItem(key);
+    }
+    function setToken(token) {
+      if (token) {
+        store.setItem(key, token);
+      } else {
+        store.removeItem(key);
+      }
+    }
   }
 ]);'use strict';
 // Authentication service for user variables
