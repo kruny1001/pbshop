@@ -8,6 +8,10 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	_ = require('lodash');
 
+//added 10/22
+var jwt = require('jsonwebtoken');
+
+var jwtSecret = 'fjkdlsajfoew239053/3uk';
 /**
  * Get the error message from error object
  */
@@ -85,7 +89,11 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.send(400, err);
 				} else {
-					res.jsonp(user);
+                    var token = jwt.sign({
+						username: user.name
+					}, jwtSecret);
+					res.send({user:user, token:token});
+                    //res.send({test:'helloWorld'});
 				}
 			});
 		}

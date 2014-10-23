@@ -103,7 +103,6 @@
                 store.removeItem(key);
             }
         }
-
     });
 
     app.factory('AuthInterceptor', function AuthInterceptor(AuthTokenFactory) {

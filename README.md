@@ -304,3 +304,6 @@ http://gdurl.com/
 #9/25#
 https://github.com/googledrive/realtime-tasks/blob/master/app/scripts/app.js
 implementing a Google Drive
+
+#10/21#
+JWT Imeplementation /egghead

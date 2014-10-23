@@ -4,7 +4,12 @@ module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var banners = require('../../app/controllers/banners');
 
+	var expressJwt = require('express-jwt');
+	var jwtSecret = 'fjkdlsajfoew239053/3uk';
+	//app.use(expressJwt({ secret:jwtSecret }).unless({ path: ['/banners']}));
+
 	// Banners Routes
+
 	app.route('/banners')
 		.get(banners.list)
 		.post(users.requiresLogin, banners.create);

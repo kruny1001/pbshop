@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "app22716610.boards", "name" : "_id_" }, { "v" : 1, "key" : { "contentNum" : 1 }, "unique" : true, "ns" : "app22716610.boards", "name" : "contentNum_1", "background" : true } ] }

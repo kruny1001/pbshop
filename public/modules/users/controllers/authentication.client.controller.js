@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication',
-	function($scope, $http, $location, Authentication) {
+angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', 'AuthTokenFactory',
+	function($scope, $http, $location, Authentication, AuthTokenFactory) {
 		$scope.authentication = Authentication;
 
 		//If user is signed in then redirect back home
@@ -22,8 +22,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		$scope.signin = function() {
 			$http.post('/auth/signin', $scope.credentials).success(function(response) {
 				//If successful we assign the response to the global user model
-				$scope.authentication.user = response;
-
+				$scope.authentication.user = response.user;
+				AuthTokenFactory.setToken(response.token);
 				//And redirect to the index page
 				$location.path('/');
 			}).error(function(response) {
@@ -32,3 +32,4 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		};
 	}
 ]);
+
