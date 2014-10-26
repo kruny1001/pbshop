@@ -42,7 +42,7 @@ var getErrorMessage = function(err) {
 /**
  * Show the current Review
  */
-exports.read = function(req, res) {
+exports.readGWT = function(req, res) {
     var d = new Date();
     var iat = d.getTime();
     var exp = new Date(2022, 11, 31).getTime();
@@ -60,25 +60,44 @@ exports.read = function(req, res) {
             "description":"A shining badge of distinction"
         }
     }
-    Review.findById(id).populate('user', 'displayName').exec(function(err, product) {
+    res.send('test');
+    /*
+    Product.findById(id).populate('user', 'displayName').exec(function(err, product) {
         if (err) return next(err);
         if (! product) return next(new Error('Failed to load product ' + id));
-        //res.jsonp(product) = review ;
-        next();
-    });
-    //res.jsonp(product);
+        result = product ;
 
+    });
+    */
 };
 
-/**
- * Review middleware
- */
-exports.reviewByID = function(req, res, next, id) { Review.findById(id).populate('user', 'displayName').exec(function(err, review) {
-    if (err) return next(err);
-    if (! review) return next(new Error('Failed to load Review ' + id));
-    req.review = review ;
-    next();
-});
+exports.productByID = function(req, res, next, id){
+    Product.findById(id).populate('user', 'displayName').exec(function(err, product) {
+        if (err) return next(err);
+        if (! product) return next(new Error('[ERROR] Fail to Load product ' + id));
+        var d = new Date();
+        var iat = d.getTime();
+        var exp = new Date(2022, 11, 31).getTime();
+        var template = {
+            "iss":"08243362007174700466",
+            "aud":"Google",
+            "typ":"google/payments/inapp/item/v1",
+            "iat": iat,
+            "exp": exp,
+            "request":{
+                "currencyCode":"USD",
+                "price":product.price.toString(),
+                "name":product.name,
+                "sellerData":product.user.displayName,
+                "description":product.description
+            }
+        }
+        var token = jwt.sign(template, '80oij1i2QxEJmI8tA7T-Fg');
+        //console.log(token);
+        res.header('Content-Type', 'application/json; charset=utf-8');
+        res.jsonp([token]);
+        //TODO: here need to set Google Walllet json format
+    });
 };
 
 /**

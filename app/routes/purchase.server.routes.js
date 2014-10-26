@@ -9,6 +9,8 @@ module.exports = function(app) {
     var banners = require('../../app/controllers/banners');
     var gwCtrl = require('../../app/controllers/gwPurchase');
 
-    app.route('/purchase/gw')
-        .get(gwCtrl.read);
+    app.route('/purchase/gw_test/:product_id')
+        .get(gwCtrl.readGWT);
+    // Finish by binding the Gallery middleware
+    app.param('product_id', gwCtrl.productByID);
 }

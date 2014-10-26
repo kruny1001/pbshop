@@ -7,8 +7,8 @@ var product = {
     "iss":"08243362007174700466",
     "aud":"Google",
     "typ":"google/payments/inapp/item/v1",
-    "iat":1414051189,
-    "exp":1414137589,
+    "iat":1414278546,
+    "exp":1414364946,
     "request":{
         "currencyCode":"USD",
         "price":"3.00",
@@ -18,10 +18,17 @@ var product = {
     }
 }
 
-var token = jwt.sign(product, 'shhhh');
+/*
+ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwODI0MzM2MjAwNzE3N
+ DcwMDQ2NiIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9
+ wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxNDE0Mjc4N
+ zkwLCJleHAiOjE0MTQzNjQ5NDYsInJlcXVlc3QiOnsiY3VycmVuY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6IkdvbGQgU3RhciIsInNlbGxlckRhdGEiOiJzb21lIG9wYXF1ZSBkYXRhIiwiZGVzY3JpcHRpb24iOiJBIHNoaW5pbmcgYmFkZ2Ugb2YgZGlzdGluY3Rpb24ifX0.N3VRf_B9y0gGN8B5gyIbNQhjUB9qwCelAoSeQvclJOc
+* */
+
+var token = jwt.sign(product, '80oij1i2QxEJmI8tA7T-Fg');
 console.log(token);
 
-jwt.verify(token, 'shhhh', function(err, decoded) {
+jwt.verify(token, '80oij1i2QxEJmI8tA7T-Fg', function(err, decoded) {
     console.log(decoded) // bar
 });
 

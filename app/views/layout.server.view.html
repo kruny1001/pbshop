@@ -79,6 +79,8 @@
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
 	{% endfor %}
 
+	<script src="https://sandbox.google.com/checkout/inapp/lib/buy.js"></script>
+
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
 	<script async type="text/javascript" src="http://localhost:35729/livereload.js"></script>

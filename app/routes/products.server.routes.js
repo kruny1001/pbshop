@@ -12,8 +12,14 @@ module.exports = function(app) {
 	
 	app.route('/products/:productId')
 		.get(products.read)
-		.put(users.requiresLogin, products.hasAuthorization, products.update)
-	    .delete(users.requiresLogin, products.hasAuthorization, products.delete);
+
+		// TODO: Production
+		// this should be able when production release
+		//.put(users.requiresLogin, products.hasAuthorization, products.update)
+		.put(users.requiresLogin, products.update)
+
+		//.delete(users.requiresLogin, products.hasAuthorization, products.delete);
+		.delete(users.requiresLogin, products.hasAuthorization, products.delete);
 
     app.route('/products/list/:bannerId')
         .get(products.listByParentId);

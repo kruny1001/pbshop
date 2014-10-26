@@ -1,0 +1,17 @@
+<section data-ng-controller="ProductslistController">
+	<br><br><br>
+
+	<div class="core-title">All Products List (Developer Mode)</div>
+
+	<div ng-repeat="product in products">
+		<input style="position:relative; top:30px; left:200px"type="button" value="Edit" ng-click="editProducts(product._id)"/>
+		<input style="position:relative; top:30px; left:200px"type="button" value="Delete" ng-click="deleteProducts(product._id)"/>
+		<input style="position:relative; top:30px; left:200px"type="button" value="Purchase" ng-click="purchaseProduct(product._id)"/>
+		<img ng-src={{product.mainimg}} style="height:50px; width:60px; position:relative; top:30px; left:200px" ng-mouseenter="zoomIn($event)" ng-mouseleave="zoomOut($event)">
+		<pre style="background-color: rgba(201, 211, 244, 0.47)"> {{product | json}}</pre>
+	</div>
+
+	<div class="core-title">All Banner List</div>
+	<div ng-repeat="banner in banners"><pre style="background-color: rgba(167, 194, 114, 0.25)">{{banner | json}}</pre></pre></div>
+
+</section>
