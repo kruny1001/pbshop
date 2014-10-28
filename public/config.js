@@ -8,7 +8,7 @@ var ApplicationConfiguration = (function() {
         [
             'ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ui.calendar',
             /*'google-maps',*/ 'mgo-angular-wizard', /*'angularFileUpload',*/
-            'smart-table', 'ui.ace', 'ngSanitize','textAngular', 'firebase'
+            'smart-table', 'ui.ace', 'ngSanitize','textAngular', 'firebase', 'gdriveapps'
         ];
 
 	// Add a new vertical module

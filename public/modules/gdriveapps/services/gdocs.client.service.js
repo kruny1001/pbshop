@@ -1,15 +1,19 @@
 'use strict';
 
-angular.module('gdriveapps').factory('Gdocs', [
+angular.module('gdriveapps').factory('gdocs', [
 	function() {
-		// Gdocs service logic
-		// ...
+		var gdocs = new GDocs();
 
-		// Public API
-		return {
-			someMethod: function() {
-				return true;
-			}
-		};
+		/*
+		var dnd = new DnDFileController('body', function(files) {
+			var $scope = angular.element(this).scope();
+			Util.toArray(files).forEach(function(file, i) {
+				gdocs.upload(file, function() {
+					//$scope.fetchDocs(true);
+				}, true);
+			});
+		});
+		*/
+		return gdocs;
 	}
 ]);

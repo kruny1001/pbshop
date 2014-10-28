@@ -24,7 +24,16 @@ angular.module('gdriveapps').config(['$stateProvider',
 		state('editGdriveapp', {
 			url: '/gdriveapps/:gdriveappId/edit',
 			templateUrl: 'modules/gdriveapps/views/edit-gdriveapp.client.view.html'
-		})/*.
+		}).
+		state('gDrive', {
+			url: '/gDrive',
+			templateUrl: 'modules/gdriveapps/views/gdrive.html'
+		}).
+		state('gDrive2', {
+			url: '/gDrive2',
+			templateUrl: 'modules/gdriveapps/views/storage.html'
+		})
+		/*.
 
         state('createFile', {
             url: '/create',

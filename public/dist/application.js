@@ -15,7 +15,8 @@ var ApplicationConfiguration = function () {
         'ui.ace',
         'ngSanitize',
         'textAngular',
-        'firebase'
+        'firebase',
+        'gdriveapps'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -2832,6 +2833,12 @@ angular.module('gdriveapps').config([
     }).state('editGdriveapp', {
       url: '/gdriveapps/:gdriveappId/edit',
       templateUrl: 'modules/gdriveapps/views/edit-gdriveapp.client.view.html'
+    }).state('gDrive', {
+      url: '/gDrive',
+      templateUrl: 'modules/gdriveapps/views/gdrive.html'
+    }).state('gDrive2', {
+      url: '/gDrive2',
+      templateUrl: 'modules/gdriveapps/views/storage.html'
     });
     /*.
 
@@ -2858,9 +2865,374 @@ angular.module('gdriveapps').config([
 ]);'use strict';
 angular.module('gdriveapps').controller('DocsController', [
   '$scope',
-  function ($scope) {
+  '$http',
+  'gdocs',
+  function ($scope, $http, gdocs) {
+    $scope.test = 'test_123';
+    $scope.docs = [];
+    // Response handler that caches file icons in the filesystem API.
+    function successCallbackWithFsCaching(resp, status, headers, config) {
+      var docs = [];
+      var totalEntries = resp.items.length;
+      console.log(totalEntries);
+      resp.items.forEach(function (entry, i) {
+        var doc = {
+            title: entry.title,
+            updatedDate: Util.formatDate(entry.modifiedDate),
+            updatedDateFull: entry.modifiedDate,
+            icon: entry.iconLink,
+            alternateLink: entry.alternateLink,
+            size: entry.fileSize ? '( ' + entry.fileSize + ' bytes)' : null
+          };
+        // 'http://gstatic.google.com/doc_icon_128.png' -> 'doc_icon_128.png'
+        doc.iconFilename = doc.icon.substring(doc.icon.lastIndexOf('/') + 1);
+        console.log(doc.icon);
+        // If file exists, it we'll get back a FileEntry for the filesystem URL.
+        // Otherwise, the error callback will fire and we need to XHR it in and
+        // write it to the FS.
+        var fsURL = fs.root.toURL() + FOLDERNAME + '/' + doc.iconFilename;
+        window.webkitResolveLocalFileSystemURL(fsURL, function (entry) {
+          console.log('Fetched icon from the FS cache');
+          doc.icon = entry.toURL();
+          // should be === to fsURL, but whatevs.
+          $scope.docs.push(doc);
+          // Only want to sort and call $apply() when we have all entries.
+          if (totalEntries - 1 == i) {
+            $scope.docs.sort(Util.sortByDate);
+            $scope.$apply(function ($scope) {
+            });  // Inform angular we made changes.
+          }
+        }, function (e) {
+          $http.get(doc.icon, { responseType: 'blob' }).success(function (blob) {
+            console.log('Fetched icon via XHR');
+            blob.name = doc.iconFilename;
+            // Add icon filename to blob.
+            writeFile(blob);
+            // Write is async, but that's ok.
+            doc.icon = window.URL.createObjectURL(blob);
+            $scope.docs.push(doc);
+            if (totalEntries - 1 == i) {
+              $scope.docs.sort(Util.sortByDate);
+            }
+          });
+        });
+      });
+    }
+    $scope.clearDocs = function () {
+      $scope.docs = [];  // Clear out old results.
+    };
+    $scope.fetchDocs = function (retry) {
+      this.clearDocs();
+      if (gdocs.accessToken) {
+        var config = {
+            params: { 'alt': 'json' },
+            headers: { 'Authorization': 'Bearer ' + gdocs.accessToken }
+          };
+        //https://drive.google.com/open?id=0B8FisuvAYPTfampGWFhXQUs5dVU&authuser=0
+        $http.get(gdocs.DOCLIST_FEED, config).success(successCallbackWithFsCaching).error(function (data, status, headers, config) {
+          if (status == 401 && retry) {
+            gdocs.removeCachedAuthToken(gdocs.auth.bind(gdocs, true, $scope.fetchDocs.bind($scope, false)));
+          }
+        });
+      }
+    };
+    // Toggles the authorization state.
+    $scope.toggleAuth = function (interactive) {
+      if (!gdocs.accessToken) {
+        gdocs.auth(interactive, function () {
+          $scope.fetchDocs(false);
+        });
+      } else {
+        gdocs.revokeAuthToken(function () {
+        });
+        this.clearDocs();
+      }
+    };
+    // Controls the label of the authorize/deauthorize button.
+    $scope.authButtonLabel = function () {
+      if (gdocs.accessToken)
+        return 'Deauthorize';
+      else
+        return 'Authorize';
+    };
+    $scope.toggleAuth(false);
   }
-]);'use strict';
+]);/*
+ Copyright 2012 Google Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ Author: Eric Bidelman (ericbidelman@chromium.org)
+ */
+'use strict';
+function GDocs(selector) {
+  var SCOPE_ = 'https://www.googleapis.com/drive/v2/';
+  this.lastResponse = null;
+  this.__defineGetter__('SCOPE', function () {
+    return SCOPE_;
+  });
+  this.__defineGetter__('DOCLIST_FEED', function () {
+    return SCOPE_ + 'files/';
+  });
+  this.__defineGetter__('CREATE_SESSION_URI', function () {
+    return 'https://www.googleapis.com/upload/drive/v2/files?uploadType=resumable';
+  });
+  this.__defineGetter__('DEFAULT_CHUNK_SIZE', function () {
+    return 1024 * 1024 * 5;  // 5MB;
+  });
+}
+;
+GDocs.prototype.auth = function (interactive, opt_callback) {
+  try {
+    chrome.identity.getAuthToken({ interactive: interactive }, function (token) {
+      if (token) {
+        this.accessToken = token;
+        opt_callback && opt_callback();
+      }
+    }.bind(this));
+  } catch (e) {
+    console.log(e);
+  }
+};
+GDocs.prototype.removeCachedAuthToken = function (opt_callback) {
+  if (this.accessToken) {
+    var accessToken = this.accessToken;
+    this.accessToken = null;
+    // Remove token from the token cache.
+    chrome.identity.removeCachedAuthToken({ token: accessToken }, function () {
+      opt_callback && opt_callback();
+    });
+  } else {
+    opt_callback && opt_callback();
+  }
+};
+GDocs.prototype.revokeAuthToken = function (opt_callback) {
+  if (this.accessToken) {
+    // Make a request to revoke token
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' + this.accessToken);
+    xhr.send();
+    this.removeCachedAuthToken(opt_callback);
+  }
+};
+/*
+ * Generic HTTP AJAX request handler.
+ */
+GDocs.prototype.makeRequest = function (method, url, callback, opt_data, opt_headers) {
+  var data = opt_data || null;
+  var headers = opt_headers || {};
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url, true);
+  // Include common headers (auth and version) and add rest.
+  xhr.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
+  for (var key in headers) {
+    xhr.setRequestHeader(key, headers[key]);
+  }
+  xhr.onload = function (e) {
+    this.lastResponse = this.response;
+    callback(this.lastResponse, this);
+  }.bind(this);
+  xhr.onerror = function (e) {
+    console.log(this, this.status, this.response, this.getAllResponseHeaders());
+  };
+  xhr.send(data);
+};
+/**
+ * Uploads a file to Google Docs.
+ */
+GDocs.prototype.upload = function (blob, callback, retry) {
+  var onComplete = function (response) {
+      document.getElementById('main').classList.remove('uploading');
+      var entry = JSON.parse(response).entry;
+      callback.apply(this, [entry]);
+    }.bind(this);
+  var onError = function (response) {
+      if (retry) {
+        this.removeCachedAuthToken(this.auth.bind(this, true, this.upload.bind(this, blob, callback, false)));
+      } else {
+        document.getElementById('main').classList.remove('uploading');
+        throw new Error('Error: ' + response);
+      }
+    }.bind(this);
+  var uploader = new MediaUploader({
+      token: this.accessToken,
+      file: blob,
+      onComplete: onComplete,
+      onError: onError
+    });
+  document.getElementById('main').classList.add('uploading');
+  uploader.upload();
+};/*
+ Copyright 2012 Google Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ Author: Eric Bidelman (ericbidelman@chromium.org)
+ */
+function onError(e) {
+  console.log(e);
+}
+// FILESYSTEM SUPPORT ----------------------------------------------------------
+var fs = null;
+var FOLDERNAME = 'test';
+function writeFile(blob) {
+  if (!fs) {
+    return;
+  }
+  fs.root.getDirectory(FOLDERNAME, { create: true }, function (dirEntry) {
+    dirEntry.getFile(blob.name, {
+      create: true,
+      exclusive: false
+    }, function (fileEntry) {
+      // Create a FileWriter object for our FileEntry, and write out blob.
+      fileEntry.createWriter(function (fileWriter) {
+        fileWriter.onerror = onError;
+        fileWriter.onwriteend = function (e) {
+          console.log('Write completed.');
+        };
+        fileWriter.write(blob);
+      }, onError);
+    }, onError);
+  }, onError);
+}
+// -----------------------------------------------------------------------------
+var gDriveApp = angular.module('gDriveApp', []);
+gDriveApp.factory('gdocs', function () {
+  var gdocs = new GDocs();
+  var dnd = new DnDFileController('body', function (files) {
+      var $scope = angular.element(this).scope();
+      Util.toArray(files).forEach(function (file, i) {
+        gdocs.upload(file, function () {
+        }, true);
+      });
+    });
+  return gdocs;
+});
+//gDriveApp.service('gdocs', GDocs);
+//gDriveApp.controller('DocsController', ['$scope', '$http', DocsController]);
+// Main Angular controller for app.
+function DocsController($scope, $http, gdocs) {
+  $scope.docs = [];
+  // Response handler that caches file icons in the filesystem API.
+  function successCallbackWithFsCaching(resp, status, headers, config) {
+    var docs = [];
+    var totalEntries = resp.items.length;
+    console.log(totalEntries);
+    resp.items.forEach(function (entry, i) {
+      var doc = {
+          title: entry.title,
+          updatedDate: Util.formatDate(entry.modifiedDate),
+          updatedDateFull: entry.modifiedDate,
+          icon: entry.iconLink,
+          alternateLink: entry.alternateLink,
+          size: entry.fileSize ? '( ' + entry.fileSize + ' bytes)' : null
+        };
+      // 'http://gstatic.google.com/doc_icon_128.png' -> 'doc_icon_128.png'
+      doc.iconFilename = doc.icon.substring(doc.icon.lastIndexOf('/') + 1);
+      console.log(doc.icon);
+      // If file exists, it we'll get back a FileEntry for the filesystem URL.
+      // Otherwise, the error callback will fire and we need to XHR it in and
+      // write it to the FS.
+      var fsURL = fs.root.toURL() + FOLDERNAME + '/' + doc.iconFilename;
+      window.webkitResolveLocalFileSystemURL(fsURL, function (entry) {
+        console.log('Fetched icon from the FS cache');
+        doc.icon = entry.toURL();
+        // should be === to fsURL, but whatevs.
+        $scope.docs.push(doc);
+        // Only want to sort and call $apply() when we have all entries.
+        if (totalEntries - 1 == i) {
+          $scope.docs.sort(Util.sortByDate);
+          $scope.$apply(function ($scope) {
+          });  // Inform angular we made changes.
+        }
+      }, function (e) {
+        $http.get(doc.icon, { responseType: 'blob' }).success(function (blob) {
+          console.log('Fetched icon via XHR');
+          blob.name = doc.iconFilename;
+          // Add icon filename to blob.
+          writeFile(blob);
+          // Write is async, but that's ok.
+          doc.icon = window.URL.createObjectURL(blob);
+          $scope.docs.push(doc);
+          if (totalEntries - 1 == i) {
+            $scope.docs.sort(Util.sortByDate);
+          }
+        });
+      });
+    });
+  }
+  $scope.clearDocs = function () {
+    $scope.docs = [];  // Clear out old results.
+  };
+  $scope.fetchDocs = function (retry) {
+    this.clearDocs();
+    if (gdocs.accessToken) {
+      var config = {
+          params: { 'alt': 'json' },
+          headers: { 'Authorization': 'Bearer ' + gdocs.accessToken }
+        };
+      //https://drive.google.com/open?id=0B8FisuvAYPTfampGWFhXQUs5dVU&authuser=0
+      $http.get(gdocs.DOCLIST_FEED, config).success(successCallbackWithFsCaching).error(function (data, status, headers, config) {
+        if (status == 401 && retry) {
+          gdocs.removeCachedAuthToken(gdocs.auth.bind(gdocs, true, $scope.fetchDocs.bind($scope, false)));
+        }
+      });
+    }
+  };
+  // Toggles the authorization state.
+  $scope.toggleAuth = function (interactive) {
+    if (!gdocs.accessToken) {
+      gdocs.auth(interactive, function () {
+        $scope.fetchDocs(false);
+      });
+    } else {
+      gdocs.revokeAuthToken(function () {
+      });
+      this.clearDocs();
+    }
+  };
+  // Controls the label of the authorize/deauthorize button.
+  $scope.authButtonLabel = function () {
+    if (gdocs.accessToken)
+      return 'Deauthorize';
+    else
+      return 'Authorize';
+  };
+  $scope.toggleAuth(false);
+}
+DocsController.$inject = [
+  '$scope',
+  '$http',
+  'gdocs'
+];
+// For code minifiers.
+// Init setup and attach event listeners.
+document.addEventListener('DOMContentLoaded', function (e) {
+  // FILESYSTEM SUPPORT --------------------------------------------------------
+  window.webkitRequestFileSystem(TEMPORARY, 1024 * 1024, function (localFs) {
+    fs = localFs;
+  }, onError);  // ---------------------------------------------------------------------------
+});'use strict';
 // Gdriveapps controller
 angular.module('gdriveapps').constant('CONFIG', {
   clientId: '574563539488-pctm7fr21vcetcfpdf9hhaje9q5vepee.apps.googleusercontent.com',
@@ -2932,7 +3304,182 @@ angular.module('gdriveapps').controller('GdriveappsController', [
       $scope.gdriveapp = Gdriveapps.get({ gdriveappId: $stateParams.gdriveappId });
     };
   }
-]);'use strict';
+]);/**
+ * Created by KevinSo on 10/2/2014.
+ */
+'use strict';
+var googlePlusUserLoader = function () {
+    var STATE_START = 1;
+    var STATE_ACQUIRING_AUTHTOKEN = 2;
+    var STATE_AUTHTOKEN_ACQUIRED = 3;
+    var state = STATE_START;
+    var signin_button, xhr_button, revoke_button, user_info_div;
+    function disableButton(button) {
+      button.setAttribute('disabled', 'disabled');
+    }
+    function enableButton(button) {
+      button.removeAttribute('disabled');
+    }
+    function changeState(newState) {
+      state = newState;
+      switch (state) {
+      case STATE_START:
+        enableButton(signin_button);
+        disableButton(xhr_button);
+        disableButton(revoke_button);
+        break;
+      case STATE_ACQUIRING_AUTHTOKEN:
+        sampleSupport.log('Acquiring token...');
+        disableButton(signin_button);
+        disableButton(xhr_button);
+        disableButton(revoke_button);
+        break;
+      case STATE_AUTHTOKEN_ACQUIRED:
+        disableButton(signin_button);
+        enableButton(xhr_button);
+        enableButton(revoke_button);
+        break;
+      }
+    }
+    // @corecode_begin getProtectedData
+    function xhrWithAuth(method, url, interactive, callback) {
+      var access_token;
+      var retry = true;
+      getToken();
+      function getToken() {
+        chrome.identity.getAuthToken({ interactive: interactive }, function (token) {
+          if (chrome.runtime.lastError) {
+            callback(chrome.runtime.lastError);
+            return;
+          }
+          access_token = token;
+          requestStart();
+        });
+      }
+      function requestStart() {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.onload = requestComplete;
+        xhr.send();
+      }
+      function requestComplete() {
+        if (this.status == 401 && retry) {
+          retry = false;
+          chrome.identity.removeCachedAuthToken({ token: access_token }, getToken);
+        } else {
+          callback(null, this.status, this.response);
+        }
+      }
+    }
+    function getUserInfo(interactive) {
+      xhrWithAuth('GET', 'https://www.googleapis.com/plus/v1/people/me', interactive, onUserInfoFetched);
+    }
+    // @corecode_end getProtectedData
+    // Code updating the user interface, when the user information has been
+    // fetched or displaying the error.
+    function onUserInfoFetched(error, status, response) {
+      if (!error && status == 200) {
+        changeState(STATE_AUTHTOKEN_ACQUIRED);
+        sampleSupport.log(response);
+        var user_info = JSON.parse(response);
+        populateUserInfo(user_info);
+      } else {
+        changeState(STATE_START);
+      }
+    }
+    function populateUserInfo(user_info) {
+      user_info_div.innerHTML = 'Hello ' + user_info.displayName;
+      fetchImageBytes(user_info);
+    }
+    function fetchImageBytes(user_info) {
+      if (!user_info || !user_info.image || !user_info.image.url)
+        return;
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', user_info.image.url, true);
+      xhr.responseType = 'blob';
+      xhr.onload = onImageFetched;
+      xhr.send();
+    }
+    function onImageFetched(e) {
+      if (this.status != 200)
+        return;
+      var imgElem = document.createElement('img');
+      var objUrl = window.webkitURL.createObjectURL(this.response);
+      imgElem.src = objUrl;
+      imgElem.onload = function () {
+        window.webkitURL.revokeObjectURL(objUrl);
+      };
+      user_info_div.insertAdjacentElement('afterbegin', imgElem);
+    }
+    // OnClick event handlers for the buttons.
+    /**
+     Retrieves a valid token. Since this is initiated by the user
+     clicking in the Sign In button, we want it to be interactive -
+     ie, when no token is found, the auth window is presented to the user.
+
+     Observe that the token does not need to be cached by the app.
+     Chrome caches tokens and takes care of renewing when it is expired.
+     In that sense, getAuthToken only goes to the server if there is
+     no cached token or if it is expired. If you want to force a new
+     token (for example when user changes the password on the service)
+     you need to call removeCachedAuthToken()
+     **/
+    function interactiveSignIn() {
+      changeState(STATE_ACQUIRING_AUTHTOKEN);
+      // @corecode_begin getAuthToken
+      // @description This is the normal flow for authentication/authorization
+      // on Google properties. You need to add the oauth2 client_id and scopes
+      // to the app manifest. The interactive param indicates if a new window
+      // will be opened when the user is not yet authenticated or not.
+      // @see http://developer.chrome.com/apps/app_identity.html
+      // @see http://developer.chrome.com/apps/identity.html#method-getAuthToken
+      chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
+        if (chrome.runtime.lastError) {
+          sampleSupport.log(chrome.runtime.lastError);
+          changeState(STATE_START);
+        } else {
+          sampleSupport.log('Token acquired:' + token + '. See chrome://identity-internals for details.');
+          changeState(STATE_AUTHTOKEN_ACQUIRED);
+        }
+      });  // @corecode_end getAuthToken
+    }
+    function revokeToken() {
+      user_info_div.innerHTML = '';
+      chrome.identity.getAuthToken({ 'interactive': false }, function (current_token) {
+        if (!chrome.runtime.lastError) {
+          // @corecode_begin removeAndRevokeAuthToken
+          // @corecode_begin removeCachedAuthToken
+          // Remove the local cached token
+          chrome.identity.removeCachedAuthToken({ token: current_token }, function () {
+          });
+          // @corecode_end removeCachedAuthToken
+          // Make a request to revoke token in the server
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' + current_token);
+          xhr.send();
+          // @corecode_end removeAndRevokeAuthToken
+          // Update the user interface accordingly
+          changeState(STATE_START);
+          sampleSupport.log('Token revoked and removed from cache. ' + 'Check chrome://identity-internals to confirm.');
+        }
+      });
+    }
+    return {
+      onload: function () {
+        signin_button = document.querySelector('#signin');
+        signin_button.addEventListener('click', interactiveSignIn);
+        xhr_button = document.querySelector('#getxhr');
+        xhr_button.addEventListener('click', getUserInfo.bind(xhr_button, true));
+        revoke_button = document.querySelector('#revoke');
+        revoke_button.addEventListener('click', revokeToken);
+        user_info_div = document.querySelector('#user_info');
+        // Trying to get user's info without signing in, it will work if the
+        // application was previously authorized by the user.
+        getUserInfo(false);
+      }
+    };
+  }();'use strict';
 angular.module('gdriveapps').provider('Weather', function () {
   var apiKey = '';
   this.setApiKey = function (key) {
@@ -2991,16 +3538,71 @@ angular.module('gdriveapps').controller('WeatherController', [
     });
   }
 ]);'use strict';
-angular.module('gdriveapps').factory('Gdocs', [function () {
-    // Gdocs service logic
-    // ...
-    // Public API
-    return {
-      someMethod: function () {
-        return true;
+angular.module('gdriveapps').factory('gdocs', [function () {
+    var gdocs = new GDocs();
+    /*
+		var dnd = new DnDFileController('body', function(files) {
+			var $scope = angular.element(this).scope();
+			Util.toArray(files).forEach(function(file, i) {
+				gdocs.upload(file, function() {
+					//$scope.fetchDocs(true);
+				}, true);
+			});
+		});
+		*/
+    return gdocs;
+  }]);/**
+ * Created by Kevin on 2014-10-27.
+ */
+'use strict';
+var CONFIG = {
+    clientId: '574563539488-n0vrevgjp3606l20hfk4rqfk1dc8j3qb.apps.googleusercontent.com',
+    developerKey: 'AIzaSyDJm_DwVOeyGFn0nscjK3FK6GymBfQC6S4',
+    scopes: ['https://www.googleapis.com/auth/drive']
+  };
+angular.module('gdriveapps').value('config', CONFIG);
+angular.module('gdriveapps').controller('storage', [
+  '$q',
+  '$rootScope',
+  'config',
+  function ($q, $rootScope, config) {
+    var accessToken;
+    function onApiLoad() {
+      window.gapi.load('auth', authenticateWithGoogle);
+      window.gapi.load('picker');
+    }
+    function authenticateWithGoogle() {
+      window.gapi.auth.authorize({
+        'client_id': config.clientId,
+        'scope': ['https://www.googleapis.com/auth/drive']
+      }, handleAuthentication);
+    }
+    function handleAuthentication(result) {
+      if (result && !result.error) {
+        accessToken = result.access_token;
+        console.log(accessToken);
+        setupPicker();
+      } else {
+        console.log(result);
+        console.log(result.error);
+        console.log('fail to authentication');
       }
-    };
-  }]);'use strict';
+    }
+    function setupPicker() {
+      var picker = new google.picker.PickerBuilder().setOAuthToken(accessToken).setDeveloperKey(config.developerKey).addView(new google.picker.DocsUploadView()).addView(new google.picker.DocsView()).enableFeature(google.picker.Feature.MULTISELECT_ENABLED).setCallback(pickerCallback).build();
+      picker.setVisible(true);
+    }
+    function pickerCallback(data) {
+      if (data.action == google.picker.Action.PICKED) {
+        //do something
+        alert('URL: ' + data.docs[0].url);
+      } else if (data.action == google.picker.Action.CANCEL) {
+        alert('goodbye');
+      }
+    }
+    onApiLoad();
+  }
+]);'use strict';
 //Gdriveapps service used to communicate Gdriveapps REST endpoints
 angular.module('gdriveapps').factory('Gdriveapps', [
   '$resource',

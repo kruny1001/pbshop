@@ -44,27 +44,24 @@ function writeFile(blob) {
 }
 // -----------------------------------------------------------------------------
 
-var gDriveApp = angular.module('gDriveApp', []);
-
-gDriveApp.factory('gdocs', function() {
-    var gdocs = new GDocs();
+'use strict';
+angular.module('gdriveapps').factory('gdocs1', function() {
+    var gdocs1 = new GDocs();
 
     var dnd = new DnDFileController('body', function(files) {
         var $scope = angular.element(this).scope();
         Util.toArray(files).forEach(function(file, i) {
-            gdocs.upload(file, function() {
+            gdocs1.upload(file, function() {
                 //$scope.fetchDocs(true);
             }, true);
         });
     });
-
-    return gdocs;
+    return gdocs1;
 });
-//gDriveApp.service('gdocs', GDocs);
-//gDriveApp.controller('DocsController', ['$scope', '$http', DocsController]);
 
 // Main Angular controller for app.
-function DocsController($scope, $http, gdocs) {
+angular.module('gdriveapps').controller('Dc1', ['$scope', '$http', 'gdocs1', function ($scope, $http, gdocs1) {
+    $scope.test = 'test_123';
     $scope.docs = [];
 
     // Response handler that caches file icons in the filesystem API.
@@ -129,22 +126,22 @@ function DocsController($scope, $http, gdocs) {
     $scope.fetchDocs = function(retry) {
         this.clearDocs();
 
-        if (gdocs.accessToken) {
+        if (gdocs1.accessToken) {
             var config = {
                 params: {'alt': 'json'},
                 headers: {
-                    'Authorization': 'Bearer ' + gdocs.accessToken
+                    'Authorization': 'Bearer ' + gdocs1.accessToken
 
                 }
             };
 
             //https://drive.google.com/open?id=0B8FisuvAYPTfampGWFhXQUs5dVU&authuser=0
-            $http.get(gdocs.DOCLIST_FEED, config).
+            $http.get(gdocs1.DOCLIST_FEED, config).
                 success(successCallbackWithFsCaching).
                 error(function(data, status, headers, config) {
                     if (status == 401 && retry) {
-                        gdocs.removeCachedAuthToken(
-                            gdocs.auth.bind(gdocs, true,
+                        gdocs1.removeCachedAuthToken(
+                            gdocs1.auth.bind(gdocs1, true,
                                 $scope.fetchDocs.bind($scope, false)));
                     }
                 });
@@ -153,19 +150,19 @@ function DocsController($scope, $http, gdocs) {
 
     // Toggles the authorization state.
     $scope.toggleAuth = function(interactive) {
-        if (!gdocs.accessToken) {
-            gdocs.auth(interactive, function() {
+        if (!gdocs1.accessToken) {
+            gdocs1.auth(interactive, function() {
                 $scope.fetchDocs(false);
             });
         } else {
-            gdocs.revokeAuthToken(function() {});
+            gdocs1.revokeAuthToken(function() {});
             this.clearDocs();
         }
     }
 
     // Controls the label of the authorize/deauthorize button.
     $scope.authButtonLabel = function() {
-        if (gdocs.accessToken)
+        if (gdocs1.accessToken)
             return 'Deauthorize';
         else
             return 'Authorize';
@@ -173,8 +170,7 @@ function DocsController($scope, $http, gdocs) {
 
     $scope.toggleAuth(false);
 }
-
-DocsController.$inject = ['$scope', '$http', 'gdocs']; // For code minifiers.
+]);
 
 // Init setup and attach event listeners.
 document.addEventListener('DOMContentLoaded', function(e) {

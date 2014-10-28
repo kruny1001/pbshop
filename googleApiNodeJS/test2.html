@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Google Drive Picker</title>
+</head>
+<body>
+<h1>The Uploading Tool</h1>
+<script>
+    var clientId = '574563539488-n0vrevgjp3606l20hfk4rqfk1dc8j3qb.apps.googleusercontent.com';
+    var developerKey = 'AIzaSyDJm_DwVOeyGFn0nscjK3FK6GymBfQC6S4';
+    var accessToken;
+
+    function onApiLoad(){
+        gapi.load('auth', authenticateWithGoogle);
+        gapi.load('picker');
+    }
+
+    function authenticateWithGoogle(){
+        window.gapi.auth.authorize({
+            'client_id': clientId,
+            'scope':['https://www.googleapis.com/auth/drive']
+        }, handleAuthentication);
+    }
+    function handleAuthentication(result){
+        if(result && !result.error){
+            accessToken = result.access_token;
+            console.log(accessToken);
+            setupPicker();
+        }else{
+            console.log(result);
+            console.log(result.error);
+            console.log('fail to authentication')
+        }
+    }
+
+    function setupPicker() {
+        var picker = new google.picker.PickerBuilder()
+            .setOAuthToken(accessToken)
+            .setDeveloperKey(developerKey)
+            .addView(new google.picker.DocsUploadView())
+            .addView(new google.picker.DocsView())
+            .build();
+        picker.setVisible(true);
+    }
+</script>
+<script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</div>
+</body>
+</html>
