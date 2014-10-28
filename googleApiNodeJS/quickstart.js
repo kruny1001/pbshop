@@ -35,7 +35,6 @@ function getAccessToken(oauth2Client, callback) {
             oauth2Client.setCredentials(tokens);
             callback();
         });
-
     });
 }
 

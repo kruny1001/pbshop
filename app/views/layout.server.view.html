@@ -61,7 +61,6 @@
 
     <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link data-require="font-awesome@*" data-semver="4.1.0" rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
-
 </head>
 
 <body class="ng-cloak" unresolved touch-action="auto">
@@ -80,7 +79,9 @@
 	{% endfor %}
 
 	<script src="https://sandbox.google.com/checkout/inapp/lib/buy.js"></script>
+	<!--
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+	-->
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->

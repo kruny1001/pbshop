@@ -11,6 +11,9 @@ var mongoose = require('mongoose'),
     Product = mongoose.model('Product'),
     _ = require('lodash');
 
+var googleapis = require('googleapis');
+
+
 /*
     Module dependencies for custom
  */
