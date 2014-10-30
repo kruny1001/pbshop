@@ -3096,8 +3096,11 @@ angular.module('gdriveapps').controller('storage', [
   'configGdrive',
   'Googledrive',
   'GooglePlus',
-  function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus) {
+  'Products',
+  function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
     var accessToken;
+    $scope.permalLink = 'http://drive.google.com/uc?export=view&id=';
+    $scope.arrive = false;
     $scope.authName = 'Authorize';
     $scope.isAuth = false;
     $scope.init = function init() {
@@ -3124,7 +3127,8 @@ angular.module('gdriveapps').controller('storage', [
                 createFolder();
                 */
         createNewAccountFolder();
-        setFilePicker();  //findTargetUriFolder();
+        setFilePicker();  // singleFile
+                          //findTargetUriFolder();
       } else {
         console.log(result);
         console.log(result.error);
@@ -3144,7 +3148,7 @@ angular.module('gdriveapps').controller('storage', [
     function getGoogleDriveInfo() {
       Googledrive.getGoogleDriveInfo();
     }
-    /// Custom file Picker Start
+    /// Custom file Picker Start ----------------------------------------------------------
     function setFilePicker() {
       var filePicker = document.getElementById('filePicker');
       filePicker.style.display = 'none';
@@ -3173,6 +3177,7 @@ angular.module('gdriveapps').controller('storage', [
         var metadata = {
             'title': fileData.name,
             'mimeType': contentType,
+            'writersCanShare': true,
             'parents': [{
                 'kind': 'drive#fileLink',
                 'id': '0B8FisuvAYPTfN1o1Q0d4T2JLTk0'
@@ -3196,7 +3201,7 @@ angular.module('gdriveapps').controller('storage', [
         request.execute(callback);
       };
     }
-    /// Custom file Picker End
+    /// Custom file Picker End ----------------------------------------------------------
     function callGooglePlus() {
       function callback(resp) {
         console.log(resp);
@@ -3215,7 +3220,8 @@ angular.module('gdriveapps').controller('storage', [
         if (data.action == google.picker.Action.PICKED) {
           //do something
           $scope.files = data.docs;
-          alert('URL: ' + data.docs[0].url);
+          $scope.arrive = true;
+          //alert('URL: ' + data.docs[0].url);
           $scope.$digest();
         } else if (data.action == google.picker.Action.CANCEL) {
           alert('goodbye');
@@ -3245,6 +3251,9 @@ angular.module('gdriveapps').controller('storage', [
       };
       Googledrive.findFolder(callback);
     }
+    $scope.find = function () {
+      $scope.products = Products.query();
+    };
   }
 ]);/*
  Copyright 2012 Google Inc.
@@ -3788,9 +3797,14 @@ angular.module('gdriveapps').factory('Googledrive', [
         });
       });
     }
+    //Google File Picker Platform
     function setupPicker(accessToken, callback) {
-      var picker = new google.picker.PickerBuilder().setOAuthToken(accessToken).setDeveloperKey(configGdrive.developerKey).addView(new google.picker.DocsUploadView().setParent('0B8FisuvAYPTfN1o1Q0d4T2JLTk0')).addView(new google.picker.DocsView()).enableFeature(google.picker.Feature.MULTISELECT_ENABLED).setCallback(callback).build();
-      picker.setVisible(true);
+      var callbackAfterFindFolder = function (resp) {
+        var folderID = resp.result.items[0].id;
+        var picker = new google.picker.PickerBuilder().setOAuthToken(accessToken).setDeveloperKey(configGdrive.developerKey).addView(new google.picker.DocsUploadView().setParent(folderID)).addView(new google.picker.DocsView().setParent(folderID)).enableFeature(google.picker.Feature.MULTISELECT_ENABLED).setCallback(callback).build();
+        picker.setVisible(true);
+      };
+      findFolder(callbackAfterFindFolder);
     }
     function listFolder() {
       gapi.client.load('drive', 'v2').then(function () {

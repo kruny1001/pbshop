@@ -19,8 +19,10 @@ var CONFIG = {
 angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
-    .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus) {
+    .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
         var accessToken;
+        $scope.permalLink = 'http://drive.google.com/uc?export=view&id=';
+        $scope.arrive = false;
         $scope.authName = 'Authorize';
         $scope.isAuth = false;
         $scope.init = function init(){
@@ -48,7 +50,7 @@ angular.module('gdriveapps')
                 createFolder();
                 */
                 createNewAccountFolder();
-                setFilePicker();
+                setFilePicker(); // singleFile
                 //findTargetUriFolder();
             }else{
                 console.log(result);
@@ -71,7 +73,8 @@ angular.module('gdriveapps')
             Googledrive.getGoogleDriveInfo();
         }
 
-        /// Custom file Picker Start
+        /// Custom file Picker Start ----------------------------------------------------------
+
         function setFilePicker() {
             var filePicker = document.getElementById('filePicker');
 
@@ -105,6 +108,7 @@ angular.module('gdriveapps')
                 var metadata = {
                     'title': fileData.name,
                     'mimeType': contentType,
+                    'writersCanShare':true,
                     'parents': [{
                         'kind': "drive#fileLink",
                         'id': "0B8FisuvAYPTfN1o1Q0d4T2JLTk0"
@@ -141,7 +145,8 @@ angular.module('gdriveapps')
                 request.execute(callback);
             }
         }
-        /// Custom file Picker End
+
+        /// Custom file Picker End ----------------------------------------------------------
 
         function callGooglePlus(){
             function callback(resp) {
@@ -163,7 +168,8 @@ angular.module('gdriveapps')
                 if(data.action == google.picker.Action.PICKED){
                     //do something
                     $scope.files = data.docs;
-                    alert('URL: ' + data.docs[0].url);
+                    $scope.arrive = true;
+                    //alert('URL: ' + data.docs[0].url);
                     $scope.$digest()
                 }else if(data.action ==google.picker.Action.CANCEL){
                     alert('goodbye');
@@ -198,5 +204,9 @@ angular.module('gdriveapps')
             }
             Googledrive.findFolder(callback);
         }
+
+        $scope.find = function() {
+            $scope.products = Products.query();
+        };
     }]
 );

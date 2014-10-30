@@ -59,17 +59,24 @@ angular.module('gdriveapps').factory('Googledrive', ['configGdrive',
 			});
 		}
 
+		//Google File Picker Platform
 		function setupPicker(accessToken, callback){
-			var picker = new google.picker.PickerBuilder()
-				.setOAuthToken(accessToken)
-				.setDeveloperKey(configGdrive.developerKey)
-				.addView(new google.picker.DocsUploadView().setParent("0B8FisuvAYPTfN1o1Q0d4T2JLTk0"))
-				.addView(new google.picker.DocsView())
-				.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-				//.enableFeature(google.picker.Feature.NAV_HIDDEN)
-				.setCallback(callback)
-				.build();
-			picker.setVisible(true);
+			var callbackAfterFindFolder = function(resp){
+				var folderID = resp.result.items[0].id;
+				var picker = new google.picker.PickerBuilder()
+					.setOAuthToken(accessToken)
+					.setDeveloperKey(configGdrive.developerKey)
+					.addView(new google.picker.DocsUploadView().setParent(folderID))
+					.addView(new google.picker.DocsView().setParent(folderID))
+					.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+					//.enableFeature(google.picker.Feature.NAV_HIDDEN)
+					.setCallback(callback)
+					.build();
+				picker.setVisible(true);
+			}
+			findFolder(callbackAfterFindFolder);
+
+
 		}
 
 		function listFolder(){

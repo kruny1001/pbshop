@@ -1,22 +1,41 @@
-<section id="main" ng-controller="storage">
+<section id="main" ng-controller="storage" ng-init="find()">
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <br><br><br>
     <div class="well" id="content">
         <div class="core-subtitle">Temporal Authentication</div>
         <input type="button" value="{{authName}}" ng-click="init()">
+        <hr/>
         <pre>{{rootGdriveFolderID}}</pre>
     </div>
     <div class="core-title">Upload Product</div>
     <div class="well">
         <div class="core-subtitle">Upload Image</div>
         <input ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()">
-        <pre ng-repeat="file in files">{{file}}</pre>
 
         <input type="file" id="filePicker" style="display: none" />
 
+        <hr/>
+
+        <div class="well" ng-repeat="file in files">
+            <pre >{{file}}</pre>
+            <img style="width:200px" ng-src="{{ arrive && permalLink + file.id || ''}}">
+        </div>
+
+
+
     </div>
+
     <div class="well">
         <div class="core-subtitle">Product Information</div>
+        <h6>총 상품 갯수: {{products.length}}</h6>
+
+        <div class="well" ng-repeat="product in products" product-editor>
+            <h6>상품이름: {{product.name}}</h6>
+            <h6>상품사진: {{product.mainimg}}</h6>
+            <h6>가격: {{product.price}}</h6>
+            <pre>{{product}}</pre>
+        </div>
+
     </div>
     <div class="well">
         <div class="core-subtitle">Insert Files to GoogleDrive</div>
