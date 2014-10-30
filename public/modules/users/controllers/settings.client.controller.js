@@ -12,7 +12,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
 			}
-
 			return false;
 		};
 
