@@ -56,7 +56,12 @@ module.exports = {
 
                 //firebase
                 'public/lib/angularfire/dist/angularfire.min.js',
-                'public/lib/firebase/firebase.js'
+                'public/lib/firebase/firebase.js',
+
+                //angular material
+                'public/lib/angular-aria/angular-aria.js',
+                //'public/lib/hammerjs/hammerjs.min.js',
+                'public/lib/angular-material/angular-material.min.js',
 
 			]
 		},

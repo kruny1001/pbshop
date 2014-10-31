@@ -7,6 +7,7 @@
 
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
+
     <!-- Aloha Editor
     <script type="text/javascript">
         var Aloha = window.Aloha || ( window.Aloha = {} );
@@ -61,6 +62,8 @@
 
     <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link data-require="font-awesome@*" data-semver="4.1.0" rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
+
+
 </head>
 
 <body class="ng-cloak" unresolved touch-action="auto">
@@ -73,6 +76,8 @@
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
 	</script>
+
+	<script type="text/javascript" src="http://hammerjs.github.io/dist/hammer.min.js"></script>
 
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>

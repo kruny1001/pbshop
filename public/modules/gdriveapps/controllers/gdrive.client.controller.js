@@ -20,7 +20,14 @@ angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
     .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
-        var accessToken;
+        /*
+        * */
+        $scope.data = {};
+        $scope.data.cb1 = true;
+        $scope.data.cb2 = false;
+        /*
+         * */
+         var accessToken;
         $scope.permalLink = 'http://drive.google.com/uc?export=view&id=';
         $scope.arrive = false;
         $scope.authName = 'Authorize';
@@ -32,7 +39,8 @@ angular.module('gdriveapps')
         $scope.authenticateWithGoogle =function authenticateWithGoogle(){
             window.gapi.auth.authorize({
                 'client_id': configGdrive.clientId,
-                'scope':configGdrive.scopes
+                'scope':configGdrive.scopes,
+                'immediate': true
             }, handleAuthentication);
         }
         function handleAuthentication(result){
@@ -216,3 +224,59 @@ angular.module('gdriveapps')
         }
     }]
 );
+
+
+angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $timeout, $mdBottomSheet) {
+    $scope.alert = '';
+
+    $scope.showListBottomSheet = function($event) {
+        $mdBottomSheet.show({
+            templateUrl: 'modules/gdriveapps/views/bottom-sheet-list-template.html',
+            controller: 'ListBottomSheetCtrl',
+            targetEvent: $event
+        }).then(function(clickedItem) {
+            $scope.alert = clickedItem.name + ' clicked!';
+        });
+    };
+
+    $scope.showGridBottomSheet = function($event) {
+        $mdBottomSheet.show({
+            templateUrl: 'modules/gdriveapps/views/bottom-sheet-grid-template.html',
+            controller: 'GridBottomSheetCtrl',
+            targetEvent: $event
+        }).then(function(clickedItem) {
+            $scope.alert = clickedItem.name + ' clicked!';
+        });
+    };
+})
+
+angular.module('gdriveapps').controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
+
+        $scope.items = [
+            { name: 'Share', icon: 'share' },
+            { name: 'Upload', icon: 'upload' },
+            { name: 'Copy', icon: 'copy' },
+            { name: 'Print this page', icon: 'print' },
+        ];
+
+        $scope.listItemClick = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    })
+angular.module('gdriveapps').controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet) {
+
+        $scope.items = [
+            { name: 'Hangout', icon: 'hangout' },
+            { name: 'Mail', icon: 'mail' },
+            { name: 'Message', icon: 'message' },
+            { name: 'Copy', icon: 'copy' },
+            { name: 'Facebook', icon: 'facebook' },
+            { name: 'Twitter', icon: 'twitter' },
+        ];
+
+        $scope.listItemClick = function($index) {
+            var clickedItem = $scope.items[$index];
+            $mdBottomSheet.hide(clickedItem);
+        };
+    });
