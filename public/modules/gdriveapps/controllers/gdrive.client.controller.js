@@ -172,7 +172,7 @@ angular.module('gdriveapps')
                     //alert('URL: ' + data.docs[0].url);
                     $scope.$digest()
                 }else if(data.action ==google.picker.Action.CANCEL){
-                    alert('goodbye');
+                    //alert('goodbye');
                 }
             }
             Googledrive.setupPicker(accessToken, pickerCallback);
@@ -208,5 +208,11 @@ angular.module('gdriveapps')
         $scope.find = function() {
             $scope.products = Products.query();
         };
+
+        $scope.onChangeStatus = function(){
+            console.log('sdfsf');
+            $scope.$digest();
+
+        }
     }]
 );

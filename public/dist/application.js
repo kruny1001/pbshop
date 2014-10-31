@@ -71,6 +71,8 @@ ApplicationConfiguration.registerModule('products');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('seller-interface');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('shop-list');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('slider-editor');'use strict';
@@ -3224,7 +3226,6 @@ angular.module('gdriveapps').controller('storage', [
           //alert('URL: ' + data.docs[0].url);
           $scope.$digest();
         } else if (data.action == google.picker.Action.CANCEL) {
-          alert('goodbye');
         }
       }
       Googledrive.setupPicker(accessToken, pickerCallback);
@@ -3253,6 +3254,10 @@ angular.module('gdriveapps').controller('storage', [
     }
     $scope.find = function () {
       $scope.products = Products.query();
+    };
+    $scope.onChangeStatus = function () {
+      console.log('sdfsf');
+      $scope.$digest();
     };
   }
 ]);/*
@@ -3801,7 +3806,7 @@ angular.module('gdriveapps').factory('Googledrive', [
     function setupPicker(accessToken, callback) {
       var callbackAfterFindFolder = function (resp) {
         var folderID = resp.result.items[0].id;
-        var picker = new google.picker.PickerBuilder().setOAuthToken(accessToken).setDeveloperKey(configGdrive.developerKey).addView(new google.picker.DocsUploadView().setParent(folderID)).addView(new google.picker.DocsView().setParent(folderID)).enableFeature(google.picker.Feature.MULTISELECT_ENABLED).setCallback(callback).build();
+        var picker = new google.picker.PickerBuilder().setOAuthToken(accessToken).setDeveloperKey(configGdrive.developerKey).addView(new google.picker.DocsUploadView().setParent(folderID)).addView(new google.picker.DocsView().setParent(folderID)).enableFeature(google.picker.Feature.MULTISELECT_ENABLED).setLocale('ko').setCallback(callback).build();
         picker.setVisible(true);
       };
       findFolder(callbackAfterFindFolder);
@@ -4243,7 +4248,58 @@ angular.module('reviews').factory('Reviews', [
   function ($resource) {
     return $resource('reviews/:reviewId', { reviewId: '@_id' }, { update: { method: 'PUT' } });
   }
-]);'use strict';
+]);/*
+ Directives Talking to Controllers
+ https://egghead.io/lessons/angularjs-directives-talking-to-controllers
+* */
+'use strict';
+angular.module('seller-interface').directive('selectImg', [function () {
+    return {
+      restrict: 'A',
+      scope: {
+        value: '=mySlider',
+        index: '@',
+        onChangeStatus: '&'
+      },
+      link: function postLink(scope, element, attrs) {
+        var isClicked = false;
+        element.bind('click', function () {
+          console.log('click');
+          if (isClicked) {
+            TweenLite.to(this, 0.3, { borderColor: '#ffffff' });
+            isClicked = false;
+            scope.value.selected = false;
+            scope.onChangeStatus();
+          } else {
+            TweenLite.to(this, 0.3, { borderColor: '#FF5F49' });
+            isClicked = true;
+            scope.value.selected = true;
+            scope.onChangeStatus();
+          }
+        });
+      }
+    };
+  }]);/**
+ * Created by Kevin on 2014-10-30.
+ */
+'use strict';
+angular.module('seller-interface').directive('selectSection', [function () {
+    return {
+      restrict: 'A',
+      scope: {},
+      link: function postLink(scope, element, attrs) {
+        var isClicked = false;
+        element.bind('mouseenter', function () {
+          TweenLite.to(this, 0.3, { backgroundColor: 'rgb(187, 194, 239)' });
+          console.log('mouse enter');
+        });
+        element.bind('mouseleave', function () {
+          TweenLite.to(this, 0.3, { backgroundColor: '#F5F5F5' });
+          console.log('mouse leave');
+        });
+      }
+    };
+  }]);'use strict';
 //Setting up route
 angular.module('shop-list').config([
   '$stateProvider',

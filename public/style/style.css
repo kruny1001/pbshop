@@ -6964,6 +6964,15 @@ a.link:hover {
 #datetime h2 {
   font-size: 1.0em; }
 
+.sellerInterfaceItemImg {
+  width: 200px;
+  box-shadow: 10px 10px 5px #888888;
+  border-radius: 10px;
+  border: 3px solid #ffffff; }
+
+.main-product-title {
+  font-size: 1em; }
+
 body {
   overflow-x: hidden; }
 

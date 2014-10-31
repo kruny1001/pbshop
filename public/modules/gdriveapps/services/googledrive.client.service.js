@@ -69,6 +69,7 @@ angular.module('gdriveapps').factory('Googledrive', ['configGdrive',
 					.addView(new google.picker.DocsUploadView().setParent(folderID))
 					.addView(new google.picker.DocsView().setParent(folderID))
 					.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+					.setLocale('ko')
 					//.enableFeature(google.picker.Feature.NAV_HIDDEN)
 					.setCallback(callback)
 					.build();
