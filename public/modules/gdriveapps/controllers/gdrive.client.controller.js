@@ -40,7 +40,7 @@ angular.module('gdriveapps')
             window.gapi.auth.authorize({
                 'client_id': configGdrive.clientId,
                 'scope':configGdrive.scopes,
-                'immediate': true
+                'immediate': false
             }, handleAuthentication);
         }
         function handleAuthentication(result){

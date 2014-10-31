@@ -3121,7 +3121,7 @@ angular.module('gdriveapps').controller('storage', [
       window.gapi.auth.authorize({
         'client_id': configGdrive.clientId,
         'scope': configGdrive.scopes,
-        'immediate': true
+        'immediate': false
       }, handleAuthentication);
     };
     function handleAuthentication(result) {
