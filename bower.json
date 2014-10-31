@@ -27,7 +27,7 @@
     "textAngular": "~1.2.2",
     "firebase": "~1.0.24",
     "angularfire": "~0.8.2",
-    "angular-material": "~0.4.2"
+    "angular-material-internal": "~0.4.2"
   },
   "resolutions": {
     "jquery": "~2.1.1"
