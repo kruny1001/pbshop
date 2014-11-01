@@ -13,6 +13,7 @@
 
         <div class="well">
             <div class="core-subtitle">Upload Image & Image Select</div>
+
             <input id="filePicker" style="display: none" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()">
             <pre>You can upload and select from Google Drive</pre>
     <!--
@@ -31,7 +32,31 @@
             <pre>You can create, edit or delete product information</pre>
 
             <div select-section class="well" ng-repeat="product in products" product-editor>
-                <div class="main-product-title">{{product.name}}</div>
+                <div style="font-size:14px">{{product.name}}</div>
+                <div style="font-size:12px" layout="vertical" layout-sm="horizontal" layout-padding>
+                    <div  flex>
+                        <div>상품이름: {{product.name}}</div>
+                    </div>
+                    <div flex>
+                        <div>가격: {{product.price}}</div>
+                    </div>
+                    <div flex>
+                        <div>상품사진: <img ng-src="{{product.mainimg}}" style="width:50px"></div>
+                    </div>
+                    <div flex>
+                        <div>Cuatro [flex]</div>
+                    </div>
+                </div>
+
+                <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+                    <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+                        Edit Button
+                    </md-button>
+                    <div style="width:50px;"></div>
+                    <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
+                        Upload Image
+                    </md-button>
+                </div>
                 <div ng-if="false">
                     <h6>상품이름: {{product.name}}</h6>
                     <h6>상품사진: {{product.mainimg}}</h6>
@@ -42,6 +67,34 @@
           </div>
 
         </div>
+    </div>
+
+    <div layout="vertical" md-theme="light-blue-dark">
+        <md-content>
+        <form style="padding: 20px;">
+            <div class="row">
+                <md-text-float label="Title" ng-model="user.title"></md-text-float>
+                <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
+            </div>
+        </form>
+    </md-content>
+
+        <md-content >
+            <form style="padding: 20px;">
+                <md-text-float label="Company" ng-model="user.company" disabled> </md-text-float>
+                <div class="row">
+                    <md-text-float label="FirstName" ng-model="user.firstName"> </md-text-float>
+                    <md-text-float label="LastName" ng-model="user.lastName" class="long"> </md-text-float>
+                </div>
+                <md-text-float label="Address" ng-model="user.address"> </md-text-float>
+                <div class="row">
+                    <md-text-float label="City" ng-model="user.city"> </md-text-float>
+                    <md-text-float label="State" ng-model="user.state"> </md-text-float>
+                    <md-text-float label="Postal Code" ng-model="user.postalCode"> </md-text-float>
+                </div>
+                <md-text-float label="Country" ng-model="user.country" disabled> </md-text-float>
+            </form>
+        </md-content>
     </div>
 
     <div ng-controller="BottomSheetExample">
@@ -84,19 +137,21 @@
 
         <section layout="vertical" layout-sm="horizontal" layout-align="center center">
             <md-button class="md-fab" aria-label="Time">
-                <md-icon icon="/img/icons/ic_access_time_24px.svg" style="width: 24px; height: 24px;"></md-icon>
+                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg&output=embed" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
 
+            <img ng-src="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg">
+
             <md-button class="md-fab" aria-label="New document">
-                <md-icon icon="/img/icons/ic_insert_drive_file_24px.svg" style="width: 24px; height: 24px;"></md-icon>
+                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_insert_drive_file_24px.svg" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
 
             <md-button class="md-fab" disabled arial-label="Comment">
-                <md-icon icon="/img/icons/ic_comment_24px.svg" style="width: 24px; height: 24px;"></md-icon>
+                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_comment_24px.svg" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
 
             <md-button class="md-fab md-primary" md-theme="cyan" aria-label="Profile">
-                <md-icon icon="/img/icons/ic_people_24px.svg" style="width: 24px; height: 24px;"></md-icon>
+                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_people_24px.svg" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
             <div class="label">FAB</div>
         </section>

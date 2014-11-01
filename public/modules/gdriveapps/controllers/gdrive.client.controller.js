@@ -25,6 +25,19 @@ angular.module('gdriveapps')
         $scope.data = {};
         $scope.data.cb1 = true;
         $scope.data.cb2 = false;
+
+        $scope.user = {
+            title:     "Technical Program Manager",
+            email:     "ipsum@lorem.com",
+            firstName: "Naomi",
+            lastName:  "" ,
+            company:   "Google" ,
+            address:   "1600 Amphitheatre Pkwy" ,
+            city:      "Mountain View" ,
+            state:     "CA" ,
+            country:   "USA" ,
+            postalCode : "94043"
+        };
         /*
          * */
          var accessToken;
@@ -82,7 +95,7 @@ angular.module('gdriveapps')
         }
 
         /// Custom file Picker Start ----------------------------------------------------------
-
+/*
         function setFilePicker() {
             var filePicker = document.getElementById('filePicker');
 
@@ -153,7 +166,7 @@ angular.module('gdriveapps')
                 request.execute(callback);
             }
         }
-
+*/
         /// Custom file Picker End ----------------------------------------------------------
 
         function callGooglePlus(){
@@ -249,14 +262,13 @@ angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $
         });
     };
 })
-
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
 
         $scope.items = [
-            { name: 'Share', icon: 'share' },
-            { name: 'Upload', icon: 'upload' },
-            { name: 'Copy', icon: 'copy' },
-            { name: 'Print this page', icon: 'print' },
+            { name: 'Upload New Image (Google Drive)', icon: 'share' },
+            { name: 'Select Existing Image (Google Drive)', icon: 'upload' },
+            { name: 'Product History (Google Sheets)', icon: 'copy' },
+            { name: 'Print this page (PDF Printer)', icon: 'print' },
         ];
 
         $scope.listItemClick = function($index) {

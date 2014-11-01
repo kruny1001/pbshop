@@ -15,7 +15,7 @@
 
  Author: Eric Bidelman (ericbidelman@chromium.org)
  */
-
+/*
 "use strict";
 
 
@@ -81,9 +81,6 @@ GDocs.prototype.revokeAuthToken = function(opt_callback) {
     }
 }
 
-/*
- * Generic HTTP AJAX request handler.
- */
 GDocs.prototype.makeRequest = function(method, url, callback, opt_data, opt_headers) {
     var data = opt_data || null;
     var headers = opt_headers || {};
@@ -108,11 +105,6 @@ GDocs.prototype.makeRequest = function(method, url, callback, opt_data, opt_head
     xhr.send(data);
 };
 
-
-
-/**
- * Uploads a file to Google Docs.
- */
 GDocs.prototype.upload = function(blob, callback, retry) {
 
     var onComplete = function(response) {
@@ -143,3 +135,4 @@ GDocs.prototype.upload = function(blob, callback, retry) {
     uploader.upload();
 
 };
+*/

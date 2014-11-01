@@ -9,7 +9,6 @@ var ApplicationConfiguration = function () {
         'ui.router',
         'ui.bootstrap',
         'ui.utils',
-        'ui.calendar',
         'mgo-angular-wizard',
         'smart-table',
         'ui.ace',
@@ -2977,105 +2976,128 @@ angular.module('gdriveapps').controller('DocsController', [
 
  Author: Eric Bidelman (ericbidelman@chromium.org)
  */
-'use strict';
-function GDocs(selector) {
-  var SCOPE_ = 'https://www.googleapis.com/drive/v2/';
-  this.lastResponse = null;
-  this.__defineGetter__('SCOPE', function () {
-    return SCOPE_;
-  });
-  this.__defineGetter__('DOCLIST_FEED', function () {
-    return SCOPE_ + 'files/';
-  });
-  this.__defineGetter__('CREATE_SESSION_URI', function () {
-    return 'https://www.googleapis.com/upload/drive/v2/files?uploadType=resumable';
-  });
-  this.__defineGetter__('DEFAULT_CHUNK_SIZE', function () {
-    return 1024 * 1024 * 5;  // 5MB;
-  });
-}
-;
-GDocs.prototype.auth = function (interactive, opt_callback) {
-  try {
-    chrome.identity.getAuthToken({ interactive: interactive }, function (token) {
-      if (token) {
-        this.accessToken = token;
-        opt_callback && opt_callback();
-      }
-    }.bind(this));
-  } catch (e) {
-    console.log(e);
-  }
-};
-GDocs.prototype.removeCachedAuthToken = function (opt_callback) {
-  if (this.accessToken) {
-    var accessToken = this.accessToken;
-    this.accessToken = null;
-    // Remove token from the token cache.
-    chrome.identity.removeCachedAuthToken({ token: accessToken }, function () {
-      opt_callback && opt_callback();
-    });
-  } else {
-    opt_callback && opt_callback();
-  }
-};
-GDocs.prototype.revokeAuthToken = function (opt_callback) {
-  if (this.accessToken) {
-    // Make a request to revoke token
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' + this.accessToken);
-    xhr.send();
-    this.removeCachedAuthToken(opt_callback);
-  }
-};
 /*
- * Generic HTTP AJAX request handler.
- */
-GDocs.prototype.makeRequest = function (method, url, callback, opt_data, opt_headers) {
-  var data = opt_data || null;
-  var headers = opt_headers || {};
-  var xhr = new XMLHttpRequest();
-  xhr.open(method, url, true);
-  // Include common headers (auth and version) and add rest.
-  xhr.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
-  for (var key in headers) {
-    xhr.setRequestHeader(key, headers[key]);
-  }
-  xhr.onload = function (e) {
-    this.lastResponse = this.response;
-    callback(this.lastResponse, this);
-  }.bind(this);
-  xhr.onerror = function (e) {
-    console.log(this, this.status, this.response, this.getAllResponseHeaders());
-  };
-  xhr.send(data);
-};
-/**
- * Uploads a file to Google Docs.
- */
-GDocs.prototype.upload = function (blob, callback, retry) {
-  var onComplete = function (response) {
-      document.getElementById('main').classList.remove('uploading');
-      var entry = JSON.parse(response).entry;
-      callback.apply(this, [entry]);
-    }.bind(this);
-  var onError = function (response) {
-      if (retry) {
-        this.removeCachedAuthToken(this.auth.bind(this, true, this.upload.bind(this, blob, callback, false)));
-      } else {
-        document.getElementById('main').classList.remove('uploading');
-        throw new Error('Error: ' + response);
-      }
-    }.bind(this);
-  var uploader = new MediaUploader({
-      token: this.accessToken,
-      file: blob,
-      onComplete: onComplete,
-      onError: onError
+"use strict";
+
+
+function GDocs(selector) {
+
+    var SCOPE_ = 'https://www.googleapis.com/drive/v2/';
+
+    this.lastResponse = null;
+
+    this.__defineGetter__('SCOPE', function() {
+        return SCOPE_;
     });
-  document.getElementById('main').classList.add('uploading');
-  uploader.upload();
-};/**
+
+    this.__defineGetter__('DOCLIST_FEED', function() {
+        return SCOPE_ + 'files/';
+    });
+
+    this.__defineGetter__('CREATE_SESSION_URI', function() {
+        return 'https://www.googleapis.com/upload/drive/v2/files?uploadType=resumable';
+    });
+
+    this.__defineGetter__('DEFAULT_CHUNK_SIZE', function() {
+        return 1024 * 1024 * 5; // 5MB;
+    });
+};
+
+GDocs.prototype.auth = function(interactive, opt_callback) {
+    try {
+        chrome.identity.getAuthToken({interactive: interactive}, function(token) {
+            if (token) {
+                this.accessToken = token;
+                opt_callback && opt_callback();
+            }
+        }.bind(this));
+    } catch(e) {
+        console.log(e);
+    }
+};
+
+GDocs.prototype.removeCachedAuthToken = function(opt_callback) {
+    if (this.accessToken) {
+        var accessToken = this.accessToken;
+        this.accessToken = null;
+        // Remove token from the token cache.
+        chrome.identity.removeCachedAuthToken({
+            token: accessToken
+        }, function() {
+            opt_callback && opt_callback();
+        });
+    } else {
+        opt_callback && opt_callback();
+    }
+};
+
+GDocs.prototype.revokeAuthToken = function(opt_callback) {
+    if (this.accessToken) {
+        // Make a request to revoke token
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
+            this.accessToken);
+        xhr.send();
+        this.removeCachedAuthToken(opt_callback);
+    }
+}
+
+GDocs.prototype.makeRequest = function(method, url, callback, opt_data, opt_headers) {
+    var data = opt_data || null;
+    var headers = opt_headers || {};
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+
+    // Include common headers (auth and version) and add rest.
+    xhr.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
+    for (var key in headers) {
+        xhr.setRequestHeader(key, headers[key]);
+    }
+
+    xhr.onload = function(e) {
+        this.lastResponse = this.response;
+        callback(this.lastResponse, this);
+    }.bind(this);
+    xhr.onerror = function(e) {
+        console.log(this, this.status, this.response,
+            this.getAllResponseHeaders());
+    };
+    xhr.send(data);
+};
+
+GDocs.prototype.upload = function(blob, callback, retry) {
+
+    var onComplete = function(response) {
+        document.getElementById('main').classList.remove('uploading');
+        var entry = JSON.parse(response).entry;
+        callback.apply(this, [entry]);
+    }.bind(this);
+    var onError = function(response) {
+        if (retry) {
+            this.removeCachedAuthToken(
+                this.auth.bind(this, true,
+                    this.upload.bind(this, blob, callback, false)));
+        } else {
+            document.getElementById('main').classList.remove('uploading');
+            throw new Error('Error: '+response);
+        }
+    }.bind(this);
+
+
+    var uploader = new MediaUploader({
+        token: this.accessToken,
+        file: blob,
+        onComplete: onComplete,
+        onError: onError
+    });
+
+    document.getElementById('main').classList.add('uploading');
+    uploader.upload();
+
+};
+*/
+/**
  * Created by Kevin on 2014-10-27.
 Developing with the javascript Lib
  https://developers.google.com/api-client-library/javascript/dev/dev_jscript
@@ -3106,6 +3128,18 @@ angular.module('gdriveapps').controller('storage', [
     $scope.data = {};
     $scope.data.cb1 = true;
     $scope.data.cb2 = false;
+    $scope.user = {
+      title: 'Technical Program Manager',
+      email: 'ipsum@lorem.com',
+      firstName: 'Naomi',
+      lastName: '',
+      company: 'Google',
+      address: '1600 Amphitheatre Pkwy',
+      city: 'Mountain View',
+      state: 'CA',
+      country: 'USA',
+      postalCode: '94043'
+    };
     /*
          * */
     var accessToken;
@@ -3160,58 +3194,78 @@ angular.module('gdriveapps').controller('storage', [
       Googledrive.getGoogleDriveInfo();
     }
     /// Custom file Picker Start ----------------------------------------------------------
-    function setFilePicker() {
-      var filePicker = document.getElementById('filePicker');
-      filePicker.style.display = 'none';
-      // Access token has been successfully retrieved, requests can be sent to the API.
-      filePicker.style.display = 'block';
-      filePicker.onchange = uploadFile;
-    }
-    function uploadFile(evt) {
-      var callback = function (file) {
-        console.log('!!File!!');
-        console.log(file);
-      };
-      gapi.client.load('drive', 'v2', function () {
-        var file = evt.target.files[0];
-        insertFile(file, callback);
-      });
-    }
-    function insertFile(fileData, callback) {
-      var boundary = '-------314159265358979323846';
-      var delimiter = '\r\n--' + boundary + '\r\n';
-      var close_delim = '\r\n--' + boundary + '--';
-      var reader = new FileReader();
-      reader.readAsBinaryString(fileData);
-      reader.onload = function (e) {
-        var contentType = fileData.type || 'application/octet-stream';
-        var metadata = {
-            'title': fileData.name,
-            'mimeType': contentType,
-            'writersCanShare': true,
-            'parents': [{
-                'kind': 'drive#fileLink',
-                'id': '0B8FisuvAYPTfN1o1Q0d4T2JLTk0'
-              }]
-          };
-        var base64Data = btoa(reader.result);
-        var multipartRequestBody = delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) + delimiter + 'Content-Type: ' + contentType + '\r\n' + 'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
-        console.log(multipartRequestBody);
-        var request = gapi.client.request({
-            'path': '/upload/drive/v2/files',
-            'method': 'POST',
-            'params': { 'uploadType': 'multipart' },
-            'headers': { 'Content-Type': 'multipart/mixed; boundary="' + boundary + '"' },
-            'body': multipartRequestBody
-          });
-        if (!callback) {
-          callback = function (file) {
-            console.log(file);
-          };
+    /*
+        function setFilePicker() {
+            var filePicker = document.getElementById('filePicker');
+
+            filePicker.style.display = 'none';
+
+            // Access token has been successfully retrieved, requests can be sent to the API.
+            filePicker.style.display = 'block';
+            filePicker.onchange = uploadFile;
         }
-        request.execute(callback);
-      };
-    }
+
+        function uploadFile(evt) {
+            var callback = function(file) {
+                console.log('!!File!!');
+                console.log(file);
+            }
+            gapi.client.load('drive', 'v2', function() {
+                var file = evt.target.files[0];
+                insertFile(file, callback);
+            });
+        }
+
+        function insertFile(fileData, callback) {
+            var boundary = '-------314159265358979323846';
+            var delimiter = "\r\n--" + boundary + "\r\n";
+            var close_delim = "\r\n--" + boundary + "--";
+
+            var reader = new FileReader();
+            reader.readAsBinaryString(fileData);
+            reader.onload = function(e) {
+                var contentType = fileData.type || 'application/octet-stream';
+                var metadata = {
+                    'title': fileData.name,
+                    'mimeType': contentType,
+                    'writersCanShare':true,
+                    'parents': [{
+                        'kind': "drive#fileLink",
+                        'id': "0B8FisuvAYPTfN1o1Q0d4T2JLTk0"
+                    }]
+
+                };
+
+                var base64Data = btoa(reader.result);
+                var multipartRequestBody =
+                    delimiter +
+                    'Content-Type: application/json\r\n\r\n' +
+                    JSON.stringify(metadata) +
+                    delimiter +
+                    'Content-Type: ' + contentType + '\r\n' +
+                    'Content-Transfer-Encoding: base64\r\n' +
+                    '\r\n' +
+                    base64Data +
+                    close_delim;
+                console.log(multipartRequestBody);
+
+                var request = gapi.client.request({
+                    'path': '/upload/drive/v2/files',
+                    'method': 'POST',
+                    'params': {'uploadType': 'multipart'},
+                    'headers': {
+                        'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+                    },
+                    'body': multipartRequestBody});
+                if (!callback) {
+                    callback = function(file) {
+                        console.log(file)
+                    };
+                }
+                request.execute(callback);
+            }
+        }
+*/
     /// Custom file Picker End ----------------------------------------------------------
     function callGooglePlus() {
       function callback(resp) {
@@ -3302,19 +3356,19 @@ angular.module('gdriveapps').controller('ListBottomSheetCtrl', [
   function ($scope, $mdBottomSheet) {
     $scope.items = [
       {
-        name: 'Share',
+        name: 'Upload New Image (Google Drive)',
         icon: 'share'
       },
       {
-        name: 'Upload',
+        name: 'Select Existing Image (Google Drive)',
         icon: 'upload'
       },
       {
-        name: 'Copy',
+        name: 'Product History (Google Sheets)',
         icon: 'copy'
       },
       {
-        name: 'Print this page',
+        name: 'Print this page (PDF Printer)',
         icon: 'print'
       }
     ];
@@ -3376,150 +3430,178 @@ angular.module('gdriveapps').controller('GridBottomSheetCtrl', [
 
  Author: Eric Bidelman (ericbidelman@chromium.org)
  */
+/*
 function onError(e) {
-  console.log(e);
+    console.log(e);
 }
+
 // FILESYSTEM SUPPORT ----------------------------------------------------------
 var fs = null;
 var FOLDERNAME = 'test';
+
 function writeFile(blob) {
-  if (!fs) {
-    return;
-  }
-  fs.root.getDirectory(FOLDERNAME, { create: true }, function (dirEntry) {
-    dirEntry.getFile(blob.name, {
-      create: true,
-      exclusive: false
-    }, function (fileEntry) {
-      // Create a FileWriter object for our FileEntry, and write out blob.
-      fileEntry.createWriter(function (fileWriter) {
-        fileWriter.onerror = onError;
-        fileWriter.onwriteend = function (e) {
-          console.log('Write completed.');
-        };
-        fileWriter.write(blob);
-      }, onError);
+    if (!fs) {
+        return;
+    }
+
+    fs.root.getDirectory(FOLDERNAME, {create: true}, function(dirEntry) {
+        dirEntry.getFile(blob.name, {create: true, exclusive: false}, function(fileEntry) {
+            // Create a FileWriter object for our FileEntry, and write out blob.
+            fileEntry.createWriter(function(fileWriter) {
+                fileWriter.onerror = onError;
+                fileWriter.onwriteend = function(e) {
+                    console.log('Write completed.');
+                };
+                fileWriter.write(blob);
+            }, onError);
+        }, onError);
     }, onError);
-  }, onError);
 }
 // -----------------------------------------------------------------------------
+
 var gDriveApp = angular.module('gDriveApp', []);
-gDriveApp.factory('gdocs', function () {
-  var gdocs = new GDocs();
-  var dnd = new DnDFileController('body', function (files) {
-      var $scope = angular.element(this).scope();
-      Util.toArray(files).forEach(function (file, i) {
-        gdocs.upload(file, function () {
-        }, true);
-      });
+
+gDriveApp.factory('gdocs', function() {
+    var gdocs = new GDocs();
+
+    var dnd = new DnDFileController('body', function(files) {
+        var $scope = angular.element(this).scope();
+        Util.toArray(files).forEach(function(file, i) {
+            gdocs.upload(file, function() {
+                //$scope.fetchDocs(true);
+            }, true);
+        });
     });
-  return gdocs;
+
+    return gdocs;
 });
 //gDriveApp.service('gdocs', GDocs);
 //gDriveApp.controller('DocsController', ['$scope', '$http', DocsController]);
+
 // Main Angular controller for app.
 function DocsController($scope, $http, gdocs) {
-  $scope.docs = [];
-  // Response handler that caches file icons in the filesystem API.
-  function successCallbackWithFsCaching(resp, status, headers, config) {
-    var docs = [];
-    var totalEntries = resp.items.length;
-    console.log(totalEntries);
-    resp.items.forEach(function (entry, i) {
-      var doc = {
-          title: entry.title,
-          updatedDate: Util.formatDate(entry.modifiedDate),
-          updatedDateFull: entry.modifiedDate,
-          icon: entry.iconLink,
-          alternateLink: entry.alternateLink,
-          size: entry.fileSize ? '( ' + entry.fileSize + ' bytes)' : null
-        };
-      // 'http://gstatic.google.com/doc_icon_128.png' -> 'doc_icon_128.png'
-      doc.iconFilename = doc.icon.substring(doc.icon.lastIndexOf('/') + 1);
-      console.log(doc.icon);
-      // If file exists, it we'll get back a FileEntry for the filesystem URL.
-      // Otherwise, the error callback will fire and we need to XHR it in and
-      // write it to the FS.
-      var fsURL = fs.root.toURL() + FOLDERNAME + '/' + doc.iconFilename;
-      window.webkitResolveLocalFileSystemURL(fsURL, function (entry) {
-        console.log('Fetched icon from the FS cache');
-        doc.icon = entry.toURL();
-        // should be === to fsURL, but whatevs.
-        $scope.docs.push(doc);
-        // Only want to sort and call $apply() when we have all entries.
-        if (totalEntries - 1 == i) {
-          $scope.docs.sort(Util.sortByDate);
-          $scope.$apply(function ($scope) {
-          });  // Inform angular we made changes.
-        }
-      }, function (e) {
-        $http.get(doc.icon, { responseType: 'blob' }).success(function (blob) {
-          console.log('Fetched icon via XHR');
-          blob.name = doc.iconFilename;
-          // Add icon filename to blob.
-          writeFile(blob);
-          // Write is async, but that's ok.
-          doc.icon = window.URL.createObjectURL(blob);
-          $scope.docs.push(doc);
-          if (totalEntries - 1 == i) {
-            $scope.docs.sort(Util.sortByDate);
-          }
+    $scope.docs = [];
+
+    // Response handler that caches file icons in the filesystem API.
+    function successCallbackWithFsCaching(resp, status, headers, config) {
+        var docs = [];
+        var totalEntries = resp.items.length;
+        console.log(totalEntries);
+        resp.items.forEach(function(entry, i) {
+            var doc = {
+                title: entry.title,
+                updatedDate: Util.formatDate(entry.modifiedDate),
+                updatedDateFull: entry.modifiedDate,
+                icon: entry.iconLink,
+                alternateLink: entry.alternateLink,
+                size: entry.fileSize ? '( ' + entry.fileSize + ' bytes)' : null
+            };
+
+            // 'http://gstatic.google.com/doc_icon_128.png' -> 'doc_icon_128.png'
+            doc.iconFilename = doc.icon.substring(doc.icon.lastIndexOf('/') + 1);
+            console.log(doc.icon);
+            // If file exists, it we'll get back a FileEntry for the filesystem URL.
+            // Otherwise, the error callback will fire and we need to XHR it in and
+            // write it to the FS.
+            var fsURL = fs.root.toURL() + FOLDERNAME + '/' + doc.iconFilename;
+            window.webkitResolveLocalFileSystemURL(fsURL, function(entry) {
+                console.log('Fetched icon from the FS cache');
+
+                doc.icon = entry.toURL(); // should be === to fsURL, but whatevs.
+
+                $scope.docs.push(doc);
+
+                // Only want to sort and call $apply() when we have all entries.
+                if (totalEntries - 1 == i) {
+                    $scope.docs.sort(Util.sortByDate);
+                    $scope.$apply(function($scope) {}); // Inform angular we made changes.
+                }
+            }, function(e) {
+
+                $http.get(doc.icon, {responseType: 'blob'}).success(function(blob) {
+                    console.log('Fetched icon via XHR');
+
+                    blob.name = doc.iconFilename; // Add icon filename to blob.
+
+                    writeFile(blob); // Write is async, but that's ok.
+
+                    doc.icon = window.URL.createObjectURL(blob);
+
+                    $scope.docs.push(doc);
+                    if (totalEntries - 1 == i) {
+                        $scope.docs.sort(Util.sortByDate);
+                    }
+                });
+
+            });
         });
-      });
-    });
-  }
-  $scope.clearDocs = function () {
-    $scope.docs = [];  // Clear out old results.
-  };
-  $scope.fetchDocs = function (retry) {
-    this.clearDocs();
-    if (gdocs.accessToken) {
-      var config = {
-          params: { 'alt': 'json' },
-          headers: { 'Authorization': 'Bearer ' + gdocs.accessToken }
-        };
-      //https://drive.google.com/open?id=0B8FisuvAYPTfampGWFhXQUs5dVU&authuser=0
-      $http.get(gdocs.DOCLIST_FEED, config).success(successCallbackWithFsCaching).error(function (data, status, headers, config) {
-        if (status == 401 && retry) {
-          gdocs.removeCachedAuthToken(gdocs.auth.bind(gdocs, true, $scope.fetchDocs.bind($scope, false)));
+    }
+
+    $scope.clearDocs = function() {
+        $scope.docs = []; // Clear out old results.
+    };
+
+    $scope.fetchDocs = function(retry) {
+        this.clearDocs();
+
+        if (gdocs.accessToken) {
+            var config = {
+                params: {'alt': 'json'},
+                headers: {
+                    'Authorization': 'Bearer ' + gdocs.accessToken
+
+                }
+            };
+
+            //https://drive.google.com/open?id=0B8FisuvAYPTfampGWFhXQUs5dVU&authuser=0
+            $http.get(gdocs.DOCLIST_FEED, config).
+                success(successCallbackWithFsCaching).
+                error(function(data, status, headers, config) {
+                    if (status == 401 && retry) {
+                        gdocs.removeCachedAuthToken(
+                            gdocs.auth.bind(gdocs, true,
+                                $scope.fetchDocs.bind($scope, false)));
+                    }
+                });
         }
-      });
+    };
+
+    // Toggles the authorization state.
+    $scope.toggleAuth = function(interactive) {
+        if (!gdocs.accessToken) {
+            gdocs.auth(interactive, function() {
+                $scope.fetchDocs(false);
+            });
+        } else {
+            gdocs.revokeAuthToken(function() {});
+            this.clearDocs();
+        }
     }
-  };
-  // Toggles the authorization state.
-  $scope.toggleAuth = function (interactive) {
-    if (!gdocs.accessToken) {
-      gdocs.auth(interactive, function () {
-        $scope.fetchDocs(false);
-      });
-    } else {
-      gdocs.revokeAuthToken(function () {
-      });
-      this.clearDocs();
-    }
-  };
-  // Controls the label of the authorize/deauthorize button.
-  $scope.authButtonLabel = function () {
-    if (gdocs.accessToken)
-      return 'Deauthorize';
-    else
-      return 'Authorize';
-  };
-  $scope.toggleAuth(false);
+
+    // Controls the label of the authorize/deauthorize button.
+    $scope.authButtonLabel = function() {
+        if (gdocs.accessToken)
+            return 'Deauthorize';
+        else
+            return 'Authorize';
+    };
+
+    $scope.toggleAuth(false);
 }
-DocsController.$inject = [
-  '$scope',
-  '$http',
-  'gdocs'
-];
-// For code minifiers.
+
+DocsController.$inject = ['$scope', '$http', 'gdocs']; // For code minifiers.
+
 // Init setup and attach event listeners.
-document.addEventListener('DOMContentLoaded', function (e) {
-  // FILESYSTEM SUPPORT --------------------------------------------------------
-  window.webkitRequestFileSystem(TEMPORARY, 1024 * 1024, function (localFs) {
-    fs = localFs;
-  }, onError);  // ---------------------------------------------------------------------------
-});'use strict';
+document.addEventListener('DOMContentLoaded', function(e) {
+
+    // FILESYSTEM SUPPORT --------------------------------------------------------
+    window.webkitRequestFileSystem(TEMPORARY, 1024 * 1024, function(localFs) {
+        fs = localFs;
+    }, onError);
+    // ---------------------------------------------------------------------------
+});
+*/
+'use strict';
 // Gdriveapps controller
 angular.module('gdriveapps').constant('CONFIG', {
   clientId: '574563539488-pctm7fr21vcetcfpdf9hhaje9q5vepee.apps.googleusercontent.com',

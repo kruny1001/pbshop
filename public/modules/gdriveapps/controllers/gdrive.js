@@ -15,7 +15,7 @@
 
  Author: Eric Bidelman (ericbidelman@chromium.org)
  */
-
+/*
 function onError(e) {
     console.log(e);
 }
@@ -185,3 +185,4 @@ document.addEventListener('DOMContentLoaded', function(e) {
     }, onError);
     // ---------------------------------------------------------------------------
 });
+*/
