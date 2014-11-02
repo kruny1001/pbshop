@@ -2,12 +2,13 @@
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
     <br><br><br>
     <div style="margin:25px" layout="vertical">
-        <md-toolbar md-theme="indigo" scroll-shrink>
+
+        <md-toolbar style="border-radius:15px 15px 0px 0px;" md-theme="indigo" scroll-shrink>
             <div class="md-toolbar-tools">
                 <span class="md-flex">Temporal Authentication</span>
             </div>
         </md-toolbar>
-        <md-content class="md-padding">
+        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
             <input type="button" value="{{authName}}" ng-click="init()">
             <md-tooltip>
                 Authentication Section
@@ -20,71 +21,38 @@
             </p>
         </md-content>
 
-        <md-toolbar md-theme="indigo">
+        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
                 <span class="md-flex">Upload Image & Image Select</span>
             </div>
         </md-toolbar>
-
-        <md-content class="md-padding">
+        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
             <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()">
             You can upload and select from Google Drive
             <!--
                     <input type="file" id="filePicker" style="display: none" />
             -->
             <p>
-            <div class="well">
-                <!--
-                <pre >{{file}}</pre>
-                -->
-                <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
-            </div>
+                <div class="well">
+                    <!--
+                    <pre >{{file}}</pre>
+                    -->
+                    <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
+                </div>
             </p>
         </md-content>
 
-        <md-toolbar md-theme="indigo">
+
+        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
                 <span class="md-flex">
                     Product Information ({{products.length}})
                 </span>
             </div>
         </md-toolbar>
-
-        <md-content class="md-padding">
-            You can create, edit or delete product information
-            <md-list>
-                <md-item ng-repeat="item in todos">
-                    <md-item-content>
-                        <div class="md-tile-left">
-                            <img ng-src="{{item.product_uri}}" class="face" alt="{{item.who}}">
-                        </div>
-                        <div class="md-tile-content">
-                            <h3>{{item.name}}</h3>
-                            <h4>{{item.when}}</h4>
-                            <p>
-                                {{item.notes}}
-                            </p>
-                            <!--
-                            <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-                                <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-                                        Edit Button
-                                </md-button>
-                                <div style="width:50px; height: 5px;"></div>
-                                <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
-                                    Upload Image
-                                </md-button>
-                            </div>
-                            -->
-                        </div>
-                    </md-item-content>
-                </md-item>
-            </md-list>
-
-            <!--
-                    <input type="file" id="filePicker" style="display: none" />
-            -->
-
-                <md-contnet ng-repeat="product in products" product-editor>
+        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px; overflow-y:hidden;">
+            <div layout="horizontal" layout-padding>
+                <md-contnet ng-repeat="product in products" product-editor flex="45">
                 <md-card>
                     <img ng-src="{{product.mainimg}}"
                          class="md-card-image"
@@ -106,6 +74,8 @@
                     </div>
                 </md-card>
                 </md-contnet>
+            </div>
+
                 <!--
                 <div style="font-size:14px">{{product.name}}</div>
                 <div style="font-size:12px" layout="vertical" layout-sm="horizontal" layout-padding>
@@ -124,7 +94,48 @@
                 </div>
                 -->
         </md-content>
+
+
+    <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
+        <div class="md-toolbar-tools">
+                <span class="md-flex">
+                    Reviews
+                </span>
+        </div>
+    </md-toolbar>
+
+
+    <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
+        <md-list>
+            <md-item ng-repeat="item in todos">
+                <md-item-content>
+                    <div class="md-tile-left">
+                        <img ng-src="{{item.product_uri}}" class="face" alt="{{item.who}}">
+                    </div>
+                    <div class="md-tile-content">
+                        <h3>{{item.name}}</h3>
+                        <h4>{{item.when}}</h4>
+                        <p>
+                            {{item.notes}}
+                        </p>
+                        <!--
+                        <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+                            <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+                                    Edit Button
+                            </md-button>
+                            <div style="width:50px; height: 5px;"></div>
+                            <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
+                                Upload Image
+                            </md-button>
+                        </div>
+                        -->
+                    </div>
+                </md-item-content>
+            </md-item>
+        </md-list>
+    </md-content>
     </div>
+
 
     <!--
     <div layout="vertical" md-theme="light-blue-dark">
