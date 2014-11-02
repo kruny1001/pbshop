@@ -1,37 +1,112 @@
 <section id="main" ng-controller="storage" ng-init="find()">
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
-<br><br><br>
-    <div style="margin:25px">
-        <div class="well" id="content">
-            <div class="core-subtitle">Temporal Authentication</div>
-            <pre>This Authentication process would be done when seller login at Production Version</pre>
+    <br><br><br>
+    <div style="margin:25px" layout="vertical">
+        <md-toolbar md-theme="indigo" scroll-shrink>
+            <div class="md-toolbar-tools">
+                <span class="md-flex">Temporal Authentication</span>
+            </div>
+        </md-toolbar>
+        <md-content class="md-padding">
             <input type="button" value="{{authName}}" ng-click="init()">
-            <!--
+            <md-tooltip>
+                Authentication Section
+            </md-tooltip>
+            </input>
+            This Authentication process would be done when seller login at Production Version
+
+            <p>
             <pre>{{rootGdriveFolderID}}</pre>
-            -->
-        </div>
+            </p>
+        </md-content>
 
-        <div class="well">
-            <div class="core-subtitle">Upload Image & Image Select</div>
+        <md-toolbar md-theme="indigo">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">Upload Image & Image Select</span>
+            </div>
+        </md-toolbar>
 
+        <md-content class="md-padding">
             <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()">
-            <pre>You can upload and select from Google Drive</pre>
-    <!--
-            <input type="file" id="filePicker" style="display: none" />
-    -->
+            You can upload and select from Google Drive
+            <!--
+                    <input type="file" id="filePicker" style="display: none" />
+            -->
+            <p>
             <div class="well">
                 <!--
                 <pre >{{file}}</pre>
                 -->
                 <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
             </div>
-        </div>
+            </p>
+        </md-content>
 
-        <div class="well">
-            <div class="core-subtitle">Product Information <div style="font-size:small">총 상품 갯수: {{products.length}}</div></div>
-            <pre>You can create, edit or delete product information</pre>
+        <md-toolbar md-theme="indigo">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">
+                    Product Information ({{products.length}})
+                </span>
+            </div>
+        </md-toolbar>
 
-            <div select-section class="well" ng-repeat="product in products" product-editor>
+        <md-content class="md-padding">
+            You can create, edit or delete product information
+            <md-list>
+                <md-item ng-repeat="item in todos">
+                    <md-item-content>
+                        <div class="md-tile-left">
+                            <img ng-src="{{item.product_uri}}" class="face" alt="{{item.who}}">
+                        </div>
+                        <div class="md-tile-content">
+                            <h3>{{item.name}}</h3>
+                            <h4>{{item.when}}</h4>
+                            <p>
+                                {{item.notes}}
+                            </p>
+                            <!--
+                            <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+                                <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+                                        Edit Button
+                                </md-button>
+                                <div style="width:50px; height: 5px;"></div>
+                                <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
+                                    Upload Image
+                                </md-button>
+                            </div>
+                            -->
+                        </div>
+                    </md-item-content>
+                </md-item>
+            </md-list>
+
+            <!--
+                    <input type="file" id="filePicker" style="display: none" />
+            -->
+
+                <md-contnet ng-repeat="product in products" product-editor>
+                <md-card>
+                    <img ng-src="{{product.mainimg}}"
+                         class="md-card-image"
+                         alt="Washed Out"
+                         pagespeed_url_hash="73454173"
+                         onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                    <h3>{{product.name}} (가격: {{product.price}})</h3>
+                    <p>
+                        {{product.description}}
+                    </p>
+                    <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+                        <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+                            Edit Button
+                        </md-button>
+                        <div style="width:50px; height: 5px;"></div>
+                        <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
+                            Upload Image
+                        </md-button>
+                    </div>
+                </md-card>
+                </md-contnet>
+                <!--
                 <div style="font-size:14px">{{product.name}}</div>
                 <div style="font-size:12px" layout="vertical" layout-sm="horizontal" layout-padding>
                     <div  flex>
@@ -47,37 +122,20 @@
                         <div>Cuatro [flex]</div>
                     </div>
                 </div>
-
-                <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-                    <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-                        Edit Button
-                    </md-button>
-                    <div style="width:50px; height: 15px;"></div>
-                    <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
-                        Upload Image
-                    </md-button>
-                </div>
-                <div ng-if="false">
-                    <h6>상품이름: {{product.name}}</h6>
-                    <h6>상품사진: {{product.mainimg}}</h6>
-                    <h6>가격: {{product.price}}</h6>
-                    <!-- Detail Information -->
-                    <pre>{{product}}</pre>
-                </div>
-          </div>
-
-        </div>
+                -->
+        </md-content>
     </div>
 
+    <!--
     <div layout="vertical" md-theme="light-blue-dark">
         <md-content>
-        <form style="padding: 20px;">
-            <div class="row">
-                <md-text-float label="Title" ng-model="user.title"></md-text-float>
-                <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
-            </div>
-        </form>
-    </md-content>
+            <form style="padding: 20px;">
+                <div class="row">
+                    <md-text-float label="Title" ng-model="user.title"></md-text-float>
+                    <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
+                </div>
+            </form>
+        </md-content>
 
         <md-content >
             <form style="padding: 20px;">
@@ -96,6 +154,7 @@
             </form>
         </md-content>
     </div>
+
 
     <div ng-controller="BottomSheetExample">
         <p style="padding-left: 20px;">
@@ -118,7 +177,6 @@
     </div>
 
     <md-content>
-
         <section layout="vertical" layout-sm="horizontal" layout-align="center center">
             <md-button>Button</md-button>
             <md-button noink class="md-primary">Primary (noink)</md-button>
@@ -172,16 +230,6 @@
 
     </md-content>
 
-    <md-content>
-        <md-card>
-            <img src="http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfMTM1MG1rSnNsMUk" class="md-card-image" alt="Washed Out" pagespeed_url_hash="73454173" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-            <h2>명이나물</h2>
-            <p>
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-            </p>
-        </md-card>
-    </md-content>
 
     <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
         Checkbox 1: {{ data.cb1 }}
@@ -190,5 +238,5 @@
     <md-checkbox ng-model="data.cb2" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'">
         Checkbox 2: {{ data.cb2 }}
     </md-checkbox>
-
+    -->
 </section>

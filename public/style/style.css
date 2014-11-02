@@ -2,6 +2,7 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css);
 @import url(../lib/angular-material/angular-material.min.css);
+@import url(../lib/angular-material/themes/indigo-theme.css);
 @import "http://font-style: em;googleapis.com/css?family=Open+Sans)";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,900,700);
@@ -7205,6 +7206,14 @@ form > .row {
 md-input-group.long > input {
   width: 264px; }
 
+/**/
+.face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px; }
+
+/**/
 body {
   overflow-x: hidden; }
 

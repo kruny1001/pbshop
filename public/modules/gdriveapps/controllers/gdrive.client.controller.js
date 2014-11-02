@@ -38,6 +38,24 @@ angular.module('gdriveapps')
             country:   "USA" ,
             postalCode : "94043"
         };
+
+        $scope.todos = [
+            {
+                product_uri : 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfaTJnaHRWWmozRUU',
+                name: '명이나물',
+                who: '명이게이',
+                when: '3:08PM',
+                notes: "아나니 아나니 아나니리요"
+            },
+            {
+                product_uri : 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfcDVGYVc3NEtaSEU',
+                name: '더덕나물',
+                who: '명이게이',
+                when: '3:08PM',
+                notes: " I'll be in your neighborhood doing errands"
+            },
+        ]
+
         /*
          * */
          var accessToken;

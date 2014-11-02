@@ -3140,6 +3140,22 @@ angular.module('gdriveapps').controller('storage', [
       country: 'USA',
       postalCode: '94043'
     };
+    $scope.todos = [
+      {
+        product_uri: 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfaTJnaHRWWmozRUU',
+        name: '\uba85\uc774\ub098\ubb3c',
+        who: '\uba85\uc774\uac8c\uc774',
+        when: '3:08PM',
+        notes: '\uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694'
+      },
+      {
+        product_uri: 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfcDVGYVc3NEtaSEU',
+        name: '\ub354\ub355\ub098\ubb3c',
+        who: '\uba85\uc774\uac8c\uc774',
+        when: '3:08PM',
+        notes: ' I\'ll be in your neighborhood doing errands'
+      }
+    ];
     /*
          * */
     var accessToken;
