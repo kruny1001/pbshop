@@ -20,14 +20,10 @@
             </md-tooltip>
             </input>
             This Authentication process would be done when seller login at Production Version
-
             <p>
             <pre>{{rootGdriveFolderID}}</pre>
             </p>
         </md-content>
-
-
-
 
         <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
@@ -40,12 +36,17 @@
             <div layout="horizontal" layout-padding>
                 <md-contnet ng-repeat="product in products" product-editor flex="66" style="min-width: 210px; max-width:320px;">
                 <md-card>
+                    <!--
                     <img ng-src="{{product.mainimg}}"
                          class="md-card-image"
                          alt="Washed Out"
                          pagespeed_url_hash="73454173"
                          onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                    -->
+                    <img ng-src="{{product.mainimg}}"
+                         class="md-card-image">
                     <h3>{{product.name}} (가격: {{product.price}})</h3>
+
                     <p>
                         {{product.description}}
                     </p>
@@ -110,11 +111,11 @@
                     <input type="file" id="filePicker" style="display: none" />
             -->
             <p>
-            <div class="well">
+            <div class="well" >
                 <!--
                 <pre >{{file}}</pre>
                 -->
-                <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
+                <img ng-repeat="file in files" style="margin-left:15px; margin-bottom: 15px"  select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
             </div>
             </p>
         </md-content>

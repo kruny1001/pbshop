@@ -22,6 +22,13 @@ angular.module('gdriveapps')
     .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
         /*
         * */
+
+        $http({'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc', method:"GET", headers: {
+            "Content-Type": "image/jpeg"
+        }})
+            .success(function(data) {
+                console.log(data);
+            })
         $scope.data = {};
         $scope.data.cb1 = true;
         $scope.data.cb2 = false;
@@ -66,6 +73,7 @@ angular.module('gdriveapps')
         $scope.init = function init(){
             window.gapi.load('auth', $scope.authenticateWithGoogle);
             window.gapi.load('picker');
+            gapi.client.load('urlshortener', 'v1');
         }
         $scope.authenticateWithGoogle =function authenticateWithGoogle(){
             window.gapi.auth.authorize({
@@ -208,6 +216,17 @@ angular.module('gdriveapps')
                     //do something
                     $scope.files = data.docs;
                     $scope.arrive = true;
+
+                    // make shorten URL
+                    var request = gapi.client.urlshortener.url.get({
+                        'shortUrl': 'http://goo.gl/fbsS'
+                    });
+                    request.then(function(response) {
+                        appendResults(response.result.longUrl);
+                    }, function(reason) {
+                        console.log('Error: ' + reason.result.error.message);
+                    });
+
                     //alert('URL: ' + data.docs[0].url);
                     $scope.$digest()
                 }else if(data.action ==google.picker.Action.CANCEL){

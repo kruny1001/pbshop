@@ -3125,6 +3125,13 @@ angular.module('gdriveapps').controller('storage', [
   function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
     /*
         * */
+    $http({
+      'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc',
+      method: 'GET',
+      headers: { 'Content-Type': 'image/jpeg' }
+    }).success(function (data) {
+      console.log(data);
+    });
     $scope.data = {};
     $scope.data.cb1 = true;
     $scope.data.cb2 = false;
@@ -3146,7 +3153,7 @@ angular.module('gdriveapps').controller('storage', [
         name: '\uba85\uc774\ub098\ubb3c',
         who: '\uba85\uc774\uac8c\uc774',
         when: '3:08PM',
-        notes: '\uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694'
+        notes: '\uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694\uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8 \uc544\ub098\ub2c8\ub9ac\uc694'
       },
       {
         product_uri: 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfcDVGYVc3NEtaSEU',
@@ -3166,6 +3173,7 @@ angular.module('gdriveapps').controller('storage', [
     $scope.init = function init() {
       window.gapi.load('auth', $scope.authenticateWithGoogle);
       window.gapi.load('picker');
+      gapi.client.load('urlshortener', 'v1');
     };
     $scope.authenticateWithGoogle = function authenticateWithGoogle() {
       window.gapi.auth.authorize({
@@ -3302,6 +3310,13 @@ angular.module('gdriveapps').controller('storage', [
           //do something
           $scope.files = data.docs;
           $scope.arrive = true;
+          // make shorten URL
+          var request = gapi.client.urlshortener.url.get({ 'shortUrl': 'http://goo.gl/fbsS' });
+          request.then(function (response) {
+            appendResults(response.result.longUrl);
+          }, function (reason) {
+            console.log('Error: ' + reason.result.error.message);
+          });
           //alert('URL: ' + data.docs[0].url);
           $scope.$digest();
         } else if (data.action == google.picker.Action.CANCEL) {
