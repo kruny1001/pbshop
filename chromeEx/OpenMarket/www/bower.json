@@ -1,0 +1,26 @@
+{
+  "name": "OpenMarket",
+  "version": "0.0.1",
+  "homepage": "https://github.com/kruny1001/pbshop",
+  "authors": [
+    "kruny1001 <kruny1001@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "latest",
+    "angular-resource": "latest",
+    "angular-animate": "latest",
+    "angular-route": "latest",
+    "angular-touch": "latest",
+    "gsap": "latest",
+    "jquery": "latest"
+  }
+}

@@ -15,7 +15,7 @@ productEditor.directive('homeSelectAnni', function ($location, $http) {
 
             element.bind('click', function(){
                 // It scare from 0.8 to 1
-                var id = element.scope().this.product._id;
+                var id = element.scope().product._id;
                 TweenLite.from(element, 0.5, {scale:0.8, ease:Back.easeOut, onComplete:function(){redirectPath(id)}});
             });
         }

@@ -1,17 +1,22 @@
-<section id="main" ng-controller="storage" ng-init="find()">
+<section id="main"  ng-controller="storage" ng-init="find()" style="background-color:#EBECED">
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
     <br><br><br>
-    <div style="margin:25px" layout="vertical">
+    <div style="margin:25px;" layout="vertical">
 
-        <md-toolbar style="border-radius:15px 15px 0px 0px;" md-theme="indigo" scroll-shrink>
+        <md-toolbar
+                style="border-radius:15px 15px 0px 0px;"
+                md-theme="indigo" scroll-shrink
+                >
             <div class="md-toolbar-tools">
-                <span class="md-flex">Temporal Authentication</span>
+                <span>판매자 관리</span>
+
+                <!-- fill up the space between left and right area -->
+                <span flex> Test Version </span>
             </div>
         </md-toolbar>
         <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <input type="button" value="{{authName}}" ng-click="init()">
             <md-tooltip>
-                Authentication Section
+                판매현황, 및 지금까지의 판매 실적에 대해서 알려 드립니다.
             </md-tooltip>
             </input>
             This Authentication process would be done when seller login at Production Version
@@ -21,26 +26,7 @@
             </p>
         </md-content>
 
-        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
-            <div class="md-toolbar-tools">
-                <span class="md-flex">Upload Image & Image Select</span>
-            </div>
-        </md-toolbar>
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()">
-            You can upload and select from Google Drive
-            <!--
-                    <input type="file" id="filePicker" style="display: none" />
-            -->
-            <p>
-                <div class="well">
-                    <!--
-                    <pre >{{file}}</pre>
-                    -->
-                    <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
-                </div>
-            </p>
-        </md-content>
+
 
 
         <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
@@ -67,7 +53,7 @@
                         <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
                             Edit Button
                         </md-button>
-                        <div style="width:50px; height: 5px;"></div>
+                        <div style="width:25px; height: 5px;"></div>
                         <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
                             Upload Image
                         </md-button>
@@ -95,6 +81,43 @@
                 -->
         </md-content>
 
+        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">Upload Image & Image Select</span>
+                <span flex></span>
+
+                <md-button class="md-raised md-primary"
+                           noink
+                           style="background-color: #009688"
+                           aria-label="{{authName}}"
+                           ng-click="init()">
+                    {{authName}}
+                </md-button>
+                <md-button class="md-raised md-primary"
+                           noink
+                           style="background-color: #009688"
+                           aria-label="{{authName}}"
+                           ng-click="setupPicker()"
+                           ng-disabled="!isAuth">
+                    File Picker
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
+            <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
+            You can upload and select from Google Drive
+            <!--
+                    <input type="file" id="filePicker" style="display: none" />
+            -->
+            <p>
+            <div class="well">
+                <!--
+                <pre >{{file}}</pre>
+                -->
+                <img style="margin-left:15px; margin-bottom: 15px" ng-repeat="file in files" select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
+            </div>
+            </p>
+        </md-content>
 
     <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
         <div class="md-toolbar-tools">
@@ -250,4 +273,10 @@
         Checkbox 2: {{ data.cb2 }}
     </md-checkbox>
     -->
+    <br/>
+    <footer>
+        <div style="margin-left:20px">
+            kevAngularJS
+        </div>
+    </footer>
 </section>

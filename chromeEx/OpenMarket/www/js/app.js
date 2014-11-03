@@ -3,10 +3,10 @@
  */
 
 'use strict';
-
-//var body = '';
-var productEditor = angular.module('productEditor',['ngRoute', 'ngResource', 'ui.bootstrap',
-        'gDriveApp', 'keyBoardModule', 'ngAnimate', 'product.services', 'payment','ilbeReview']);
+var productEditor = angular.module('productEditor',
+    [   'ngRoute', 'ngResource', 'ui.bootstrap',
+        'gdriveapps', 'keyBoardModule', 'ngAnimate',
+        'product.services', 'payment','ilbeReview']);
 
 productEditor.config( [
     '$compileProvider', '$httpProvider','$routeProvider',

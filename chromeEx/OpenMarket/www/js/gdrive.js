@@ -44,7 +44,7 @@ function writeFile(blob) {
 }
 // -----------------------------------------------------------------------------
 
-'use strict';
+angular.module('gdriveapps',[]);
 angular.module('gdriveapps').factory('gdocs1', function() {
     var gdocs1 = new GDocs();
 
