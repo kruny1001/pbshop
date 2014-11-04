@@ -8,27 +8,29 @@
                 md-theme="indigo" scroll-shrink
                 >
             <div class="md-toolbar-tools">
-                <span>판매자 관리</span>
-
+                <span><i class="fa fa-bookmark-o"></i> 판매자 관리</span>
                 <!-- fill up the space between left and right area -->
                 <span flex> Test Version </span>
             </div>
         </md-toolbar>
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <md-tooltip>
-                판매현황, 및 지금까지의 판매 실적에 대해서 알려 드립니다.
-            </md-tooltip>
-            </input>
-            This Authentication process would be done when seller login at Production Version
-            <p>
-            <pre>{{rootGdriveFolderID}}</pre>
-            </p>
+            <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
+                <md-tooltip>
+                    판매현황, 및 지금까지의 판매 실적에 대해서 알려 드립니다.
+                </md-tooltip>
+                </input>
+                <p>
+
+                    업데이트 News<hr>
+                판매현황<hr>
+
+
+                </p>
         </md-content>
 
         <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
                 <span class="md-flex">
-                    Product Information ({{products.length}})
+                    상품정보 ({{products.length}})
                 </span>
             </div>
         </md-toolbar>
@@ -84,7 +86,7 @@
 
         <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
-                <span class="md-flex">Upload Image & Image Select</span>
+                <span class="md-flex">업로드 이미지 & 업데이트 이미지</span>
                 <span flex></span>
 
                 <md-button class="md-raised md-primary"
@@ -107,6 +109,7 @@
         <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
             <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
             You can upload and select from Google Drive
+            <pre>Your FolderID: {{rootGdriveFolderID}}</pre>
             <!--
                     <input type="file" id="filePicker" style="display: none" />
             -->

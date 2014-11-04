@@ -33,6 +33,7 @@ angular.module('shop-list').controller('ProductslistController', ['$scope', '$st
 		}
 
 		$scope.purchaseProduct = function(productID){
+			console.log(productID);
 			GetPurchaseJWT.query({productID: productID}).$promise
 				.then(function (response){
 					console.log(response[0]);

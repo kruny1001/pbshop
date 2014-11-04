@@ -1,0 +1,37 @@
+<section data-ng-controller="ListingProductController" style="background-color:#EBECED" ng-init="find()">
+	<br/><br/><br/>
+	<div style="margin:25px;" layout="vertical">
+		<md-toolbar
+				style="border-radius:15px 15px 0px 0px;"
+				md-theme="indigo" scroll-shrink
+				>
+			<div class="md-toolbar-tools">
+				<span><i class="fa fa-bookmark-o"></i> 상품리스트</span>
+				<!-- fill up the space between left and right area -->
+				<span flex> Test Version </span>
+			</div>
+		</md-toolbar>
+		<md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
+			<md-contnet ng-repeat="product in products" product-editor flex="66" style="min-width: 210px; max-width:320px;">
+				<md-card>
+					<img ng-src="{{product.mainimg}}"
+						 class="md-card-image">
+					<h3>{{product.name}} (가격: {{product.price}})</h3>
+
+					<p>
+						{{product.description}}
+					</p>
+					<div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+						<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+							상세페이지
+						</md-button>
+						<div style="width:25px; height: 5px;"></div>
+						<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id)">
+							빠른구매
+						</md-button>
+					</div>
+				</md-card>
+			</md-contnet>
+		</md-content>
+	</div>
+</section>

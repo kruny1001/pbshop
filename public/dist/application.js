@@ -4460,6 +4460,42 @@ angular.module('reviews').factory('Reviews', [
   function ($resource) {
     return $resource('reviews/:reviewId', { reviewId: '@_id' }, { update: { method: 'PUT' } });
   }
+]);'use strict';
+//Setting up route
+angular.module('seller-interface').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Seller interface state routing
+    $stateProvider.state('listing-product', {
+      url: '/listing-product',
+      templateUrl: 'modules/seller-interface/views/listing-product.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('seller-interface').controller('ListingProductController', [
+  '$scope',
+  'Products',
+  'GetPurchaseJWT',
+  function ($scope, Products, GetPurchaseJWT) {
+    $scope.find = function () {
+      $scope.products = Products.query();
+    };
+    $scope.purchaseProduct = function (productID) {
+      GetPurchaseJWT.query({ productID: productID }).$promise.then(function (response) {
+        console.log(response[0]);
+        google.payments.inapp.buy({
+          parameters: {},
+          jwt: response[0],
+          success: function () {
+            window.alert('success');
+          },
+          failure: function () {
+            window.alert('failure');
+          }
+        });
+      });
+    };
+  }
 ]);/*
  Directives Talking to Controllers
  https://egghead.io/lessons/angularjs-directives-talking-to-controllers
@@ -4556,6 +4592,7 @@ angular.module('shop-list').controller('ProductslistController', [
       TweenLite.to(element.currentTarget, 0.5, { scale: 1 });
     };
     $scope.purchaseProduct = function (productID) {
+      console.log(productID);
       GetPurchaseJWT.query({ productID: productID }).$promise.then(function (response) {
         console.log(response[0]);
         google.payments.inapp.buy({
