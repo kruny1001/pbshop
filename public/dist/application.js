@@ -3123,8 +3123,39 @@ angular.module('gdriveapps').controller('storage', [
   'GooglePlus',
   'Products',
   function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
-    /*
-         * */
+    /**/
+    google.load('visualization', '1', { packages: ['corechart'] });
+    var data = google.visualization.arrayToDataTable([
+        [
+          'Year',
+          'Sales',
+          'Expenses'
+        ],
+        [
+          '\uba85\uc774\ub098\ubb3c',
+          1000,
+          400
+        ],
+        [
+          '\ub354\ub355\ub098\ubb3c',
+          1170,
+          460
+        ],
+        [
+          '\ubb38\uc5b4\uc816\uac08',
+          660,
+          1120
+        ],
+        [
+          '\uc624\uc9d5\uc5b4\uc816\uac08',
+          1030,
+          540
+        ]
+      ]);
+    var options = { title: 'Company Performance' };
+    var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
+    chart.draw(data, options);
+    /**/
     $http({
       'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc',
       method: 'GET',

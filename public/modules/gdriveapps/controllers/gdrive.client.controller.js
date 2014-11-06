@@ -6,7 +6,6 @@
  */
 
 'use strict';
-
 var CONFIG = {
     clientId: '574563539488-n0vrevgjp3606l20hfk4rqfk1dc8j3qb.apps.googleusercontent.com',
     developerKey: 'AIzaSyBEGA9BOSoo0DF69RNRh9MsMKDxaVlnT_U',
@@ -20,8 +19,25 @@ angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
     .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
-        /*
-         * */
+        /**/
+        google.load('visualization', '1', {
+            packages: ['corechart']
+        });
+
+         var data = google.visualization.arrayToDataTable([
+         ['Year', 'Sales', 'Expenses'],
+         ['명이나물', 1000, 400],
+         ['더덕나물', 1170, 460],
+         ['문어젖갈', 660, 1120],
+         ['오징어젖갈', 1030, 540]
+         ]);
+         var options = {
+         title: 'Company Performance'
+         };
+         var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
+
+         chart.draw(data, options);
+         /**/
 
         $http({'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc', method:"GET", headers: {
             "Content-Type": "image/jpeg"

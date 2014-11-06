@@ -83,7 +83,17 @@
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
 	{% endfor %}
 
+	<!-- Google Wallet-->
 	<script src="https://sandbox.google.com/checkout/inapp/lib/buy.js"></script>
+	<!-- Google Chart-->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+
+		// Load the Visualization API library and the piechart library.
+		google.load('visualization', '1.0', {'packages':['corechart']});
+		google.setOnLoadCallback(drawChart);
+		// ... draw the chart...
+	</script>
 	<!--
 	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 	-->
