@@ -4474,9 +4474,11 @@ angular.module('seller-interface').config([
 ]);'use strict';
 angular.module('seller-interface').controller('ListingProductController', [
   '$scope',
+  '$log',
+  '$mdDialog',
   'Products',
   'GetPurchaseJWT',
-  function ($scope, Products, GetPurchaseJWT) {
+  function ($scope, $log, $mdDialog, Products, GetPurchaseJWT) {
     $scope.items = [
       {
         name: 'Upload New Image (Google Drive)',
@@ -4503,6 +4505,10 @@ angular.module('seller-interface').controller('ListingProductController', [
         console.log($scope.partitioned);
       });
     };
+    $scope.listItemClick = function ($index) {
+      var clickedItem = $scope.items[$index];
+      $mdBottomSheet.hide(clickedItem);
+    };
     $scope.purchaseProduct = function (productID) {
       GetPurchaseJWT.query({ productID: productID }).$promise.then(function (response) {
         console.log(response[0]);
@@ -4524,6 +4530,33 @@ angular.module('seller-interface').controller('ListingProductController', [
         newArr.push(input.slice(i, i + size));
       }
       return newArr;
+    }
+    ;
+    $scope.dialogAdvanced = function (ev) {
+      $log.debug('dialogAdvanced() preparing to show...');
+      $mdDialog.show({
+        templateUrl: 'modules/seller-interface/views/dialogtest.html',
+        targetEvent: ev,
+        controller: DialogController,
+        onComplete: function () {
+          $log.debug('dialogAdvanced() now shown!');
+        }
+      }).then(function (answer) {
+        $scope.alert = 'You said the information was "' + answer + '".';
+      }, function () {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    };
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
     }
   }
 ]);/*

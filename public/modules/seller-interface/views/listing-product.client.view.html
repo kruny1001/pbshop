@@ -30,12 +30,18 @@
 							</p>
 
 							<div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-								<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-									EDIT
+								<md-button class="md-raised md-primary"
+										   ng-click="showListBottomSheet($event)">
+									상세정보
 								</md-button>
 								<div style="width:25px; height: 5px;"> </div>
+								<!--
 								<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id)">
 									빠른구매
+								</md-button>
+								-->
+								<md-button class="md-raised md-primary" ng-click="dialogAdvanced($event)">
+									구매하기
 								</md-button>
 								<div ng-if="alert!='' ">
 									<pre > {{product.name}} {{alert}}</pre>
