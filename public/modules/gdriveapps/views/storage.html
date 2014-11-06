@@ -1,10 +1,10 @@
 <section id="main"  ng-controller="storage" ng-init="find()" style="background-color:#EBECED">
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
     <br><br><br>
-    <div style="margin:25px;" layout="vertical">
+    <div style="margin:10px;" layout="vertical">
 
         <md-toolbar
-                style="border-radius:15px 15px 0px 0px;"
+                style="border-radius:15px 15px 0px 0px; font-size:xx-large; font-family: 'Nanum Brush Script', serif;"
                 md-theme="indigo" scroll-shrink
                 >
             <div class="md-toolbar-tools">
@@ -19,15 +19,13 @@
                 </md-tooltip>
                 </input>
                 <p>
-
-                    업데이트 News<hr>
+                업데이트 News<hr>
                 판매현황<hr>
-
-
                 </p>
         </md-content>
 
-        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
+        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;
+        font-size:xx-large; font-family: 'Nanum Brush Script', serif;">
             <div class="md-toolbar-tools">
                 <span class="md-flex">
                     상품정보 ({{products.length}})
@@ -64,7 +62,6 @@
                 </md-card>
                 </md-contnet>
             </div>
-
                 <!--
                 <div style="font-size:14px">{{product.name}}</div>
                 <div style="font-size:12px" layout="vertical" layout-sm="horizontal" layout-padding>
@@ -84,7 +81,8 @@
                 -->
         </md-content>
 
-        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
+        <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
+        margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
                 <span class="md-flex">업로드 이미지 & 업데이트 이미지</span>
                 <span flex></span>
@@ -110,27 +108,24 @@
             <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
             You can upload and select from Google Drive
             <pre>Your FolderID: {{rootGdriveFolderID}}</pre>
-            <!--
-                    <input type="file" id="filePicker" style="display: none" />
-            -->
+            <!-- <input type="file" id="filePicker" style="display: none" /> -->
             <p>
             <div class="well" >
-                <!--
-                <pre >{{file}}</pre>
-                -->
+                <!-- <pre >{{file}}</pre> -->
                 <img ng-repeat="file in files" style="margin-left:15px; margin-bottom: 15px"  select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
             </div>
             </p>
         </md-content>
 
-    <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
+    <md-toolbar md-theme="indigo" style="
+    font-size:xx-large; font-family: 'Nanum Brush Script', serif;
+    margin-top:10px; border-radius:15px 15px 0px 0px;">
         <div class="md-toolbar-tools">
                 <span class="md-flex">
                     Reviews
                 </span>
         </div>
     </md-toolbar>
-
 
     <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
         <md-list>
@@ -235,9 +230,7 @@
             <md-button class="md-fab" aria-label="Time">
                 <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg&output=embed" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
-
             <img ng-src="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg">
-
             <md-button class="md-fab" aria-label="New document">
                 <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_insert_drive_file_24px.svg" style="width: 24px; height: 24px;"></md-icon>
             </md-button>
@@ -265,9 +258,7 @@
             <md-button class="md-primary" md-theme="cyan">Button</md-button>
             <div class="label">Themed</div>
         </section>
-
     </md-content>
-
 
     <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
         Checkbox 1: {{ data.cb1 }}
@@ -280,7 +271,7 @@
     <br/>
     <footer>
         <div style="margin-left:20px">
-            kevAngularJS
+            <b>kevAngularJS --</b> Web Maseter : pbshop1001@gmail.com
         </div>
     </footer>
 </section>

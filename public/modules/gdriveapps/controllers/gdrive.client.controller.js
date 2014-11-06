@@ -1,6 +1,6 @@
 /**
  * Created by Kevin on 2014-10-27.
-Developing with the javascript Lib
+ Developing with the javascript Lib
  https://developers.google.com/api-client-library/javascript/dev/dev_jscript
 
  */
@@ -21,7 +21,7 @@ angular.module('gdriveapps').value('configGdrive', CONFIG);
 angular.module('gdriveapps')
     .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
         /*
-        * */
+         * */
 
         $http({'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc', method:"GET", headers: {
             "Content-Type": "image/jpeg"
@@ -65,7 +65,7 @@ angular.module('gdriveapps')
 
         /*
          * */
-         var accessToken;
+        var accessToken;
         $scope.permalLink = 'http://drive.google.com/uc?export=view&id=';
         $scope.arrive = false;
         $scope.authName = 'Authorize';
@@ -90,12 +90,12 @@ angular.module('gdriveapps')
                 //console.log(accessToken);
 
                 /*
-                callGooglePlus();
-                setFilePicker();
-                listFolder();
-                getGoogleDriveInfo();
-                createFolder();
-                */
+                 callGooglePlus();
+                 setFilePicker();
+                 listFolder();
+                 getGoogleDriveInfo();
+                 createFolder();
+                 */
                 createNewAccountFolder();
                 setFilePicker(); // singleFile
                 //findTargetUriFolder();
@@ -110,89 +110,89 @@ angular.module('gdriveapps')
         function listFolder() {
             Googledrive.listFolder()
         }
-/*
-        function createFolder(){
-            var folderName;
-            Googledrive.createFolder(folderName, accessToken);
-        }
-*/
+        /*
+         function createFolder(){
+         var folderName;
+         Googledrive.createFolder(folderName, accessToken);
+         }
+         */
         function getGoogleDriveInfo(){
             Googledrive.getGoogleDriveInfo();
         }
 
         /// Custom file Picker Start ----------------------------------------------------------
-/*
-        function setFilePicker() {
-            var filePicker = document.getElementById('filePicker');
+        /*
+         function setFilePicker() {
+         var filePicker = document.getElementById('filePicker');
 
-            filePicker.style.display = 'none';
+         filePicker.style.display = 'none';
 
-            // Access token has been successfully retrieved, requests can be sent to the API.
-            filePicker.style.display = 'block';
-            filePicker.onchange = uploadFile;
-        }
+         // Access token has been successfully retrieved, requests can be sent to the API.
+         filePicker.style.display = 'block';
+         filePicker.onchange = uploadFile;
+         }
 
-        function uploadFile(evt) {
-            var callback = function(file) {
-                console.log('!!File!!');
-                console.log(file);
-            }
-            gapi.client.load('drive', 'v2', function() {
-                var file = evt.target.files[0];
-                insertFile(file, callback);
-            });
-        }
+         function uploadFile(evt) {
+         var callback = function(file) {
+         console.log('!!File!!');
+         console.log(file);
+         }
+         gapi.client.load('drive', 'v2', function() {
+         var file = evt.target.files[0];
+         insertFile(file, callback);
+         });
+         }
 
-        function insertFile(fileData, callback) {
-            var boundary = '-------314159265358979323846';
-            var delimiter = "\r\n--" + boundary + "\r\n";
-            var close_delim = "\r\n--" + boundary + "--";
+         function insertFile(fileData, callback) {
+         var boundary = '-------314159265358979323846';
+         var delimiter = "\r\n--" + boundary + "\r\n";
+         var close_delim = "\r\n--" + boundary + "--";
 
-            var reader = new FileReader();
-            reader.readAsBinaryString(fileData);
-            reader.onload = function(e) {
-                var contentType = fileData.type || 'application/octet-stream';
-                var metadata = {
-                    'title': fileData.name,
-                    'mimeType': contentType,
-                    'writersCanShare':true,
-                    'parents': [{
-                        'kind': "drive#fileLink",
-                        'id': "0B8FisuvAYPTfN1o1Q0d4T2JLTk0"
-                    }]
+         var reader = new FileReader();
+         reader.readAsBinaryString(fileData);
+         reader.onload = function(e) {
+         var contentType = fileData.type || 'application/octet-stream';
+         var metadata = {
+         'title': fileData.name,
+         'mimeType': contentType,
+         'writersCanShare':true,
+         'parents': [{
+         'kind': "drive#fileLink",
+         'id': "0B8FisuvAYPTfN1o1Q0d4T2JLTk0"
+         }]
 
-                };
+         };
 
-                var base64Data = btoa(reader.result);
-                var multipartRequestBody =
-                    delimiter +
-                    'Content-Type: application/json\r\n\r\n' +
-                    JSON.stringify(metadata) +
-                    delimiter +
-                    'Content-Type: ' + contentType + '\r\n' +
-                    'Content-Transfer-Encoding: base64\r\n' +
-                    '\r\n' +
-                    base64Data +
-                    close_delim;
-                console.log(multipartRequestBody);
+         var base64Data = btoa(reader.result);
+         var multipartRequestBody =
+         delimiter +
+         'Content-Type: application/json\r\n\r\n' +
+         JSON.stringify(metadata) +
+         delimiter +
+         'Content-Type: ' + contentType + '\r\n' +
+         'Content-Transfer-Encoding: base64\r\n' +
+         '\r\n' +
+         base64Data +
+         close_delim;
+         console.log(multipartRequestBody);
 
-                var request = gapi.client.request({
-                    'path': '/upload/drive/v2/files',
-                    'method': 'POST',
-                    'params': {'uploadType': 'multipart'},
-                    'headers': {
-                        'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
-                    },
-                    'body': multipartRequestBody});
-                if (!callback) {
-                    callback = function(file) {
-                        console.log(file)
-                    };
-                }
-                request.execute(callback);
-            }
-        }
-*/
+         var request = gapi.client.request({
+         'path': '/upload/drive/v2/files',
+         'method': 'POST',
+         'params': {'uploadType': 'multipart'},
+         'headers': {
+         'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+         },
+         'body': multipartRequestBody});
+         if (!callback) {
+         callback = function(file) {
+         console.log(file)
+         };
+         }
+         request.execute(callback);
+         }
+         }
+         */
         /// Custom file Picker End ----------------------------------------------------------
 
         function callGooglePlus(){
@@ -270,11 +270,9 @@ angular.module('gdriveapps')
         $scope.onChangeStatus = function(){
             console.log('sdfsf');
             $scope.$digest();
-
         }
     }]
 );
-
 
 angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $timeout, $mdBottomSheet) {
     $scope.alert = '';
@@ -298,34 +296,36 @@ angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $
             $scope.alert = clickedItem.name + ' clicked!';
         });
     };
-})
+});
+
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
 
-        $scope.items = [
-            { name: 'Upload New Image (Google Drive)', icon: 'share' },
-            { name: 'Select Existing Image (Google Drive)', icon: 'upload' },
-            { name: 'Product History (Google Sheets)', icon: 'copy' },
-            { name: 'Print this page (PDF Printer)', icon: 'print' },
-        ];
+    $scope.items = [
+        { name: 'Upload New Image (Google Drive)', icon: 'share' },
+        { name: 'Select Existing Image (Google Drive)', icon: 'upload' },
+        { name: 'Product History (Google Sheets)', icon: 'copy' },
+        { name: 'Print this page (PDF Printer)', icon: 'print' },
+    ];
 
-        $scope.listItemClick = function($index) {
-            var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
-        };
-    })
+    $scope.listItemClick = function($index) {
+        var clickedItem = $scope.items[$index];
+        $mdBottomSheet.hide(clickedItem);
+    };
+});
+
 angular.module('gdriveapps').controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet) {
 
-        $scope.items = [
-            { name: 'Hangout', icon: 'hangout' },
-            { name: 'Mail', icon: 'mail' },
-            { name: 'Message', icon: 'message' },
-            { name: 'Copy', icon: 'copy' },
-            { name: 'Facebook', icon: 'facebook' },
-            { name: 'Twitter', icon: 'twitter' },
-        ];
+    $scope.items = [
+        { name: 'Hangout', icon: 'hangout' },
+        { name: 'Mail', icon: 'mail' },
+        { name: 'Message', icon: 'message' },
+        { name: 'Copy', icon: 'copy' },
+        { name: 'Facebook', icon: 'facebook' },
+        { name: 'Twitter', icon: 'twitter' },
+    ];
 
-        $scope.listItemClick = function($index) {
-            var clickedItem = $scope.items[$index];
-            $mdBottomSheet.hide(clickedItem);
-        };
-    });
+    $scope.listItemClick = function($index) {
+        var clickedItem = $scope.items[$index];
+        $mdBottomSheet.hide(clickedItem);
+    };
+});

@@ -1,37 +1,57 @@
 <section data-ng-controller="ListingProductController" style="background-color:#EBECED" ng-init="find()">
 	<br/><br/><br/>
-	<div style="margin:25px;" layout="vertical">
+	<div style="margin:10px; height:100%" layout="vertical">
 		<md-toolbar
-				style="border-radius:15px 15px 0px 0px;"
+				style="border-radius:15px 15px 0px 0px; font-size:xx-large; font-family: 'Nanum Brush Script', serif;"
 				md-theme="indigo" scroll-shrink
 				>
 			<div class="md-toolbar-tools">
 				<span><i class="fa fa-bookmark-o"></i> 상품리스트</span>
 				<!-- fill up the space between left and right area -->
-				<span flex> Test Version </span>
+				<span flex></span>
 			</div>
 		</md-toolbar>
 		<md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-			<md-contnet ng-repeat="product in products" product-editor flex="66" style="min-width: 210px; max-width:320px;">
-				<md-card>
-					<img ng-src="{{product.mainimg}}"
-						 class="md-card-image">
-					<h3>{{product.name}} (가격: {{product.price}})</h3>
+<!--
+			<md-contnet ng-repeat="product in products"
+						style="min-width: 210px; max-width:320px;"
+			>
+-->
+			<div layout="vertical" layout-sm="horizontal" layout-padding ng-repeat="Partproducts in partitioned">
+				<div ng-repeat="product in Partproducts" flex>
 
-					<p>
-						{{product.description}}
-					</p>
-					<div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-						<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-							상세페이지
-						</md-button>
-						<div style="width:25px; height: 5px;"></div>
-						<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id)">
-							빠른구매
-						</md-button>
-					</div>
-				</md-card>
-			</md-contnet>
+						<md-card style="font-family: 'Nanum Gothic', sans-serif;">
+							<img src="{{product.mainimg}}" class="md-card-image">
+							<h3 style="font-size: large">{{product.name}} (가격: {{product.price}})</h3>
+							<p>
+								<h5>
+								{{product.description}}
+								</h5>
+							</p>
+
+							<div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+								<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+									EDIT
+								</md-button>
+								<div style="width:25px; height: 5px;"> </div>
+								<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id)">
+									빠른구매
+								</md-button>
+								<div ng-if="alert!='' ">
+									<pre > {{product.name}} {{alert}}</pre>
+								</div>
+							</div>
+						</md-card>
+				</div>
+			</div>
+
 		</md-content>
+		<br/><br/><br/>
 	</div>
+	<br/>
+	<footer>
+		<div style="margin-left:20px">
+			<b>kevAngularJS --</b> Web Maseter : pbshop1001@gmail.com
+		</div>
+	</footer>
 </section>
