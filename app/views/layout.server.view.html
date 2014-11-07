@@ -4,29 +4,15 @@
 <head>
 	<title>{{title}}</title>
 
-
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-
-
-    <!-- Aloha Editor
-    <script type="text/javascript">
-        var Aloha = window.Aloha || ( window.Aloha = {} );
-
-        Aloha.settings = {
-            plugins: {
-                load: "common/ui, common/format, common/paste, common/block, common/list, common/table, common/image, common/link"
-            }
-        }
-    </script>
-    -->
-
-    <!-- END Aloha Editor-->
 
 	<!-- General META -->
 	<meta charset="utf-8">
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 	<!-- Semantic META -->
 	<meta name="keywords" content="{{keywords}}">
@@ -51,12 +37,11 @@
 	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
 	<!--Application CSS Files-->
-	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">
-	{% endfor %}
+	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
 
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 
@@ -66,7 +51,7 @@
 
 </head>
 
-<body class="ng-cloak" unresolved touch-action="auto">
+<body class="ng-cloak">
 
 	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
 

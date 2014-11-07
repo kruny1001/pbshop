@@ -1,7 +1,6 @@
 $brand-primary:         #967ADC;
 $brand-success:         #A0D468;
 
-
 @import '../lib/bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets';
 @import '../lib/bootstrap-sass-official/assets/stylesheets/bootstrap';
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css);
@@ -14,17 +13,18 @@ $brand-success:         #A0D468;
 // Reset
 @import "reset";
 //@import "unreset";
-// Some Mixins
-@import "mixins";
-// Page body style
-@import "page";
-// Incontent
-@import "incontent";
-@import "gview";
 
-@import "menubox";
-@import "googlemap";
-@import "wizard";
+// Some Mixins
+//@import "mixins";
+// Page body style
+//@import "page";
+// Incontent
+//@import "incontent";
+//@import "gview";
+
+//@import "menubox";
+//@import "googlemap";
+//@import "wizard";
 
 //fonts
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
@@ -38,16 +38,16 @@ $brand-success:         #A0D468;
 //@import "productionDescription";
 
 @import "basic";
-@import "front-page";
-@import "admin";
+//@import "front-page";
+//@import "admin";
 
 @import 'core-home';
-@import 'ui-calendar';
+//@import 'ui-calendar';
 @import 'ddak';
 @import 'banner';
 
 @import 'ribbon'; //Upper right corner ribbon
-@import 'gdriveapps-weather';
+//@import 'gdriveapps-weather';
 @import 'sellerInterface';
 
 @import 'front-menu';
