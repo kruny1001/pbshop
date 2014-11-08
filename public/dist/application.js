@@ -4647,10 +4647,26 @@ angular.module('shop-list').config([
   '$stateProvider',
   function ($stateProvider) {
     // Shop list state routing
-    $stateProvider.state('products-list', {
+    $stateProvider.state('detail-product', {
+      url: '/detail-product/:productId',
+      templateUrl: 'modules/shop-list/views/detail-product.client.view.html'
+    }).state('products-list', {
       url: '/products-list',
       templateUrl: 'modules/shop-list/views/products-list.client.view.html'
     });
+  }
+]);'use strict';
+angular.module('shop-list').controller('DetailProductController', [
+  '$scope',
+  '$stateParams',
+  'Products',
+  function ($scope, $stateParams, Products) {
+    var productId = $stateParams.productId;
+    console.log($scope.parentId);
+    // Find a Product
+    $scope.findOne = function () {
+      $scope.product = Products.get({ productId: productId });
+    };
   }
 ]);'use strict';
 angular.module('shop-list').controller('ProductslistController', [

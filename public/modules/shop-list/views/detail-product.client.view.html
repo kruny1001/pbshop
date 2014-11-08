@@ -1,0 +1,97 @@
+<section data-ng-controller="DetailProductController" ng-init="findOne()" style="padding:0;">
+	<br><br><br>
+	<md-whiteframe class="md-whiteframe-z1 " layout layout-align="center center">
+			<span>
+				<h1>{{product.name}}</h1>
+
+			</span>
+	</md-whiteframe>
+	<style>
+		md-whiteframe {
+			background: #fff;
+			margin: 2px;
+			padding: 2px; }
+	</style>
+	<div layout="vertical" layout-sm="horizontal" layout-padding>
+		<div flex>
+		<md-whiteframe class="md-whiteframe-z1 " layout layout-align="center center">
+			<span>
+				<img ng-src="{{product.mainimg}}"/>
+			</span>
+		</md-whiteframe>
+		</div>
+		<div flex>
+			<md-whiteframe class="md-whiteframe-z2" layout layout-align="center center">
+				<span>
+					<h2>{{product.price}}원</h2>
+					<h3>무료배송</h3>
+					<h5>{{product.description}}</h5>
+				</span>
+			</md-whiteframe>
+		</div>
+	</div>
+
+	<div layout="vertical" layout-sm="horizontal" layout-padding>
+		<div flex flex-md="60" offset-md="25">
+		<md-whiteframe class="md-whiteframe-z3" layout layout-align="center center">
+			<span>
+				<h2>Hello World</h2>
+					<h3>Hello World</h3>
+			</span>
+		</md-whiteframe>
+		</div>
+		<div flex>
+		<md-whiteframe class="md-whiteframe-z4" layout layout-align="center center">
+			<span>
+				<h2>Hello World</h2>
+					<h3>Hello World</h3>
+			</span>
+		</md-whiteframe>
+		</div>
+	</div>
+
+	<div layout="vertical" layout-sm="horizontal" layout-padding>
+		<div flex>
+			<md-whiteframe class="md-whiteframe-z5" layout layout-align="center center">
+				<span>이야 기분 딱! 좋다</span>
+			</md-whiteframe>
+		</div>
+		<div flex>
+			<md-whiteframe class="md-whiteframe-z5" layout layout-align="center center">
+				<span>
+				<h2>Hello World</h2>
+					<h3>Hello World</h3>
+			</span>
+			</md-whiteframe>
+		</div>
+		<div flex>
+			<md-whiteframe class="md-whiteframe-z5" layout layout-align="center center">
+				<span>
+				<h2>Hello World</h2>
+					<h3>Hello World</h3>
+			</span>
+			</md-whiteframe>
+		</div>
+	</div>
+
+	<header>
+		Header
+	</header>
+
+	<div flex layout="vertical" layout-sm="horizontal">
+
+		<aside flex-sm="33" flex-md="20">
+			Menu<br>
+			[flex-sm="33"][flex-md="20"]
+		</aside>
+
+		<main flex>
+			Main [flex]
+		</main>
+
+	</div>
+
+	<footer>
+		Footer
+	</footer>
+</section>

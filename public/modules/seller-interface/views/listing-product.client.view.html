@@ -43,10 +43,12 @@
 
 						<md-card style="font-family: 'Nanum Gothic', sans-serif; background-color:#FFF;">
 							<img src="{{product.mainimg}}" class="md-card-image">
-							<div style="font-weight: bold; margin-top:5px">{{product.name}}</div>
+							<div style="font-weight: bold; margin-top:5px">
+								<a href="/#!/detail-product/{{product._id}}">{{product.name}}</a>
+							</div>
 							<div style="display:inline">
 								<span style="font-weight: bold; font-size:smaller"> {{product.price}}원</span>
-								<span>판매자이름</span>
+								<span> <a>{{product.user.displayName}}</a></span>
 							</div>
 							<!--
 							<p>
