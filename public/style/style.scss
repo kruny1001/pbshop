@@ -36,7 +36,7 @@ $brand-success:         #A0D468;
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
 //@import "productionDescription";
-
+@import 'color-plate';
 @import "basic";
 //@import "front-page";
 //@import "admin";
@@ -51,6 +51,8 @@ $brand-success:         #A0D468;
 @import 'sellerInterface';
 
 @import 'front-menu';
+
+@import 'detail-interface';
 body{
   overflow-x:hidden;
 }

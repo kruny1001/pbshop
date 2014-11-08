@@ -7837,6 +7837,9 @@ md-input-group.long > input {
   z-index: 1;
   overflow: hidden; }
 
+.detail-info {
+  background-color: #fde0dc; }
+
 body {
   overflow-x: hidden; }
 
