@@ -18,12 +18,18 @@ var CONFIG = {
 angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
-    .controller('gdrive', ['$scope','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products',
-        function ($scope, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
-        /**/
+    .controller('gdrive', ['$scope','$state','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products',
+        function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
+
+            $scope.goChildView = function(stateName){
+                $state.go(stateName);
+                $mdSidenav('left').close();
+            }
+        /*
         google.load('visualization', '1', {
             packages: ['corechart']
         });
+
 
          var data = google.visualization.arrayToDataTable([
          ['Year', 'Sales', 'Expenses'],
@@ -316,7 +322,7 @@ angular.module('gdriveapps')
         }
 
         $scope.toggleLeft = function() {
-            $mdSidenav('left').toggle();
+            $mdSidenav('left').open();
         };
     }]
 );
@@ -348,8 +354,7 @@ angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $
         $scope.close = function() {
             $mdSidenav('left').close();
         };
-    })
-;
+    });
 
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
 

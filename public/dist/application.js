@@ -2910,8 +2910,18 @@ angular.module('gdriveapps').config([
       url: '/gDrive',
       templateUrl: 'modules/gdriveapps/views/gdrive.html'
     }).state('gDrive2', {
+      abstract: true,
       url: '/gDrive2',
       templateUrl: 'modules/gdriveapps/views/storage.html'
+    }).state('gDrive2.dashboard', {
+      url: '/dashboard',
+      templateUrl: 'modules/gdriveapps/template/gDrive2.dashboard.tmp.html'
+    }).state('gDrive2.addNewProduct', {
+      url: '/addNewProduct',
+      templateUrl: 'modules/gdriveapps/template/gDrive2.addNewProduct.tmp.html'
+    }).state('gDrive2.historyPayment', {
+      url: '/historyPayment',
+      templateUrl: 'modules/gdriveapps/template/gDrive2.historyPayment.tmp.html'
     });
     /*.
 
@@ -3187,6 +3197,7 @@ var CONFIG = {
 angular.module('gdriveapps').value('configGdrive', CONFIG);
 angular.module('gdriveapps').controller('gdrive', [
   '$scope',
+  '$state',
   '$http',
   '$q',
   '$mdDialog',
@@ -3195,40 +3206,31 @@ angular.module('gdriveapps').controller('gdrive', [
   'Googledrive',
   'GooglePlus',
   'Products',
-  function ($scope, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
-    /**/
-    google.load('visualization', '1', { packages: ['corechart'] });
-    var data = google.visualization.arrayToDataTable([
-        [
-          'Year',
-          'Sales',
-          'Expenses'
-        ],
-        [
-          '\uba85\uc774\ub098\ubb3c',
-          1000,
-          400
-        ],
-        [
-          '\ub354\ub355\ub098\ubb3c',
-          1170,
-          460
-        ],
-        [
-          '\ubb38\uc5b4\uc816\uac08',
-          660,
-          1120
-        ],
-        [
-          '\uc624\uc9d5\uc5b4\uc816\uac08',
-          1030,
-          540
-        ]
-      ]);
-    var options = { title: 'Company Performance' };
-    var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
-    chart.draw(data, options);
-    /**/
+  function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
+    $scope.goChildView = function (stateName) {
+      $state.go(stateName);
+      $mdSidenav('left').close();
+    };
+    /*
+        google.load('visualization', '1', {
+            packages: ['corechart']
+        });
+
+
+         var data = google.visualization.arrayToDataTable([
+         ['Year', 'Sales', 'Expenses'],
+         ['명이나물', 1000, 400],
+         ['더덕나물', 1170, 460],
+         ['문어젖갈', 660, 1120],
+         ['오징어젖갈', 1030, 540]
+         ]);
+         var options = {
+         title: 'Company Performance'
+         };
+         var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
+
+         chart.draw(data, options);
+         /**/
     $http({
       'url': 'http://drive.google.com/uc?export=view&id=0B8FisuvAYPTfZl9VUnEwcGdFdHc',
       method: 'GET',
@@ -3482,7 +3484,7 @@ angular.module('gdriveapps').controller('gdrive', [
       };
     }
     $scope.toggleLeft = function () {
-      $mdSidenav('left').toggle();
+      $mdSidenav('left').open();
     };
   }
 ]);
@@ -3521,7 +3523,6 @@ angular.module('gdriveapps').controller('BottomSheetExample', [
     };
   }
 ]);
-;
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', [
   '$scope',
   '$mdBottomSheet',

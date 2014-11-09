@@ -30,8 +30,21 @@ angular.module('gdriveapps').config(['$stateProvider',
 			templateUrl: 'modules/gdriveapps/views/gdrive.html'
 		}).
 		state('gDrive2', {
+			abstract: true,
 			url: '/gDrive2',
 			templateUrl: 'modules/gdriveapps/views/storage.html'
+		}).
+		state('gDrive2.dashboard', {
+				url: '/dashboard',
+				templateUrl: 'modules/gdriveapps/template/gDrive2.dashboard.tmp.html'
+			}).
+		state('gDrive2.addNewProduct', {
+			url: '/addNewProduct',
+				templateUrl: 'modules/gdriveapps/template/gDrive2.addNewProduct.tmp.html'
+		}).
+		state('gDrive2.historyPayment', {
+			url: '/historyPayment',
+			templateUrl: 'modules/gdriveapps/template/gDrive2.historyPayment.tmp.html'
 		})
 		/*.
 
