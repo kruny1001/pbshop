@@ -18,14 +18,11 @@
 			</span>
 		</md-whiteframe>
 	</div>
+
 	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
-
-
 		<md-whiteframe flex class="md-whiteframe-z1 " layout layout-align="center center">
 			<img style="width:100%" ng-src="{{product.mainimg}}"/>
 		</md-whiteframe>
-
-
 		<md-whiteframe flex class="md-whiteframe-z2" layout layout-padding>
 			<span>
 				<h4>{{product.price}}원</h4>
@@ -44,7 +41,12 @@
 			</span>
 		</md-whiteframe>
 	</div>
+	<!--
+	<textarea data-ui-tinymce id="tinymce1" data-ng-model="from_one.from_one"></textarea>
+	<div  ng-bind-html="from_one.from_one"></div>
+	-->
 
+	</div>
 	<div style="margin:14px;">
 		<md-tabs selected="selectedIndex">
 			<md-tab style="font-weight:bold; font-size:medium "
@@ -126,4 +128,21 @@
 		</md-whiteframe>
 	</div>
 	-->
+	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
+		<md-whiteframe flex class="md-whiteframe-z1 " layout layout-padding>
+			<h5>판매자 정보</h5>
+			<span flex>
+				<h6>상호/대표자: 몰칸 / kevin</h6>
+				<h6>사업자번호: 201-22-12121</h6>
+				<h6>연락처: 123-123-2323</h6>
+			</span>
+			<span flex>
+				<h6>사업장 소재지: 서울 강북구 미아동 839-292 4층</h6>
+				<h6>통신판매 신고번호: 2008-서울강북-0183</h6>
+				<h6>e-mail: test@gmail.com</h6>
+			</span>
+		</md-whiteframe>
+	</div>
+
+
 </section>

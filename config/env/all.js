@@ -63,6 +63,8 @@ module.exports = {
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/textAngular/dist/textAngular.min.js',
 
+                'public/lib/angular-ui-tinymce/src/tinymce.js',
+
                 //firebase
                 'public/lib/angularfire/dist/angularfire.min.js',
                 'public/lib/firebase/firebase.js',
