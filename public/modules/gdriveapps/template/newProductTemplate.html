@@ -1,0 +1,22 @@
+<md-dialog aria-label="Suspect app">
+    <md-content>
+        <h2><b>새광고</b></h2>
+        <p>새로운 제품 광고를 만들수 있습니다.</p>
+        <div layout="vertical">
+            <form>
+                <md-text-float label="상품이름" ng-model="user.firstName"></md-text-float>
+                <md-text-float label="상품이미지(ULR)" ng-model="user.lastName" class="long"> </md-text-float>
+                <md-text-float label="상품가격" ng-model="user.address"> </md-text-float>
+                <md-text-float label="상품정보" ng-model="user.address"> </md-text-float>
+            </form>
+        </div>
+    </md-content>
+    <div class="md-actions" layout="horizontal" layout-align="end">
+        <md-button ng-click="cancel()">
+            <b>최소하기</b>
+        </md-button>
+        <md-button class="md-primary" ng-click="hide()">
+            <b>추가하기</b>
+        </md-button>
+    </div>
+</md-dialog>

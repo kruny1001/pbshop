@@ -3185,15 +3185,17 @@ var CONFIG = {
     ]
   };
 angular.module('gdriveapps').value('configGdrive', CONFIG);
-angular.module('gdriveapps').controller('storage', [
+angular.module('gdriveapps').controller('gdrive', [
   '$scope',
   '$http',
   '$q',
+  '$mdDialog',
+  '$mdSidenav',
   'configGdrive',
   'Googledrive',
   'GooglePlus',
   'Products',
-  function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
+  function ($scope, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
     /**/
     google.load('visualization', '1', { packages: ['corechart'] });
     var data = google.visualization.arrayToDataTable([
@@ -3455,6 +3457,33 @@ angular.module('gdriveapps').controller('storage', [
       console.log('sdfsf');
       $scope.$digest();
     };
+    $scope.openNewProductDialog = function (ev) {
+      //Open Dialog
+      $mdDialog.show({
+        templateUrl: 'modules/gdriveapps/template/newProductTemplate.html',
+        targetEvent: ev,
+        controller: newProductDialog,
+        clickOutsideToClose: false
+      }).then(function () {
+        $scope.alert = 'You said "Okay".';
+      }, function () {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    };
+    function newProductDialog($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    $scope.toggleLeft = function () {
+      $mdSidenav('left').toggle();
+    };
   }
 ]);
 angular.module('gdriveapps').controller('BottomSheetExample', [
@@ -3482,7 +3511,17 @@ angular.module('gdriveapps').controller('BottomSheetExample', [
       });
     };
   }
+]).controller('LeftCtrl', [
+  '$scope',
+  '$timeout',
+  '$mdSidenav',
+  function ($scope, $timeout, $mdSidenav) {
+    $scope.close = function () {
+      $mdSidenav('left').close();
+    };
+  }
 ]);
+;
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', [
   '$scope',
   '$mdBottomSheet',

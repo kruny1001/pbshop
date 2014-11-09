@@ -18,7 +18,8 @@ var CONFIG = {
 angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
-    .controller('storage', ['$scope','$http','$q', 'configGdrive', 'Googledrive', 'GooglePlus', 'Products', function ($scope, $http, $q, configGdrive, Googledrive, GooglePlus, Products) {
+    .controller('gdrive', ['$scope','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products',
+        function ($scope, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
         /**/
         google.load('visualization', '1', {
             packages: ['corechart']
@@ -286,7 +287,37 @@ angular.module('gdriveapps')
         $scope.onChangeStatus = function(){
             console.log('sdfsf');
             $scope.$digest();
+        };
+
+        $scope.openNewProductDialog = function(ev) {
+            //Open Dialog
+            $mdDialog.show({
+                templateUrl: 'modules/gdriveapps/template/newProductTemplate.html',
+                targetEvent: ev,
+                controller: newProductDialog,
+                clickOutsideToClose  : false
+            }).then(function() {
+                $scope.alert = 'You said "Okay".';
+            }, function() {
+                $scope.alert = 'You cancelled the dialog.';
+            });
+        };
+
+        function newProductDialog($scope, $mdDialog){
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            $scope.answer = function(answer) {
+                $mdDialog.hide(answer);
+            };
         }
+
+        $scope.toggleLeft = function() {
+            $mdSidenav('left').toggle();
+        };
     }]
 );
 
@@ -312,7 +343,13 @@ angular.module('gdriveapps').controller('BottomSheetExample', function($scope, $
             $scope.alert = clickedItem.name + ' clicked!';
         });
     };
-});
+})
+    .controller('LeftCtrl', function($scope, $timeout, $mdSidenav) {
+        $scope.close = function() {
+            $mdSidenav('left').close();
+        };
+    })
+;
 
 angular.module('gdriveapps').controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
 
