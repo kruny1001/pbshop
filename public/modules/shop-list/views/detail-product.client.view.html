@@ -1,74 +1,123 @@
-<section data-ng-controller="DetailProductController" ng-init="findOne()" >
+<section style="background-color:#EBECED" data-ng-controller="DetailProductController" ng-init="findOne()" >
 	<br><br><br>
-	<md-whiteframe class="md-whiteframe-z1 " layout layout-align="center center">
-			<span>
-				<h1>{{product.name}}</h1>
 
-			</span>
-	</md-whiteframe>
 	<style>
 		md-whiteframe {
 			background: #fff;
 			margin: 2px;
 			padding: 2px; }
+		md-tabs{
+			margin: 2px;
+			padding: 2px;
+		}
 	</style>
 	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
+		<md-whiteframe flex class="md-whiteframe-z1 " layout layout-align="center center">
+			<span>
+				<h4>{{product.name}}</h4>
+			</span>
+		</md-whiteframe>
+	</div>
+	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
+
 
 		<md-whiteframe flex class="md-whiteframe-z1 " layout layout-align="center center">
-				<img style="width:100%" ng-src="{{product.mainimg}}"/>
+			<img style="width:100%" ng-src="{{product.mainimg}}"/>
 		</md-whiteframe>
 
 
-			<md-whiteframe flex class="md-whiteframe-z2 detail-info" layout layout-padding>
-				<span>
-					<h2>{{product.price}}원</h2>
-					<h3>무료배송</h3>
-					<h5>{{product.description}}</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5><h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-					<h5>ㅆㅅㅌㅊ 모니터 받침대 2</h5>
-
-				</span>
-			</md-whiteframe>
+		<md-whiteframe flex class="md-whiteframe-z2" layout layout-padding>
+			<span>
+				<h4>{{product.price}}원</h4>
+				<h5>무료배송</h5>
+				<h5>{{product.description}}</h5>
+				<hr>
+				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+					즉시구매
+				</md-button>
+				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+					Google Wallet
+				</md-button>
+				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+					Paypal
+				</md-button>
+			</span>
+		</md-whiteframe>
 	</div>
 
+	<div style="margin:14px;">
+		<md-tabs selected="selectedIndex">
+			<md-tab style="font-weight:bold; font-size:medium "
+					ng-repeat="tab in tabs"
+					on-select="announceSelected(tab)"
+					on-deselect="announceDeselected(tab)"
+					ng-disabled="tab.disabled"
+					label="{{tab.title}}">
+
+				<div class="demo-tab tab{{$index%4}}" layout="vertical" layout-fill layout-align="space-around center">
+					<md-whiteframe flex class="md-whiteframe-z1 " layout-fill layout-align="center center">
+						<div ng-bind-html="tab.content"></div>
+					</md-whiteframe>
+
+					<!--
+					<md-button class="md-warn" ng-click="removeTab( tab )">
+						Remove Tab
+					</md-button>
+					-->
+				</div>
+
+			</md-tab>
+		</md-tabs>
+		<!--
+		<form ng-submit="addTab(tTitle,tContent)" flex>
+		<div layout="vertical" layout-sm="horizontal" layout-padding layout-align="left center">
+			<md-text-float label="Active Index" ng-model="selectedIndex" disabled></md-text-float>
+			<md-text-float label="Active Title" ng-model="tabs[selectedIndex].title"></md-text-float>
+		</div>
+		<div layout="vertical" layout-sm="horizontal" layout-padding layout-align="left center">
+			<span class="title">Add a new Tab:</span>
+			<md-text-float label="Label" ng-model="tTitle"></md-text-float>
+			<md-text-float label="Content" ng-model="tContent"></md-text-float>
+			<md-button class="add-tab md-primary" type="submit" style="max-height: 40px">Add Tab</md-button>
+		</div>
+		</form>
+		-->
+	</div>
+	<!--
 	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
-		<md-whiteframe flex class="md-whiteframe-z3" layout layout-align="center center">
+		<md-whiteframe flex class="md-whiteframe-z3" layout layout-padding>
 			<span>
-				<h2>Hello World</h2>
-					<h3>Hello World</h3>
+				반품/배송/교환 문의 정보
+				<hr>
+				<h5>판매자 지정택배사</h5>
+				<h5>반품배송비</h5>
+				<h5>보내실곳</h5>
 			</span>
 		</md-whiteframe>
 		<md-whiteframe flex class="md-whiteframe-z4" layout layout-align="center center">
 			<span>
-				<h2>Hello World</h2>
-					<h3>Hello World</h3>
+
 			</span>
 		</md-whiteframe>
 	</div>
 
 	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
-			<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
-				<span>이야 기분 딱! 좋다</span>
-			</md-whiteframe>
-			<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
+		<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
+			<span>이야 기분 딱! 좋다</span>
+		</md-whiteframe>
+		<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
 				<span>
 				<h2>Hello World</h2>
 					<h3>Hello World</h3>
 			</span>
-			</md-whiteframe>
+		</md-whiteframe>
 
-			<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
+		<md-whiteframe flex class="md-whiteframe-z5" layout layout-align="center center">
 				<span>
 				<h2>Hello World</h2>
 					<h3>Hello World</h3>
 			</span>
-			</md-whiteframe>
+		</md-whiteframe>
 	</div>
 	<div layout="vertical" layout-sm="horizontal" style="margin:5px;" layout-padding>
 		<md-whiteframe flex class="md-whiteframe-z3">
@@ -76,4 +125,5 @@
 			<h3>Hello World</h3>
 		</md-whiteframe>
 	</div>
+	-->
 </section>
