@@ -25,15 +25,22 @@
 		</md-whiteframe>
 		<md-whiteframe flex class="md-whiteframe-z2" layout layout-padding>
 			<span>
-				<h4>{{product.price}}원</h4>
+				<h4><b>{{product.price}}원<b></h4>
 				<h5>무료배송</h5>
 				<h5>{{product.description}}</h5>
+
+				<h5><b>수량</b></h5>
+				<select style="width:64px;" ng-model="quantity" class="form-control">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
 				<hr>
-				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-					즉시구매
-				</md-button>
-				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-					Google Wallet
+
+				<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id, quantity)">
+					빠른구매
 				</md-button>
 				<md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
 					Paypal

@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('shop-list').controller('DetailProductController', ['$scope','$stateParams','Products',
-	function($scope, $stateParams, Products) {
+angular.module('shop-list').controller('DetailProductController', ['$scope','$stateParams','Products', 'GetPurchaseJWT',
+	function($scope, $stateParams, Products, GetPurchaseJWT) {
 		var productId=$stateParams.productId;
+
 		console.log($scope.parentId);
+
+		$scope.quantity = 1;
 
 		// Find a Product
 		$scope.findOne = function() {
@@ -53,5 +56,30 @@ angular.module('shop-list').controller('DetailProductController', ['$scope','$st
 		$scope.from_one = {
 			from_one :'bold data in controller in from_one.js'
 		}
+
+		$scope.purchaseProduct = function(productID, quantity){
+			console.log(productID);
+			console.log(quantity);
+			var optdesc= 'quantity is '+ quantity;
+			GetPurchaseJWT.query({productID: productID, qty: quantity, optdesc: optdesc}).$promise
+				.then(function (response){
+					console.log(response[0]);
+
+					google.payments.inapp.buy({
+						parameters: {},
+						jwt: response[0],
+						success: function(result) {
+							window.alert('success: '+ result);
+							console.log(result.request);
+							console.log(result.response);
+							console.log(result.jwt);
+
+							//once success the payment shou
+						},
+						failure: function() { window.alert('failure')}
+					})
+				});
+
+		};
 	}
 ]);

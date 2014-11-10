@@ -18,13 +18,18 @@ var CONFIG = {
 angular.module('gdriveapps').value('configGdrive', CONFIG);
 
 angular.module('gdriveapps')
-    .controller('gdrive', ['$scope','$state','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products',
-        function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
+    .controller('gdrive', ['$scope','$state','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products','Authentication','ProductByUserId',
+        function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products, Authentication, ProductByUserId) {
+            $scope.authentication = Authentication;
+            console.log($scope.authentication);
 
             $scope.goChildView = function(stateName){
                 $state.go(stateName);
                 $mdSidenav('left').close();
             }
+
+            //$scope.queriedProduct = ProductByUserId.query({userId:$scope.authentication.user._id });
+
         /*
         google.load('visualization', '1', {
             packages: ['corechart']
@@ -287,7 +292,7 @@ angular.module('gdriveapps')
         }
 
         $scope.find = function() {
-            $scope.products = Products.query();
+            $scope.products = ProductByUserId.query({userId:$scope.authentication.user._id });
         };
 
         $scope.onChangeStatus = function(){

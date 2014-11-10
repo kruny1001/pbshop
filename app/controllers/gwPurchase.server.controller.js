@@ -46,24 +46,16 @@ var getErrorMessage = function(err) {
  * Show the current Review
  */
 exports.readGWT = function(req, res) {
-    var d = new Date();
-    var iat = d.getTime();
-    var exp = new Date(2022, 11, 31).getTime();
-    var product = {
-        "iss":"08243362007174700466",
-        "aud":"Google",
-        "typ":"google/payments/inapp/item/v1",
-        "iat": iat,
-        "exp": exp,
-        "request":{
-            "currencyCode":"USD",
-            "price":"3.00",
-            "name":"Gold Star",
-            "sellerData":"some opaque data",
-            "description":"A shining badge of distinction"
-        }
-    }
-    res.send('test');
+    console.log('readGWT');
+    var qty = req.params.qty;
+    var optdesc = req.params.optdesc;
+    var template = req.template;
+    template.request.description = optdesc;
+    template.request.price = template.request.price * qty;
+    var token = jwt.sign(req.template, '80oij1i2QxEJmI8tA7T-Fg');
+    res.header('Content-Type', 'application/json; charset=utf-8');
+    res.jsonp([token]);
+    //TODO: here need to set Google Walllet json format
     /*
     Product.findById(id).populate('user', 'displayName').exec(function(err, product) {
         if (err) return next(err);
@@ -75,31 +67,31 @@ exports.readGWT = function(req, res) {
 };
 
 exports.productByID = function(req, res, next, id){
-    Product.findById(id).populate('user', 'displayName').exec(function(err, product) {
-        if (err) return next(err);
-        if (! product) return next(new Error('[ERROR] Fail to Load product ' + id));
-        var d = new Date();
-        var iat = d.getTime();
-        var exp = new Date(2022, 11, 31).getTime();
-        var template = {
-            "iss":"08243362007174700466",
-            "aud":"Google",
-            "typ":"google/payments/inapp/item/v1",
-            "iat": iat,
-            "exp": exp,
-            "request":{
-                "currencyCode":"USD",
-                "price":product.price.toString(),
-                "name":product.name,
-                "sellerData":"",
-                "description":product.description
+    console.log('productByID');
+    Product.findById(id).populate('user', 'displayName')
+        .exec(function(err, product) {
+            if (err) return next(err);
+            if (! product) return next(new Error('[ERROR] Fail to Load product ' + id));
+            var d = new Date();
+            var iat = d.getTime();
+            var exp = new Date(2022, 11, 31).getTime();
+            var template = {
+                "iss":"08243362007174700466",
+                "aud":"Google",
+                "typ":"google/payments/inapp/item/v1",
+                "iat": iat,
+                "exp": exp,
+                "request":{
+                    "currencyCode":"USD",
+                    "price":product.price.toString(),
+                    "name":product.name,
+                    "sellerData":"",
+                    "description":product.description
+                }
             }
-        }
-        var token = jwt.sign(template, '80oij1i2QxEJmI8tA7T-Fg');
-        //console.log(token);
-        res.header('Content-Type', 'application/json; charset=utf-8');
-        res.jsonp([token]);
-        //TODO: here need to set Google Walllet json format
+            //console.log(token);
+            req.template = template;
+            next();
     });
 };
 

@@ -68,6 +68,8 @@ ApplicationConfiguration.registerModule('gwas');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('opencpu');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('payments');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('products');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('reviews');'use strict';
@@ -3206,11 +3208,16 @@ angular.module('gdriveapps').controller('gdrive', [
   'Googledrive',
   'GooglePlus',
   'Products',
-  function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products) {
+  'Authentication',
+  'ProductByUserId',
+  function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products, Authentication, ProductByUserId) {
+    $scope.authentication = Authentication;
+    console.log($scope.authentication);
     $scope.goChildView = function (stateName) {
       $state.go(stateName);
       $mdSidenav('left').close();
     };
+    //$scope.queriedProduct = ProductByUserId.query({userId:$scope.authentication.user._id });
     /*
         google.load('visualization', '1', {
             packages: ['corechart']
@@ -3453,7 +3460,7 @@ angular.module('gdriveapps').controller('gdrive', [
       Googledrive.findFolder(callback);
     }
     $scope.find = function () {
-      $scope.products = Products.query();
+      $scope.products = ProductByUserId.query({ userId: $scope.authentication.user._id });
     };
     $scope.onChangeStatus = function () {
       console.log('sdfsf');
@@ -3799,7 +3806,7 @@ angular.module('gdriveapps').controller('GdriveappsController', [
   'Authentication',
   'Gdriveapps',
   function ($scope, $stateParams, $location, Authentication, Gdriveapps) {
-    $scope.authentication = Authentication;
+    console.log($scope.authentication);
     // Create new Gdriveapp
     $scope.create = function () {
       // Create new Gdriveapp object
@@ -4387,6 +4394,99 @@ angular.module('opencpu').factory('Readcsv', [
     };
   }
 ]);'use strict';
+// Configuring the Articles module
+angular.module('payments').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Payments', 'payments', 'dropdown', '/payments(/create)?');
+    Menus.addSubMenuItem('topbar', 'payments', 'List Payments', 'payments');
+    Menus.addSubMenuItem('topbar', 'payments', 'New Payment', 'payments/create');
+  }
+]);'use strict';
+//Setting up route
+angular.module('payments').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Payments state routing
+    $stateProvider.state('listPayments', {
+      url: '/payments',
+      templateUrl: 'modules/payments/views/list-payments.client.view.html'
+    }).state('createPayment', {
+      url: '/payments/create',
+      templateUrl: 'modules/payments/views/create-payment.client.view.html'
+    }).state('viewPayment', {
+      url: '/payments/:paymentId',
+      templateUrl: 'modules/payments/views/view-payment.client.view.html'
+    }).state('editPayment', {
+      url: '/payments/:paymentId/edit',
+      templateUrl: 'modules/payments/views/edit-payment.client.view.html'
+    });
+  }
+]);'use strict';
+// Payments controller
+angular.module('payments').controller('PaymentsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Payments',
+  function ($scope, $stateParams, $location, Authentication, Payments) {
+    $scope.authentication = Authentication;
+    // Create new Payment
+    $scope.create = function () {
+      // Create new Payment object
+      var payment = new Payments({ name: this.name });
+      // Redirect after save
+      payment.$save(function (response) {
+        $location.path('payments/' + response._id);
+        // Clear form fields
+        $scope.name = '';
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Remove existing Payment
+    $scope.remove = function (payment) {
+      if (payment) {
+        payment.$remove();
+        for (var i in $scope.payments) {
+          if ($scope.payments[i] === payment) {
+            $scope.payments.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.payment.$remove(function () {
+          $location.path('payments');
+        });
+      }
+    };
+    // Update existing Payment
+    $scope.update = function () {
+      var payment = $scope.payment;
+      payment.$update(function () {
+        $location.path('payments/' + payment._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Payments
+    $scope.find = function () {
+      $scope.payments = Payments.query();
+    };
+    // Find existing Payment
+    $scope.findOne = function () {
+      $scope.payment = Payments.get({ paymentId: $stateParams.paymentId });
+    };
+  }
+]);'use strict';
+//Payments service used to communicate Payments REST endpoints
+angular.module('payments').factory('Payments', [
+  '$resource',
+  function ($resource) {
+    return $resource('payments/:paymentId', { paymentId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 //Setting up route
 angular.module('products').config([
   '$stateProvider',
@@ -4495,6 +4595,18 @@ angular.module('products').factory('ProductsBanner', [
   '$resource',
   function ($resource) {
     return $resource('products/list/:bannerId', { bannerId: '@bannerId' }, {
+      update: { method: 'PUT' },
+      query: {
+        method: 'GET',
+        isArray: true
+      }
+    });
+  }
+]);
+angular.module('products').factory('ProductByUserId', [
+  '$resource',
+  function ($resource) {
+    return $resource('products/find/:userId', { userId: '@userId' }, {
       update: { method: 'PUT' },
       query: {
         method: 'GET',
@@ -4771,9 +4883,11 @@ angular.module('shop-list').controller('DetailProductController', [
   '$scope',
   '$stateParams',
   'Products',
-  function ($scope, $stateParams, Products) {
+  'GetPurchaseJWT',
+  function ($scope, $stateParams, Products, GetPurchaseJWT) {
     var productId = $stateParams.productId;
     console.log($scope.parentId);
+    $scope.quantity = 1;
     // Find a Product
     $scope.findOne = function () {
       $scope.product = Products.get({ productId: productId });
@@ -4822,6 +4936,31 @@ angular.module('shop-list').controller('DetailProductController', [
     }
     // Tabs End -----------------------------------------------
     $scope.from_one = { from_one: 'bold data in controller in from_one.js' };
+    $scope.purchaseProduct = function (productID, quantity) {
+      console.log(productID);
+      console.log(quantity);
+      var optdesc = 'quantity is ' + quantity;
+      GetPurchaseJWT.query({
+        productID: productID,
+        qty: quantity,
+        optdesc: optdesc
+      }).$promise.then(function (response) {
+        console.log(response[0]);
+        google.payments.inapp.buy({
+          parameters: {},
+          jwt: response[0],
+          success: function (result) {
+            window.alert('success: ' + result);
+            console.log(result.request);
+            console.log(result.response);
+            console.log(result.jwt);  //once success the payment shou
+          },
+          failure: function () {
+            window.alert('failure');
+          }
+        });
+      });
+    };
   }
 ]);'use strict';
 angular.module('shop-list').controller('ProductslistController', [
@@ -4889,7 +5028,11 @@ angular.module('shop-list').factory('AllBanners', [
 angular.module('shop-list').factory('GetPurchaseJWT', [
   '$resource',
   function ($resource) {
-    return $resource('purchase/gw_test/:productID', { productID: '@_id' }, {
+    return $resource('purchase/gw_test/:productID/:qty/:optdesc', {
+      productID: '@_id',
+      qty: '@qty',
+      optdesc: '@optdesc'
+    }, {
       query: {
         method: 'get',
         isArray: true

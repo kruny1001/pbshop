@@ -109,12 +109,14 @@ exports.list = function(req, res) { Review.find().sort('-created').populate('use
 /**
  * Review middleware
  */
-exports.reviewByID = function(req, res, next, id) { Review.findById(id).populate('user', 'displayName').exec(function(err, review) {
-		if (err) return next(err);
-		if (! review) return next(new Error('Failed to load Review ' + id));
-		req.review = review ;
-		next();
-	});
+exports.reviewByID = function(req, res, next, id) {
+	Review.findById(id).populate('user', 'displayName')
+		.exec(function(err, review) {
+			if (err) return next(err);
+			if (! review) return next(new Error('Failed to load Review ' + id));
+			req.review = review ;
+			next();
+		});
 };
 
 /**

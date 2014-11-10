@@ -21,8 +21,7 @@ angular.module('gdriveapps').value('config', {
 
 angular.module('gdriveapps').controller('GdriveappsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Gdriveapps',
 	function($scope, $stateParams, $location, Authentication, Gdriveapps ) {
-		$scope.authentication = Authentication;
-
+		console.log($scope.authentication);
 		// Create new Gdriveapp
 		$scope.create = function() {
 			// Create new Gdriveapp object

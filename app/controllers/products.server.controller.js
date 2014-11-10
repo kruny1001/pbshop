@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	Product = mongoose.model('Product'),
 	_ = require('lodash');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Get the error message from error object
@@ -134,7 +135,7 @@ exports.hasAuthorization = function(req, res, next) {
  * List of Products
  */
 exports.listByParentId = function(req, res) {
-    Product. find({parentId:req.params.bannerId}).sort('-created').populate('user', 'displayName').exec(function(err, products) {
+    Product.find({parentId:req.params.bannerId}).sort('-created').populate('user', 'displayName').exec(function(err, products) {
         if (err) {
             return res.send(400, {
                 message: getErrorMessage(err)
@@ -144,3 +145,16 @@ exports.listByParentId = function(req, res) {
         }
     });
 };
+
+exports.findProductsByUserId = function(req ,res) {
+	Product.find({user: new ObjectId(req.params.userId)}).sort('-created').populate('user', 'displayName').exec(function(err, products) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+			res.header('Content-Type', 'application/json; charset=utf-8');
+			res.jsonp(products);
+		}
+	});
+}

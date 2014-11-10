@@ -18,3 +18,17 @@ angular.module('products').factory('ProductsBanner', ['$resource', function($res
         }
     });
 }]);
+
+angular.module('products').factory('ProductByUserId', ['$resource', function($resource) {
+    return $resource('products/find/:userId', {
+        userId: '@userId'
+    }, {
+        update: {
+            method: 'PUT'
+        },
+        query: {
+            method: 'GET',
+            isArray: true
+        }
+    });
+}]);

@@ -24,6 +24,9 @@ module.exports = function(app) {
     app.route('/products/list/:bannerId')
         .get(products.listByParentId);
 
+	app.route('/products/find/:userId')
+		.get(products.findProductsByUserId);
+
 	// Finish by binding the Product middleware
 	app.param('productId', products.productByID);
 
