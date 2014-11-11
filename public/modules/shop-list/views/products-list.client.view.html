@@ -4,7 +4,9 @@
 	<div class="core-title">All Products List (Developer Mode)</div>
 
 	<div ng-repeat="product in products">
-		<img ng-src={{product.mainimg}} style="z-index: 10; height:50px; width:60px; position:relative; top:30px; left:200px" ng-mouseenter="zoomIn($event)" ng-mouseleave="zoomOut($event)">
+		<img ng-src={{product.mainimg}}
+			style="z-index: 10; height:50px; width:60px; position:relative; top:30px; left:200px;"
+			ng-mouseenter="zoomIn($event)" ng-mouseleave="zoomOut($event)">
 		<input style="position:relative; top:30px; left:200px"type="button" value="Edit" ng-click="editProducts(product._id)"/>
 		<input style="position:relative; top:30px; left:200px"type="button" value="Delete" ng-click="deleteProducts(product._id)"/>
 		<input style="position:relative; top:30px; left:200px"type="button" value="Purchase" ng-click="purchaseProduct(product._id)"/>

@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<!-- end Sorting Bar-->
-		<!--
+<!--
 		<md-toolbar
 				style="border-radius:15px 15px 0px 0px; font-size:xx-large; font-family: 'Nanum Brush Script', serif;"
 				md-theme="indigo" scroll-shrink
@@ -32,17 +32,18 @@
 				<span flex></span>
 			</div>
 		</md-toolbar>
-		-->
+-->
 		<md-content class="md-padding" style="border-radius:0px 0px 15px 15px; background-color:#EBECED;">
 <!--
 			<md-contnet ng-repeat="product in products"
 						style="min-width: 210px; max-width:320px;"
 			>
 -->
-			<div layout="vertical" layout-sm="horizontal" layout-padding ng-repeat="Partproducts in partitioned">
-				<div ng-repeat="product in Partproducts" flex style="padding:0;">
+			<div layout="vertical" layout-sm="horizontal" layout-align="center center" ng-repeat="Partproducts in partitioned">
+				<div ng-repeat="product in Partproducts" style="padding:0;">
 
-						<md-card style="font-family: 'Nanum Gothic', sans-serif; background-color:#FFF;">
+						<md-card
+								style="font-family: 'Nanum Gothic', sans-serif; background-color:#FFF; max-width:333px">
 							<img src="{{product.mainimg}}" class="md-card-image">
 							<div style="font-weight: bold; margin-top:5px">
 								<a href="/#!/detail-product/{{product._id}}">{{product.name}}</a>

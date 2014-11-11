@@ -39,24 +39,25 @@ module.exports = {
 
                 'public/lib/lodash/dist/lodash.underscore.min.js',
                 //'public/lib/angular-google-maps/dist/angular-google-maps.min.js',
-                'public/lib/ng-file-upload/angular-file-upload.min.js',
-                'public/lib/angular-wizard/dist/angular-wizard.min.js',
+
+                //'public/lib/ng-file-upload/angular-file-upload.min.js',
+                //'public/lib/angular-wizard/dist/angular-wizard.min.js',
 
                 'public/lib/gsap/src/minified/TweenMax.min.js',
                 'public/lib/gsap/src/minified/TimelineMax.min.js',
-                'public/lib/gsap/src/minified/utils/Draggable.min.js',
+                //'public/lib/gsap/src/minified/utils/Draggable.min.js',
                 //'public/lib/gsap/src/minified/plugins/ThrowPropsPlugin.min.js',
                 'public/lib/gsap/src/minified/plugins/CSSPlugin.min.js',
                 'public/lib/gsap/src/minified/plugins/TextPlugin.min.js',
                 'public/lib/gsap/src/minified/plugins/ScrollToPlugin.min.js',
 
                 'public/lib/angular-smart-table/dist/smart-table.min.js',
-                'public/lib/requirejs/require.js',
+                //'public/lib/requirejs/require.js',
                 //'public/lib/ng-aloha-editor/libs/alohaeditor-0.23.26/aloha/lib/aloha-full.min.js',
 
                 //opencpu disabled for a while
                 //'public/3rdlib/opencpu/opencpu-0.5.js',
-                'public/lib/angular-ui-ace/ui-ace.js',
+                //'public/lib/angular-ui-ace/ui-ace.js',
 
                 //text Angular
 
@@ -66,8 +67,8 @@ module.exports = {
                 'public/lib/angular-ui-tinymce/src/tinymce.js',
 
                 //firebase
-                'public/lib/angularfire/dist/angularfire.min.js',
-                'public/lib/firebase/firebase.js',
+                //'public/lib/angularfire/dist/angularfire.min.js',
+                //'public/lib/firebase/firebase.js',
 
                 //angular material
                 'public/lib/angular-aria/angular-aria.js',
