@@ -3493,6 +3493,9 @@ angular.module('gdriveapps').controller('gdrive', [
     $scope.toggleLeft = function () {
       $mdSidenav('left').open();
     };
+    $scope.getPaymentHistory = function () {
+      $scope.payments = Payments.query();
+    };
   }
 ]);
 angular.module('gdriveapps').controller('BottomSheetExample', [
@@ -3851,6 +3854,19 @@ angular.module('gdriveapps').controller('GdriveappsController', [
     // Find existing Gdriveapp
     $scope.findOne = function () {
       $scope.gdriveapp = Gdriveapps.get({ gdriveappId: $stateParams.gdriveappId });
+    };
+  }
+]);'use strict';
+angular.module('gdriveapps').controller('HistoryPaymentController', [
+  '$scope',
+  'Authentication',
+  'Payments',
+  'PaymentsBySellerData',
+  function ($scope, Authentication, Payments, PaymentsBySellerData) {
+    $scope.authentication = Authentication;
+    console.log($scope.authentication);
+    $scope.getPaymentHistory = function () {
+      $scope.payments = PaymentsBySellerData.query({ sellerData: Authentication.user._id });
     };
   }
 ]);/**
@@ -4486,6 +4502,12 @@ angular.module('payments').factory('Payments', [
   function ($resource) {
     return $resource('payments/:paymentId', { paymentId: '@_id' }, { update: { method: 'PUT' } });
   }
+]);
+angular.module('payments').factory('PaymentsBySellerData', [
+  '$resource',
+  function ($resource) {
+    return $resource('payments/:sellerData', { sellerData: '@sellerData' }, {});
+  }
 ]);'use strict';
 //Setting up route
 angular.module('products').config([
@@ -4884,9 +4906,9 @@ angular.module('shop-list').controller('DetailProductController', [
   '$stateParams',
   'Products',
   'GetPurchaseJWT',
-  function ($scope, $stateParams, Products, GetPurchaseJWT) {
+  'Payments',
+  function ($scope, $stateParams, Products, GetPurchaseJWT, Payments) {
     var productId = $stateParams.productId;
-    console.log($scope.parentId);
     $scope.quantity = 1;
     // Find a Product
     $scope.findOne = function () {
@@ -4945,20 +4967,37 @@ angular.module('shop-list').controller('DetailProductController', [
         qty: quantity,
         optdesc: optdesc
       }).$promise.then(function (response) {
-        console.log(response[0]);
         google.payments.inapp.buy({
           parameters: {},
           jwt: response[0],
           success: function (result) {
-            window.alert('success: ' + result);
-            console.log(result.request);
-            console.log(result.response);
-            console.log(result.jwt);  //once success the payment shou
+            //window.alert('success: '+ result);
+            //console.log(result.request);
+            //console.log(result.response);
+            //console.log(result.jwt);
+            // Insert Payment History
+            createPaymentHistory(result);
           },
           failure: function () {
-            window.alert('failure');
+            window.alert('Your Payment transaction is failed');
           }
         });
+      });
+    };
+    var createPaymentHistory = function (result) {
+      // Create new Payment object
+      var payment = new Payments({
+          name: result.request.name,
+          price: Number(result.request.price),
+          sellerData: result.request.sellerData,
+          description: result.request.description,
+          currencyCode: result.request.currencyCode,
+          orderID: result.response.orderId
+        });
+      // Redirect after save
+      payment.$save(function (response) {
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
       });
     };
   }
@@ -5037,6 +5076,18 @@ angular.module('shop-list').factory('GetPurchaseJWT', [
         method: 'get',
         isArray: true
       }
+    });
+  }
+]);
+angular.module('shop-list').factory('', [
+  '$resource',
+  function ($resource) {
+    return $resource('', {}, {
+      query: {
+        method: 'get',
+        isArray: true
+      },
+      insert: { method: 'post' }
     });
   }
 ]);'use strict';
