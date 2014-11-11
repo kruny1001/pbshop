@@ -14,7 +14,6 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var payment = new Payment(req.body);
 	payment.user = req.user;
-
 	payment.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -87,6 +86,18 @@ exports.list = function(req, res) { Payment.find().sort('-created').populate('us
  * Payment middleware
  */
 exports.paymentByID = function(req, res, next, id) { Payment.findById(id).populate('user', 'displayName').exec(function(err, payment) {
+		if (err) return next(err);
+		if (! payment) return next(new Error('Failed to load Payment ' + id));
+		req.payment = payment ;
+		next();
+	});
+};
+
+/**
+ *  Find Payment Information
+ */
+exports.paymentsBySellerData = function(req, res, next){
+		Payment.find( {sellerData: req.params.sellerData}).populate('user', 'displayName').exec(function(err, payment) {
 		if (err) return next(err);
 		if (! payment) return next(new Error('Failed to load Payment ' + id));
 		req.payment = payment ;

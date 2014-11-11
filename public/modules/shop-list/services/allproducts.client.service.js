@@ -12,7 +12,6 @@ angular.module('shop-list').factory('AllBanners', ['$resource',
 	}
 ]);
 
-
 angular.module('shop-list').factory('GetPurchaseJWT', ['$resource',
 	function($resource) {
 		return $resource('purchase/gw_test/:productID/:qty/:optdesc',
@@ -24,3 +23,15 @@ angular.module('shop-list').factory('GetPurchaseJWT', ['$resource',
 		);
 	}
 ]);
+
+angular.module('shop-list').factory('', ['$resource', function($resource){
+	return $resource('',
+		{
+
+		},
+		{
+			query: {method:'get', isArray: true},
+			insert: {method: 'post'}
+		}
+	);
+}])

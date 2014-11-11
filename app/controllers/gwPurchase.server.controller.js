@@ -85,7 +85,7 @@ exports.productByID = function(req, res, next, id){
                     "currencyCode":"USD",
                     "price":product.price.toString(),
                     "name":product.name,
-                    "sellerData":"",
+                    "sellerData":product.user._id,
                     "description":product.description
                 }
             }

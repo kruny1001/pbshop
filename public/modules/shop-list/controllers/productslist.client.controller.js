@@ -43,7 +43,7 @@ angular.module('shop-list').controller('ProductslistController', ['$scope', '$st
 						jwt: response[0],
 						success: function() { window.alert('success')},
 						failure: function() { window.alert('failure')}
-					})
+					});
 				});
 
 		};

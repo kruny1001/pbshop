@@ -16,12 +16,9 @@ var PaymentSchema = new Schema({
 		required: 'Please fill Payment name',
 		trim: true
 	},
-	parentId:{
-		type: String,
-		required: ''
-	},
 	price:{
 		type: Number,
+		required: 'Please fill Payment price',
 		default: 0
 	},
 	description:{

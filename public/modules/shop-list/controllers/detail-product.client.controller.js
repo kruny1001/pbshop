@@ -1,13 +1,9 @@
 'use strict';
 
-angular.module('shop-list').controller('DetailProductController', ['$scope','$stateParams','Products', 'GetPurchaseJWT',
-	function($scope, $stateParams, Products, GetPurchaseJWT) {
+angular.module('shop-list').controller('DetailProductController', ['$scope','$stateParams','Products', 'GetPurchaseJWT','Payments',
+	function($scope, $stateParams, Products, GetPurchaseJWT, Payments) {
 		var productId=$stateParams.productId;
-
-		console.log($scope.parentId);
-
 		$scope.quantity = 1;
-
 		// Find a Product
 		$scope.findOne = function() {
 			$scope.product = Products.get({
@@ -63,23 +59,42 @@ angular.module('shop-list').controller('DetailProductController', ['$scope','$st
 			var optdesc= 'quantity is '+ quantity;
 			GetPurchaseJWT.query({productID: productID, qty: quantity, optdesc: optdesc}).$promise
 				.then(function (response){
-					console.log(response[0]);
-
 					google.payments.inapp.buy({
 						parameters: {},
 						jwt: response[0],
 						success: function(result) {
-							window.alert('success: '+ result);
-							console.log(result.request);
-							console.log(result.response);
-							console.log(result.jwt);
-
-							//once success the payment shou
+							//window.alert('success: '+ result);
+							//console.log(result.request);
+							//console.log(result.response);
+							//console.log(result.jwt);
+							// Insert Payment History
+							createPaymentHistory(result);
 						},
-						failure: function() { window.alert('failure')}
+						failure: function() {
+							window.alert('Your Payment transaction is failed')
+						}
 					})
 				});
+		};
 
+		var createPaymentHistory = function (result) {
+			// Create new Payment object
+			var payment = new Payments({
+				name: result.request.name,
+				price: Number(result.request.price),
+				sellerData: result.request.sellerData,
+				description: result.request.description,
+				currencyCode: result.request.currencyCode,
+				orderID: result.response.orderId
+			});
+			// Redirect after save
+			payment.$save(function (response) {
+				//$location.path('payments/' + response._id);
+				// Clear form fields
+				//$scope.name = '';
+			}, function (errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 	}
 ]);

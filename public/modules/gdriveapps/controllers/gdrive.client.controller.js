@@ -329,6 +329,10 @@ angular.module('gdriveapps')
         $scope.toggleLeft = function() {
             $mdSidenav('left').open();
         };
+
+        $scope.getPaymentHistory = function() {
+            $scope.payments = Payments.query();
+        }
     }]
 );
 

@@ -9,6 +9,9 @@ module.exports = function(app) {
 		.get(payments.list)
 		.post(users.requiresLogin, payments.create);
 
+	app.route('/payments/:sellerData')
+		.get(payments.read)
+
 	app.route('/payments/:paymentId')
 		.get(payments.read)
 		.put(users.requiresLogin, payments.hasAuthorization, payments.update)
@@ -16,4 +19,5 @@ module.exports = function(app) {
 
 	// Finish by binding the Payment middleware
 	app.param('paymentId', payments.paymentByID);
+	app.param('sellerData', payments.paymentsBySellerData);
 };

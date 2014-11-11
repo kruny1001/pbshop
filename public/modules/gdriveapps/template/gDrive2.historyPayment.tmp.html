@@ -1,39 +1,24 @@
-<section layout="horizontal" flex ng-controller="gdrive">
+<section layout="horizontal" flex ng-controller="HistoryPaymentController" ng-init="getPaymentHistory()">
     <div style="margin:10px;" flex layout="vertical">
         <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
         margin-top:10px; border-radius:15px 15px 0px 0px;">
             <div class="md-toolbar-tools">
-                <span class="md-flex">Payment History</span>
+                <span class="md-flex">Payment History({{payments.length}})</span>
                 <span flex></span>
-
                 <md-button class="md-raised md-primary"
                            noink
                            style="background-color: #009688"
                            aria-label="{{authName}}"
-                           ng-click="init()">
-                    {{authName}}
-                </md-button>
-                <md-button class="md-raised md-primary"
-                           noink
-                           style="background-color: #009688"
-                           aria-label="{{authName}}"
-                           ng-click="setupPicker()"
-                           ng-disabled="!isAuth">
-                    File Picker
+                           >
+                    Refresh
                 </md-button>
             </div>
         </md-toolbar>
         <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
-            You can upload and select from Google Drive
-            <pre>Your FolderID: {{rootGdriveFolderID}}</pre>
-            <!-- <input type="file" id="filePicker" style="display: none" /> -->
-            <p>
-            <div class="well" >
-                <!-- <pre >{{file}}</pre> -->
-                <img ng-repeat="file in files" style="margin-left:15px; margin-bottom: 15px"  select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
-            </div>
-            </p>
+            <h3>이곳에서 현재까지 판매된 정보를 알 수 있습니다.</h3>
+            <pre ng-repeat="payment in payments">
+                {{payment}}
+            </pre>
         </md-content>
     </div>
 
