@@ -35,6 +35,73 @@
             </div>
             </p>
         </md-content>
+
+        <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
+        margin-top:10px; border-radius:15px 15px 0px 0px;">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">새상품정보입력</span>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-content flex data-ng-controller="AddNewProductController" class="md-padding" style="border-radius:0px 0px 15px 15px" ng-init="getBanners()">
+                <div layout="vertical" layout-align="center">
+                    <pre>{{parentId}}</pre>
+                    <pre>{{selectedBanner}}</pre>
+                        <form data-ng-submit="create()" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-default">
+                                </div>
+                                <div data-ng-show="error" class="text-danger">
+                                    <h4>{{error}}</h4>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Banner</label>
+                                    <select class="form-control" ng-model="selectedBanner" ng-options="banner.name for banner in banners">
+                                        <option value="">-- choose color --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Name</label>
+                                    <div class="controls">
+                                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="상품이름을 적어주세요" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="mainimg">Main Img</label>
+                                    <div class="controls">
+                                        <input type="text" data-ng-model="mainimg" id="mainimg" class="form-control" placeholder="Main Img" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="imgs">Images</label>
+                                    <div class="controls">
+                                        <input type="text" data-ng-model="imgs" id="imgs" class="form-control" placeholder="메인 이미지를 선택하여 주세요" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="price">Price</label>
+                                    <div class="controls">
+                                        <input type="text" data-ng-model="price" id="price" class="form-control" placeholder="상품가격을 적어주세요" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">상품정보</label>
+                                    <div class="controls">
+                                        <input type="text" data-ng-model="description" id="description" class="form-control" placeholder="간단한 1-2줄의 상품요약" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">상품상세정보</label>
+                                    <div class="controls">
+                                        <textarea data-ui-tinymce id="tinymce1" data-ng-model="detailDesc"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+        </md-content>
+
     </div>
 
 

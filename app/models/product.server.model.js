@@ -36,6 +36,10 @@ var ProductSchema = new Schema({
         type: String,
         default: ''
     },
+    detailDesc:{
+        type: String,
+        default:''
+    },
 	created: {
 		type: Date,
 		default: Date.now

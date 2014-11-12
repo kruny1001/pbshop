@@ -1134,6 +1134,18 @@ angular.module('banners').factory('Banners', [
       }
     });
   }
+]);
+angular.module('banners').factory('BannerByUserId', [
+  '$resource',
+  function ($resource) {
+    return $resource('banners/find/:userId', { userId: '@userId' }, {
+      update: { method: 'PUT' },
+      query: {
+        method: 'GET',
+        isArray: true
+      }
+    });
+  }
 ]);'use strict';
 // Setting up route
 angular.module('core').config([
@@ -1466,30 +1478,33 @@ angular.module('gdriveapps').config([
     }).state('gDrive2.addNewProduct', {
       url: '/addNewProduct',
       templateUrl: 'modules/gdriveapps/template/gDrive2.addNewProduct.tmp.html'
+    }).state('gDrive2.editProduct', {
+      url: '/editProduct/:productId',
+      templateUrl: 'modules/gdriveapps/template/gDrive2.editProduct.tmp.html'
     }).state('gDrive2.historyPayment', {
       url: '/historyPayment',
       templateUrl: 'modules/gdriveapps/template/gDrive2.historyPayment.tmp.html'
     });
     /*.
 
-        state('createFile', {
-            url: '/create',
-            templateUrl:'modules/gdriveapps/views/create-doc.client.view.html',
-            controller: 'CreateDocController'
-        }).
-        state('installTodo', {
-            url: '/install',
-            templateUrl:'modules/gdriveapps/views/install-todo.client.view.html',
-            controller: 'InstallTodoController'
-        }).
-        state('todoState',{
-            url:'/todos/:fileId/:filter',
-            templateUrl:'modules/gdriveapps/views/install-todo.client.view.html',
-            controller:'todoController',
-            resolve: {
-                //realtimeDocument: app.loadFile
-            }
-        })*/
+			 state('createFile', {
+			 url: '/create',
+			 templateUrl:'modules/gdriveapps/views/create-doc.client.view.html',
+			 controller: 'CreateDocController'
+			 }).
+			 state('installTodo', {
+			 url: '/install',
+			 templateUrl:'modules/gdriveapps/views/install-todo.client.view.html',
+			 controller: 'InstallTodoController'
+			 }).
+			 state('todoState',{
+			 url:'/todos/:fileId/:filter',
+			 templateUrl:'modules/gdriveapps/views/install-todo.client.view.html',
+			 controller:'todoController',
+			 resolve: {
+			 //realtimeDocument: app.loadFile
+			 }
+			 })*/
     ;
   }
 ]);'use strict';
@@ -1586,6 +1601,79 @@ angular.module('gdriveapps').controller('DocsController', [
         return 'Authorize';
     };
     $scope.toggleAuth(false);
+  }
+]);/**
+ * Created by Kevin on 2014-11-11.
+ */
+angular.module('gdriveapps').controller('AddNewProductController', [
+  '$scope',
+  '$stateParams',
+  'Authentication',
+  'Products',
+  'BannerByUserId',
+  function ($scope, $stateParams, Authentication, Products, BannerByUserId) {
+    $scope.authentication = Authentication;
+    $scope.parentId = $stateParams.bannerId;
+    // Create new Product
+    $scope.create = function () {
+      // Create new Product object
+      var product = new Products({
+          name: this.name,
+          mainimg: this.mainimg,
+          imgs: this.imgs,
+          price: this.price,
+          description: this.description,
+          parentId: $scope.selectedBanner._id,
+          detailDesc: $scope.detailDesc
+        });
+      // Redirect after save
+      product.$save(function (response) {
+        alert('Successfully Added');
+        $scope.error = '';
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+      this.mainimg = '';
+      this.imgs = '';
+      this.price = 0;
+      this.description = '';
+    };
+    // Update existing Product
+    $scope.update = function () {
+      var product = $scope.product;
+      product.$update(function () {
+        //$location.path('products/' + product._id);
+        alert('updated successfully');
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Products
+    $scope.find = function () {
+      $scope.products = Products.query();
+    };
+    $scope.findBanners = function () {
+      $scope.banners = Banners.query();
+    };
+    // Find existing Product
+    $scope.findOne = function () {
+      Products.get({ productId: $stateParams.productId }).$promise.then(function (result) {
+        $scope.product = result;
+        $scope.selectOption();
+      });
+    };
+    $scope.findProductUnderBanner = function () {
+      console.log('banner id is ' + $scope.parentId);
+      $scope.products = ProductsBanner.query({}, { bannerId: $scope.parentId });
+    };
+    $scope.getBanners = function () {
+      $scope.banners = BannerByUserId.query({ userId: Authentication.user._id });
+    };
+    $scope.selectOption = function () {
+      $scope.selectedBanner = $scope.product.parentId;  //$scope.product.parentId;
+    };
   }
 ]);/*
  Copyright 2012 Google Inc.
@@ -1757,9 +1845,12 @@ angular.module('gdriveapps').controller('gdrive', [
   'ProductByUserId',
   function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products, Authentication, ProductByUserId) {
     $scope.authentication = Authentication;
-    console.log($scope.authentication);
     $scope.goChildView = function (stateName) {
       $state.go(stateName);
+      $mdSidenav('left').close();
+    };
+    $scope.redirect = function (stateName, param) {
+      $state.go(stateName, { productId: param });
       $mdSidenav('left').close();
     };
     //$scope.queriedProduct = ProductByUserId.query({userId:$scope.authentication.user._id });
@@ -3390,17 +3481,13 @@ angular.module('shop-list').config([
 angular.module('shop-list').controller('DetailProductController', [
   '$scope',
   '$stateParams',
+  '$sce',
   'Products',
   'GetPurchaseJWT',
   'Payments',
-  function ($scope, $stateParams, Products, GetPurchaseJWT, Payments) {
+  function ($scope, $stateParams, $sce, Products, GetPurchaseJWT, Payments) {
     var productId = $stateParams.productId;
     $scope.quantity = 1;
-    // Find a Product
-    $scope.findOne = function () {
-      $scope.product = Products.get({ productId: productId });
-    };
-    // Tabs Start -----------------------------------------------
     var tabs = [
         {
           title: '\uc0c1\uc138 \uc0c1\ud488\uc124\uba85',
@@ -3408,13 +3495,21 @@ angular.module('shop-list').controller('DetailProductController', [
         },
         {
           title: '\ubc18\ud488/\ubc30\uc1a1/\uad50\ud658 \ubb38\uc758',
-          content: '&#10;                        <h1 style="text-align: center;">&#34;\ud5e4\uc5b4\ud2b8\ub9ac\ud2b8\uba3c\ud2b8\uc758 \ub300\uc138&#34;</h1><h2 style="text-align: center;">\ud5d0\ub9ac\uc6c3 \uc2a4\ud0c0\uc758 \ubca0\uc2a4\ud2b8\uc140\ub7ec</h2><p><br/></p><p style="text-align: left;">\ubaa8\ub85c\uce78 \uc624\uc77c \ud2b8\ub9ac\ud2b8\uba3c\ud2b8 \uc81c\ud488\uc758 \ubaa8\ub85c\ucf54 \ub0a8\uc11c \uc9c0\uc5ed\uc5d0\uc11c \uc7ac\ubc30\ub41c &#34;\uc544\ub974\uac04 \uc624\uc77c&#34; \uc774 \uc8fc\uc131\ubd84\uc73c\ub85c \ub9cc\ub4e4\uc5b4\uc9c4 \uc81c\ud488\ub4e4\ub85c \ucc9c\uc5f0 \ud1a0\ucf54\ud398\ub864, \ube44\ud0c0\ubbfc E, \uc624\uba54\uac009, \ud3f4\ub9ac\ud398\ub180\uc774 \ud48d\ubd80\ud558\uac8c \ud568\uc720\ub418\uc5b4 \uc788\uc5b4 \uc138\ud3ec \uad6c\uc870\ub97c \uc790\uc5f0\uc2a4\ub7fd\uac8c \uc7ac\uc0dd\uc2dc\ucf1c\uc8fc\uace0 \ubaa8\ubc1c\uc758 \ud0c4\ub825\uc744 \ub192\uc5ec\uc8fc\uba70 \uc724\uae30\uc640 \ud65c\ub825\uc774 \uc5c6\ub294 \ubaa8\ubc1c\uc5d0 \uc0dd\uba85\ub825\uacfc \uad11\ud0dd\uc744 \ud68c\ubcf5\uc2dc\ucf1c \uc90d\ub2c8\ub2e4. \uac74\uc870\ud55c \uc5d0\uc5b4\ucee8 \ubc14\ub78c\uc73c\ub85c \ubd80\ud130 \uc218\ubd84\uc744 \ubcf4\ud638\ud558\uba70 \uc7a5\ub9c8\ucca0 \uc2b5\uae30\ub85c \uc778\ud574 \uae30\ub984\uc9c0\uace0 \uccd0\uc9c4 \uba38\ub9ac\uacb0\uc744 \ubd80\ub4dc\ub7fd\uace0 \ubcfc\ub968\uac10 \uc788\uac8c \ucf00\uc5b4\ud574 \uc90d\ub2c8\ub2e4.\xa0</p><p style="text-align: left;">\uc5fc\uc0c9\uc774\ub098 \ud37c\uba38\uc2dc \uc0ac\uc6a9\ud558\uba74 \ubaa8\ubc1c\uc758 \uc190\uc0c1\uc744 \ub9c9\uc544\uc8fc\uace0 \ud6a8\uacfc\ub97c \ub354 \uc624\ub798 \uc9c0\uc18d\uc2dc\ucf1c \uc8fc\uba70 \ub4dc\ub77c\uc774 \uc2dc\uac04\uc744 40% \uc774\uc0c1 \ub2e8\ucd95 \uc2dc\ucf1c \uc90d\ub2c8\ub2e4. \ubaa8\ub85c\uce78 \uc624\uc77c\uc758 \ubaa8\ub4e0 \uc81c\ud488\uc740 \ub3d9\ubb3c\uc131 \ud568\uc720\ubb3c\uc774 \ubc30\uc81c\ub41c \ucd5c\uc0c1\uc758 \ud488\uc9c8\ub85c \ubaa8\ub4e0 \uc81c\ud488\uc774 \ubaa8\ubc1c\uc5d0 \ud0c4\ub825\uc744 \uc7ac\uc0dd\uc2dc\ucf1c\uc8fc\uba70 \ud654\ub824\ud55c \uc724\uae30\ub97c \ub354\ud574\uc8fc\ub294 \ub3d9\uc2dc\uc5d0 \uc720\ud574 \uc0b0\uc18c\ub85c\ubd80\ud130 \ub6f0\uc5b4\ub09c \ubc29\uc5b4\ub825\uc73c\ub85c \uc138\ud3ec\uac00 \uc190\uc0c1\ub418\ub294 \uac83 \uc744 \ubc29\uc9c0\ud558\ub294 \ud6a8\uacfc\uac00 \ud0c1\uc6d4\ud569\ub2c8\ub2e4.\xa0</p><p style="text-align: left;">\uc2a4\ud0c0\uc77c\ub9c1\uacfc \ucf00\uc5b4\ub97c \ub3d9\uc2dc\uc5d0 \ub9cc\ub3c5\uc2dc\ucf1c\ub4dc\ub9ac\ub294 \uba40\ud2f0\ud50c \uc81c\ud488\ub4e4 \uccb4\ud5d8\ud574 \ubcf4\uc138\uc694!</p><p style="text-align: left;">\ub9cc\uc871\ud558\uc2e4\ubfd0\ub9cc \uc544\ub2c8\ub77c \ub9e4\ub2c8\uc544\uac00 \ub418\uc2e4 \uac83 \uc744 \ud655\uc2e0\ud569\ub2c8\ub2e4.\xa0</p><p style="text-align: left;"><br/></p><p style="text-align: left;"><br/></p>&#10;'
+          content: ''
         },
         {
           title: '\uc0c1\ud488\ubd84\uc11d\ud3c9/\uc0c1\ud488\ubb38\uc758',
           content: 'You can bind the selected tab via the selected attribute on the md-tabs element.'
         }
       ];
+    // Find a Product
+    $scope.findOne = function () {
+      Products.get({ productId: productId }).$promise.then(function (value) {
+        $scope.product = value;
+        tabs[1].content = $sce.trustAsHtml(value.detailDesc);
+      });
+    };
+    // Tabs Start -----------------------------------------------
     $scope.tabs = tabs;
     $scope.selectedIndex = 1;
     $scope.announceSelected = announceSelected;

@@ -19,6 +19,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, banners.hasAuthorization, banners.update)
 		.delete(users.requiresLogin, banners.hasAuthorization, banners.delete);
 
+	app.route('/banners/find/:userId')
+		.get(banners.findBannersByUserId);
+
 	// Finish by binding the Banner middleware
 	app.param('bannerId', banners.bannerByID);
 };

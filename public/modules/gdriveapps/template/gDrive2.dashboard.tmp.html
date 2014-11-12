@@ -55,8 +55,8 @@
                         <p>
                             {{product.description}}
                         </p>
-                        <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-                            <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
+                        <div class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
+                            <md-button class="md-raised md-primary" ng-click="redirect('gDrive2.editProduct', product._id)">
                                 Edit Button
                             </md-button>
                             <div style="width:25px; height: 5px;"></div>

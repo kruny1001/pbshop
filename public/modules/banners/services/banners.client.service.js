@@ -16,3 +16,17 @@ angular.module('banners').factory('Banners', ['$resource',
 		});
 	}
 ]);
+
+angular.module('banners').factory('BannerByUserId', ['$resource', function($resource) {
+	return $resource('banners/find/:userId', {
+		userId: '@userId'
+	}, {
+		update: {
+			method: 'PUT'
+		},
+		query: {
+			method: 'GET',
+			isArray: true
+		}
+	});
+}]);

@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	Banner = mongoose.model('Banner'),
 	_ = require('lodash');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Get the error message from error object
@@ -117,6 +118,18 @@ exports.bannerByID = function(req, res, next, id) { Banner.findById(id).populate
 	});
 };
 
+exports.findBannersByUserId = function(req ,res) {
+	Banner.find({user: new ObjectId(req.params.userId)}).sort('-created').populate('user', 'displayName').exec(function(err, products) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+			res.header('Content-Type', 'application/json; charset=utf-8');
+			res.jsonp(products);
+		}
+	});
+}
 /**
  * Banner authorization middleware
  */

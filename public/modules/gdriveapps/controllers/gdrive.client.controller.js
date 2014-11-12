@@ -21,10 +21,13 @@ angular.module('gdriveapps')
     .controller('gdrive', ['$scope','$state','$http','$q', '$mdDialog', '$mdSidenav','configGdrive', 'Googledrive', 'GooglePlus', 'Products','Authentication','ProductByUserId',
         function ($scope, $state, $http, $q, $mdDialog, $mdSidenav, configGdrive, Googledrive, GooglePlus, Products, Authentication, ProductByUserId) {
             $scope.authentication = Authentication;
-            console.log($scope.authentication);
-
             $scope.goChildView = function(stateName){
                 $state.go(stateName);
+                $mdSidenav('left').close();
+            }
+
+            $scope.redirect = function(stateName, param){
+                $state.go(stateName, {productId: param});
                 $mdSidenav('left').close();
             }
 

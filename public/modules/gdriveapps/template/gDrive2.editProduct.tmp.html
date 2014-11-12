@@ -1,0 +1,111 @@
+<section layout="horizontal" flex ng-controller="gdrive">
+    <div style="margin:10px;" flex layout="vertical">
+        <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
+        margin-top:10px; border-radius:15px 15px 0px 0px;">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">Image Tool</span>
+                <span flex></span>
+
+                <md-button class="md-raised md-primary"
+                           noink
+                           style="background-color: #009688"
+                           aria-label="{{authName}}"
+                           ng-click="init()">
+                    {{authName}}
+                </md-button>
+                <md-button class="md-raised md-primary"
+                           noink
+                           style="background-color: #009688"
+                           aria-label="{{authName}}"
+                           ng-click="setupPicker()"
+                           ng-disabled="!isAuth">
+                    File Picker
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px" ng-controller="AddNewProductController">
+            <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
+            You can upload and select from Google Drive
+            <pre>Your FolderID: {{rootGdriveFolderID}}</pre>
+            <!-- <input type="file" id="filePicker" style="display: none" /> -->
+            <p>
+            <div class="well" >
+                <!-- <pre >{{file}}</pre> -->
+                <img ng-repeat="file in files" style="margin-left:15px; margin-bottom: 15px"  select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
+            </div>
+            </p>
+        </md-content>
+
+        <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
+        margin-top:10px; border-radius:15px 15px 0px 0px;">
+            <div class="md-toolbar-tools">
+                <span class="md-flex">상품정보수정</span>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-content flex data-ng-controller="AddNewProductController" class="md-padding" style="border-radius:0px 0px 15px 15px" ng-init="findOne(); getBanners() ">
+            <div layout="vertical" layout-align="center">
+                <!--
+                <pre>{{product | json}}</pre>
+                <pre>{{banners[0] | json}}</pre>
+                <pre>{{selectedBanner | json}}</pre>
+                -->
+                <form data-ng-submit="update()" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-default">
+                        </div>
+                        <div data-ng-show="error" class="text-danger">
+                            <h4>{{error}}</h4>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="name">Banner</label>
+                            <select class="form-control"
+                                    ng-model="selectedBanner"
+                                    ng-options="banner._id as banner.name for banner in banners">
+                                <option value="">-- choose color --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="product.name" id="name" class="form-control" placeholder="상품이름을 적어주세요" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="mainimg">Main Img</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="product.mainimg" id="mainimg" class="form-control" placeholder="Main Img" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="imgs">Images</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="product.imgs" id="imgs" class="form-control" placeholder="메인 이미지를 선택하여 주세요" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="price">Price</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="product.price" id="price" class="form-control" placeholder="상품가격을 적어주세요" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="description">상품정보</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="product.description" id="description" class="form-control" placeholder="간단한 1-2줄의 상품요약" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="description">상품상세정보</label>
+                            <div class="controls">
+                                <textarea data-ui-tinymce id="tinymce1" data-ng-model="product.detailDesc" style="height:700px;"></textarea>
+                            </div>
+                            <pre>{{product.detailDesc}}</pre>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </md-content>
+    </div>
+</section>
