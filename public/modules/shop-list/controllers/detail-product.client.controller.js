@@ -64,7 +64,7 @@ angular.module('shop-list').controller('DetailProductController', ['$scope','$st
 		$scope.purchaseProduct = function(productID, quantity){
 			console.log(productID);
 			console.log(quantity);
-			var optdesc= 'quantity is '+ quantity;
+			var optdesc= '주문수량: '+ quantity+'개';
 			GetPurchaseJWT.query({productID: productID, qty: quantity, optdesc: optdesc}).$promise
 				.then(function (response){
 					google.payments.inapp.buy({

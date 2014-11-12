@@ -82,7 +82,7 @@ exports.productByID = function(req, res, next, id){
                 "iat": iat,
                 "exp": exp,
                 "request":{
-                    "currencyCode":"USD",
+                    "currencyCode":"KRW",
                     "price":product.price.toString(),
                     "name":product.name,
                     "sellerData":product.user._id,

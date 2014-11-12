@@ -3542,7 +3542,7 @@ angular.module('shop-list').controller('DetailProductController', [
     $scope.purchaseProduct = function (productID, quantity) {
       console.log(productID);
       console.log(quantity);
-      var optdesc = 'quantity is ' + quantity;
+      var optdesc = '\uc8fc\ubb38\uc218\ub7c9: ' + quantity + '\uac1c';
       GetPurchaseJWT.query({
         productID: productID,
         qty: quantity,
