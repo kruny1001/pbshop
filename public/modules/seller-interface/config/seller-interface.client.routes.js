@@ -6,7 +6,7 @@ angular.module('seller-interface').config(['$stateProvider',
 		// Seller interface state routing
 		$stateProvider.
 		state('listing-product', {
-			url: '/listing-product',
+			url: '/',
 			templateUrl: 'modules/seller-interface/views/listing-product.client.view.html'
 		});
 	}

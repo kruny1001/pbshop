@@ -1156,7 +1156,7 @@ angular.module('core').config([
     $urlRouterProvider.otherwise('/');
     // Home state routing
     $stateProvider.state('home', {
-      url: '/',
+      url: '/dev',
       templateUrl: 'modules/core/views/home.client.view.html'
     });
   }
@@ -2991,10 +2991,6 @@ angular.module('opencpu').factory('Readcsv', [
 angular.module('payments').run([
   'Menus',
   function (Menus) {
-    // Set top bar menu items
-    Menus.addMenuItem('topbar', 'Payments', 'payments', 'dropdown', '/payments(/create)?');
-    Menus.addSubMenuItem('topbar', 'payments', 'List Payments', 'payments');
-    Menus.addSubMenuItem('topbar', 'payments', 'New Payment', 'payments/create');
   }
 ]);'use strict';
 //Setting up route
@@ -3320,7 +3316,7 @@ angular.module('seller-interface').config([
   function ($stateProvider) {
     // Seller interface state routing
     $stateProvider.state('listing-product', {
-      url: '/listing-product',
+      url: '/',
       templateUrl: 'modules/seller-interface/views/listing-product.client.view.html'
     });
   }
