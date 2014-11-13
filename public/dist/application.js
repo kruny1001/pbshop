@@ -1165,12 +1165,15 @@ angular.module('core').config([
  * Binds a TinyMCE widget to <textarea> elements.
  */
 angular.module('ui.tinymce', []).value('uiTinymceConfig', {
-  plugins: 'image',
+  plugins: 'image, link, fullscreen, code, table, contextmenu, media',
+  contextmenu: 'link media image inserttable | cell row column deletetable',
   image_advtab: true,
   image_class_list: [{
       title: 'Responsive Size',
       value: 'img-responsive'
-    }]
+    }],
+  fullscreen_new_window: true,
+  fullscreen_settings: { theme_advanced_path_location: 'top' }
 }).directive('uiTinymce', [
   'uiTinymceConfig',
   function (uiTinymceConfig) {
@@ -1826,7 +1829,8 @@ var CONFIG = {
     scopes: [
       'https://www.googleapis.com/auth/drive',
       'https://www.googleapis.com/auth/drive.appdata',
-      'https://www.googleapis.com/auth/plus.me'
+      'https://www.googleapis.com/auth/plus.me',
+      'https://www.googleapis.com/auth/paymentssandbox.make_payments'
     ]
   };
 angular.module('gdriveapps').value('configGdrive', CONFIG);
@@ -3350,9 +3354,13 @@ angular.module('seller-interface').controller('ListingProductController', [
       $scope.products = Products.query();
       $scope.products.$promise.then(function (result) {
         console.log('Done querying products');
-        $scope.partitioned = partition(result, 2);
+        $scope.partitioned = partition(result, 3);
         console.log($scope.partitioned);
       });
+    };
+    $scope.testColumnSystem = function (numberOfColumn) {
+      $scope.partitioned = partition($scope.products, numberOfColumn);
+      $scope.$digest();
     };
     $scope.listItemClick = function ($index) {
       var clickedItem = $scope.items[$index];
@@ -3481,21 +3489,22 @@ angular.module('shop-list').controller('DetailProductController', [
   'Products',
   'GetPurchaseJWT',
   'Payments',
-  function ($scope, $stateParams, $sce, Products, GetPurchaseJWT, Payments) {
+  'configGdrive',
+  function ($scope, $stateParams, $sce, Products, GetPurchaseJWT, Payments, configGdrive) {
     var productId = $stateParams.productId;
     $scope.quantity = 1;
     var tabs = [
         {
-          title: '\uc0c1\uc138 \uc0c1\ud488\uc124\uba85',
-          content: '<p>R package and code repository</p><p><br/></p><p><a href="http://kruny1001.ocpu.io/pbshop/info">R</a>\xa0Package Repository: <a href="http://kruny1001.ocpu.io/pbshop/info">here</a></p><p> Code Repository: <a href="https://github.com/kruny1001/pbshop">here</a></p><p><br/></p><p>Demo web application:\xa0<a href="http://kevangular.herokuapp.com/#!/gwas-t1">http://kevangular.herokuapp.com/#!/gwas-t1</a></p><p><br/></p><p><img style="height: 578px;width: 1075px;" src="http://goo.gl/t5cXqX" title="" class=""/><br/></p>'
+          title: '\ubc18\ud488/\ubc30\uc1a1/\uad50\ud658 \ubb38\uc758',
+          content: 'No Contents'
         },
         {
-          title: '\ubc18\ud488/\ubc30\uc1a1/\uad50\ud658 \ubb38\uc758',
+          title: '\uc0c1\uc138 \uc0c1\ud488\uc124\uba85',
           content: ''
         },
         {
           title: '\uc0c1\ud488\ubd84\uc11d\ud3c9/\uc0c1\ud488\ubb38\uc758',
-          content: 'You can bind the selected tab via the selected attribute on the md-tabs element.'
+          content: 'No Contents'
         }
       ];
     // Find a Product
@@ -3535,6 +3544,70 @@ angular.module('shop-list').controller('DetailProductController', [
     }
     // Tabs End -----------------------------------------------
     $scope.from_one = { from_one: 'bold data in controller in from_one.js' };
+    var accessToken;
+    $scope.authenticateWithGoogle = function authenticateWithGoogle() {
+      window.gapi.auth.authorize({
+        'client_id': configGdrive.clientId,
+        'scope': configGdrive.scopes,
+        'immediate': false
+      }, handleAuthentication);
+    };
+    function buttonReady(params) {
+      if (params.status == 'SUCCESS') {
+        if (document.readyState === 'interactive' || document.readyState == 'complete' || document.readyState == 'loaded') {
+          document.getElementById('wallet-button-holder').appendChild(params.walletButtonElement);
+        } else {
+          document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('wallet-button-holder').appendChild(params.walletButtonElement);
+          });
+        }
+      }
+    }
+    var createWalletButtonSuccessCallback = function (param) {
+      wallet.transactionId = param.response.response.googleTransactionId;
+      console.log('Masked Wallet Response:' + JSON.stringify(param.response));  /*
+			$.mobile.changePage('#confirmation-page', {
+				transition: 'slide'
+			}
+			*/
+    };
+    var createWalletButtonFailureCallback = function (error) {
+      // log error message
+      console.log('There was an error getting the Masked Wallet: ' + JSON.stringify(error));
+    };
+    function handleAuthentication(result) {
+      var test2 = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHb29nbGUiLCJyZXF1ZXN0Ijp7ImN1cnJlbmN5Q29kZSI6IlVTRCIsInByaWNlIjoxMiwibmFtZSI6IkxhbTEyIiwic2VsbGVyRGF0YSI6IjU0MmNmM2NkMDZkZDA3NTAxNjRhZDZmOSIsImRlc2NyaXB0aW9uIjoi7KO866y47IiY65-JOiAx6rCcIn0sInJlc3BvbnNlIjp7Im9yZGVySWQiOiJHV0RHX1MuNjJlY2ExNWItMjUwMS00MzEyLTg4NTgtMzE3YWNkNDk0ZjVjIn0sInR5cCI6Imdvb2dsZS9wYXltZW50cy9pbmFwcC9pdGVtL3YxL3Bvc3RiYWNrL2J1eSIsImF1ZCI6IjA4MjQzMzYyMDA3MTc0NzAwNDY2IiwiaWF0IjoxNDE1ODU1NTQ2LCJleHAiOjE0MTU4NTU1NjZ9.C9vt9cNEAvtrpfw5hqQaqJYa1Mqva8jvINWqQMy0NwM';
+      console.log(configGdrive.clientId);
+      google.wallet.online.authorize({
+        'clientId': configGdrive.clientId,
+        'callback': function (result) {
+          console.log(result);
+          google.wallet.online.createWalletButton({
+            'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwODI0MzM2MjAwNzE3NDcwMDQ2NiIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS93YWxsZXQvb25saW5lL21hc2tlZC92Mi9yZXF1ZXN0IiwiaWF0IjoxNDE1ODU5MTYzLCJleHAiOjE2NzI0NjY0MDAwMDAsInJlcXVlc3QiOnsiY2xpZW50SWQiOiI1NzQ1NjM1Mzk0ODgtbjB2cmV2Z2pwMzYwNmwyMGhmazRycWZrMWRjOGozcWIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJtZXJjaGFudE5hbWUiOiJwYlNob3AiLCJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjMwMDAvIiwicGhvbmVOdW1iZXJSZXF1aXJlZCI6dHJ1ZSwicGF5Ijp7ImVzdGltYXRlZFRvdGFsUHJpY2UiOiIxNS4wMSIsImN1cnJlbmN5Q29kZSI6IlVTRCJ9LCJzaGlwIjp7fX19.ayFuAfhYnlzBWNlJxbuwHT2o-4k01tZ2x41c9_fzeJk',
+            'success': createWalletButtonSuccessCallback,
+            'failure': createWalletButtonFailureCallback,
+            'ready': buttonReady,
+            'height': '44',
+            'width': '230'
+          });
+        }
+      });  /*
+			if(result && !result.error){
+				$scope.isAuth = true;
+				$scope.authName = 'Deauthorize';
+				accessToken = result.access_token;
+
+			}else{
+				console.log(result);
+				console.log(result.error);
+				console.log('fail to authentication')
+			}
+			$scope.$digest();
+			*/
+    }
+    $scope.testPurchaseProduct = function () {
+      google.wallet.online.setAccessToken('[accessToken]');
+    };
     $scope.purchaseProduct = function (productID, quantity) {
       console.log(productID);
       console.log(quantity);
@@ -3551,7 +3624,7 @@ angular.module('shop-list').controller('DetailProductController', [
             //window.alert('success: '+ result);
             //console.log(result.request);
             //console.log(result.response);
-            //console.log(result.jwt);
+            console.log(result.jwt);
             // Insert Payment History
             createPaymentHistory(result);
           },
@@ -3673,7 +3746,10 @@ angular.module('template').config([
   '$stateProvider',
   function ($stateProvider) {
     // Template state routing
-    $stateProvider.state('test-font-animation', {
+    $stateProvider.state('banners-gallery', {
+      url: '/banners-gallery',
+      templateUrl: 'modules/template/views/banners-gallery.client.view.html'
+    }).state('test-font-animation', {
       url: '/test-font-animation',
       templateUrl: 'modules/template/views/test-font-animation.client.view.html'
     }).state('draggable', {
@@ -3683,6 +3759,11 @@ angular.module('template').config([
       url: '/setrowcol',
       templateUrl: 'modules/template/views/set-row-col.client.view.html'
     });
+  }
+]);'use strict';
+angular.module('template').controller('BannersgalleryController', [
+  '$scope',
+  function ($scope) {
   }
 ]);'use strict';
 angular.module('template').controller('DraggableController', [
@@ -3859,6 +3940,30 @@ angular.module('template').directive('bannerFront', [function () {
         };
         function updateSlider() {
         }  //element.text('this is the bannerFront directive');
+      }
+    };
+  }]);'use strict';
+angular.module('template').directive('octopusBanner', [function () {
+    return {
+      templateUrl: 'modules/template/tmpl/octopusBanner.tmpl.html',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        // Octopus banner directive logic
+        // ...
+        TweenLite.delayedCall(4, startLoading);
+        function startLoading() {
+          TweenMax.to($('#text'), 5, {
+            opacity: 0,
+            top: '680px'
+          });
+        }  //TweenMax.to($('#container'), 5, {backgroundColor:"white"});
+           /**
+
+				TweenMax.to($('#one'), 3, {opacity: 0, top: "300px", repeat: -1, yoyo: true});
+				TweenMax.to($('#two'), 3, {opacity: 0, bottom: "300px", repeat: -1, yoyo: true});
+				TweenMax.to($('#three'), 4, {opacity: 0, left: "1000px", repeat: -1, yoyo: true});
+				TweenMax.to($('#four'), 4, {opacity: 0, right: "1000px", repeat: -1, yoyo: true});
+				**/
       }
     };
   }]);'use strict';
