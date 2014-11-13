@@ -42,9 +42,14 @@
 				<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id, quantity)">
 					빠른구매
 				</md-button>
-				<md-button class="md-raised md-primary" ng-click="createPaymentHistory()">
+
+				<!--
+				<md-button class="md-raised md-primary" ng-click="authenticateWithGoogle()">
 					Add new payment history (Dev)
 				</md-button>
+				-->
+				<div id="wallet-button-holder"></div>
+
 			</span>
 		</md-whiteframe>
 	</div>

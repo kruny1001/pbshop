@@ -5,6 +5,10 @@ angular.module('template').config(['$stateProvider',
 	function($stateProvider) {
 		// Template state routing
 		$stateProvider.
+		state('banners-gallery', {
+			url: '/banners-gallery',
+			templateUrl: 'modules/template/views/banners-gallery.client.view.html'
+		}).
 		state('test-font-animation', {
 			url: '/test-font-animation',
 			templateUrl: 'modules/template/views/test-font-animation.client.view.html'

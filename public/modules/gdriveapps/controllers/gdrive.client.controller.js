@@ -12,7 +12,8 @@ var CONFIG = {
     scopes: [
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/plus.me'
+        'https://www.googleapis.com/auth/plus.me',
+        'https://www.googleapis.com/auth/paymentssandbox.make_payments'
     ]
 };
 angular.module('gdriveapps').value('configGdrive', CONFIG);

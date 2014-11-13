@@ -14,10 +14,15 @@ angular.module('seller-interface').controller('ListingProductController', ['$sco
 			$scope.products = Products.query()
 			$scope.products.$promise.then(function (result) {
 				console.log('Done querying products');
-				$scope.partitioned = partition(result, 2);
+				$scope.partitioned = partition(result, 3);
 				console.log($scope.partitioned);
 			});
 		};
+
+		$scope.testColumnSystem = function(numberOfColumn){
+			$scope.partitioned = partition($scope.products, numberOfColumn);
+			$scope.$digest();
+		}
 
 		$scope.listItemClick = function($index) {
 			var clickedItem = $scope.items[$index];

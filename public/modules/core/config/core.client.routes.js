@@ -21,11 +21,18 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
  */
 angular.module('ui.tinymce', [])
 	.value('uiTinymceConfig', {
-		plugins: "image",
+		plugins: "image, link, fullscreen, code, table, contextmenu, media",
+		contextmenu: "link media image inserttable | cell row column deletetable",
 		image_advtab: true,
 		image_class_list: [
 			{title: 'Responsive Size', value: 'img-responsive'}
-		]})
+
+		],
+		fullscreen_new_window : true,
+		fullscreen_settings : {
+			theme_advanced_path_location : "top"
+		}
+	})
 	.directive('uiTinymce', ['uiTinymceConfig', function(uiTinymceConfig) {
 		uiTinymceConfig = uiTinymceConfig || {};
 		var generatedIds = 0;
