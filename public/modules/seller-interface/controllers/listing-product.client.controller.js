@@ -1,7 +1,14 @@
 'use strict';
 
-angular.module('seller-interface').controller('ListingProductController', ['$scope', '$log', '$mdDialog', 'Products','GetPurchaseJWT',
-	function($scope, $log, $mdDialog, Products, GetPurchaseJWT) {
+angular.module('seller-interface').controller('ListingProductController', ['$scope', '$log', '$mdDialog', '$mdToast','Products','GetPurchaseJWT',
+	function($scope, $log, $mdDialog, $mdToast, Products, GetPurchaseJWT) {
+
+		$scope.openToast = function($event) {
+			$mdToast.show({
+				template: '<md-toast>Hello!</md-toast>',
+				hideDelay: 3000
+			});
+		};
 
 		$scope.items = [
 			{ name: 'Upload New Image (Google Drive)', icon: 'share' },
@@ -9,6 +16,7 @@ angular.module('seller-interface').controller('ListingProductController', ['$sco
 			{ name: 'Product History (Google Sheets)', icon: 'copy' },
 			{ name: 'Print this page (PDF Printer)', icon: 'print' },
 		];
+
 
 		$scope.find = function() {
 			$scope.products = Products.query()

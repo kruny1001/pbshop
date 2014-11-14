@@ -68,12 +68,34 @@ var UserSchema = new Schema({
 	},
 	providerData: {},
 	additionalProvidersData: {},
-	roles: {
-		type: [{
+	business: {
+		Role:{
+			type: [{
+				type: String,
+				enum: ['user', 'admin', 'merchant', 'blogger']
+			}],
+			default: ['user']
+		},
+		representative:{
 			type: String,
-			enum: ['user', 'admin']
-		}],
-		default: ['user']
+			default:''
+		},
+		businessNum:{
+			type: String,
+			default:''
+		},
+		businessPlace:{
+			type: String,
+			default:''
+		},
+		phone:{
+			type:String,
+			default:''
+		},
+		netBusinessNum:{
+			type:String,
+			default:''
+		}
 	},
 	updated: {
 		type: Date

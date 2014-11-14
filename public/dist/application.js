@@ -930,10 +930,6 @@ angular.module('andrewkim').factory('Rental', [function () {
 angular.module('articles').run([
   'Menus',
   function (Menus) {
-    // Set top bar menu items
-    Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-    Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-    Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
   }
 ]);'use strict';
 // Setting up route
@@ -1021,8 +1017,7 @@ angular.module('banners').run([
   function (Menus) {
     // Set top bar menu items
     Menus.addMenuItem('topbar', 'Banners', 'banners', 'dropdown', '/banners(/create)?');
-    Menus.addSubMenuItem('topbar', 'banners', 'List Banners', 'banners');
-    Menus.addSubMenuItem('topbar', 'banners', 'New Banner', 'banners/create');
+    Menus.addSubMenuItem('topbar', 'banners', 'List Banners', 'banners');  //Menus.addSubMenuItem('topbar', 'banners', 'New Banner', 'banners/create');
   }
 ]);'use strict';
 //Setting up route
@@ -3225,10 +3220,6 @@ angular.module('products').factory('Products', [
 angular.module('reviews').run([
   'Menus',
   function (Menus) {
-    // Set top bar menu items
-    Menus.addMenuItem('topbar', 'Reviews', 'reviews', 'dropdown', '/reviews(/create)?');
-    Menus.addSubMenuItem('topbar', 'reviews', 'List Reviews', 'reviews');
-    Menus.addSubMenuItem('topbar', 'reviews', 'New Review', 'reviews/create');
   }
 ]);'use strict';
 //Setting up route
@@ -3329,9 +3320,16 @@ angular.module('seller-interface').controller('ListingProductController', [
   '$scope',
   '$log',
   '$mdDialog',
+  '$mdToast',
   'Products',
   'GetPurchaseJWT',
-  function ($scope, $log, $mdDialog, Products, GetPurchaseJWT) {
+  function ($scope, $log, $mdDialog, $mdToast, Products, GetPurchaseJWT) {
+    $scope.openToast = function ($event) {
+      $mdToast.show({
+        template: '<md-toast>Hello!</md-toast>',
+        hideDelay: 3000
+      });
+    };
     $scope.items = [
       {
         name: 'Upload New Image (Google Drive)',
