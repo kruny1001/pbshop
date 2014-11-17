@@ -8116,7 +8116,7 @@ md-input-group.long > input {
   border-radius: 5px;
   z-index: 100; }
 
-.front-urimium-1 input, button {
+.front-urimium-1 input, .front-urimium-1 button {
   position: relative;
   width: 200px;
   height: 50px;
