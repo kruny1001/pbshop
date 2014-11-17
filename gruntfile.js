@@ -9,7 +9,8 @@ module.exports = function(grunt) {
         clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
         clientCSS: ['public/modules/**/*.css'],
         mochaTests: ['app/tests/**/*.js'],
-        sass: 'public/style/{,*/}*.{scss,sass}'
+        //sass: 'public/style/{,*/}*.{scss,sass}'
+        sass: 'public/style/**/*.{scss,sass}'
     };
 
     // Project Configuration
@@ -151,7 +152,6 @@ module.exports = function(grunt) {
             dev: {
                 files: {
                     'public/css/style.css': 'public/style/style.scss'
-                    //'public/css/bootstrap.css': 'public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap.scss'
                 }
             },
             dist: {

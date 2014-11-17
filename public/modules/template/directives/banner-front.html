@@ -1,80 +1,28 @@
 <div>
-    <style>
-        #demoWrapper {
-            width: 600px;
-            height: 350px;
-            -webkit-font-smoothing: antialiased;
-            color: black;
-            overflow: hidden;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        #bg {
-            position: absolute;
-            background-image: url(http://www.greensock.com/_img/codepen/black_textured_background.png);
-            width: 600px;
-            height: 350px;
-        }
-        #content {
-            padding-left: 15px;
-            visibility: hidden;
-        }
-        #info {
-            margin-top: 20px;
-        }
-        #feature {
-            position: relative;
-            float: left;
-        }
-        #description {
-            position: relative;
-            float: left;
-            margin-left: 20px;
-            width: 290px;
-            font-size: 16px;
-            color: #ffffff;
-            line-height: 24px;
-        }
-        #bannertitle{
-            position: relative;
-            margin-top: 10px;
-            font-size: 36px;
-            font-weight: normal;
-            color:#ffffff;
-        }
-        #bannersubtitle{
-            position: relative;
-            font-size: 22px;
-            font-weight: normal;
-            color: #cfcfcf;
-            color:#ffffff;
-        }
-        #nav {
-            position: relative;
-            /*top: 327px;
-            //left: 84px;*/
-            white-space: nowrap;
-        }
-        #nav img {
-            position: relative;
-            margin-right: 20px;
-            float: left;
-        }
-        button {
-            padding: 10px;
-            margin-top: 10px;
-        }
+    <md-checkbox ng-model="dev" aria-label="Checkbox 1">
+        Developer View: {{ dev }}
+    </md-checkbox>
 
-        button:nth-child(1){
-            margin-left:10px;
-        }
-    </style>
-    <div id="demoWrapper">
+    <div style="width: 600px; margin-left:20px" ng-if="dev">
+        <md-slider discrete ng-model="rating" min="0" max="100" aria-label="rating" ng-click="setRating()">
+        </md-slider>
+    </div>
+
+    <div id="demoWrapper" style="margin-left:20px">
         <div id="bg"></div>
+
         <div id="content">
-            <h1 id="bannertitle">Freakishly Robust</h1>
-            <h2 id="bannersubtitle">With features that makes other engines look like cheap toys</h2>
+            <h1 id="bannertitle">의리미엄</h1>
+            <h2 id="bannersubtitle">의리미엄 쇼핑몰의 특징</h2>
             <div id="info"><img src="http://www.greensock.com/wp-content/uploads/custom/codepen/feature_robust.png" width="240" height="151" id="feature">
-                <p id="description">Animate colors, beziers, css properties, arrays, scrolls and lots more. Round values, smoothly reverse() on the fly, use relative values, employ virtually any easing equation, and manage conflicting tweens like a pro. GSAP does all this and much more with ease.</p>
+                <p id="description">
+                    심플한 유저 인터페이스<br>
+                    안전한 전자상거래<br>
+                    판매자 유저인터페이스<br>
+                    Google Wallet<br>
+                    빠른속도<br>
+                    안전한 전자상거래<br>
+                </p>
             </div>
             <div id="nav">
                 <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_robust.png" width="83" height="59">
@@ -84,15 +32,41 @@
                 <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_plugin.png" width="76" height="59">
             </div>
         </div>
+
+        <div id="content2">
+            <h1 id="bannertitle2">의리미엄2</h1>
+            <h2 id="bannersubtitle2">의리미엄 쇼핑몰의 특징2</h2>
+            <div id="info2"><img src="http://www.greensock.com/wp-content/uploads/custom/codepen/feature_robust.png" width="240" height="151" id="feature2">
+                <p id="description2">
+                    심플한 유저 인터페이스2<br>
+                    안전한 전자상거래2<br>
+                    판매자 유저인터페이스2<br>
+                    Google Wallet2<br>
+                    빠른속도2<br>
+                    안전한 전자상거래2<br>
+                </p>
+            </div>
+            <div id="nav2">
+                <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_robust.png" width="83" height="59">
+                <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_overwrite.png" width="43" height="59">
+                <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_compatible.png" width="73" height="59">
+                <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_support.png" width="83" height="59">
+                <img src="http://www.greensock.com/wp-content/uploads/custom/codepen/icon_plugin.png" width="76" height="59">
+            </div>
+        </div>
     </div>
     <div>
-        <button id="play" ng-click="play()">play</button>
-        <button id="pause" ng-click="pause()">pause</button>
-        <button id="reverse" ng-click="reverse()">reverse</button>
-        <button id="resume" ng-click="resume()">resume</button>
-        <button id="restart" ng-click="restart()">restart</button>
+        <md-button id="play2" ng-click="play()">play</md-button>
+        <md-button id="pause2" ng-click="pause()" ng-if="dev">pause</md-button>
+        <md-button id="reverse2" ng-click="reverse()" ng-if="dev">reverse</md-button>
+        <md-button id="resume2" ng-click="resume()" ng-if="dev">resume</md-button>
+        <md-button id="restart2" ng-click="restart()" ng-if="dev">restart</md-button>
     </div>
-    <div id="sliderWrapper">
-        <div id="slider"></div>
+
+    <div ng-if="dev">
+    <pre>Totle Time to Run {{masterTimeline.duration()}}</pre>
+    <pre>Tl Progress: {{tl.progress()*100 | number:0}}% - Totle Time to Run {{tl.duration()}}</pre>
+    <pre>Tl2 Progress: {{tl2.progress()*100 | number:0}}% - Totle Time to Run {{tl2.duration()}}</pre>
+    <pre>Total Progress: {{masterTimeline.progress()*100 | number:0}}%</pre>
     </div>
 </div>

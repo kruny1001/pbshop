@@ -1,0 +1,121 @@
+<!--
+<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
+-->
+<style>
+	#demo {
+		width: 692px;
+		height: 70px;
+		//background-color: #333;
+		padding: 8px;
+	}
+	#demoBackground{
+		position:relative;
+		//background-color:#000;
+		overflow:hidden;
+		width:692px;
+		height:70px;
+		visibility:hidden;
+	}
+	#logoImg{
+		position:absolute;
+		//visibility:hidden;
+		//background: url(modules/template/imgs/12.png) no-repeat;
+		height: 45px;
+		width: 45px;
+		top:6px;
+	}
+	#logoTitle{
+		margin-left:38px;
+	}
+
+
+	#demo2 {
+		width: 692px;
+		height: 100px;
+		background-color: #333;
+		padding: 8px;
+	}
+	#demoBackground2 {
+		position: relative;
+		background-color: #000;
+		overflow: hidden;
+		width: 692px;
+		height: 100px;
+		visibility:hidden;
+	}
+	#logo2 {
+		position: absolute;
+		background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/logo_black_1.jpg) no-repeat;
+		height: 60px;
+		width: 60px;
+		top: 6px;
+	}
+
+	#txtContainer2 {
+		position: absolute;
+		left: 65px;
+		top: 14px;
+	}
+	.txt2 {
+		font: 36px monospace;
+		position: absolute;
+		color: #afafaf;
+		font-weight: bold;
+		left: 0px;
+		top: 0;
+	}
+
+	input[type="button"]{
+		-webkit-appearance: button;
+		padding:5px;
+		margin-right:5px;
+		margin-bottom:5px;
+	}
+
+	body{
+		margin: 0;
+		background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/25480/hero-img.jpg') top center no-repeat;
+		background-size: cover;
+	}
+</style>
+
+<section data-ng-controller="FrontUrimium1Controller" ng-init="logo()">
+
+	<!--
+	<md-toolbar md-theme="blue" class="navbar-fixed-top navbar-inverse">
+		<h2 class="md-toolbar-tools">
+		<span stlye="position:relative; display:inline;">
+			<img id="logoImg" ng-src="modules/template/imgs/12.png">
+			<div id="logoTitle"><b>Urimium:[의리미엄]</b></div>
+		</span>
+		</h2>
+	</md-toolbar>
+	-->
+	<md-content class="md-padding contents-ui" style="height: 100%">
+		<div id="cloudContainer">
+			<div class="front-urimium-1" style="z-index:50;">
+				<div style="z-index:50; text-align: center">
+					<h2><b>Urimium:[의리미엄]</b></h2>
+				</div>
+				<form><fieldset><input type="search" /><button type="submit"><i class="fa fa-search"></i></button></fieldset></form>
+			</div>
+		</div>
+	</md-content>
+	<md-content class="md-padding" style="height: 100%; background-color: #BFDC7A">
+		<div style="height:100%">
+			<input type="button" id="restartBtn" value="restart()">
+			<banner-front></banner-front>
+			<div id="demo2">
+				<div id="demoBackground2">
+					<div id="logo2"></div>
+					<div id="txtContainer2"></div>
+				</div>
+			</div>
+			<input type="button" id="restartBtn2" style="margin:36px;" value="restart2()">
+		</div>
+	</md-content>
+	<audio src="http://cinemont.com/tutorials/howls/in_the_rain.mp3" autoplay loop></audio>
+
+
+
+</section>

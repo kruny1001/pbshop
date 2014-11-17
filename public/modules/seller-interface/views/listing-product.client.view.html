@@ -1,12 +1,8 @@
 <section data-ng-controller="ListingProductController" style="background-color:#EBECED" ng-init="find()">
-	<br/><br/><br/>
-
 	<!-- start Sorting Bar-->
-	<div style="height:100%" layout="vertical">
+	<div class="container" style="height:100%; margin-top:50px" layout="vertical">
 		<div class="top-menu" style="margin:10px;">
-			<md-tooltip>
-				[help] 정렬을 도와 드립니다.
-			</md-tooltip>
+
 			<div class="dropdown">
 				<button class="dropdownbtn btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
 					Everyting
@@ -30,77 +26,24 @@
 			</div>
 		</div>
 		<!-- end Sorting Bar-->
-<!--
-		<md-toolbar
-				style="border-radius:15px 15px 0px 0px; font-size:xx-large; font-family: 'Nanum Brush Script', serif;"
-				md-theme="indigo" scroll-shrink
-				>
-			<div class="md-toolbar-tools">
-				<span><i class="fa fa-bookmark-o"></i> 상품리스트</span>
-				<span flex></span>
-			</div>
-		</md-toolbar>
--->
-		<md-content class="md-padding" style="border-radius:0px 0px 15px 15px; background-color:#EBECED;">
-<!--
-			<md-contnet ng-repeat="product in products"
-						style="min-width: 210px; max-width:320px;"
-			>
--->
-
-			<md-button ng-click="openToast()">
-				Open a Toast!
-			</md-button>
+		<md-content class="md-padding" style="background-color:#EBECED;">
 
 			<div layout="vertical" layout-sm="horizontal" layout-align="center center" ng-repeat="Partproducts in partitioned">
-				<div ng-repeat="product in Partproducts" style="padding:0;">
-
-						<md-card
-								style="font-family: 'Nanum Gothic', sans-serif; background-color:#FFF; max-width:310px">
-							<img src="{{product.mainimg}}" class="md-card-image">
-							<div style="font-weight: bold; margin-top:5px">
-								<a href="/#!/detail-product/{{product._id}}">{{product.name}}</a>
-							</div>
-							<div style="display:inline">
-								<span style="font-weight: bold; font-size:smaller"> {{product.price}}원</span>
-								<span> <a>{{product.user.displayName}}</a></span>
-							</div>
-							<!--
-							<p>
-								<h5>
-								{{product.description}}
-								</h5>
-							</p>
-							-->
-							<!--
-							<div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-
-								<md-button class="md-raised md-primary"
-										   ng-click="showListBottomSheet($event)">
-									상세정보
-								</md-button>
-								<div style="width:25px; height: 5px;"> </div>
-
-								<md-button class="md-raised md-primary" ng-click="purchaseProduct(product._id)">
-									빠른구매
-								</md-button>
-
-								<md-button class="md-raised md-primary" ng-click="dialogAdvanced($event)">
-									구매하기
-								</md-button>
-								<div ng-if="alert!='' ">
-									<pre > {{product.name}} {{alert}}</pre>
-								</div>
-							</div>
-						</md-card>
-						-->
-				</div>
+				<md-card ng-repeat="product in Partproducts"
+						 class="listing-product-mdCard">
+					<img ng-src="{{product.mainimg}}" class="md-card-image">
+					<div style="font-weight: bold; margin-top:5px">
+						<a href="/#!/detail-product/{{product._id}}">{{product.name}}</a>
+					</div>
+					<div style="display:inline">
+						<span style="font-weight: bold; font-size:smaller"> {{product.price}}원</span>
+						<span> <a>{{product.user.displayName}}</a></span>
+					</div>
+				</md-card>
 			</div>
 
 		</md-content>
-		<br/><br/><br/>
 	</div>
-	<br/>
 	<footer>
 		<div style="margin-left:20px">
 			<b>kevAngularJS --</b> Web Master : pbshop1001@gmail.com

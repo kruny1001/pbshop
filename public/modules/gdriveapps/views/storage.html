@@ -1,33 +1,28 @@
 <section id="main"  layout="vertical" layout-fill ng-controller="gdrive" ng-init="find()" style="background-color:#EBECED">
-    <script src="https://apis.google.com/js/client.js?onload=init"></script>
-    <br/><br/><br/>
-    <md-button ng-click="toggleLeft()" class="md-primary" hide-md>
+    <md-button ng-click="toggleLeft()" class="md-primary" style="position:fixed; top:60px; right:15px; z-index:5"hide-md>
         <b>사이드 메뉴 열기</b>
     </md-button>
-    <section layout="horizontal" flex>
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" component-id="left" is-locked-open="$media('md')">
+    <div class="contents-ui">
+        <section layout="horizontal" flex>
+            <md-sidenav class="md-sidenav-left md-whiteframe-z2" component-id="left" is-locked-open="$media('md')">
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools"><b>관리자 메뉴</b></h1>
+                </md-toolbar>
+                <md-content class="md-padding" ng-controller="LeftCtrl">
+                    <md-button ng-click="close()" class="md-primary" hide-md>
+                        Close Sidenav Left
+                    </md-button>
+                    <p hide show-md>
+                    <h6>sidenav 메뉴가 왼쪽에 잠겨 있습니다.</h6>
+                    </p>
+                    <a ng-click="goChildView('gDrive2.dashboard')"><h3>Dashboard</h3></a>
+                    <a ng-click="goChildView('gDrive2.addNewProduct')"><h3>Add new Product</h3></a>
+                    <a ng-click="goChildView('gDrive2.historyPayment')"><h3>History of Payment</h3></a>
+                </md-content>
+            </md-sidenav>
 
-        <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools"><b>관리자 메뉴</b></h1>
-        </md-toolbar>
-        <md-content class="md-padding" ng-controller="LeftCtrl">
-            <md-button ng-click="close()" class="md-primary" hide-md>
-                Close Sidenav Left
-            </md-button>
-            <p hide show-md>
-            <h6>sidenav 메뉴가 왼쪽에 잠겨 있습니다.</h6>
-            </p>
-            <a ng-click="goChildView('gDrive2.dashboard')"><h3>Dashboard</h3></a>
-            <a ng-click="goChildView('gDrive2.addNewProduct')"><h3>Add new Product</h3></a>
-            <a ng-click="goChildView('gDrive2.historyPayment')"><h3>History of Payment</h3></a>
-        </md-content>
-    </md-sidenav>
-    <div ui-view layout="horizontal" flex></div>
-    </section>
-    <br/>
-    <footer>
-        <div style="margin-left:20px">
-            <b>kevAngularJS --</b> Web Master : pbshop1001@gmail.com
-        </div>
-    </footer>
+            <div ui-view layout="horizontal" flex></div>
+        </section>
+    </div>
+
 </section>

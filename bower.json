@@ -15,7 +15,6 @@
     "jquery": "latest",
     "gsap": "latest",
     "bootstrap-sass-official": "latest",
-    "grunt-contrib-sass": "latest",
     "lodash": "latest",
     "angular-wizard": "latest",
     "angular-smart-table": "*",

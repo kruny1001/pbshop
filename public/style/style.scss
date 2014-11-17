@@ -6,6 +6,11 @@ $brand-success:         #A0D468;
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css);
 @import '../lib/angular-material/angular-material.min.css';
 @import '../lib/angular-material/themes/indigo-theme.css';
+@import '../lib/angular-material/themes/amber-theme.css';
+@import '../lib/angular-material/themes/blue-grey-theme.css';
+@import '../lib/angular-material/themes/blue-theme.css';
+@import '../lib/angular-material/themes/light-blue-dark-theme.css';
+
 @import '../lib/components-font-awesome/scss/font-awesome';
 //@import '../lib/bootstrap-sass-official/assets/stylesheets/bootstrap/glyphicons';
 
@@ -53,6 +58,11 @@ $brand-success:         #A0D468;
 @import 'front-menu';
 
 @import 'detail-interface';
+@import 'banner_gallery';
+
+@import 'banner-front-directive';
+//New Look Front Page
+@import 'front-urimium-1';
 
 body{
   overflow-x:hidden;
@@ -79,4 +89,25 @@ body{
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(255,0,0,0.4);
+}
+
+.listing-product-mdCard{
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color:#FFF;
+  max-width:310px;
+  max-height:350px;
+}
+
+.contents-ui{
+  height:100%;
+  margin-top:64px;
+}
+
+md-whiteframe {
+  background: #fff;
+  margin: 2px;
+  padding: 2px; }
+md-tabs{
+  margin: 2px;
+  padding: 2px;
 }

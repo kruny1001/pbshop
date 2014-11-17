@@ -1,0 +1,131 @@
+#demoWrapper {
+  width: 600px;
+  height: 350px;
+  -webkit-font-smoothing: antialiased;
+  color: black;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#bg {
+  position: absolute;
+  background-image: url(http://www.greensock.com/_img/codepen/black_textured_background.png);
+  width: 600px;
+  height: 350px;
+}
+#content {
+  padding-left: 15px;
+  visibility: hidden;
+}
+#info {
+  margin-top: 20px;
+}
+#feature {
+  position: relative;
+  float: left;
+}
+#content #description {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+  width: 290px;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+}
+
+#content #bannertitle{
+  position: relative;
+  margin-top: 10px;
+  font-size: 36px;
+  font-weight: normal;
+  color:#ffffff;
+}
+#content #bannersubtitle{
+  position: relative;
+  font-size: 22px;
+  font-weight: normal;
+  color: #cfcfcf;
+  color:#ffffff;
+}
+#nav {
+  position: relative;
+  /*top: 327px;
+  //left: 84px;*/
+  white-space: nowrap;
+}
+#nav img {
+  position: relative;
+  margin-right: 20px;
+  float: left;
+}
+
+
+button {
+  //padding: 10px;
+  //margin-top: 10px;
+}
+
+button:nth-child(1){
+  //margin-left:10px;
+}
+
+
+#demoWrapper2 {
+  width: 600px;
+  height: 350px;
+  -webkit-font-smoothing: antialiased;
+  color: black;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#bg2 {
+  position: absolute;
+  background-image: url(http://www.greensock.com/_img/codepen/black_textured_background.png);
+  width: 600px;
+  height: 350px;
+}
+#content2 {
+  padding-left: 15px;
+  visibility: hidden;
+}
+#info2 {
+  margin-top: 20px;
+}
+#feature2 {
+  position: relative;
+  float: left;
+}
+#content2 #description2 {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+  width: 290px;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 24px;
+}
+#content2 #bannertitle2{
+  position: relative;
+  margin-top: 10px;
+  font-size: 36px;
+  font-weight: normal;
+  color:#ffffff;
+}
+#content2 #bannersubtitle2{
+  position: relative;
+  font-size: 22px;
+  font-weight: normal;
+  color: #cfcfcf;
+  color:#ffffff;
+}
+#nav2 {
+  position: relative;
+  /*top: 327px;
+  //left: 84px;*/
+  white-space: nowrap;
+}
+#nav2 img {
+  position: relative;
+  margin-right: 20px;
+  float: left;
+}

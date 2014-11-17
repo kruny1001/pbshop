@@ -3357,8 +3357,7 @@ angular.module('seller-interface').controller('ListingProductController', [
       });
     };
     $scope.testColumnSystem = function (numberOfColumn) {
-      $scope.partitioned = partition($scope.products, numberOfColumn);
-      $scope.$digest();
+      $scope.partitioned = partition($scope.products, numberOfColumn);  //$scope.$digest();
     };
     $scope.listItemClick = function ($index) {
       var clickedItem = $scope.items[$index];
@@ -3744,7 +3743,10 @@ angular.module('template').config([
   '$stateProvider',
   function ($stateProvider) {
     // Template state routing
-    $stateProvider.state('banners-gallery', {
+    $stateProvider.state('front-urimium-1', {
+      url: '/front-urimium-1',
+      templateUrl: 'modules/template/views/front-urimium-1.client.view.html'
+    }).state('banners-gallery', {
       url: '/banners-gallery',
       templateUrl: 'modules/template/views/banners-gallery.client.view.html'
     }).state('test-font-animation', {
@@ -3834,6 +3836,113 @@ angular.module('template').controller('DraggableController', [
     update();
   }
 ]);'use strict';
+angular.module('template').controller('FrontUrimium1Controller', [
+  '$scope',
+  '$timeout',
+  function ($scope, $timeout) {
+    var allClouds = new TimelineLite(), $cloudContainer = $('#cloudContainer');
+    var logo = $('#logoImg'), topTitle = $('#topTitle'), restartBtn = $('#restartBtn'), tl = new TimelineLite({ paused: true });
+    console.log(logo);
+    console.log(topTitle);
+    tl.from(logo, 0.7, {
+      left: '-=60px',
+      ease: Back.easeOut
+    }).from(topTitle, 0.5, {
+      left: '-=60px',
+      ease: Back.easeOut
+    });
+    //.from(timelinelite, 0.5, {width:"0px", alpha:0    }, "-=0.02")
+    //.staggerFrom(tagline, 0.5, {top:"-=30px", rotation:"-40deg", alpha:0, scale:1.8, ease:Back.easeOut}, 0.2);
+    restartBtn.click(function () {
+      tl.restart();
+    });
+    $scope.logo = function () {
+      tl.play();
+    };
+    //show the demoBackground div after DOM is ready and all images loaded
+    TweenLite.set($('#demoBackground'), { css: { visibility: 'visible' } });
+    function initClouds() {
+      //loop through creation of 10 clouds
+      for (var i = 0; i < 7; i++) {
+        //dynamically create a cloud element
+        var cloud = $('<div class="cloud"></div>').appendTo($cloudContainer);
+        //set its initial position and opacity using GSAP
+        TweenLite.set(cloud, {
+          left: -100,
+          top: i * 40,
+          opacity: 0
+        });
+        //create a repeating timeline for this cloud
+        var cloudTl = new TimelineMax({ repeat: -1 });
+        //fade opacity to 1
+        cloudTl.to(cloud, 0.5, { opacity: 1 }).to(cloud, 30 + Math.random() * 8, {
+          left: '100%',
+          ease: Linear.easeNone
+        }, 0).to(cloud, 0.5, { opacity: 0 }, '-=0.5');
+        //add this cloud's timeline to the allClouds timeline at a random start time.
+        allClouds.add(cloudTl, Math.random() * 5);
+      }
+    }
+    $timeout(function () {
+      initClouds();
+    }, 3000);
+    var logo = $('#logo2'), txtContainer = $('#txtContainer2'), restartBtn2 = $('#restartBtn2'), tl2, progressSlider, totalProgressSlider, txt;
+    function splitText(phrase) {
+      var prevLetter, sentence, sentence = phrase.split('');
+      $.each(sentence, function (index, val) {
+        if (val === ' ') {
+          val = '&nbsp;';
+        }
+        var letter = $('<div/>', { id: 'txt' + index }).addClass('txt2').html(val).appendTo(txtContainer);
+        if (prevLetter) {
+          $(letter).css('left', $(prevLetter).position().left + $(letter).width() + 'px');
+        }
+        ;
+        prevLetter = letter;
+      });
+      txt = $('.txt2');
+    }
+    function buildTimeline() {
+      //note this timeline uses 3D transforms which will only work in recent versions of Safari, Chrome, and FireFox. IE10 will support 3D transforms as well. All other browsers simply will not show those properties being tweened.
+      TweenLite.set(txtContainer, { css: { perspective: 500 } });
+      tl2 = new TimelineMax({
+        onUpdate: updateUI,
+        repeat: 2,
+        repeatDelay: 1,
+        yoyo: true
+      });
+      tl2.from(logo, 0.5, {
+        left: '-=60px',
+        ease: Back.easeOut
+      });
+      tl2.staggerFrom(txt, 0.4, { alpha: 0 }, 0.06, 'textEffect');
+      tl2.staggerFrom(txt, 0.8, {
+        rotationY: '-270deg',
+        top: 80,
+        transformOrigin: '50% 50% -80',
+        ease: Back.easeOut
+      }, 0.06, 'textEffect');
+      tl2.staggerTo(txt, 0.6, {
+        rotationX: '360deg',
+        color: '#90e500',
+        transformOrigin: '50% 50% 10'
+      }, 0.02);
+    }
+    function updateUI() {
+    }
+    restartBtn2.click(function () {
+      //Start playing from a progress of 0.
+      tl2.restart();
+    });
+    function init() {
+      splitText('We Hope You Enjoyed the Tour');
+      buildTimeline();
+      //show the demoBackground div after DOM is ready and all images loaded
+      TweenLite.set($('#demoBackground2'), { visibility: 'visible' });
+    }
+    init();
+  }
+]);'use strict';
 angular.module('template').controller('SetrowcolController', [
   '$scope',
   function ($scope) {
@@ -3855,13 +3964,17 @@ angular.module('template').directive('bannerFront', [function () {
       templateUrl: 'modules/template/directives/banner-front.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        // Banner front directive logic
-        // ...
-        var tl = new TimelineLite({ onUpdate: updateSlider });
-        tl.set('#content', { visibility: 'visible' }).from('h1', 0.5, {
+        scope.tl = new TimelineMax();
+        scope.tl.set('#content2', {
+          autoAlpha: 0,
+          display: 'none'
+        }, '+=0.25').set('#content', {
+          autoAlpha: 1,
+          display: 'block'
+        }).from('#bannertitle', 0.5, {
           left: 100,
           autoAlpha: 0
-        }).from('h2', 0.5, {
+        }).from('#bannersubtitle', 0.5, {
           left: -100,
           autoAlpha: 0
         }, '-=0.25').from('#feature', 0.5, {
@@ -3875,69 +3988,82 @@ angular.module('template').directive('bannerFront', [function () {
           rotation: -180,
           autoAlpha: 0
         }, 0.2, 'stagger');
-        /*
-                $("#play").click(function() {
-                    //play() only plays forward from current position. If timeline has finished, play() has nowhere to go.
-                    //if the timeline is not done then play() or else restart() (restart always restarts from the beginning).
-
-                    if(tl.progress() != 1){
-                        //carl just changed this again
-                        tl.play();
-                    } else {
-                        tl.restart();
-                    }
-                });
-
-                $("#pause").click(function() {
-                    tl.pause();
-                });
-
-                $("#reverse").click(function() {
-                    tl.reverse();
-                });
-
-                $("#resume").click(function() {
-                    tl.resume();
-                });
-
-                $("#restart").click(function() {
-                    tl.restart();
-                });
-
-                $("#slider").slider({
-                    range: false,
-                    min: 0,
-                    max: 100,
-                    step:.1,
-                    slide: function ( event, ui ) {
-                        tl.pause();
-                        //adjust the timeline's progress() based on slider value
-                        tl.progress( ui.value/100 );
-                    }
-                });
-                 */
+        scope.tl2 = new TimelineMax();
+        scope.tl2.set('#content', {
+          autoAlpha: 0,
+          display: 'none'
+        }, '+=2').set('#content2', {
+          autoAlpha: 1,
+          display: 'block'
+        }).from('#bannertitle2', 0.5, {
+          left: 100,
+          autoAlpha: 0
+        }).from('#bannersubtitle2', 0.5, {
+          left: -100,
+          autoAlpha: 0
+        }, '-=0.25').from('#feature2', 0.5, {
+          scale: 0.5,
+          autoAlpha: 0
+        }, 'feature2').from('#description2', 0.5, {
+          left: 100,
+          autoAlpha: 0
+        }, 'feature2+=0.25').staggerFrom('#nav2 img', 0.5, {
+          scale: 0,
+          rotation: -180,
+          autoAlpha: 0
+        }, 0.2, 'stagger2');
+        scope.masterTimeline = new TimelineMax({ paused: true });
+        scope.masterTimeline = scope.masterTimeline.add(scope.tl).add(scope.tl2).from('#progress', scope.masterTimeline.duration(), {
+          scaleX: 0,
+          transformOrigin: 'left center'
+        }, 0);
+        scope.setRating = function () {
+          scope.masterTimeline.progress(scope.rating / 100);
+          scope.masterTimeline.pause();
+          scope.$digest();
+        };
+        scope.masterTimeline.eventCallback('onUpdate', updateSlider);
+        function updateSlider() {
+          scope.rating = scope.masterTimeline.progress() * 100;
+          scope.$digest();
+        }
         scope.play = function () {
-          if (tl.progress() != 1) {
-            //carl just changed this again
-            tl.play();
+          if (scope.masterTimeline.progress() != 1)
+            scope.masterTimeline.play();
+          else
+            scope.masterTimeline.restart();
+        };
+        scope.prev = function () {
+          if (scope.test.progress() != 1) {
+            scope.tl.play();
+            scope.test.play();
+            console.log('not 1');
           } else {
-            tl.restart();
+            scope.test.restart();
+            console.log('1');
+          }
+        };
+        scope.next = function () {
+          if (test2.progress() != 1) {
+            //carl just changed this again
+            test2.play();
+          } else {
+            //tl.restart();
+            test2.restart();
           }
         };
         scope.pause = function () {
-          tl.pause();
+          scope.masterTimeline.pause();
         };
         scope.reverse = function () {
-          tl.reverse();
+          scope.masterTimeline.reverse();
         };
         scope.resume = function () {
-          tl.resume();
+          scope.masterTimeline.resume();
         };
         scope.restart = function () {
-          tl.restart();
+          scope.masterTimeline.restart();
         };
-        function updateSlider() {
-        }  //element.text('this is the bannerFront directive');
       }
     };
   }]);'use strict';

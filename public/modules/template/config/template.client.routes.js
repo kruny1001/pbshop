@@ -5,6 +5,10 @@ angular.module('template').config(['$stateProvider',
 	function($stateProvider) {
 		// Template state routing
 		$stateProvider.
+		state('front-urimium-1', {
+			url: '/front-urimium-1',
+			templateUrl: 'modules/template/views/front-urimium-1.client.view.html'
+		}).
 		state('banners-gallery', {
 			url: '/banners-gallery',
 			templateUrl: 'modules/template/views/banners-gallery.client.view.html'

@@ -29,7 +29,7 @@ angular.module('seller-interface').controller('ListingProductController', ['$sco
 
 		$scope.testColumnSystem = function(numberOfColumn){
 			$scope.partitioned = partition($scope.products, numberOfColumn);
-			$scope.$digest();
+			//$scope.$digest();
 		}
 
 		$scope.listItemClick = function($index) {

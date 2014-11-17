@@ -12,9 +12,9 @@ module.exports = {
 	sessionCollection: 'sessions',
 	assets: {
 		lib: {
-			css: [
-                'public/css/style.css'
-			],
+            css: [
+                'public/style/style.css'
+            ],
 			js: [
                 'public/lib/jquery/dist/jquery.min.js',
                 'public/lib/jquery-ui/ui/jquary-ui.js',

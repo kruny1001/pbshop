@@ -1,275 +1,82 @@
-
-    <div style="margin:10px;" flex layout="vertical">
-        <md-toolbar
-                style="border-radius:15px 15px 0px 0px; font-size:xx-large; font-family: 'Nanum Brush Script', serif;"
-                md-theme="indigo" scroll-shrink
-                >
-            <div class="md-toolbar-tools">
-                <span><i class="fa fa-bookmark-o"></i> Admin Dashboard </span>
-                <!-- fill up the space between left and right area -->
-            </div>
-        </md-toolbar>
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <md-tooltip>
-                판매현황, 및 지금까지의 판매 실적에 대해서 알려 드립니다.
-            </md-tooltip>
-            </input>
-            업데이트 News<hr>
-            <!--
-            <div id="chartdiv" flex></div>
-            -->
-            판매현황<hr>
-
-        </md-content>
-
-        <md-toolbar md-theme="indigo" style="margin-top:10px; border-radius:15px 15px 0px 0px;">
-            <div class="md-toolbar-tools">
-                <span class="md-flex" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;">
-                    Product Info ({{products.length}})
-                </span>
-                <span flex></span>
-                <md-button class="md-raised md-primary"
-                           noink
-                           style="background-color: #009688; font-weight: bold"
-                           aria-label="새로운 상품"
-                           ng-click="openNewProductDialog($event)">
-                    새로운 상품
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px; overflow-y:hidden;">
-            <div layout="horizontal" layout-padding>
-                <md-contnet ng-repeat="product in products" product-editor flex="66" style="min-width: 210px; max-width:320px;">
-                    <md-card>
-                        <!--
-                        <img ng-src="{{product.mainimg}}"
-                             class="md-card-image"
-                             alt="Washed Out"
-                             pagespeed_url_hash="73454173"
-                             onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-                        -->
-                        <img ng-src="{{product.mainimg}}"
-                             class="md-card-image">
-                        <h3>{{product.name}} (가격: {{product.price}})</h3>
-
-                        <p>
-                            {{product.description}}
-                        </p>
-                        <div class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-                            <md-button class="md-raised md-primary" ng-click="redirect('gDrive2.editProduct', product._id)">
-                                Edit Button
-                            </md-button>
-                            <div style="width:25px; height: 5px;"></div>
-                            <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
-                                Upload Image
-                            </md-button>
-                        </div>
-                    </md-card>
-                </md-contnet>
-            </div>
-            <!--
-            <div style="font-size:14px">{{product.name}}</div>
-            <div style="font-size:12px" layout="vertical" layout-sm="horizontal" layout-padding>
-                <div  flex>
-                    <div>상품이름: {{product.name}}</div>
-                </div>
-                <div flex>
-                    <div>가격: {{product.price}}</div>
-                </div>
-                <div flex>
-                    <div>상품사진: <img ng-src="{{product.mainimg}}" style="width:50px"></div>
-                </div>
-                <div flex>
-                    <div>Cuatro [flex]</div>
-                </div>
-            </div>
-            -->
-        </md-content>
-
-        <md-toolbar md-theme="indigo" style="font-size:xx-large; font-family: 'Nanum Brush Script', serif;
-        margin-top:10px; border-radius:15px 15px 0px 0px;">
-            <div class="md-toolbar-tools">
-                <span class="md-flex">Image Tool</span>
-                <span flex></span>
-
-                <md-button class="md-raised md-primary"
-                           noink
-                           style="background-color: #009688"
-                           aria-label="{{authName}}"
-                           ng-click="init()">
-                    {{authName}}
-                </md-button>
-                <md-button class="md-raised md-primary"
-                           noink
-                           style="background-color: #009688"
-                           aria-label="{{authName}}"
-                           ng-click="setupPicker()"
-                           ng-disabled="!isAuth">
-                    File Picker
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <!-- <input id="filePicker" ng-disabled="isAuth == false" type="button" value="upload to GDrive" ng-click="setupPicker()"> -->
-            You can upload and select from Google Drive
-            <pre>Your FolderID: {{rootGdriveFolderID}}</pre>
-            <!-- <input type="file" id="filePicker" style="display: none" /> -->
-            <p>
-            <div class="well" >
-                <!-- <pre >{{file}}</pre> -->
-                <img ng-repeat="file in files" style="margin-left:15px; margin-bottom: 15px"  select-img my-slider="file" index={{$index}} on-change-status="onChangeStatus()" class="sellerInterfaceItemImg" ng-src="{{ arrive && permalLink + file.id || ''}}">
-            </div>
-            </p>
-        </md-content>
-
-        <md-toolbar md-theme="indigo" style="
-    font-size:xx-large; font-family: 'Nanum Brush Script', serif;
-    margin-top:10px; border-radius:15px 15px 0px 0px;">
-            <div class="md-toolbar-tools">
-                <span class="md-flex">
-                    Reviews
-                </span>
-            </div>
-        </md-toolbar>
-
-        <md-content class="md-padding" style="border-radius:0px 0px 15px 15px">
-            <md-list>
-                <md-item ng-repeat="item in todos">
-                    <md-item-content>
-                        <div class="md-tile-left">
-                            <img ng-src="{{item.product_uri}}" class="face" alt="{{item.who}}">
-                        </div>
-                        <div class="md-tile-content">
-                            <h3>{{item.name}}</h3>
-                            <h4>{{item.when}}</h4>
-                            <p>
-                                {{item.notes}}
-                            </p>
-                            <!--
-                            <div ng-controller="BottomSheetExample" class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-                                <md-button class="md-raised md-primary" ng-click="showListBottomSheet($event)">
-                                        Edit Button
-                                </md-button>
-                                <div style="width:50px; height: 5px;"></div>
-                                <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
-                                    Upload Image
-                                </md-button>
-                            </div>
-                            -->
-                        </div>
-                    </md-item-content>
-                </md-item>
-            </md-list>
-        </md-content>
-    </div>
-
-
-    <!--
-    <div layout="vertical" md-theme="light-blue-dark">
-        <md-content>
-            <form style="padding: 20px;">
-                <div class="row">
-                    <md-text-float label="Title" ng-model="user.title"></md-text-float>
-                    <md-text-float label="eMail" ng-model="user.email" type="email"></md-text-float>
-                </div>
-            </form>
-        </md-content>
-
-        <md-content >
-            <form style="padding: 20px;">
-                <md-text-float label="Company" ng-model="user.company" disabled> </md-text-float>
-                <div class="row">
-                    <md-text-float label="FirstName" ng-model="user.firstName"> </md-text-float>
-                    <md-text-float label="LastName" ng-model="user.lastName" class="long"> </md-text-float>
-                </div>
-                <md-text-float label="Address" ng-model="user.address"> </md-text-float>
-                <div class="row">
-                    <md-text-float label="City" ng-model="user.city"> </md-text-float>
-                    <md-text-float label="State" ng-model="user.state"> </md-text-float>
-                    <md-text-float label="Postal Code" ng-model="user.postalCode"> </md-text-float>
-                </div>
-                <md-text-float label="Country" ng-model="user.country" disabled> </md-text-float>
-            </form>
-        </md-content>
-    </div>
-
-
-    <div ng-controller="BottomSheetExample">
-        <p style="padding-left: 20px;">
-            Bottom sheet can be dismissed with the service or a swipe down.
-        </p>
-        <div class="bottom-sheet-demo inset" layout="vertical" layout-sm="horizontal" layout-align="center">
-            <md-button class="md-primary" ng-click="showListBottomSheet($event)">
-                Show as List
-            </md-button>
-            <div style="width:50px;"></div>
-            <md-button class="md-primary" ng-click="showGridBottomSheet($event)">
-                Show as Grid
-            </md-button>
-        </div>
-
-        <br/>
-        <b layout="horizontal" layout-align="center center" layout-padding>
-            {{alert}}
-        </b>
-    </div>
-
-    <md-content>
-        <section layout="vertical" layout-sm="horizontal" layout-align="center center">
-            <md-button>Button</md-button>
-            <md-button noink class="md-primary">Primary (noink)</md-button>
-            <md-button disabled class="md-primary">Disabled</md-button>
-            <md-button class="md-warn">Warn</md-button>
-            <div class="label">flat</div>
-        </section>
-
-        <section layout="vertical" layout-sm="horizontal" layout-align="center center">
-            <md-button class="md-raised">Button</md-button>
-            <md-button class="md-raised md-primary">Primary</md-button>
-            <md-button disabled class="md-raised md-primary">Disabled</md-button>
-            <md-button class="md-raised md-warn">Warn</md-button>
-            <div class="label">raised</div>
-        </section>
-
-        <section layout="vertical" layout-sm="horizontal" layout-align="center center">
-            <md-button class="md-fab" aria-label="Time">
-                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg&output=embed" style="width: 24px; height: 24px;"></md-icon>
-            </md-button>
-            <img ng-src="http://localhost:3000/modules/seller-interface/img/icons/ic_access_time_24px.svg">
-            <md-button class="md-fab" aria-label="New document">
-                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_insert_drive_file_24px.svg" style="width: 24px; height: 24px;"></md-icon>
-            </md-button>
-
-            <md-button class="md-fab" disabled arial-label="Comment">
-                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_comment_24px.svg" style="width: 24px; height: 24px;"></md-icon>
-            </md-button>
-
-            <md-button class="md-fab md-primary" md-theme="cyan" aria-label="Profile">
-                <md-icon icon="http://localhost:3000/modules/seller-interface/img/icons/ic_people_24px.svg" style="width: 24px; height: 24px;"></md-icon>
-            </md-button>
-            <div class="label">FAB</div>
-        </section>
-
-        <section layout="vertical" layout-sm="horizontal" layout-align="center center">
-            <md-button class>Reset</md-button>
-            <md-button class>RSVP</md-button>
-            <div class="label">Button Group</div>
-        </section>
-
-        <section layout="vertical" layout-sm="horizontal" layout-align="center center">
-            <md-button class="md-primary" md-theme="green">Button</md-button>
-            <md-button class="md-primary md-raised" md-theme="indigo">Button</md-button>
-            <md-button class="md-primary md-raised" md-theme="orange">Button</md-button>
-            <md-button class="md-primary" md-theme="cyan">Button</md-button>
-            <div class="label">Themed</div>
-        </section>
+<div style="margin:10px;" flex layout="vertical">
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">
+            <span>Admin Dashboard </span>
+        </h1>
+    </md-toolbar>
+    <md-content class="md-padding">
+        </input>
+        업데이트 News<hr>
+        판매현황<hr>
     </md-content>
 
-    <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
-        Checkbox 1: {{ data.cb1 }}
-    </md-checkbox>
+    <md-toolbar class="md-theme-light" md-theme="light-blue-dark">
+        <h1 class="md-toolbar-tools">
+                <span class="md-flex">
+                    Product Info ({{products.length}})
+                </span>
+            <span flex></span>
+            <md-button class="md-raised md-primary"
+                       noink
+                       style="background-color: #009688; font-weight: bold"
+                       aria-label="새로운 상품"
+                       ng-click="openNewProductDialog($event)">
+                새로운 상품
+            </md-button>
+        </h1>
+    </md-toolbar>
+    <md-content class="md-padding" style="overflow-y:hidden;">
+        <!--
+        <md-list>
+            <md-item ng-repeat="product in products">
+                <md-item-content>
+                    <div class="md-tile-left">
+                        <img ng-src="{{product.mainimg}}" class="face">
+                    </div>
+                    <div class="md-tile-content">
+                        <h5>{{product.name}} </h5>
+                        <h6>가격: {{product.price}}</h6>
+                    </div>
+                </md-item-content>
+            </md-item>
+        </md-list>
+        -->
 
-    <md-checkbox ng-model="data.cb2" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'">
-        Checkbox 2: {{ data.cb2 }}
-    </md-checkbox>
-    -->
+        <div layout="horizontal" layout-padding>
+            <md-card ng-repeat="product in products" style="max-width:210px; max-height:250px; min-width:120px">
+                <img ng-src="{{product.mainimg}}"
+                     class="md-card-image">
+
+                <h6>{{product.name}}</h6>
+                <h6>(가격: {{product.price}})</h6>
+                <!--
+                <md-button class="md-raised md-primary" ng-click="redirect('gDrive2.editProduct', product._id)">
+                    <h6>Edit</h6>
+                </md-button>
+                -->
+            </md-card>
+        </div>
+    </md-content>
+
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools"><span class="md-flex">Reviews</span></h1>
+    </md-toolbar>
+    <md-content class="md-padding">
+        <md-list>
+            <md-item ng-repeat="item in todos">
+                <md-item-content>
+                    <div class="md-tile-left">
+                        <img ng-src="{{item.product_uri}}" class="face" alt="{{item.who}}">
+                    </div>
+                    <div class="md-tile-content">
+                        <h3>{{item.name}}</h3>
+                        <h4>{{item.when}}</h4>
+                        <p>
+                            {{item.notes}}
+                        </p>
+                    </div>
+                </md-item-content>
+            </md-item>
+        </md-list>
+    </md-content>
+</div>
