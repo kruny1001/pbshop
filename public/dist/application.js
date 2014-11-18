@@ -59,6 +59,8 @@ ApplicationConfiguration.registerModule('banners');'use strict';
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('gdriveapps');'use strict';
+// Use application configuration module to register a new module
+ApplicationConfiguration.registerModule('main-page');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('opencpu');'use strict';
 // Use applicaion configuration module to register a new module
@@ -2858,6 +2860,22 @@ angular.module('gdriveapps').factory('GooglePlus', [function () {
       });
     }
   }]);'use strict';
+//Setting up route
+angular.module('main-page').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Main page state routing
+    $stateProvider.state('main-page-view', {
+      url: '/main-page-view',
+      templateUrl: 'modules/main-page/views/main-page-view.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('main-page').controller('MainPageViewController', [
+  '$scope',
+  function ($scope) {
+  }
+]);'use strict';
 // Opencpu module config
 angular.module('opencpu').run([
   'Menus',
